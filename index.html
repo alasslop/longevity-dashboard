@@ -455,6 +455,16 @@
             <div class="chart-container">
                 <svg id="radarChart" class="radar-chart" viewBox="0 0 500 500" width="100%" height="450"></svg>
             </div>
+            <div style="display: flex; justify-content: center; gap: 24px; margin-top: 8px; font-size: 0.85rem; color: #78716C;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <div style="width: 20px; height: 12px; background: rgba(5, 150, 105, 0.3); border: 2px solid #059669; border-radius: 2px;"></div>
+                    <span>Aktuell</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <div style="width: 20px; height: 0; border-top: 2px dashed #9CA3AF;"></div>
+                    <span>Ziel (4 Wochen)</span>
+                </div>
+            </div>
         </div>
         
         <!-- Score Details with Accordions -->
@@ -613,6 +623,15 @@
                 timeAllocation: 4,
                 medical: 9
             },
+            goals: {
+                energy: 8,
+                nutrition: 7,
+                sleepStress: 8,
+                wellbeing: 9,
+                mindset: 8,
+                timeAllocation: 6,
+                medical: 9
+            },
             answers: {
                 energy: {
                     energy_level: "7/10",
@@ -657,7 +676,7 @@
                 summary: "Dein Gesamtergebnis zeigt eine solide Basis mit Stärken im medizinischen Bereich und Wohlbefinden. Die größten Verbesserungspotenziale liegen bei der aktiven Gesundheitszeit und Ernährung.",
                 priorities: [
                     {
-                        domain: "Time Healthy",
+                        domain: "Time Allocation",
                         reason: "Mit 4/10 ist dies dein niedrigster Score.",
                         habit: "Nach dem Mittagessen → 10 Minuten spazieren gehen",
                         expected: "In 4 Wochen: Mehr Energie am Nachmittag"
@@ -669,7 +688,7 @@
                         expected: "In 4 Wochen: Bessere Hydration"
                     },
                     {
-                        domain: "Sleep",
+                        domain: "Sleep & Stress",
                         reason: "Guter Schlaf verstärkt alle anderen Verbesserungen.",
                         habit: "Nach dem Abendessen → Handy in Flugmodus",
                         expected: "In 4 Wochen: Schnelleres Einschlafen"
@@ -707,7 +726,7 @@
         }
         
         // SVG Radar Chart zeichnen
-        function drawRadarChart(scores) {
+        function drawRadarChart(scores, goals) {
             const svg = document.getElementById('radarChart');
             const centerX = 250;
             const centerY = 250;
@@ -715,6 +734,7 @@
             
             const categories = Object.keys(scores);
             const values = Object.values(scores);
+            const goalValues = goals ? categories.map(cat => goals[cat] || values[categories.indexOf(cat)]) : null;
             const numCategories = categories.length;
             const angleStep = (2 * Math.PI) / numCategories;
             
@@ -754,6 +774,27 @@
                 line.setAttribute('stroke', '#E7E5E4');
                 line.setAttribute('stroke-width', '1');
                 svg.appendChild(line);
+            }
+            
+            // ZIEL-Polygon zeichnen (gestrichelt, grau) - VOR dem Daten-Polygon
+            if (goalValues) {
+                let goalPoints = [];
+                for (let i = 0; i < numCategories; i++) {
+                    const value = goalValues[i];
+                    const radius = (value / 10) * maxRadius;
+                    const angle = i * angleStep - Math.PI / 2;
+                    const x = centerX + radius * Math.cos(angle);
+                    const y = centerY + radius * Math.sin(angle);
+                    goalPoints.push(`${x},${y}`);
+                }
+                
+                const goalPolygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+                goalPolygon.setAttribute('points', goalPoints.join(' '));
+                goalPolygon.setAttribute('fill', 'none');
+                goalPolygon.setAttribute('stroke', '#9CA3AF');
+                goalPolygon.setAttribute('stroke-width', '2');
+                goalPolygon.setAttribute('stroke-dasharray', '8,4');
+                svg.appendChild(goalPolygon);
             }
             
             // Datenpunkte berechnen und Polygon zeichnen
@@ -855,6 +896,7 @@
             
             // Scores berechnen
             const scores = data.scores || {};
+            const goals = data.goals || null;
             const scoreValues = Object.values(scores);
             const totalScore = scoreValues.reduce((a, b) => a + b, 0);
             const maxScore = scoreValues.length * 10;
@@ -863,8 +905,8 @@
             document.getElementById('percentage').textContent = percentage + '%';
             document.getElementById('totalPoints').textContent = totalScore + '/' + maxScore + ' Punkte';
             
-            // Radar Chart zeichnen
-            drawRadarChart(scores);
+            // Radar Chart zeichnen (mit Zielen)
+            drawRadarChart(scores, goals);
             
             // Accordions rendern
             const accordionList = document.getElementById('accordionList');
