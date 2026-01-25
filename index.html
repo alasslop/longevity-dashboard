@@ -5,9 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Longevity Lifestyle Test - Dein Ergebnis</title>
     
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    
+    <!-- React & Recharts for Radar Chart -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/recharts@2.8.0/umd/Recharts.js"></script>
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap');
-        
         :root {
             --color-bg: #FAFAF9;
             --color-card: #FFFFFF;
@@ -179,6 +187,14 @@
             margin-top: 4px;
         }
         
+        /* Radar Chart Container */
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 350px;
+        }
+        
         /* Accordion */
         .accordion {
             border: 1px solid var(--color-border);
@@ -255,7 +271,7 @@
             border-top: 1px solid var(--color-border);
         }
         
-        /* Score Bar in Accordion */
+        /* Score Bar */
         .score-bar-container {
             margin-bottom: 20px;
         }
@@ -386,6 +402,10 @@
             .accordion-header {
                 padding: 14px 16px;
             }
+            
+            .chart-container {
+                min-height: 300px;
+            }
         }
     </style>
 </head>
@@ -428,6 +448,17 @@
             </div>
         </div>
         
+        <!-- Radar Chart -->
+        <div class="card">
+            <h2 class="card-title">
+                <span class="card-title-icon">📊</span>
+                Dein Gesundheitsprofil
+            </h2>
+            <div class="chart-container">
+                <div id="radarChart"></div>
+            </div>
+        </div>
+        
         <!-- Score Details with Accordions -->
         <div class="card">
             <h2 class="card-title">
@@ -437,9 +468,7 @@
             <p style="color: var(--color-text-muted); margin-bottom: 20px; font-size: 0.9rem;">
                 Klicke auf einen Bereich um deine Antworten zu sehen
             </p>
-            <div id="accordionList">
-                <!-- Accordions werden per JavaScript eingefügt -->
-            </div>
+            <div id="accordionList"></div>
         </div>
         
         <!-- AI Summary -->
@@ -662,9 +691,13 @@
             element.classList.toggle('open');
         }
         
+        // Globale Daten für React
+        let globalData = null;
+        
         // Dashboard rendern
         function renderDashboard() {
             const data = loadData();
+            globalData = data;
             
             // Persönliche Daten
             document.getElementById('userName').textContent = data.name || 'Teilnehmer';
@@ -683,6 +716,9 @@
             
             document.getElementById('percentage').textContent = percentage + '%';
             document.getElementById('totalPoints').textContent = totalScore + '/' + maxScore + ' Punkte';
+            
+            // Radar Chart rendern
+            renderRadarChart(scores);
             
             // Accordions rendern
             const accordionList = document.getElementById('accordionList');
@@ -755,6 +791,54 @@
                     `;
                 });
             }
+        }
+        
+        // Radar Chart mit Recharts rendern
+        function renderRadarChart(scores) {
+            const { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer, Tooltip } = Recharts;
+            
+            // Daten für Radar Chart vorbereiten
+            const radarData = Object.entries(scores).map(([key, value]) => ({
+                domain: SCORE_CONFIG[key]?.label || key,
+                score: value,
+                fullMark: 10
+            }));
+            
+            // React Component für Radar Chart
+            const RadarChartComponent = () => {
+                return React.createElement(
+                    ResponsiveContainer,
+                    { width: '100%', height: 350 },
+                    React.createElement(
+                        RadarChart,
+                        { data: radarData, margin: { top: 20, right: 30, bottom: 20, left: 30 } },
+                        React.createElement(PolarGrid, { stroke: '#E7E5E4' }),
+                        React.createElement(PolarAngleAxis, { 
+                            dataKey: 'domain',
+                            tick: { fill: '#78716C', fontSize: 12 }
+                        }),
+                        React.createElement(PolarRadiusAxis, { 
+                            angle: 90,
+                            domain: [0, 10],
+                            tick: { fill: '#78716C', fontSize: 10 }
+                        }),
+                        React.createElement(Radar, {
+                            name: 'Score',
+                            dataKey: 'score',
+                            stroke: '#059669',
+                            fill: '#059669',
+                            fillOpacity: 0.3,
+                            strokeWidth: 2
+                        }),
+                        React.createElement(Tooltip, null)
+                    )
+                );
+            };
+            
+            // React rendern
+            const container = document.getElementById('radarChart');
+            const root = ReactDOM.createRoot(container);
+            root.render(React.createElement(RadarChartComponent));
         }
         
         // Dashboard laden
