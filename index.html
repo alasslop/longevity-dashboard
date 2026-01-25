@@ -10,11 +10,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
     
-    <!-- React & Recharts for Radar Chart -->
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/recharts@2.8.0/umd/Recharts.js"></script>
-    
     <style>
         :root {
             --color-bg: #FAFAF9;
@@ -192,7 +187,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 350px;
+            padding: 10px 0;
+            min-height: 450px;
+        }
+        
+        .radar-chart {
+            max-width: 100%;
+            height: auto;
+            min-height: 400px;
         }
         
         /* Accordion */
@@ -402,10 +404,6 @@
             .accordion-header {
                 padding: 14px 16px;
             }
-            
-            .chart-container {
-                min-height: 300px;
-            }
         }
     </style>
 </head>
@@ -455,7 +453,7 @@
                 Dein Gesundheitsprofil
             </h2>
             <div class="chart-container">
-                <div id="radarChart"></div>
+                <svg id="radarChart" class="radar-chart" viewBox="0 0 500 500" width="100%" height="450"></svg>
             </div>
         </div>
         
@@ -514,9 +512,12 @@
     
     <script>
         // Score-Konfiguration mit Fragen
+        // labelLine1 und labelLine2 für zweizeilige Labels im Radar-Chart
         const SCORE_CONFIG = {
             energy: { 
-                label: "Energy", 
+                label: "Energy",
+                labelLine1: "Energy",
+                labelLine2: "",
                 icon: "⚡",
                 questions: [
                     { id: "energy_level", question: "Wie würdest du dein aktuelles Energie-Level bewerten?" },
@@ -525,7 +526,9 @@
                 ]
             },
             nutrition: { 
-                label: "Nutrition", 
+                label: "Nutrition",
+                labelLine1: "Nutrition",
+                labelLine2: "",
                 icon: "🥗",
                 questions: [
                     { id: "nutrition_satisfaction", question: "Wie zufrieden bist du mit deiner Ernährung?" },
@@ -534,17 +537,22 @@
                     { id: "water", question: "Trinkst du ausreichend Wasser?" }
                 ]
             },
-            sleep: { 
-                label: "Sleep", 
+            sleepStress: { 
+                label: "Sleep & Stress",
+                labelLine1: "Sleep &",
+                labelLine2: "Stress",
                 icon: "😴",
                 questions: [
                     { id: "sleep_hours", question: "Stunden Schlaf pro Nacht" },
                     { id: "wake_ups", question: "Wie oft wachst du nachts auf?" },
-                    { id: "sleep_quality", question: "Schlafqualität (1-10)" }
+                    { id: "sleep_quality", question: "Schlafqualität (1-10)" },
+                    { id: "stress_level", question: "Wie gestresst fühlst du dich?" }
                 ]
             },
             wellbeing: { 
-                label: "Wellbeing", 
+                label: "Wellbeing",
+                labelLine1: "Wellbeing",
+                labelLine2: "",
                 icon: "💚",
                 questions: [
                     { id: "life_satisfaction", question: "Wie zufrieden bist du mit deinem Leben?" },
@@ -553,7 +561,9 @@
                 ]
             },
             mindset: { 
-                label: "Mindset", 
+                label: "Mindset",
+                labelLine1: "Mindset",
+                labelLine2: "",
                 icon: "🧠",
                 questions: [
                     { id: "growth_belief", question: "Glaube an Verbesserung durch Anstrengung" },
@@ -561,8 +571,10 @@
                     { id: "health_control", question: "Überzeugung, Gesundheit beeinflussen zu können" }
                 ]
             },
-            timeHealthy: { 
-                label: "Time Healthy", 
+            timeAllocation: { 
+                label: "Time Allocation",
+                labelLine1: "Time",
+                labelLine2: "Allocation",
                 icon: "🏃",
                 questions: [
                     { id: "health_minutes", question: "Minuten pro Tag für Gesundheit" },
@@ -571,7 +583,9 @@
                 ]
             },
             medical: { 
-                label: "Medical", 
+                label: "Medical",
+                labelLine1: "Medical",
+                labelLine2: "",
                 icon: "🏥",
                 questions: [
                     { id: "general_health", question: "Allgemeine Gesundheit (1-10)" },
@@ -593,10 +607,10 @@
             scores: {
                 energy: 7,
                 nutrition: 5,
-                sleep: 6,
+                sleepStress: 6,
                 wellbeing: 8,
                 mindset: 7,
-                timeHealthy: 4,
+                timeAllocation: 4,
                 medical: 9
             },
             answers: {
@@ -611,10 +625,11 @@
                     processed_food: "3-5x pro Woche",
                     water: "Manchmal"
                 },
-                sleep: {
+                sleepStress: {
                     sleep_hours: "6.5 Stunden",
                     wake_ups: "1-2 mal",
-                    sleep_quality: "6/10"
+                    sleep_quality: "6/10",
+                    stress_level: "Mittel"
                 },
                 wellbeing: {
                     life_satisfaction: "8/10",
@@ -626,7 +641,7 @@
                     persistence: "7/10",
                     health_control: "8/10"
                 },
-                timeHealthy: {
+                timeAllocation: {
                     health_minutes: "20 Minuten",
                     relaxation: "Selten",
                     nature_time: "15 Minuten"
@@ -691,13 +706,144 @@
             element.classList.toggle('open');
         }
         
-        // Globale Daten für React
-        let globalData = null;
+        // SVG Radar Chart zeichnen
+        function drawRadarChart(scores) {
+            const svg = document.getElementById('radarChart');
+            const centerX = 250;
+            const centerY = 250;
+            const maxRadius = 160;
+            
+            const categories = Object.keys(scores);
+            const values = Object.values(scores);
+            const numCategories = categories.length;
+            const angleStep = (2 * Math.PI) / numCategories;
+            
+            // SVG leeren
+            svg.innerHTML = '';
+            
+            // Hintergrund-Ringe zeichnen (10, 8, 6, 4, 2)
+            [10, 8, 6, 4, 2].forEach((level, index) => {
+                const radius = (level / 10) * maxRadius;
+                let points = [];
+                for (let i = 0; i < numCategories; i++) {
+                    const angle = i * angleStep - Math.PI / 2;
+                    const x = centerX + radius * Math.cos(angle);
+                    const y = centerY + radius * Math.sin(angle);
+                    points.push(`${x},${y}`);
+                }
+                
+                const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+                polygon.setAttribute('points', points.join(' '));
+                polygon.setAttribute('fill', 'none');
+                polygon.setAttribute('stroke', '#E7E5E4');
+                polygon.setAttribute('stroke-width', '1');
+                svg.appendChild(polygon);
+            });
+            
+            // Achsenlinien zeichnen
+            for (let i = 0; i < numCategories; i++) {
+                const angle = i * angleStep - Math.PI / 2;
+                const x = centerX + maxRadius * Math.cos(angle);
+                const y = centerY + maxRadius * Math.sin(angle);
+                
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line.setAttribute('x1', centerX);
+                line.setAttribute('y1', centerY);
+                line.setAttribute('x2', x);
+                line.setAttribute('y2', y);
+                line.setAttribute('stroke', '#E7E5E4');
+                line.setAttribute('stroke-width', '1');
+                svg.appendChild(line);
+            }
+            
+            // Datenpunkte berechnen und Polygon zeichnen
+            let dataPoints = [];
+            for (let i = 0; i < numCategories; i++) {
+                const value = values[i];
+                const radius = (value / 10) * maxRadius;
+                const angle = i * angleStep - Math.PI / 2;
+                const x = centerX + radius * Math.cos(angle);
+                const y = centerY + radius * Math.sin(angle);
+                dataPoints.push({ x, y, value, category: categories[i] });
+            }
+            
+            // Daten-Polygon (gefüllt)
+            const dataPolygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+            dataPolygon.setAttribute('points', dataPoints.map(p => `${p.x},${p.y}`).join(' '));
+            dataPolygon.setAttribute('fill', 'rgba(5, 150, 105, 0.3)');
+            dataPolygon.setAttribute('stroke', '#059669');
+            dataPolygon.setAttribute('stroke-width', '2');
+            svg.appendChild(dataPolygon);
+            
+            // Datenpunkte (Kreise)
+            dataPoints.forEach(point => {
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('cx', point.x);
+                circle.setAttribute('cy', point.y);
+                circle.setAttribute('r', '5');
+                circle.setAttribute('fill', '#059669');
+                circle.setAttribute('stroke', 'white');
+                circle.setAttribute('stroke-width', '2');
+                svg.appendChild(circle);
+            });
+            
+            // Labels zeichnen (mit Unterstützung für zweizeilige Labels)
+            for (let i = 0; i < numCategories; i++) {
+                const angle = i * angleStep - Math.PI / 2;
+                const labelRadius = maxRadius + 50;
+                let x = centerX + labelRadius * Math.cos(angle);
+                let y = centerY + labelRadius * Math.sin(angle);
+                
+                const config = SCORE_CONFIG[categories[i]];
+                const labelLine1 = config ? config.labelLine1 : categories[i];
+                const labelLine2 = config ? config.labelLine2 : "";
+                const hasSecondLine = labelLine2 && labelLine2.length > 0;
+                
+                // Erste Zeile des Labels
+                const text1 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text1.setAttribute('x', x);
+                text1.setAttribute('y', hasSecondLine ? y - 7 : y);
+                text1.setAttribute('text-anchor', 'middle');
+                text1.setAttribute('dominant-baseline', 'middle');
+                text1.setAttribute('fill', '#78716C');
+                text1.setAttribute('font-size', '12');
+                text1.setAttribute('font-family', 'DM Sans, sans-serif');
+                text1.textContent = labelLine1;
+                svg.appendChild(text1);
+                
+                // Zweite Zeile des Labels (falls vorhanden)
+                if (hasSecondLine) {
+                    const text2 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    text2.setAttribute('x', x);
+                    text2.setAttribute('y', y + 7);
+                    text2.setAttribute('text-anchor', 'middle');
+                    text2.setAttribute('dominant-baseline', 'middle');
+                    text2.setAttribute('fill', '#78716C');
+                    text2.setAttribute('font-size', '12');
+                    text2.setAttribute('font-family', 'DM Sans, sans-serif');
+                    text2.textContent = labelLine2;
+                    svg.appendChild(text2);
+                }
+                
+                // Score-Wert unter dem Label
+                const scoreY = hasSecondLine ? y + 22 : y + 14;
+                const scoreText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                scoreText.setAttribute('x', x);
+                scoreText.setAttribute('y', scoreY);
+                scoreText.setAttribute('text-anchor', 'middle');
+                scoreText.setAttribute('dominant-baseline', 'middle');
+                scoreText.setAttribute('fill', '#059669');
+                scoreText.setAttribute('font-size', '11');
+                scoreText.setAttribute('font-weight', '600');
+                scoreText.setAttribute('font-family', 'DM Sans, sans-serif');
+                scoreText.textContent = values[i] + '/10';
+                svg.appendChild(scoreText);
+            }
+        }
         
         // Dashboard rendern
         function renderDashboard() {
             const data = loadData();
-            globalData = data;
             
             // Persönliche Daten
             document.getElementById('userName').textContent = data.name || 'Teilnehmer';
@@ -717,8 +863,8 @@
             document.getElementById('percentage').textContent = percentage + '%';
             document.getElementById('totalPoints').textContent = totalScore + '/' + maxScore + ' Punkte';
             
-            // Radar Chart rendern
-            renderRadarChart(scores);
+            // Radar Chart zeichnen
+            drawRadarChart(scores);
             
             // Accordions rendern
             const accordionList = document.getElementById('accordionList');
@@ -791,54 +937,6 @@
                     `;
                 });
             }
-        }
-        
-        // Radar Chart mit Recharts rendern
-        function renderRadarChart(scores) {
-            const { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer, Tooltip } = Recharts;
-            
-            // Daten für Radar Chart vorbereiten
-            const radarData = Object.entries(scores).map(([key, value]) => ({
-                domain: SCORE_CONFIG[key]?.label || key,
-                score: value,
-                fullMark: 10
-            }));
-            
-            // React Component für Radar Chart
-            const RadarChartComponent = () => {
-                return React.createElement(
-                    ResponsiveContainer,
-                    { width: '100%', height: 350 },
-                    React.createElement(
-                        RadarChart,
-                        { data: radarData, margin: { top: 20, right: 30, bottom: 20, left: 30 } },
-                        React.createElement(PolarGrid, { stroke: '#E7E5E4' }),
-                        React.createElement(PolarAngleAxis, { 
-                            dataKey: 'domain',
-                            tick: { fill: '#78716C', fontSize: 12 }
-                        }),
-                        React.createElement(PolarRadiusAxis, { 
-                            angle: 90,
-                            domain: [0, 10],
-                            tick: { fill: '#78716C', fontSize: 10 }
-                        }),
-                        React.createElement(Radar, {
-                            name: 'Score',
-                            dataKey: 'score',
-                            stroke: '#059669',
-                            fill: '#059669',
-                            fillOpacity: 0.3,
-                            strokeWidth: 2
-                        }),
-                        React.createElement(Tooltip, null)
-                    )
-                );
-            };
-            
-            // React rendern
-            const container = document.getElementById('radarChart');
-            const root = ReactDOM.createRoot(container);
-            root.render(React.createElement(RadarChartComponent));
         }
         
         // Dashboard laden
