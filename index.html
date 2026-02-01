@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Longevity Lifestyle Test - Dein Ergebnis</title>
-    
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
-    
+
     <style>
         :root {
             --color-bg: #FAFAF9;
@@ -25,13 +25,13 @@
             --radius: 16px;
             --radius-sm: 8px;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--color-bg);
@@ -39,13 +39,13 @@
             line-height: 1.6;
             min-height: 100vh;
         }
-        
+
         .container {
             max-width: 900px;
             margin: 0 auto;
             padding: 24px 16px;
         }
-        
+
         /* Header */
         .header {
             text-align: center;
@@ -57,7 +57,7 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .header::before {
             content: '';
             position: absolute;
@@ -68,7 +68,7 @@
             background: rgba(255,255,255,0.1);
             border-radius: 50%;
         }
-        
+
         .header h1 {
             font-family: 'DM Serif Display', Georgia, serif;
             font-size: 2.5rem;
@@ -76,19 +76,19 @@
             margin-bottom: 8px;
             position: relative;
         }
-        
+
         .header p {
             opacity: 0.9;
             font-size: 1.1rem;
             position: relative;
         }
-        
+
         .greeting {
             font-size: 1.25rem;
             margin-bottom: 4px;
             opacity: 0.95;
         }
-        
+
         /* Score Circle */
         .score-section {
             display: flex;
@@ -97,7 +97,7 @@
             position: relative;
             z-index: 2;
         }
-        
+
         .score-circle {
             width: 140px;
             height: 140px;
@@ -110,14 +110,14 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
             border: 4px solid var(--color-primary);
         }
-        
+
         .score-value {
             font-family: 'DM Serif Display', Georgia, serif;
             font-size: 2.5rem;
             color: var(--color-primary);
             line-height: 1;
         }
-        
+
         .score-label {
             font-size: 0.75rem;
             color: var(--color-text-muted);
@@ -125,7 +125,7 @@
             letter-spacing: 0.5px;
             margin-top: 4px;
         }
-        
+
         /* Cards */
         .card {
             background: var(--color-card);
@@ -135,7 +135,7 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             border: 1px solid var(--color-border);
         }
-        
+
         .card-title {
             font-family: 'DM Serif Display', Georgia, serif;
             font-size: 1.5rem;
@@ -144,7 +144,7 @@
             align-items: center;
             gap: 12px;
         }
-        
+
         .card-title-icon {
             width: 40px;
             height: 40px;
@@ -155,33 +155,33 @@
             justify-content: center;
             font-size: 1.25rem;
         }
-        
+
         /* Info Grid */
         .info-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 16px;
         }
-        
+
         .info-item {
             text-align: center;
             padding: 16px;
             background: var(--color-bg);
             border-radius: var(--radius-sm);
         }
-        
+
         .info-value {
             font-family: 'DM Serif Display', Georgia, serif;
             font-size: 1.5rem;
             color: var(--color-primary);
         }
-        
+
         .info-label {
             font-size: 0.8rem;
             color: var(--color-text-muted);
             margin-top: 4px;
         }
-        
+
         /* Radar Chart Container */
         .chart-container {
             display: flex;
@@ -190,13 +190,13 @@
             padding: 10px 0;
             min-height: 450px;
         }
-        
+
         .radar-chart {
             max-width: 100%;
             height: auto;
             min-height: 400px;
         }
-        
+
         /* Accordion */
         .accordion {
             border: 1px solid var(--color-border);
@@ -204,11 +204,11 @@
             margin-bottom: 12px;
             overflow: hidden;
         }
-        
+
         .accordion:last-child {
             margin-bottom: 0;
         }
-        
+
         .accordion-header {
             display: flex;
             justify-content: space-between;
@@ -219,82 +219,82 @@
             transition: background 0.2s;
             user-select: none;
         }
-        
+
         .accordion-header:hover {
             background: #F5F5F4;
         }
-        
+
         .accordion-title {
             display: flex;
             align-items: center;
             gap: 12px;
             font-weight: 500;
         }
-        
+
         .accordion-icon {
             font-size: 1.25rem;
         }
-        
+
         .accordion-right {
             display: flex;
             align-items: center;
             gap: 16px;
         }
-        
+
         .accordion-score {
             font-weight: 600;
             color: var(--color-primary);
             font-size: 1.1rem;
         }
-        
+
         .accordion-arrow {
             font-size: 1rem;
             color: var(--color-text-muted);
             transition: transform 0.3s;
         }
-        
+
         .accordion.open .accordion-arrow {
             transform: rotate(180deg);
         }
-        
+
         .accordion-content {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.3s ease-out;
             background: white;
         }
-        
+
         .accordion.open .accordion-content {
             max-height: 1000px;
         }
-        
+
         .accordion-inner {
             padding: 20px;
             border-top: 1px solid var(--color-border);
         }
-        
+
         /* Score Bar */
         .score-bar-container {
             margin-bottom: 20px;
         }
-        
+
         .score-bar-bg {
             height: 10px;
             background: #E7E5E4;
             border-radius: 5px;
             overflow: hidden;
         }
-        
+
         .score-bar-fill {
             height: 100%;
             border-radius: 5px;
             transition: width 0.5s ease-out;
         }
-        
+
         .score-bar-fill.excellent { background: linear-gradient(90deg, #059669, #10B981); }
         .score-bar-fill.good { background: linear-gradient(90deg, #F59E0B, #FBBF24); }
         .score-bar-fill.needs-work { background: linear-gradient(90deg, #DC2626, #EF4444); }
-        
+
         /* Answer Items */
         .answer-item {
             padding: 12px 16px;
@@ -302,22 +302,22 @@
             border-radius: var(--radius-sm);
             margin-bottom: 10px;
         }
-        
+
         .answer-item:last-child {
             margin-bottom: 0;
         }
-        
+
         .answer-question {
             font-size: 0.85rem;
             color: var(--color-text-muted);
             margin-bottom: 4px;
         }
-        
+
         .answer-value {
             font-weight: 500;
             color: var(--color-text);
         }
-        
+
         /* Recommendations */
         .recommendation {
             background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
@@ -326,31 +326,31 @@
             margin-bottom: 16px;
             border-left: 4px solid var(--color-primary);
         }
-        
+
         .recommendation:last-child {
             margin-bottom: 0;
         }
-        
+
         .recommendation-domain {
             font-weight: 600;
             color: var(--color-primary);
             margin-bottom: 8px;
             font-size: 1.1rem;
         }
-        
+
         .recommendation-reason {
             color: var(--color-text-muted);
             font-size: 0.9rem;
             margin-bottom: 12px;
         }
-        
+
         .habit-box {
             background: white;
             border-radius: var(--radius-sm);
             padding: 16px;
             margin-bottom: 12px;
         }
-        
+
         .habit-label {
             font-size: 0.75rem;
             text-transform: uppercase;
@@ -358,31 +358,323 @@
             color: var(--color-text-muted);
             margin-bottom: 4px;
         }
-        
+
         .habit-text {
             font-weight: 500;
             color: var(--color-text);
         }
-        
+
         .expected-result {
             font-size: 0.9rem;
             color: var(--color-text-muted);
             font-style: italic;
         }
-        
+
         /* Summary */
         .summary-text {
             font-size: 1.1rem;
             line-height: 1.8;
             color: var(--color-text);
         }
-        
+
         /* Steps */
         .steps-list p {
             margin-bottom: 8px;
             padding: 8px 0;
         }
-        
+
+        /* ========================================
+           NEUE STYLES FÜR HABIT-PLANUNG
+           ======================================== */
+
+        /* Context Form */
+        .context-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: var(--color-text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-label-icon {
+            font-size: 1.1rem;
+        }
+
+        .form-select, .form-input {
+            padding: 12px 16px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            font-family: inherit;
+            background: var(--color-bg);
+            color: var(--color-text);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-select:focus, .form-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+        }
+
+        .form-hint {
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+        }
+
+        /* Checkbox Group */
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .checkbox-item:hover {
+            border-color: var(--color-primary);
+        }
+
+        .checkbox-item.selected {
+            background: var(--color-primary-light);
+            border-color: var(--color-primary);
+        }
+
+        .checkbox-item input {
+            display: none;
+        }
+
+        .checkbox-item .checkmark {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--color-border);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .checkbox-item.selected .checkmark {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            color: white;
+        }
+
+        /* Generate Button */
+        .btn-generate {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 1.1rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn-generate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        }
+
+        .btn-generate:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-generate .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Habit Suggestions */
+        .habit-suggestions {
+            display: none;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .habit-suggestions.visible {
+            display: flex;
+        }
+
+        .habit-suggestion-card {
+            background: var(--color-bg);
+            border: 2px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .habit-suggestion-card:hover {
+            border-color: var(--color-primary);
+        }
+
+        .habit-suggestion-card.selected {
+            border-color: var(--color-primary);
+            background: var(--color-primary-light);
+        }
+
+        .habit-suggestion-card .select-indicator {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--color-border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .habit-suggestion-card.selected .select-indicator {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            color: white;
+        }
+
+        .habit-category {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--color-primary);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .habit-formula {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--color-text);
+            margin-bottom: 8px;
+        }
+
+        .habit-why {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+        }
+
+        /* Custom Habit Input */
+        .custom-habit-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .custom-habit-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--color-primary);
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 12px;
+        }
+
+        .custom-habit-input {
+            display: none;
+        }
+
+        .custom-habit-input.visible {
+            display: block;
+        }
+
+        /* Save Habits Button */
+        .btn-save-habits {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 1.1rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .btn-save-habits.visible {
+            display: flex;
+        }
+
+        .btn-save-habits:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: var(--color-primary-light);
+            border: 1px solid var(--color-primary);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .success-message.visible {
+            display: block;
+        }
+
+        .success-message h3 {
+            color: var(--color-primary);
+            margin-bottom: 8px;
+        }
+
+        /* Hidden sections */
+        .hidden {
+            display: none !important;
+        }
+
         /* Footer */
         .footer {
             text-align: center;
@@ -390,32 +682,37 @@
             color: var(--color-text-muted);
             font-size: 0.875rem;
         }
-        
+
         /* Responsive */
         @media (max-width: 640px) {
             .header h1 {
                 font-size: 1.75rem;
             }
-            
+
             .info-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-            
+
             .accordion-header {
                 padding: 14px 16px;
+            }
+
+            .checkbox-group {
+                flex-direction: column;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
+
         <!-- Header -->
         <header class="header">
             <p class="greeting">Hallo <span id="userName">Max Mustermann</span>! 👋</p>
             <h1>Dein Longevity Score</h1>
             <p>Erstellt am <span id="testDate">25.01.2026</span></p>
         </header>
-        
+
         <!-- Score Circle -->
         <div class="score-section">
             <div class="score-circle">
@@ -423,7 +720,7 @@
                 <div class="score-label" id="totalPoints">46/70 Punkte</div>
             </div>
         </div>
-        
+
         <!-- Personal Info -->
         <div class="card">
             <div class="info-grid">
@@ -445,7 +742,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Radar Chart -->
         <div class="card">
             <h2 class="card-title">
@@ -466,7 +763,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Score Details with Accordions -->
         <div class="card">
             <h2 class="card-title">
@@ -478,7 +775,7 @@
             </p>
             <div id="accordionList"></div>
         </div>
-        
+
         <!-- AI Summary -->
         <div class="card" id="summaryCard">
             <h2 class="card-title">
@@ -489,8 +786,188 @@
                 Dein Gesamtergebnis zeigt eine solide Basis mit Stärken im medizinischen Bereich und Wohlbefinden.
             </p>
         </div>
-        
-        <!-- AI Recommendations -->
+
+        <!-- ========================================
+             NEUE SEKTION: HABIT PLANUNG
+             ======================================== -->
+
+        <div class="card" id="habitPlanningCard">
+            <h2 class="card-title">
+                <span class="card-title-icon">🌱</span>
+                Deine Habits planen
+            </h2>
+
+            <p style="color: var(--color-text-muted); margin-bottom: 24px;">
+                Beantworte kurz ein paar Fragen zu deinem Alltag, damit wir dir passende Tiny Habits vorschlagen können.
+            </p>
+
+            <!-- Context Form -->
+            <form id="contextForm" class="context-form">
+
+                <!-- Frage 1: Aufstehzeit -->
+                <div class="form-group">
+                    <label class="form-label">
+                        <span class="form-label-icon">🌅</span>
+                        Wann stehst du normalerweise auf?
+                    </label>
+                    <select id="wakeUpTime" class="form-select" required>
+                        <option value="">Bitte wählen...</option>
+                        <option value="vor_6">Vor 6:00 Uhr</option>
+                        <option value="6_7">6:00 - 7:00 Uhr</option>
+                        <option value="7_8">7:00 - 8:00 Uhr</option>
+                        <option value="8_9">8:00 - 9:00 Uhr</option>
+                        <option value="nach_9">Nach 9:00 Uhr</option>
+                    </select>
+                </div>
+
+                <!-- Frage 2: Arbeitsort -->
+                <div class="form-group">
+                    <label class="form-label">
+                        <span class="form-label-icon">💼</span>
+                        Wo arbeitest du hauptsächlich?
+                    </label>
+                    <select id="workLocation" class="form-select" required>
+                        <option value="">Bitte wählen...</option>
+                        <option value="home">Von zu Hause (Home Office)</option>
+                        <option value="office">Im Büro</option>
+                        <option value="hybrid">Hybrid (beides)</option>
+                        <option value="unterwegs">Unterwegs / Außendienst</option>
+                        <option value="andere">Andere</option>
+                    </select>
+                </div>
+
+                <!-- Frage 3: Energie-Peak -->
+                <div class="form-group">
+                    <label class="form-label">
+                        <span class="form-label-icon">⚡</span>
+                        Wann hast du am meisten Energie?
+                    </label>
+                    <select id="energyPeak" class="form-select" required>
+                        <option value="">Bitte wählen...</option>
+                        <option value="morgens">Morgens (6-10 Uhr)</option>
+                        <option value="vormittags">Vormittags (10-12 Uhr)</option>
+                        <option value="nachmittags">Nachmittags (14-17 Uhr)</option>
+                        <option value="abends">Abends (nach 18 Uhr)</option>
+                    </select>
+                </div>
+
+                <!-- Frage 4: Bestehende Routinen -->
+                <div class="form-group">
+                    <label class="form-label">
+                        <span class="form-label-icon">🔄</span>
+                        Welche festen Routinen hast du bereits? (Mehrfachauswahl)
+                    </label>
+                    <p class="form-hint">Diese können als "Anker" für neue Habits dienen</p>
+                    <div class="checkbox-group" id="routinesGroup">
+                        <label class="checkbox-item" data-value="morgenkaffee">
+                            <input type="checkbox" name="routines" value="morgenkaffee">
+                            <span class="checkmark">✓</span>
+                            <span>☕ Morgenkaffee</span>
+                        </label>
+                        <label class="checkbox-item" data-value="fruehstueck">
+                            <input type="checkbox" name="routines" value="fruehstueck">
+                            <span class="checkmark">✓</span>
+                            <span>🍳 Frühstück</span>
+                        </label>
+                        <label class="checkbox-item" data-value="mittagspause">
+                            <input type="checkbox" name="routines" value="mittagspause">
+                            <span class="checkmark">✓</span>
+                            <span>🍽️ Mittagspause</span>
+                        </label>
+                        <label class="checkbox-item" data-value="feierabend">
+                            <input type="checkbox" name="routines" value="feierabend">
+                            <span class="checkmark">✓</span>
+                            <span>🏠 Feierabend</span>
+                        </label>
+                        <label class="checkbox-item" data-value="abendessen">
+                            <input type="checkbox" name="routines" value="abendessen">
+                            <span class="checkmark">✓</span>
+                            <span>🍝 Abendessen</span>
+                        </label>
+                        <label class="checkbox-item" data-value="zaehneputzen">
+                            <input type="checkbox" name="routines" value="zaehneputzen">
+                            <span class="checkmark">✓</span>
+                            <span>🪥 Zähneputzen</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Frage 5: Größte Hürde -->
+                <div class="form-group">
+                    <label class="form-label">
+                        <span class="form-label-icon">🚧</span>
+                        Was ist deine größte Hürde bei neuen Gewohnheiten?
+                    </label>
+                    <select id="biggestHurdle" class="form-select" required>
+                        <option value="">Bitte wählen...</option>
+                        <option value="zeit">Zu wenig Zeit</option>
+                        <option value="motivation">Fehlende Motivation</option>
+                        <option value="vergessen">Ich vergesse es</option>
+                        <option value="energie">Zu wenig Energie</option>
+                        <option value="unsicher">Weiß nicht wo anfangen</option>
+                    </select>
+                </div>
+
+                <!-- Frage 6: Fokusbereich -->
+                <div class="form-group">
+                    <label class="form-label">
+                        <span class="form-label-icon">🎯</span>
+                        Welchen Bereich möchtest du als erstes verbessern?
+                    </label>
+                    <select id="focusArea" class="form-select" required>
+                        <option value="">Bitte wählen...</option>
+                        <option value="energy">⚡ Mehr Energie</option>
+                        <option value="nutrition">🥗 Bessere Ernährung</option>
+                        <option value="sleep">😴 Besserer Schlaf</option>
+                        <option value="stress">🧘 Weniger Stress</option>
+                        <option value="movement">🏃 Mehr Bewegung</option>
+                        <option value="auto">🤖 AI soll entscheiden (niedrigster Score)</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-generate" id="generateBtn">
+                    <span>✨ Meine Habits generieren</span>
+                </button>
+            </form>
+
+            <!-- Habit Suggestions (initially hidden) -->
+            <div id="habitSuggestions" class="habit-suggestions">
+                <h3 style="margin-bottom: 8px;">🎯 Deine personalisierten Tiny Habits</h3>
+                <p style="color: var(--color-text-muted); margin-bottom: 16px; font-size: 0.9rem;">
+                    Wähle 1-3 Habits aus, mit denen du starten möchtest:
+                </p>
+
+                <div id="habitSuggestionsList"></div>
+
+                <!-- Custom Habit -->
+                <div class="custom-habit-section">
+                    <div class="custom-habit-toggle" onclick="toggleCustomHabit()">
+                        <span>➕</span>
+                        <span>Eigenen Habit hinzufügen</span>
+                    </div>
+                    <div id="customHabitInput" class="custom-habit-input">
+                        <div class="form-group">
+                            <label class="form-label">Dein eigener Tiny Habit:</label>
+                            <input type="text" id="customHabitText" class="form-input"
+                                   placeholder="Nach [Anker] → [Mini-Verhalten]">
+                            <p class="form-hint">Beispiel: "Nach dem Aufstehen → 3 tiefe Atemzüge"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="saveHabitsBtn" class="btn-save-habits" onclick="saveSelectedHabits()">
+                    💾 Ausgewählte Habits speichern
+                </button>
+            </div>
+
+            <!-- Success Message -->
+            <div id="successMessage" class="success-message">
+                <h3>🎉 Perfekt!</h3>
+                <p>Deine Habits wurden gespeichert. Du erhältst ab morgen tägliche Erinnerungen.</p>
+            </div>
+        </div>
+
+        <!-- AI Recommendations (Original) -->
         <div class="card" id="recommendationsCard">
             <h2 class="card-title">
                 <span class="card-title-icon">🎯</span>
@@ -498,7 +975,7 @@
             </h2>
             <div id="recommendationsList"></div>
         </div>
-        
+
         <!-- Next Steps -->
         <div class="card">
             <h2 class="card-title">
@@ -512,19 +989,42 @@
                 <p><strong>4.</strong> Erst wenn der Habit automatisch läuft, füge den nächsten hinzu</p>
             </div>
         </div>
-        
+
         <!-- Footer -->
         <footer class="footer">
             <p>Longevity Lifestyle Test</p>
             <p style="margin-top: 8px;">Bei Fragen wende dich an deinen Coach.</p>
         </footer>
     </div>
-    
+
     <script>
+        // ========================================
+        // KONFIGURATION
+        // ========================================
+
+        // n8n Webhook URL für Habit-Generierung
+        const HABIT_WEBHOOK_URL = 'https://alasslop.app.n8n.cloud/webhook/generate-habits';
+
+        // n8n Webhook URL für Habit-Speicherung
+        const SAVE_HABITS_WEBHOOK_URL = 'https://alasslop.app.n8n.cloud/webhook/save-habits';
+
         // Score-Konfiguration mit Fragen
-        // labelLine1 und labelLine2 für zweizeilige Labels im Radar-Chart
+        // REIHENFOLGE: Medical auf 12 Uhr (wissenschaftlicher Rahmen), dann im Uhrzeigersinn
+        // Medical = Zusammenarbeit mit Arzt | Die anderen 6 = Eigenverantwortung
         const SCORE_CONFIG = {
-            energy: { 
+            medical: {
+                label: "Medical",
+                labelLine1: "Medical",
+                labelLine2: "",
+                icon: "🏥",
+                questions: [
+                    { id: "general_health", question: "Allgemeine Gesundheit (1-10)" },
+                    { id: "chronic_issues", question: "Chronische Beschwerden?" },
+                    { id: "last_checkup", question: "Letzter Gesundheits-Checkup" },
+                    { id: "medications", question: "Regelmäßige Medikamente?" }
+                ]
+            },
+            energy: {
                 label: "Energy",
                 labelLine1: "Energy",
                 labelLine2: "",
@@ -535,7 +1035,7 @@
                     { id: "exhaustion", question: "Wie oft fühlst du dich erschöpft?" }
                 ]
             },
-            nutrition: { 
+            nutrition: {
                 label: "Nutrition",
                 labelLine1: "Nutrition",
                 labelLine2: "",
@@ -547,7 +1047,7 @@
                     { id: "water", question: "Trinkst du ausreichend Wasser?" }
                 ]
             },
-            sleepStress: { 
+            sleepStress: {
                 label: "Sleep & Stress",
                 labelLine1: "Sleep &",
                 labelLine2: "Stress",
@@ -559,7 +1059,7 @@
                     { id: "stress_level", question: "Wie gestresst fühlst du dich?" }
                 ]
             },
-            wellbeing: { 
+            wellbeing: {
                 label: "Wellbeing",
                 labelLine1: "Wellbeing",
                 labelLine2: "",
@@ -570,7 +1070,7 @@
                     { id: "social_quality", question: "Qualität deiner sozialen Beziehungen" }
                 ]
             },
-            mindset: { 
+            mindset: {
                 label: "Mindset",
                 labelLine1: "Mindset",
                 labelLine2: "",
@@ -581,58 +1081,55 @@
                     { id: "health_control", question: "Überzeugung, Gesundheit beeinflussen zu können" }
                 ]
             },
-            timeAllocation: { 
-                label: "Time Allocation",
-                labelLine1: "Time",
-                labelLine2: "Allocation",
-                icon: "🏃",
+            habitsTime: {
+                label: "Habits & Time",
+                labelLine1: "Habits &",
+                labelLine2: "Time",
+                icon: "⏰",
                 questions: [
                     { id: "health_minutes", question: "Minuten pro Tag für Gesundheit" },
                     { id: "relaxation", question: "Wie oft Zeit für Entspannung?" },
-                    { id: "nature_time", question: "Zeit in der Natur pro Tag" }
-                ]
-            },
-            medical: { 
-                label: "Medical",
-                labelLine1: "Medical",
-                labelLine2: "",
-                icon: "🏥",
-                questions: [
-                    { id: "general_health", question: "Allgemeine Gesundheit (1-10)" },
-                    { id: "chronic_issues", question: "Chronische Beschwerden?" },
-                    { id: "last_checkup", question: "Letzter Gesundheits-Checkup" },
-                    { id: "medications", question: "Regelmäßige Medikamente?" }
+                    { id: "nature_time", question: "Zeit in der Natur pro Tag" },
+                    { id: "routine_strength", question: "Wie gefestigt sind deine täglichen Routinen?" }
                 ]
             }
         };
-        
+
         // Demo-Daten
+        // REIHENFOLGE: Medical auf 12 Uhr (wissenschaftlicher Rahmen), dann im Uhrzeigersinn
         const DEMO_DATA = {
             name: "Max Mustermann",
+            email: "max@beispiel.de",
             age: 42,
             gender: "Männlich",
             bmi: 25.5,
             height: 180,
             testDate: new Date().toLocaleDateString('de-DE'),
             scores: {
+                medical: 9,
                 energy: 7,
                 nutrition: 5,
                 sleepStress: 6,
                 wellbeing: 8,
                 mindset: 7,
-                timeAllocation: 4,
-                medical: 9
+                habitsTime: 4
             },
             goals: {
+                medical: 9,
                 energy: 8,
                 nutrition: 7,
                 sleepStress: 8,
                 wellbeing: 9,
                 mindset: 8,
-                timeAllocation: 6,
-                medical: 9
+                habitsTime: 6
             },
             answers: {
+                medical: {
+                    general_health: "9/10",
+                    chronic_issues: "Nein",
+                    last_checkup: "Dieses Jahr",
+                    medications: "Nein"
+                },
                 energy: {
                     energy_level: "7/10",
                     exercise_minutes: "30 Minuten",
@@ -660,24 +1157,19 @@
                     persistence: "7/10",
                     health_control: "8/10"
                 },
-                timeAllocation: {
+                habitsTime: {
                     health_minutes: "20 Minuten",
                     relaxation: "Selten",
-                    nature_time: "15 Minuten"
-                },
-                medical: {
-                    general_health: "9/10",
-                    chronic_issues: "Nein",
-                    last_checkup: "Dieses Jahr",
-                    medications: "Nein"
+                    nature_time: "15 Minuten",
+                    routine_strength: "Schwach"
                 }
             },
             aiRecommendations: {
-                summary: "Dein Gesamtergebnis zeigt eine solide Basis mit Stärken im medizinischen Bereich und Wohlbefinden. Die größten Verbesserungspotenziale liegen bei der aktiven Gesundheitszeit und Ernährung.",
+                summary: "Dein Gesamtergebnis zeigt eine solide Basis mit Stärken im medizinischen Bereich und Wohlbefinden. Die größten Verbesserungspotenziale liegen bei Habits & Time und Ernährung.",
                 priorities: [
                     {
-                        domain: "Time Allocation",
-                        reason: "Mit 4/10 ist dies dein niedrigster Score.",
+                        domain: "Habits & Time",
+                        reason: "Mit 4/10 ist dies dein niedrigster Score. Hier liegt der Schlüssel zu allen anderen Verbesserungen.",
                         habit: "Nach dem Mittagessen → 10 Minuten spazieren gehen",
                         expected: "In 4 Wochen: Mehr Energie am Nachmittag"
                     },
@@ -696,12 +1188,19 @@
                 ]
             }
         };
-        
-        // Daten laden
+
+        // Globale Variable für geladene Daten
+        let currentData = null;
+        let selectedHabits = [];
+
+        // ========================================
+        // DATEN LADEN
+        // ========================================
+
         function loadData() {
             const params = new URLSearchParams(window.location.search);
             const encodedData = params.get('data');
-            
+
             if (encodedData) {
                 try {
                     return JSON.parse(atob(encodedData));
@@ -712,37 +1211,50 @@
             }
             return DEMO_DATA;
         }
-        
-        // Score-Klasse bestimmen
+
+        // ========================================
+        // HELPER FUNKTIONEN
+        // ========================================
+
         function getScoreClass(score) {
             if (score >= 7) return 'excellent';
             if (score >= 4) return 'good';
             return 'needs-work';
         }
-        
-        // Accordion Toggle
+
         function toggleAccordion(element) {
             element.classList.toggle('open');
         }
-        
-        // SVG Radar Chart zeichnen
+
+        function getLowestScoreCategory(scores) {
+            let lowest = { category: null, score: 11 };
+            for (const [key, value] of Object.entries(scores)) {
+                if (value < lowest.score) {
+                    lowest = { category: key, score: value };
+                }
+            }
+            return lowest.category;
+        }
+
+        // ========================================
+        // RADAR CHART
+        // ========================================
+
         function drawRadarChart(scores, goals) {
             const svg = document.getElementById('radarChart');
             const centerX = 250;
             const centerY = 250;
             const maxRadius = 160;
-            
             const categories = Object.keys(scores);
             const values = Object.values(scores);
             const goalValues = goals ? categories.map(cat => goals[cat] || values[categories.indexOf(cat)]) : null;
             const numCategories = categories.length;
             const angleStep = (2 * Math.PI) / numCategories;
-            
-            // SVG leeren
+
             svg.innerHTML = '';
-            
-            // Hintergrund-Ringe zeichnen (10, 8, 6, 4, 2)
-            [10, 8, 6, 4, 2].forEach((level, index) => {
+
+            // Hintergrund-Ringe
+            [10, 8, 6, 4, 2].forEach((level) => {
                 const radius = (level / 10) * maxRadius;
                 let points = [];
                 for (let i = 0; i < numCategories; i++) {
@@ -751,7 +1263,6 @@
                     const y = centerY + radius * Math.sin(angle);
                     points.push(`${x},${y}`);
                 }
-                
                 const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
                 polygon.setAttribute('points', points.join(' '));
                 polygon.setAttribute('fill', 'none');
@@ -759,13 +1270,12 @@
                 polygon.setAttribute('stroke-width', '1');
                 svg.appendChild(polygon);
             });
-            
-            // Achsenlinien zeichnen
+
+            // Achsenlinien
             for (let i = 0; i < numCategories; i++) {
                 const angle = i * angleStep - Math.PI / 2;
                 const x = centerX + maxRadius * Math.cos(angle);
                 const y = centerY + maxRadius * Math.sin(angle);
-                
                 const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
                 line.setAttribute('x1', centerX);
                 line.setAttribute('y1', centerY);
@@ -775,8 +1285,8 @@
                 line.setAttribute('stroke-width', '1');
                 svg.appendChild(line);
             }
-            
-            // ZIEL-Polygon zeichnen (gestrichelt, grau) - VOR dem Daten-Polygon
+
+            // Ziel-Polygon (gestrichelt)
             if (goalValues) {
                 let goalPoints = [];
                 for (let i = 0; i < numCategories; i++) {
@@ -787,7 +1297,6 @@
                     const y = centerY + radius * Math.sin(angle);
                     goalPoints.push(`${x},${y}`);
                 }
-                
                 const goalPolygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
                 goalPolygon.setAttribute('points', goalPoints.join(' '));
                 goalPolygon.setAttribute('fill', 'none');
@@ -796,8 +1305,8 @@
                 goalPolygon.setAttribute('stroke-dasharray', '8,4');
                 svg.appendChild(goalPolygon);
             }
-            
-            // Datenpunkte berechnen und Polygon zeichnen
+
+            // Datenpunkte berechnen
             let dataPoints = [];
             for (let i = 0; i < numCategories; i++) {
                 const value = values[i];
@@ -807,15 +1316,15 @@
                 const y = centerY + radius * Math.sin(angle);
                 dataPoints.push({ x, y, value, category: categories[i] });
             }
-            
-            // Daten-Polygon (gefüllt)
+
+            // Daten-Polygon
             const dataPolygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
             dataPolygon.setAttribute('points', dataPoints.map(p => `${p.x},${p.y}`).join(' '));
             dataPolygon.setAttribute('fill', 'rgba(5, 150, 105, 0.3)');
             dataPolygon.setAttribute('stroke', '#059669');
             dataPolygon.setAttribute('stroke-width', '2');
             svg.appendChild(dataPolygon);
-            
+
             // Datenpunkte (Kreise)
             dataPoints.forEach(point => {
                 const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
@@ -827,20 +1336,19 @@
                 circle.setAttribute('stroke-width', '2');
                 svg.appendChild(circle);
             });
-            
-            // Labels zeichnen (mit Unterstützung für zweizeilige Labels)
+
+            // Labels
             for (let i = 0; i < numCategories; i++) {
                 const angle = i * angleStep - Math.PI / 2;
                 const labelRadius = maxRadius + 50;
                 let x = centerX + labelRadius * Math.cos(angle);
                 let y = centerY + labelRadius * Math.sin(angle);
-                
+
                 const config = SCORE_CONFIG[categories[i]];
                 const labelLine1 = config ? config.labelLine1 : categories[i];
                 const labelLine2 = config ? config.labelLine2 : "";
                 const hasSecondLine = labelLine2 && labelLine2.length > 0;
-                
-                // Erste Zeile des Labels
+
                 const text1 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
                 text1.setAttribute('x', x);
                 text1.setAttribute('y', hasSecondLine ? y - 7 : y);
@@ -851,8 +1359,7 @@
                 text1.setAttribute('font-family', 'DM Sans, sans-serif');
                 text1.textContent = labelLine1;
                 svg.appendChild(text1);
-                
-                // Zweite Zeile des Labels (falls vorhanden)
+
                 if (hasSecondLine) {
                     const text2 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
                     text2.setAttribute('x', x);
@@ -865,8 +1372,7 @@
                     text2.textContent = labelLine2;
                     svg.appendChild(text2);
                 }
-                
-                // Score-Wert unter dem Label
+
                 const scoreY = hasSecondLine ? y + 22 : y + 14;
                 const scoreText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
                 scoreText.setAttribute('x', x);
@@ -881,43 +1387,252 @@
                 svg.appendChild(scoreText);
             }
         }
-        
-        // Dashboard rendern
+
+        // ========================================
+        // HABIT PLANUNG FUNKTIONEN
+        // ========================================
+
+        // Checkbox-Toggle für Routinen
+        document.querySelectorAll('.checkbox-item').forEach(item => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('selected');
+                const checkbox = this.querySelector('input[type="checkbox"]');
+                checkbox.checked = !checkbox.checked;
+            });
+        });
+
+        // Formular absenden
+        document.getElementById('contextForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const btn = document.getElementById('generateBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> <span>Habits werden generiert...</span>';
+
+            // Kontext-Daten sammeln
+            const contextData = {
+                wakeUpTime: document.getElementById('wakeUpTime').value,
+                workLocation: document.getElementById('workLocation').value,
+                energyPeak: document.getElementById('energyPeak').value,
+                routines: Array.from(document.querySelectorAll('input[name="routines"]:checked')).map(cb => cb.value),
+                biggestHurdle: document.getElementById('biggestHurdle').value,
+                focusArea: document.getElementById('focusArea').value
+            };
+
+            // Payload für Webhook
+            const payload = {
+                user: {
+                    name: currentData.name,
+                    email: currentData.email || ''
+                },
+                scores: currentData.scores,
+                answers: currentData.answers,
+                context: contextData,
+                lowestScore: getLowestScoreCategory(currentData.scores)
+            };
+
+            try {
+                const response = await fetch(HABIT_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Webhook-Fehler');
+                }
+
+                const habits = await response.json();
+                displayHabitSuggestions(habits);
+
+            } catch (error) {
+                console.error('Fehler:', error);
+                // Fallback: Demo-Habits anzeigen
+                displayHabitSuggestions(generateDemoHabits(contextData));
+            }
+
+            btn.disabled = false;
+            btn.innerHTML = '<span>✨ Meine Habits generieren</span>';
+        });
+
+        // Demo-Habits generieren (Fallback)
+        function generateDemoHabits(context) {
+            const routineAnchors = {
+                morgenkaffee: "Nach dem ersten Schluck Kaffee",
+                fruehstueck: "Nach dem Frühstück",
+                mittagspause: "Nach dem Mittagessen",
+                feierabend: "Wenn du nach Hause kommst",
+                abendessen: "Nach dem Abendessen",
+                zaehneputzen: "Nach dem Zähneputzen"
+            };
+
+            const firstRoutine = context.routines[0] || 'morgenkaffee';
+            const anchor = routineAnchors[firstRoutine];
+
+            return {
+                habits: [
+                    {
+                        category: "Energy",
+                        formula: `${anchor} → 3 tiefe Atemzüge nehmen`,
+                        why: "Aktiviert dein parasympathisches Nervensystem und gibt sofort Energie."
+                    },
+                    {
+                        category: "Nutrition",
+                        formula: "Nach dem Aufstehen → Ein Glas Wasser trinken",
+                        why: "Dein Körper ist nach dem Schlaf dehydriert. Wasser kickstartet den Stoffwechsel."
+                    },
+                    {
+                        category: "Movement",
+                        formula: "Nach dem Mittagessen → 5 Minuten um den Block gehen",
+                        why: "Kurze Bewegung nach dem Essen verbessert die Verdauung und verhindert das Nachmittagstief."
+                    },
+                    {
+                        category: "Sleep",
+                        formula: "Nach dem Abendessen → Handy auf Nachtmodus stellen",
+                        why: "Reduziert Blaulicht und signalisiert deinem Körper, dass der Tag endet."
+                    },
+                    {
+                        category: "Mindset",
+                        formula: "Nach dem Zähneputzen abends → Eine Sache aufschreiben, die heute gut lief",
+                        why: "Gratitude-Journaling verbessert nachweislich Schlaf und Wohlbefinden."
+                    }
+                ]
+            };
+        }
+
+        // Habit-Vorschläge anzeigen
+        function displayHabitSuggestions(data) {
+            const form = document.getElementById('contextForm');
+            const suggestions = document.getElementById('habitSuggestions');
+            const list = document.getElementById('habitSuggestionsList');
+
+            form.classList.add('hidden');
+            suggestions.classList.add('visible');
+
+            list.innerHTML = '';
+
+            data.habits.forEach((habit, index) => {
+                const card = document.createElement('div');
+                card.className = 'habit-suggestion-card';
+                card.dataset.index = index;
+                card.innerHTML = `
+                    <div class="select-indicator">✓</div>
+                    <div class="habit-category">${habit.category}</div>
+                    <div class="habit-formula">${habit.formula}</div>
+                    <div class="habit-why">${habit.why}</div>
+                `;
+                card.addEventListener('click', () => toggleHabitSelection(card, habit));
+                list.appendChild(card);
+            });
+
+            // Store habits for later
+            window.generatedHabits = data.habits;
+        }
+
+        // Habit-Auswahl togglen
+        function toggleHabitSelection(card, habit) {
+            card.classList.toggle('selected');
+
+            if (card.classList.contains('selected')) {
+                selectedHabits.push(habit);
+            } else {
+                selectedHabits = selectedHabits.filter(h => h.formula !== habit.formula);
+            }
+
+            // Save-Button anzeigen wenn mindestens 1 Habit ausgewählt
+            const saveBtn = document.getElementById('saveHabitsBtn');
+            if (selectedHabits.length > 0) {
+                saveBtn.classList.add('visible');
+            } else {
+                saveBtn.classList.remove('visible');
+            }
+        }
+
+        // Custom Habit Toggle
+        function toggleCustomHabit() {
+            const input = document.getElementById('customHabitInput');
+            input.classList.toggle('visible');
+        }
+
+        // Ausgewählte Habits speichern
+        async function saveSelectedHabits() {
+            const customHabit = document.getElementById('customHabitText').value;
+
+            if (customHabit) {
+                selectedHabits.push({
+                    category: "Custom",
+                    formula: customHabit,
+                    why: "Selbst definierter Habit"
+                });
+            }
+
+            const payload = {
+                user: {
+                    name: currentData.name,
+                    email: currentData.email || ''
+                },
+                selectedHabits: selectedHabits,
+                scores: currentData.scores,
+                timestamp: new Date().toISOString()
+            };
+
+            try {
+                await fetch(SAVE_HABITS_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+            } catch (error) {
+                console.error('Fehler beim Speichern:', error);
+            }
+
+            // Success Message anzeigen
+            document.getElementById('habitSuggestions').classList.remove('visible');
+            document.getElementById('successMessage').classList.add('visible');
+        }
+
+        // ========================================
+        // DASHBOARD RENDERN
+        // ========================================
+
         function renderDashboard() {
-            const data = loadData();
-            
+            currentData = loadData();
+
             // Persönliche Daten
-            document.getElementById('userName').textContent = data.name || 'Teilnehmer';
-            document.getElementById('testDate').textContent = data.testDate || new Date().toLocaleDateString('de-DE');
-            document.getElementById('age').textContent = data.age || '-';
-            document.getElementById('gender').textContent = data.gender || '-';
-            document.getElementById('bmi').textContent = data.bmi ? data.bmi.toFixed(1) : '-';
-            document.getElementById('height').textContent = data.height || '-';
-            
+            document.getElementById('userName').textContent = currentData.name || 'Teilnehmer';
+            document.getElementById('testDate').textContent = currentData.testDate || new Date().toLocaleDateString('de-DE');
+            document.getElementById('age').textContent = currentData.age || '-';
+            document.getElementById('gender').textContent = currentData.gender || '-';
+            document.getElementById('bmi').textContent = currentData.bmi ? currentData.bmi.toFixed(1) : '-';
+            document.getElementById('height').textContent = currentData.height || '-';
+
             // Scores berechnen
-            const scores = data.scores || {};
-            const goals = data.goals || null;
+            const scores = currentData.scores || {};
+            const goals = currentData.goals || null;
             const scoreValues = Object.values(scores);
             const totalScore = scoreValues.reduce((a, b) => a + b, 0);
             const maxScore = scoreValues.length * 10;
             const percentage = Math.round((totalScore / maxScore) * 100);
-            
+
             document.getElementById('percentage').textContent = percentage + '%';
             document.getElementById('totalPoints').textContent = totalScore + '/' + maxScore + ' Punkte';
-            
-            // Radar Chart zeichnen (mit Zielen)
+
+            // Radar Chart
             drawRadarChart(scores, goals);
-            
-            // Accordions rendern
+
+            // Accordions
             const accordionList = document.getElementById('accordionList');
             accordionList.innerHTML = '';
-            
+
             Object.entries(scores).forEach(([key, value]) => {
                 const config = SCORE_CONFIG[key] || { label: key, icon: '📊', questions: [] };
                 const scoreClass = getScoreClass(value);
-                const answers = data.answers && data.answers[key] ? data.answers[key] : {};
-                
-                // Antworten HTML erstellen
+                const answers = currentData.answers && currentData.answers[key] ? currentData.answers[key] : {};
+
                 let answersHTML = '';
                 config.questions.forEach(q => {
                     const answer = answers[q.id] || '-';
@@ -928,7 +1643,7 @@
                         </div>
                     `;
                 });
-                
+
                 accordionList.innerHTML += `
                     <div class="accordion" onclick="toggleAccordion(this)">
                         <div class="accordion-header">
@@ -954,18 +1669,18 @@
                     </div>
                 `;
             });
-            
+
             // AI Summary
-            if (data.aiRecommendations && data.aiRecommendations.summary) {
-                document.getElementById('summaryText').textContent = data.aiRecommendations.summary;
+            if (currentData.aiRecommendations && currentData.aiRecommendations.summary) {
+                document.getElementById('summaryText').textContent = currentData.aiRecommendations.summary;
             }
-            
-            // Empfehlungen rendern
+
+            // Empfehlungen
             const recommendationsList = document.getElementById('recommendationsList');
             recommendationsList.innerHTML = '';
-            
-            if (data.aiRecommendations && data.aiRecommendations.priorities) {
-                data.aiRecommendations.priorities.forEach((rec, index) => {
+
+            if (currentData.aiRecommendations && currentData.aiRecommendations.priorities) {
+                currentData.aiRecommendations.priorities.forEach((rec, index) => {
                     recommendationsList.innerHTML += `
                         <div class="recommendation">
                             <div class="recommendation-domain">#${index + 1} ${rec.domain}</div>
@@ -980,7 +1695,7 @@
                 });
             }
         }
-        
+
         // Dashboard laden
         document.addEventListener('DOMContentLoaded', renderDashboard);
     </script>
