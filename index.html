@@ -200,7 +200,7 @@
         }
 
         .accordion.open .accordion-content {
-            max-height: 2000px;
+            max-height: 3000px;
         }
 
         .accordion-inner {
@@ -230,6 +230,27 @@
         .score-bar-fill.good { background: linear-gradient(90deg, #F4A261, #F5B87A); }
         .score-bar-fill.needs-work { background: linear-gradient(90deg, #DC2626, #EF4444); }
 
+        /* Section Header */
+        .section-header {
+            font-family: 'Lora', Georgia, serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin: 24px 0 16px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--color-primary-light);
+        }
+
+        .section-header:first-child {
+            margin-top: 0;
+        }
+
+        .section-weight {
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: var(--color-text-muted);
+        }
+
         /* Question Items - Editable */
         .question-item {
             padding: 16px;
@@ -247,6 +268,13 @@
             color: var(--color-text);
             margin-bottom: 12px;
             font-weight: 500;
+        }
+
+        .question-id {
+            font-size: 0.8rem;
+            color: var(--color-primary);
+            font-weight: 600;
+            margin-right: 8px;
         }
 
         /* Slider Styles - Mobile Friendly */
@@ -299,6 +327,14 @@
             font-size: 1rem;
         }
 
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+        }
+
         /* Radio Button Styles - Mobile Friendly */
         .radio-group {
             display: flex;
@@ -334,6 +370,7 @@
             height: 20px;
             accent-color: var(--color-primary);
             cursor: pointer;
+            flex-shrink: 0;
         }
 
         .radio-option label {
@@ -348,6 +385,77 @@
             padding: 2px 8px;
             background: var(--color-bg);
             border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        /* Checkbox Styles */
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: white;
+            border: 2px solid var(--color-border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-height: 48px;
+        }
+
+        .checkbox-option:hover {
+            border-color: var(--color-primary);
+        }
+
+        .checkbox-option.selected {
+            border-color: var(--color-primary);
+            background: var(--color-primary-light);
+        }
+
+        .checkbox-option input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--color-primary);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .checkbox-option label {
+            flex: 1;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        /* Number Input */
+        .number-input {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .number-input input {
+            width: 120px;
+            padding: 12px 16px;
+            border: 2px solid var(--color-border);
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+        }
+
+        .number-input input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        .number-input span {
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
         }
 
         /* Save Button */
@@ -366,7 +474,7 @@
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            margin-top: 16px;
+            margin-top: 20px;
             transition: all 0.2s;
         }
 
@@ -384,10 +492,6 @@
         }
 
         /* Change Log */
-        .changelog-card {
-            background: linear-gradient(135deg, rgba(0, 144, 90, 0.05) 0%, rgba(0, 144, 90, 0.1) 100%);
-        }
-
         .changelog-item {
             display: flex;
             justify-content: space-between;
@@ -478,6 +582,17 @@
             display: block;
         }
 
+        /* Info Box */
+        .info-box {
+            background: var(--color-primary-light);
+            border-left: 4px solid var(--color-primary);
+            padding: 12px 16px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 16px;
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+        }
+
         /* Responsive */
         @media (max-width: 640px) {
             .header h1 {
@@ -518,6 +633,15 @@
                 margin-left: 0;
                 margin-top: 8px;
             }
+
+            .number-input {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .number-input input {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -527,28 +651,34 @@
         <!-- Header -->
         <header class="header">
             <p class="greeting">Hallo <span id="userName">Max Mustermann</span>,</p>
-            <h1>Dein Longevity Score</h1>
+            <h1>Dein Nutrition Score</h1>
             <p>Letzte Aktualisierung: <span id="testDate">02.02.2026</span></p>
         </header>
 
         <!-- Score Circle -->
         <div class="score-section">
             <div class="score-circle">
-                <div class="score-value" id="percentage">66%</div>
-                <div class="score-label" id="totalPoints">46/70 Punkte</div>
+                <div class="score-value" id="percentage">0%</div>
+                <div class="score-label" id="totalPoints">0/10 Punkte</div>
             </div>
         </div>
 
         <!-- Tabs -->
         <div class="card">
             <div class="tabs">
-                <button class="tab active" onclick="switchTab('scores')">📊 Scores</button>
+                <button class="tab active" onclick="switchTab('scores')">🥗 Nutrition</button>
                 <button class="tab" onclick="switchTab('history')">📈 Verlauf</button>
             </div>
 
             <!-- Scores Tab -->
             <div id="scores-tab" class="tab-content active">
-                <div id="accordionList"></div>
+                <div class="info-box">
+                    Beantworte die Fragen ehrlich. Dein Score wird automatisch berechnet. Änderungen werden protokolliert.
+                </div>
+                <div id="nutritionForm"></div>
+                <button class="save-btn" onclick="saveAllChanges()">
+                    💾 Alle Änderungen speichern
+                </button>
             </div>
 
             <!-- History Tab -->
@@ -566,206 +696,202 @@
 
     <script>
         // ========================================
-        // SCORE CONFIGURATION WITH EDITABLE OPTIONS
+        // NUTRITION ASSESSMENT - EXACT SEC 0-4
         // ========================================
-        const SCORE_CONFIG = {
-            nutrition: {
-                label: "🥗 Ernährung",
+        const NUTRITION_CONFIG = {
+            // SEC 0: Goals (nicht bewertet)
+            sec0: {
+                title: "SEC 0: Deine Ernährungsziele",
+                weight: 0, // Nicht bewertet
+                questions: [
+                    {
+                        id: "body_composition",
+                        question: "Meine aktuelle Körperzusammensetzung ist:",
+                        type: "checkbox",
+                        options: [
+                            { value: "overweight", label: "Überernährt (zu viel Körperfett)" },
+                            { value: "underweight", label: "Unterernährt (zu wenig Körperfett)" },
+                            { value: "muscled", label: "Ausreichend bemuskelt (Kraft-Score über 6/10)" },
+                            { value: "undermuscled", label: "Untermuskelt (Kraft-Score 5 oder niedriger)" },
+                            { value: "metabolic_healthy", label: "Metabolisch gesund" },
+                            { value: "metabolic_unhealthy", label: "Metabolisch ungesund" }
+                        ]
+                    },
+                    {
+                        id: "nutrition_goals",
+                        question: "Meine Ernährungsziele sind:",
+                        type: "checkbox",
+                        options: [
+                            { value: "lose_weight", label: "Gewicht verlieren" },
+                            { value: "body_comp", label: "Körperzusammensetzung verbessern (mehr Muskeln, weniger Fett)" },
+                            { value: "metabolic", label: "Metabolische Gesundheit verbessern" },
+                            { value: "maintain", label: "Gewicht halten" },
+                            { value: "gain_weight", label: "Gewicht zunehmen" },
+                            { value: "energy", label: "Konstante Energie ohne Einbrüche" },
+                            { value: "peak_energy", label: "Spitzenenergie für Wettkampf" },
+                            { value: "digestion", label: "Verdauung verbessern, Blähungen reduzieren" },
+                            { value: "mood", label: "Stimmung verbessern, Angst reduzieren" }
+                        ]
+                    },
+                    {
+                        id: "current_weight",
+                        question: "Mein aktuelles Gewicht:",
+                        type: "number",
+                        unit: "kg",
+                        min: 30,
+                        max: 300
+                    },
+                    {
+                        id: "target_weight",
+                        question: "Mein Zielgewicht:",
+                        type: "number",
+                        unit: "kg",
+                        min: 30,
+                        max: 300
+                    }
+                ]
+            },
+
+            // SEC 1: Diet Adherence (25%)
+            sec1: {
+                title: "SEC 1: Diet Adherence",
                 weight: 0.25,
                 questions: [
                     {
-                        id: "diet_enjoyment",
+                        id: "N1_1",
                         question: "Geschmack & Genuss: Wie sehr genießt du dein Essen?",
                         type: "slider",
                         min: 0,
                         max: 10,
-                        labels: { 0: "Gar nicht", 5: "Okay", 10: "Super!" }
+                        labels: {
+                            0: "Schmeckt gar nicht, esse nur aus Disziplin",
+                            5: "Okay, manchmal etwas langweilig",
+                            10: "Schmeckt super, ich freue mich auf jede Mahlzeit"
+                        }
                     },
                     {
-                        id: "satiety",
-                        question: "Sättigung: Wie satt fühlst du dich nach dem Essen?",
+                        id: "N1_2",
+                        question: "Praktische Kompatibilität: In welchen Situationen funktioniert deine Ernährung?",
+                        type: "checkbox",
+                        scoring: "count", // 0-4 situations = 0-10 points
+                        options: [
+                            { value: "restaurant", label: "Restaurant" },
+                            { value: "travel", label: "Reisen" },
+                            { value: "family", label: "Familie und Freunde" },
+                            { value: "stress", label: "Stress oder wenig Zeit" }
+                        ]
+                    },
+                    {
+                        id: "N1_3",
+                        question: "Sättigung & Zufriedenheit: Wie satt und zufrieden fühlst du dich nach dem Essen?",
                         type: "radio",
                         options: [
                             { value: "10", label: "Immer satt, keine Heißhungerattacken", points: 10 },
-                            { value: "5", label: "Meistens satt, selten hungrig", points: 5 },
-                            { value: "2", label: "Regelmäßig hungrig (2-3x/Woche)", points: 2 },
+                            { value: "5", label: "Meistens satt, selten hungrig - weniger als 1x pro Woche", points: 5 },
+                            { value: "2", label: "Regelmäßig hungrig - 2-3x pro Woche", points: 2 },
                             { value: "0", label: "Ständig hungrig oder täglicher Kampf", points: 0 }
                         ]
-                    },
+                    }
+                ]
+            },
+
+            // SEC 2: Progress (25%)
+            sec2: {
+                title: "SEC 2: Progress",
+                weight: 0.25,
+                questions: [
                     {
-                        id: "protein_intake",
-                        question: "Protein: Wie viel g/kg Körpergewicht pro Tag?",
+                        id: "N2_1",
+                        question: "Fortschritt Richtung deines Ziels:",
                         type: "radio",
                         options: [
-                            { value: "10", label: "Mehr als 1.6 g/kg - optimal", points: 10 },
+                            { value: "10", label: "Jede Woche ist ein Gewinn, Messwerte stimmen, ich fühle mich super", points: 10 },
+                            { value: "8", label: "Die meisten Wochen sind erfolgreich", points: 8 },
+                            { value: "5", label: "Fortschritt ist langsam aber über Monate sichtbar", points: 5 },
+                            { value: "2", label: "Stagnation, zumindest wird es nicht schlimmer", points: 2 },
+                            { value: "0", label: "Falsche Richtung, es wird schlimmer", points: 0 }
+                        ]
+                    }
+                ]
+            },
+
+            // SEC 3: Protein (25%)
+            sec3: {
+                title: "SEC 3: Protein",
+                weight: 0.25,
+                questions: [
+                    {
+                        id: "N3_1",
+                        question: "Tägliche Proteinzufuhr: Wie viel Gramm Protein pro kg Körpergewicht nimmst du täglich zu dir?",
+                        type: "radio",
+                        options: [
+                            { value: "10", label: "Mehr als 1.6 g/kg - optimal für Muskelaufbau", points: 10 },
                             { value: "8", label: "1.3 bis 1.5 g/kg", points: 8 },
                             { value: "4", label: "1.0 bis 1.2 g/kg", points: 4 },
                             { value: "2", label: "0.8 bis 0.9 g/kg - RDA Minimum", points: 2 },
-                            { value: "0", label: "Weniger als 0.8 g/kg", points: 0 }
+                            { value: "0", label: "Weniger als 0.8 g/kg oder kein spezifisches Ziel", points: 0 }
                         ]
                     },
                     {
-                        id: "vegetables",
-                        question: "Gemüse: An wie vielen von 10 Tagen isst du 3+ Portionen?",
+                        id: "N3_2",
+                        question: "Proteinverteilung über den Tag: Wie viele Mahlzeiten mit mindestens 30g Protein hast du pro Tag?",
+                        type: "radio",
+                        options: [
+                            { value: "10", label: "4 oder mehr Mahlzeiten mit mindestens 30g Protein", points: 10 },
+                            { value: "8", label: "3 Mahlzeiten mit mindestens 30g Protein", points: 8 },
+                            { value: "5", label: "2 Mahlzeiten mit mindestens 30g Protein", points: 5 },
+                            { value: "2", label: "1 Mahlzeit mit mindestens 30g Protein", points: 2 },
+                            { value: "0", label: "Keine Mahlzeit mit mindestens 30g Protein", points: 0 }
+                        ]
+                    }
+                ]
+            },
+
+            // SEC 4: Nutrition Principles (25%)
+            sec4: {
+                title: "SEC 4: Nutrition Principles",
+                weight: 0.25,
+                description: "Bewerte: An wie vielen von 10 Tagen erfüllst du den Standard?",
+                questions: [
+                    {
+                        id: "N4_1",
+                        question: "Achtsam mit Zucker: Ich kenne die Glukosetoleranz meines Körpers. Mein Blutzucker steigt nie über 140 mg/dL nach dem Essen und kehrt innerhalb von 90-120 Minuten zur Baseline zurück.",
                         type: "slider",
                         min: 0,
                         max: 10,
                         labels: { 0: "0 Tage", 5: "5 Tage", 10: "10 Tage" }
                     },
                     {
-                        id: "processed_food",
-                        question: "Ultra-verarbeitete Lebensmittel: An wie vielen Tagen < 20%?",
+                        id: "N4_2",
+                        question: "Ultra-verarbeitete Lebensmittel limitieren: Mindestens 80% meiner Mahlzeiten (17 von 21 pro Woche) bestehen aus unverarbeiteten oder minimal verarbeiteten Lebensmitteln.",
                         type: "slider",
                         min: 0,
                         max: 10,
                         labels: { 0: "0 Tage", 5: "5 Tage", 10: "10 Tage" }
-                    }
-                ]
-            },
-            energy: {
-                label: "⚡ Energie",
-                weight: 0.15,
-                questions: [
-                    {
-                        id: "energy_level",
-                        question: "Wie würdest du dein aktuelles Energielevel bewerten?",
-                        type: "slider",
-                        min: 0,
-                        max: 10,
-                        labels: { 0: "Erschöpft", 5: "Okay", 10: "Voller Energie" }
                     },
                     {
-                        id: "exercise_minutes",
-                        question: "Wie viele Minuten bewegst du dich täglich?",
-                        type: "radio",
-                        options: [
-                            { value: "10", label: "60+ Minuten", points: 10 },
-                            { value: "8", label: "45-60 Minuten", points: 8 },
-                            { value: "5", label: "30-45 Minuten", points: 5 },
-                            { value: "2", label: "15-30 Minuten", points: 2 },
-                            { value: "0", label: "Weniger als 15 Minuten", points: 0 }
-                        ]
+                        id: "N4_3",
+                        question: "Nicht-stärkehaltiges Gemüse: Ich esse täglich mindestens 3 Portionen nicht-stärkehaltiges Gemüse (Blattgemüse, Kreuzblütler, buntes Gemüse).",
+                        type: "slider",
+                        min: 0,
+                        max: 10,
+                        labels: { 0: "0 Tage", 5: "5 Tage", 10: "10 Tage" }
                     },
                     {
-                        id: "exhaustion",
-                        question: "Wie oft fühlst du dich erschöpft?",
-                        type: "radio",
-                        options: [
-                            { value: "10", label: "Fast nie", points: 10 },
-                            { value: "7", label: "Selten (1x/Woche)", points: 7 },
-                            { value: "4", label: "Manchmal (2-3x/Woche)", points: 4 },
-                            { value: "0", label: "Häufig oder täglich", points: 0 }
-                        ]
-                    }
-                ]
-            },
-            sleepStress: {
-                label: "😴 Schlaf & Stress",
-                weight: 0.20,
-                questions: [
-                    {
-                        id: "sleep_hours",
-                        question: "Wie viele Stunden schläfst du pro Nacht?",
-                        type: "radio",
-                        options: [
-                            { value: "10", label: "7-9 Stunden (optimal)", points: 10 },
-                            { value: "7", label: "6-7 Stunden", points: 7 },
-                            { value: "4", label: "5-6 Stunden", points: 4 },
-                            { value: "0", label: "Weniger als 5 Stunden", points: 0 }
-                        ]
+                        id: "N4_4",
+                        question: "Gesunde Fette: Fetter Fisch 2x/Woche, Olivenöl als Hauptöl, Nüsse/Samen 5x/Woche, Avocados 2x/Woche. Keine Transfette, verarbeitetes Fleisch <2x/Woche.",
+                        type: "slider",
+                        min: 0,
+                        max: 10,
+                        labels: { 0: "0 Tage", 5: "5 Tage", 10: "10 Tage" }
                     },
                     {
-                        id: "sleep_quality",
-                        question: "Wie bewertest du deine Schlafqualität?",
+                        id: "N4_5",
+                        question: "Alkohol limitieren: Mein Alkoholkonsum liegt unter 7 Drinks pro Woche UND ich trinke nie mehr als 2 Drinks an einem Tag.",
                         type: "slider",
                         min: 0,
                         max: 10,
-                        labels: { 0: "Sehr schlecht", 5: "Okay", 10: "Ausgezeichnet" }
-                    },
-                    {
-                        id: "stress_level",
-                        question: "Wie gestresst fühlst du dich im Alltag?",
-                        type: "slider",
-                        min: 0,
-                        max: 10,
-                        labels: { 0: "Sehr gestresst", 5: "Moderat", 10: "Entspannt" }
-                    }
-                ]
-            },
-            wellbeing: {
-                label: "🧘 Wohlbefinden",
-                weight: 0.15,
-                questions: [
-                    {
-                        id: "life_satisfaction",
-                        question: "Wie zufrieden bist du mit deinem Leben?",
-                        type: "slider",
-                        min: 0,
-                        max: 10,
-                        labels: { 0: "Unzufrieden", 5: "Okay", 10: "Sehr zufrieden" }
-                    },
-                    {
-                        id: "positive_emotions",
-                        question: "Wie oft erlebst du positive Emotionen?",
-                        type: "slider",
-                        min: 0,
-                        max: 10,
-                        labels: { 0: "Selten", 5: "Manchmal", 10: "Täglich" }
-                    },
-                    {
-                        id: "social_connection",
-                        question: "Wie stark fühlst du dich sozial verbunden?",
-                        type: "slider",
-                        min: 0,
-                        max: 10,
-                        labels: { 0: "Isoliert", 5: "Okay", 10: "Sehr verbunden" }
-                    }
-                ]
-            },
-            mindset: {
-                label: "🧠 Mindset",
-                weight: 0.15,
-                questions: [
-                    {
-                        id: "growth_mindset",
-                        question: "Wie offen bist du für Veränderung und Lernen?",
-                        type: "slider",
-                        min: 0,
-                        max: 10,
-                        labels: { 0: "Eher nicht", 5: "Manchmal", 10: "Sehr offen" }
-                    },
-                    {
-                        id: "purpose",
-                        question: "Wie stark fühlst du einen Sinn in deinem Leben?",
-                        type: "slider",
-                        min: 0,
-                        max: 10,
-                        labels: { 0: "Gar nicht", 5: "Etwas", 10: "Stark" }
-                    }
-                ]
-            },
-            medical: {
-                label: "🏥 Medizinisch",
-                weight: 0.10,
-                questions: [
-                    {
-                        id: "checkup",
-                        question: "Wann war dein letzter Gesundheits-Check?",
-                        type: "radio",
-                        options: [
-                            { value: "10", label: "Innerhalb der letzten 12 Monate", points: 10 },
-                            { value: "6", label: "Vor 1-2 Jahren", points: 6 },
-                            { value: "3", label: "Vor 2-5 Jahren", points: 3 },
-                            { value: "0", label: "Länger als 5 Jahre oder nie", points: 0 }
-                        ]
-                    },
-                    {
-                        id: "general_health",
-                        question: "Wie bewertest du deine allgemeine Gesundheit?",
-                        type: "slider",
-                        min: 0,
-                        max: 10,
-                        labels: { 0: "Schlecht", 5: "Okay", 10: "Ausgezeichnet" }
+                        labels: { 0: "0 Tage", 5: "5 Tage", 10: "10 Tage" }
                     }
                 ]
             }
@@ -776,26 +902,28 @@
         // ========================================
         let currentData = {
             userName: "Max Mustermann",
-            scores: {},
             answers: {},
             changelog: []
         };
 
         // Load from localStorage
         function loadData() {
-            const saved = localStorage.getItem('longevityDashboard');
+            const saved = localStorage.getItem('nutritionAssessment');
             if (saved) {
                 currentData = JSON.parse(saved);
             } else {
                 // Initialize with default values
-                Object.keys(SCORE_CONFIG).forEach(category => {
-                    currentData.scores[category] = 5;
-                    currentData.answers[category] = {};
-                    SCORE_CONFIG[category].questions.forEach(q => {
+                Object.keys(NUTRITION_CONFIG).forEach(section => {
+                    currentData.answers[section] = {};
+                    NUTRITION_CONFIG[section].questions.forEach(q => {
                         if (q.type === 'slider') {
-                            currentData.answers[category][q.id] = 5;
-                        } else {
-                            currentData.answers[category][q.id] = q.options[0].value;
+                            currentData.answers[section][q.id] = 5;
+                        } else if (q.type === 'radio') {
+                            currentData.answers[section][q.id] = q.options[Math.floor(q.options.length / 2)].value;
+                        } else if (q.type === 'checkbox') {
+                            currentData.answers[section][q.id] = [];
+                        } else if (q.type === 'number') {
+                            currentData.answers[section][q.id] = q.id === 'current_weight' ? 75 : 70;
                         }
                     });
                 });
@@ -804,40 +932,54 @@
 
         // Save to localStorage
         function saveData() {
-            localStorage.setItem('longevityDashboard', JSON.stringify(currentData));
+            localStorage.setItem('nutritionAssessment', JSON.stringify(currentData));
         }
 
         // ========================================
         // SCORE CALCULATION
         // ========================================
-        function calculateCategoryScore(category) {
-            const config = SCORE_CONFIG[category];
-            const answers = currentData.answers[category] || {};
+        function calculateSectionScore(sectionKey) {
+            const section = NUTRITION_CONFIG[sectionKey];
+            if (section.weight === 0) return null; // SEC 0 is not scored
+
+            const answers = currentData.answers[sectionKey] || {};
             let totalScore = 0;
             let maxScore = 0;
 
-            config.questions.forEach(q => {
-                const value = parseFloat(answers[q.id]) || 0;
+            section.questions.forEach(q => {
+                const value = answers[q.id];
+
                 if (q.type === 'slider') {
-                    totalScore += value;
+                    totalScore += parseFloat(value) || 0;
                     maxScore += q.max;
-                } else {
-                    totalScore += value;
+                } else if (q.type === 'radio') {
+                    totalScore += parseFloat(value) || 0;
+                    maxScore += 10;
+                } else if (q.type === 'checkbox' && q.scoring === 'count') {
+                    // N1.2: 4 situations = 10 points
+                    const count = Array.isArray(value) ? value.length : 0;
+                    totalScore += (count / 4) * 10;
                     maxScore += 10;
                 }
             });
 
-            return maxScore > 0 ? Math.round((totalScore / maxScore) * 10) : 0;
+            return maxScore > 0 ? (totalScore / maxScore) * 10 : 0;
         }
 
         function calculateTotalScore() {
-            let totalWeighted = 0;
-            Object.keys(SCORE_CONFIG).forEach(category => {
-                const score = calculateCategoryScore(category);
-                currentData.scores[category] = score;
-                totalWeighted += score * SCORE_CONFIG[category].weight;
+            let weightedSum = 0;
+            let totalWeight = 0;
+
+            Object.keys(NUTRITION_CONFIG).forEach(sectionKey => {
+                const section = NUTRITION_CONFIG[sectionKey];
+                if (section.weight > 0) {
+                    const score = calculateSectionScore(sectionKey);
+                    weightedSum += score * section.weight;
+                    totalWeight += section.weight;
+                }
             });
-            return Math.round(totalWeighted);
+
+            return totalWeight > 0 ? Math.round(weightedSum / totalWeight * 10) / 10 : 0;
         }
 
         function getScoreClass(value) {
@@ -849,117 +991,116 @@
         // ========================================
         // CHANGELOG
         // ========================================
-        function logChange(category, questionId, oldValue, newValue) {
-            const question = SCORE_CONFIG[category].questions.find(q => q.id === questionId);
-            const oldScore = currentData.scores[category];
-
-            currentData.answers[category][questionId] = newValue;
-            const newScore = calculateCategoryScore(category);
+        function logChange(sectionKey, questionId, oldValue, newValue) {
+            const section = NUTRITION_CONFIG[sectionKey];
+            const question = section.questions.find(q => q.id === questionId);
 
             const change = {
                 date: new Date().toISOString(),
-                category: category,
-                categoryLabel: SCORE_CONFIG[category].label,
+                section: sectionKey,
+                sectionTitle: section.title,
                 questionId: questionId,
-                questionLabel: question.question,
-                oldValue: oldValue,
-                newValue: newValue,
-                oldScore: oldScore,
-                newScore: newScore,
-                scoreDiff: newScore - oldScore
+                questionLabel: question.question.substring(0, 50) + '...',
+                oldValue: Array.isArray(oldValue) ? oldValue.join(', ') : oldValue,
+                newValue: Array.isArray(newValue) ? newValue.join(', ') : newValue
             };
 
             currentData.changelog.unshift(change);
-            if (currentData.changelog.length > 50) {
-                currentData.changelog = currentData.changelog.slice(0, 50);
+            if (currentData.changelog.length > 100) {
+                currentData.changelog = currentData.changelog.slice(0, 100);
             }
-
-            currentData.scores[category] = newScore;
-            saveData();
-            updateUI();
         }
 
         // ========================================
         // UI RENDERING
         // ========================================
-        function renderAccordions() {
-            const accordionList = document.getElementById('accordionList');
-            accordionList.innerHTML = '';
+        function renderForm() {
+            const form = document.getElementById('nutritionForm');
+            form.innerHTML = '';
 
-            Object.keys(SCORE_CONFIG).forEach(category => {
-                const config = SCORE_CONFIG[category];
-                const score = currentData.scores[category] || calculateCategoryScore(category);
-                const scoreClass = getScoreClass(score);
-                const answers = currentData.answers[category] || {};
+            Object.keys(NUTRITION_CONFIG).forEach(sectionKey => {
+                const section = NUTRITION_CONFIG[sectionKey];
+                const answers = currentData.answers[sectionKey] || {};
+                const sectionScore = calculateSectionScore(sectionKey);
 
-                let questionsHTML = '';
-                config.questions.forEach(q => {
-                    const value = answers[q.id] !== undefined ? answers[q.id] : (q.type === 'slider' ? 5 : q.options[0].value);
+                // Section Header
+                let headerHTML = `<div class="section-header">
+                    ${section.title}
+                    ${section.weight > 0 ? `<span class="section-weight">(${section.weight * 100}% Gewichtung) - Score: ${sectionScore !== null ? sectionScore.toFixed(1) + '/10' : 'Nicht bewertet'}</span>` : '<span class="section-weight">(Nicht bewertet)</span>'}
+                </div>`;
+
+                if (section.description) {
+                    headerHTML += `<p style="font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 16px;">${section.description}</p>`;
+                }
+
+                form.innerHTML += headerHTML;
+
+                // Questions
+                section.questions.forEach(q => {
+                    const value = answers[q.id];
+                    let questionHTML = `
+                        <div class="question-item" data-section="${sectionKey}" data-question="${q.id}">
+                            <div class="question-label">
+                                ${q.id.startsWith('N') ? `<span class="question-id">${q.id.replace('_', '.')}</span>` : ''}
+                                ${q.question}
+                            </div>
+                    `;
 
                     if (q.type === 'slider') {
-                        questionsHTML += `
-                            <div class="question-item">
-                                <div class="question-label">${q.question}</div>
-                                <div class="slider-container">
-                                    <input type="range" class="slider-input"
-                                        min="${q.min}" max="${q.max}" value="${value}"
-                                        data-category="${category}" data-question="${q.id}"
-                                        oninput="updateSliderValue(this)">
-                                    <div class="slider-value" id="value-${category}-${q.id}">${value}</div>
-                                </div>
+                        questionHTML += `
+                            <div class="slider-container">
+                                <input type="range" class="slider-input"
+                                    min="${q.min}" max="${q.max}" value="${value}"
+                                    data-section="${sectionKey}" data-question="${q.id}"
+                                    oninput="updateSliderDisplay(this)">
+                                <div class="slider-value" id="value-${sectionKey}-${q.id}">${value}</div>
+                            </div>
+                            <div class="slider-labels">
+                                <span>${q.labels[0] || '0'}</span>
+                                <span>${q.labels[10] || '10'}</span>
                             </div>
                         `;
                     } else if (q.type === 'radio') {
-                        let optionsHTML = '';
-                        q.options.forEach((opt, idx) => {
+                        questionHTML += `<div class="radio-group" data-section="${sectionKey}" data-question="${q.id}">`;
+                        q.options.forEach(opt => {
                             const isSelected = value === opt.value;
-                            optionsHTML += `
+                            questionHTML += `
                                 <div class="radio-option ${isSelected ? 'selected' : ''}"
-                                    onclick="selectRadio('${category}', '${q.id}', '${opt.value}', this)">
-                                    <input type="radio" name="${category}-${q.id}" value="${opt.value}"
-                                        ${isSelected ? 'checked' : ''}>
+                                    onclick="selectRadio('${sectionKey}', '${q.id}', '${opt.value}', this)">
+                                    <input type="radio" name="${sectionKey}-${q.id}" value="${opt.value}" ${isSelected ? 'checked' : ''}>
                                     <label>${opt.label}</label>
                                     <span class="radio-points">${opt.points} Pkt</span>
                                 </div>
                             `;
                         });
-                        questionsHTML += `
-                            <div class="question-item">
-                                <div class="question-label">${q.question}</div>
-                                <div class="radio-group" data-category="${category}" data-question="${q.id}">
-                                    ${optionsHTML}
+                        questionHTML += `</div>`;
+                    } else if (q.type === 'checkbox') {
+                        questionHTML += `<div class="checkbox-group" data-section="${sectionKey}" data-question="${q.id}">`;
+                        q.options.forEach(opt => {
+                            const isSelected = Array.isArray(value) && value.includes(opt.value);
+                            questionHTML += `
+                                <div class="checkbox-option ${isSelected ? 'selected' : ''}"
+                                    onclick="toggleCheckbox('${sectionKey}', '${q.id}', '${opt.value}', this)">
+                                    <input type="checkbox" value="${opt.value}" ${isSelected ? 'checked' : ''}>
+                                    <label>${opt.label}</label>
                                 </div>
+                            `;
+                        });
+                        questionHTML += `</div>`;
+                    } else if (q.type === 'number') {
+                        questionHTML += `
+                            <div class="number-input">
+                                <input type="number" value="${value || ''}" min="${q.min}" max="${q.max}"
+                                    data-section="${sectionKey}" data-question="${q.id}"
+                                    onchange="updateNumberInput(this)">
+                                <span>${q.unit}</span>
                             </div>
                         `;
                     }
-                });
 
-                accordionList.innerHTML += `
-                    <div class="accordion" data-category="${category}">
-                        <div class="accordion-header" onclick="toggleAccordion(this.parentElement)">
-                            <div class="accordion-title">
-                                <span>${config.label}</span>
-                            </div>
-                            <div class="accordion-right">
-                                <span class="accordion-score" id="score-${category}">${score}/10</span>
-                                <span class="accordion-arrow">▼</span>
-                            </div>
-                        </div>
-                        <div class="accordion-content">
-                            <div class="accordion-inner">
-                                <div class="score-bar-container">
-                                    <div class="score-bar-bg">
-                                        <div class="score-bar-fill ${scoreClass}" id="bar-${category}" style="width: ${score * 10}%"></div>
-                                    </div>
-                                </div>
-                                ${questionsHTML}
-                                <button class="save-btn" onclick="saveCategory('${category}')">
-                                    💾 Änderungen speichern
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `;
+                    questionHTML += `</div>`;
+                    form.innerHTML += questionHTML;
+                });
             });
         }
 
@@ -985,17 +1126,13 @@
                     minute: '2-digit'
                 });
 
-                const diffClass = change.scoreDiff > 0 ? 'positive' : (change.scoreDiff < 0 ? 'negative' : '');
-                const diffText = change.scoreDiff > 0 ? `+${change.scoreDiff}` : change.scoreDiff;
-
                 html += `
                     <div class="changelog-item">
                         <div class="changelog-date">${dateStr}</div>
                         <div class="changelog-details">
-                            <div class="changelog-category">${change.categoryLabel}</div>
+                            <div class="changelog-category">${change.sectionTitle}</div>
                             <div class="changelog-change">
-                                ${change.oldValue} → ${change.newValue}
-                                ${change.scoreDiff !== 0 ? `<span class="changelog-score-change ${diffClass}">${diffText}</span>` : ''}
+                                ${change.questionId}: ${change.oldValue} → ${change.newValue}
                             </div>
                         </div>
                     </div>
@@ -1005,39 +1142,19 @@
             changelogList.innerHTML = html;
         }
 
-        function updateUI() {
+        function updateScoreDisplay() {
             const totalScore = calculateTotalScore();
-            const maxPoints = Object.keys(SCORE_CONFIG).length * 10;
-            const totalPoints = Object.values(currentData.scores).reduce((a, b) => a + b, 0);
-            const percentage = Math.round((totalPoints / maxPoints) * 100);
+            const percentage = Math.round(totalScore * 10);
 
             document.getElementById('percentage').textContent = `${percentage}%`;
-            document.getElementById('totalPoints').textContent = `${totalPoints}/${maxPoints} Punkte`;
+            document.getElementById('totalPoints').textContent = `${totalScore.toFixed(1)}/10 Punkte`;
             document.getElementById('userName').textContent = currentData.userName;
             document.getElementById('testDate').textContent = new Date().toLocaleDateString('de-DE');
-
-            // Update individual scores
-            Object.keys(SCORE_CONFIG).forEach(category => {
-                const score = currentData.scores[category];
-                const scoreEl = document.getElementById(`score-${category}`);
-                const barEl = document.getElementById(`bar-${category}`);
-                if (scoreEl) scoreEl.textContent = `${score}/10`;
-                if (barEl) {
-                    barEl.style.width = `${score * 10}%`;
-                    barEl.className = `score-bar-fill ${getScoreClass(score)}`;
-                }
-            });
-
-            renderChangelog();
         }
 
         // ========================================
         // EVENT HANDLERS
         // ========================================
-        function toggleAccordion(element) {
-            element.classList.toggle('open');
-        }
-
         function switchTab(tabName) {
             document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
@@ -1046,47 +1163,79 @@
             document.getElementById(`${tabName}-tab`).classList.add('active');
         }
 
-        function updateSliderValue(slider) {
+        function updateSliderDisplay(slider) {
             const value = slider.value;
-            const category = slider.dataset.category;
+            const section = slider.dataset.section;
             const questionId = slider.dataset.question;
-            document.getElementById(`value-${category}-${questionId}`).textContent = value;
+            document.getElementById(`value-${section}-${questionId}`).textContent = value;
         }
 
-        function selectRadio(category, questionId, value, element) {
+        function selectRadio(section, questionId, value, element) {
             const group = element.parentElement;
             group.querySelectorAll('.radio-option').forEach(opt => opt.classList.remove('selected'));
             element.classList.add('selected');
             element.querySelector('input').checked = true;
         }
 
-        function saveCategory(category) {
-            const accordion = document.querySelector(`.accordion[data-category="${category}"]`);
-            const config = SCORE_CONFIG[category];
+        function toggleCheckbox(section, questionId, value, element) {
+            element.classList.toggle('selected');
+            const checkbox = element.querySelector('input');
+            checkbox.checked = !checkbox.checked;
+        }
 
-            config.questions.forEach(q => {
-                let newValue;
-                if (q.type === 'slider') {
-                    const slider = accordion.querySelector(`input[data-question="${q.id}"]`);
-                    newValue = slider.value;
-                } else {
-                    const selected = accordion.querySelector(`input[name="${category}-${q.id}"]:checked`);
-                    newValue = selected ? selected.value : currentData.answers[category][q.id];
-                }
+        function updateNumberInput(input) {
+            // Just update display, saving happens on save button
+        }
 
-                const oldValue = currentData.answers[category][q.id];
-                if (oldValue !== newValue) {
-                    logChange(category, q.id, oldValue, newValue);
-                }
+        function saveAllChanges() {
+            const oldAnswers = JSON.parse(JSON.stringify(currentData.answers));
+
+            // Collect all current values
+            Object.keys(NUTRITION_CONFIG).forEach(sectionKey => {
+                const section = NUTRITION_CONFIG[sectionKey];
+
+                section.questions.forEach(q => {
+                    let newValue;
+
+                    if (q.type === 'slider') {
+                        const slider = document.querySelector(`input[data-section="${sectionKey}"][data-question="${q.id}"]`);
+                        newValue = slider ? slider.value : currentData.answers[sectionKey][q.id];
+                    } else if (q.type === 'radio') {
+                        const selected = document.querySelector(`input[name="${sectionKey}-${q.id}"]:checked`);
+                        newValue = selected ? selected.value : currentData.answers[sectionKey][q.id];
+                    } else if (q.type === 'checkbox') {
+                        const checkboxes = document.querySelectorAll(`[data-section="${sectionKey}"][data-question="${q.id}"] input:checked`);
+                        newValue = Array.from(checkboxes).map(cb => cb.value);
+                    } else if (q.type === 'number') {
+                        const input = document.querySelector(`input[data-section="${sectionKey}"][data-question="${q.id}"]`);
+                        newValue = input ? input.value : currentData.answers[sectionKey][q.id];
+                    }
+
+                    const oldValue = oldAnswers[sectionKey]?.[q.id];
+
+                    // Check if value changed
+                    const oldStr = Array.isArray(oldValue) ? oldValue.sort().join(',') : String(oldValue);
+                    const newStr = Array.isArray(newValue) ? newValue.sort().join(',') : String(newValue);
+
+                    if (oldStr !== newStr) {
+                        logChange(sectionKey, q.id, oldValue, newValue);
+                    }
+
+                    currentData.answers[sectionKey][q.id] = newValue;
+                });
             });
 
+            saveData();
+            updateScoreDisplay();
+            renderChangelog();
+
             // Visual feedback
-            const btn = accordion.querySelector('.save-btn');
+            const btn = document.querySelector('.save-btn');
             btn.classList.add('saved');
             btn.innerHTML = '✅ Gespeichert!';
             setTimeout(() => {
                 btn.classList.remove('saved');
-                btn.innerHTML = '💾 Änderungen speichern';
+                btn.innerHTML = '💾 Alle Änderungen speichern';
             }, 2000);
         }
 
@@ -1095,8 +1244,9 @@
         // ========================================
         document.addEventListener('DOMContentLoaded', function() {
             loadData();
-            renderAccordions();
-            updateUI();
+            renderForm();
+            updateScoreDisplay();
+            renderChangelog();
         });
     </script>
 </body>
