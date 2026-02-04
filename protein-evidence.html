@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protein FAQ - Scientific Evidence</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Shared Brand Styles -->
+    <link rel="stylesheet" href="brand.css">
+
+    <!-- Page-specific styles -->
+    <style>
+        /* FAQ-specific styles */
+        .faq-item {
+            background: var(--color-card);
+            border-radius: var(--radius);
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            color: var(--color-teal);
+            padding: 20px 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .faq-question:hover {
+            background: var(--color-bg);
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: var(--color-accent);
+            transition: transform 0.2s;
+        }
+
+        .faq-item.open .faq-question::after {
+            content: '−';
+        }
+
+        .faq-answer {
+            padding: 0 24px 24px;
+            display: none;
+        }
+
+        .faq-item.open .faq-answer {
+            display: block;
+        }
+
+        .faq-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: var(--color-accent);
+            color: white;
+            border-radius: 50%;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .faq-category {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            color: var(--color-teal);
+            margin: 32px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--color-accent);
+        }
+
+        .faq-category:first-of-type {
+            margin-top: 0;
+        }
+
+        /* Key numbers highlight */
+        .key-number {
+            display: inline-block;
+            background: var(--color-accent-light);
+            color: var(--color-teal);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        /* Protein examples grid */
+        .protein-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .protein-example {
+            background: var(--color-bg);
+            padding: 12px;
+            border-radius: var(--radius-sm);
+            text-align: center;
+        }
+
+        .protein-amount {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--color-teal);
+        }
+
+        .protein-food {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+        }
+
+        /* Age table */
+        .age-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.9rem;
+        }
+
+        .age-table th, .age-table td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .age-table th {
+            background: var(--color-bg);
+            font-weight: 600;
+            color: var(--color-teal);
+        }
+
+        .age-table .highlight {
+            background: var(--color-accent-light);
+        }
+
+        /* Quick answer box */
+        .quick-answer {
+            background: var(--color-accent-light);
+            border-left: 4px solid var(--color-accent);
+            padding: 16px;
+            margin-bottom: 16px;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        }
+
+        .quick-answer strong {
+            color: var(--color-teal);
+        }
+
+        /* Table of contents */
+        .toc {
+            background: var(--color-card);
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            margin-bottom: 24px;
+        }
+
+        .toc h3 {
+            font-size: 1rem;
+            margin-bottom: 12px;
+            color: var(--color-teal);
+        }
+
+        .toc-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            columns: 2;
+            column-gap: 24px;
+        }
+
+        .toc-list li {
+            margin-bottom: 8px;
+            break-inside: avoid;
+        }
+
+        .toc-list a {
+            color: var(--color-teal);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .toc-list a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .toc-list {
+                columns: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index-editable-en.html" class="back-link">← Back to Assessment</a>
+
+        <h1>Protein: Questions & Answers</h1>
+        <p class="subtitle">Evidence-based answers to common protein questions</p>
+
+        <!-- Key Takeaway -->
+        <div class="bottom-line" style="margin-top: 0; margin-bottom: 24px;">
+            <h3>The Bottom Line</h3>
+            <p>Adults 40+ should aim for <strong>1.2–1.6 g protein per kg body weight per day</strong>, distributed across 3-4 meals. The RDA of 0.8 g/kg is a minimum to prevent deficiency, not optimal for health and longevity.</p>
+        </div>
+
+        <!-- Table of Contents -->
+        <div class="toc">
+            <h3>Jump to a Question</h3>
+            <ol class="toc-list">
+                <li><a href="#q1">How much protein do I really need?</a></li>
+                <li><a href="#q2">Will high protein increase my cancer risk?</a></li>
+                <li><a href="#q3">Is high protein bad for my kidneys?</a></li>
+                <li><a href="#q4">How much protein should I eat per meal?</a></li>
+                <li><a href="#q5">How do I adjust protein for my goals?</a></li>
+                <li><a href="#q6">Does protein enhance strength training?</a></li>
+                <li><a href="#q7">Can protein help with weight management?</a></li>
+                <li><a href="#q8">What does 30g of protein look like?</a></li>
+                <li><a href="#q9">Can I meet targets with plant protein?</a></li>
+                <li><a href="#q10">Do I need protein supplements?</a></li>
+            </ol>
+        </div>
+
+        <!-- CATEGORY: Understanding Your Needs -->
+        <h2 class="faq-category">Understanding Your Protein Needs</h2>
+
+        <!-- FAQ 1 -->
+        <div class="faq-item open" id="q1">
+            <button class="faq-question">
+                <span><span class="faq-number">1</span>How much protein do I really need?</span>
+            </button>
+            <div class="faq-answer">
+                <div class="quick-answer">
+                    <strong>Quick Answer:</strong> Adults 40+ should aim for <span class="key-number">1.2–1.6 g/kg/day</span>. The RDA of 0.8 g/kg is a minimum to prevent deficiency—not optimal for maintaining muscle, strength, or longevity.
+                </div>
+
+                <p>The current RDA (0.8 g/kg/day) was established to prevent protein deficiency in sedentary adults—it was never designed to optimize health, preserve muscle mass, or support active aging.</p>
+
+                <p style="margin-top: 12px;">Evidence consistently shows higher intakes are beneficial:</p>
+
+                <div class="study">
+                    <div class="study-title">PROT-AGE Study Group Position Paper</div>
+                    <div class="study-meta">Bauer et al., 2013 • JAMDA • 14(8):542-559 • doi:10.1016/j.jamda.2013.05.021</div>
+                    <div class="study-finding">International expert consensus: Older adults need <strong>1.0–1.2 g/kg/day minimum</strong>, with <strong>1.2–1.5 g/kg/day</strong> for those with acute/chronic illness or engaged in exercise.</div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/23867520/" target="_blank" class="study-link">View on PubMed →</a>
+                </div>
+
+                <div class="study">
+                    <div class="study-title">Protein and Sarcopenia Meta-Analysis</div>
+                    <div class="study-meta">Han, Woo & Kim, 2024 • Nutrients • 16(24):4350 • doi:10.3390/nu16244350</div>
+                    <div class="study-finding">Adults consuming <strong>&lt;0.8 g/kg/day had significantly higher sarcopenia risk</strong> compared to those eating ≥1.2 g/kg/day.</div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/39770971/" target="_blank" class="study-link">View on PubMed →</a>
+                </div>
+
+                <div class="study">
+                    <div class="study-title">Health ABC Study</div>
+                    <div class="study-meta">Houston et al., 2008 • Am J Clin Nutr • 87(1):150-155 • doi:10.1093/ajcn/87.1.150</div>
+                    <div class="study-finding">Following 2,000+ older adults over 3 years: Those in the <strong>lowest protein intake group lost 40% more muscle</strong>.</div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/18175749/" target="_blank" class="study-link">View on PubMed →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-item" id="q2">
+            <button class="faq-question">
+                <span><span class="faq-number">2</span>Will high protein intake increase my cancer risk?</span>
+            </button>
+            <div class="faq-answer">
+                <div class="quick-answer">
+                    <strong>Quick Answer:</strong> No. While mechanistic theories (mTOR, IGF-1) suggest a possible link, large-scale human studies consistently find <span class="key-number">no association</span> between protein intake and cancer mortality.
+                </div>
+
+                <div class="warning-box">
+                    <strong>The Levine et al. Study—Why It's Misleading:</strong>
+                    <p style="margin-top: 8px;">The oft-cited NHANES III study claiming 4× cancer risk in high-protein consumers aged 50-65 has significant problems:</p>
+                    <ul style="margin: 8px 0 0 20px; font-size: 0.9rem;">
+                        <li>The same study found high protein was associated with <strong>60% lower</strong> cancer mortality after age 65</li>
+                        <li>The high-protein group aged 50-65 likely had fewer than 35 cancer deaths—highly susceptible to chance</li>
+                        <li>Couldn't adjust for cancer screening, family history, or other key variables</li>
+                        <li>Multiple larger meta-analyses find no association</li>
+                    </ul>
+                </div>
+
+                <div class="study">
+                    <div class="study-title">Protein and Cancer Mortality Meta-Analysis</div>
+                    <div class="study-meta">Naghshi et al., 2020 • BMJ • 370:m2412 • doi:10.1136/bmj.m2412</div>
+                    <div class="study-finding">Analyzed 12 prospective cohort studies (292,629 participants): Each 3% increment in energy from protein showed <strong>no association with cancer mortality</strong>.</div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/32699048/" target="_blank" class="study-link">View on PubMed →</a>
+                </div>
+
+                <div class="study">
+                    <div class="study-title">German Nutrition Society Umbrella Review</div>
+                    <div class="study-meta">Kühn et al., 2024 • European Journal of Nutrition • 63:1471-1486 • doi:10.1007/s00394-024-03380-4</div>
+                    <div class="study-finding">Comprehensive review: Higher protein intake was <strong>not associated with risks of breast, prostate, colorectal, ovarian, or pancreatic cancer</strong>.</div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/38643440/" target="_blank" class="study-link">View on PubMed →</a>
+                </div>
+
+                <div class="success-box">
+                    <strong>Why the mTOR Mechanism Doesn't Translate:</strong>
+                    <p style="margin-top: 8px;">Protein activates mTORC1, but this is normal, tightly regulated physiology—not the chronic hyperactivation seen in cancer. Notably, <strong>resistance exercise activates mTORC1 even more than protein</strong>, yet is consistently associated with <strong>reduced</strong> cancer risk.</p>
+                </div>
+
+                <div class="expert-quote">
+                    "For adults 40+, the evidence supports protein intake of 1.2–1.6 g/kg/day. The theoretical cancer concerns are not supported by human data, while the benefits for muscle preservation, metabolic health, and longevity are well-established. Getting too little protein poses a far greater health risk than getting too much."
+                    <cite>— Peter Attia, MD (recommends 1.6-2.0 g/kg/day)</cite>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-item" id="q3">
+            <button class="faq-question">
+                <span><span class="faq-number">3</span>Is high protein bad for my kidneys?</span>
+            </button>
+            <div class="faq-answer">
+                <div class="quick-answer">
+                    <strong>Quick Answer:</strong> Not if your kidneys are healthy. The concern originated from observations that protein restriction helps people with <em>existing</em> kidney disease—but this doesn't mean protein <span class="key-number">damages healthy kidneys</span>.
+                </div>
+
+                <div class="study">
+                    <div class="study-title">Kidney Function Meta-Analysis</div>
+                    <div class="study-meta">Devries et al., 2018 • J Nutr • 148(11):1760-1775 • doi:10.1093/jn/nxy197</div>
+                    <div class="study-finding">28 RCTs (1,358 participants): Higher protein intakes (≥1.5 g/kg/day) <strong>do not adversely affect kidney function</strong> in adults without pre-existing kidney disease.</div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/30383278/" target="_blank" class="study-link">View on PubMed →</a>
+                </div>
+
+                <div class="warning-box">
+                    <strong>Important Exception:</strong> If you have diagnosed kidney disease or significantly reduced kidney function, discuss protein targets with your healthcare provider, as recommendations differ.
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-item" id="q4">
+            <button class="faq-question">
+                <span><span class="faq-number">4</span>How much protein should I eat per meal?</span>
+            </button>
+            <div class="faq-answer">
+                <div class="quick-answer">
+                    <strong>Quick Answer:</strong> It depends on your age. Due to "anabolic resistance," older adults need <span class="key-number">more protein per meal</span> to trigger the same muscle-building response as younger people.
+                </div>
+
+                <p>Moore et al. (2015, doi:<a href="https://doi.org/10.1093/gerona/glu103" target="_blank">10.1093/gerona/glu103</a>) found that older adults need approximately <strong>0.40 g/kg body weight per meal</strong> (vs 0.24 g/kg for young adults) to maximally stimulate muscle protein synthesis—about 68% more.</p>
+
+                <table class="age-table">
+                    <thead>
+                        <tr>
+                            <th>Your Age</th>
+                            <th>Per-Meal Target</th>
+                            <th>Example (70kg person)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>20-30</td>
+                            <td>~0.24 g/kg body weight</td>
+                            <td>~17g</td>
+                        </tr>
+                        <tr>
+                            <td>40</td>
+                            <td>~0.30 g/kg body weight</td>
+                            <td>~21g</td>
+                        </tr>
+                        <tr>
+                            <td>50</td>
+                            <td>~0.35 g/kg body weight</td>
+                            <td>~25g</td>
+                        </tr>
+                        <tr class="highlight">
+                            <td>60</td>
+                            <td>~0.38 g/kg body weight</td>
+                            <td>~27g</td>
+                        </tr>
+                        <tr class="highlight">
+                            <td>70+</td>
+                            <td>~0.40 g/kg body weight</td>
+                            <td>~28-30g</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p style="font-size: 0.85rem; color: var(--color-text-muted); margin-top: 8px;"><em>Note: Moore et al. also reported values per kg lean body mass (0.60 g/kg LBM for older adults). The body weight values above are more practical for most people.</em></p>
+
+                <div class="study">
+                    <div class="study-title">Protein Distribution Study</div>
+                    <div class="study-meta">Mamerow et al., 2014 • J Nutr • 144(6):876-880 • doi:10.3945/jn.113.185280</div>
+                    <div class="study-finding">Distributing protein evenly across meals (30g each) resulted in <strong>25% higher 24-hour muscle protein synthesis</strong> compared to the same total protein in a skewed pattern (e.g., 10g breakfast, 20g lunch, 60g dinner).</div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/24477298/" target="_blank" class="study-link">View on PubMed →</a>
+                </div>
+
+                <div class="summary-box">
+                    <p><strong>Practical tip:</strong> Most people eat too little protein at breakfast. Switching from toast/cereal (5-10g) to eggs or Greek yogurt (20-30g) is often the highest-impact change.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CATEGORY: Optimizing for Goals -->
+        <h2 class="faq-category">Optimizing for Your Goals</h2>
+
+        <!-- FAQ 5 -->
+        <div class="faq-item" id="q5">
+            <button class="faq-question">
+                <span><span class="faq-number">5</span>How do I adjust protein intake for weight loss or muscle building?</span>
+            </button>
+            <div class="faq-answer">
+                <div class="quick-answer">
+                    <strong>Quick Answer:</strong> Increase protein when in a caloric deficit or doing resistance training. The harder you train or diet, the <span class="key-number">more protein you need</span> to preserve muscle.
+                </div>
+
+                <table class="age-table">
+                    <thead>
+                        <tr>
+                            <th>Your Situation</th>
+                            <th>Daily Target</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>No resistance training, maintaining weight</td>
+                            <td>1.2 g/kg body weight</td>
+                        </tr>
+                        <tr class="highlight">
+                            <td>Resistance training, maintaining weight</td>
+                            <td>1.6 g/kg body weight</td>
+                        </tr>
+                        <tr>
+                            <td>Resistance training + moderate deficit (10-25%)</td>
+                            <td>2.0 g/kg body weight</td>
+                        </tr>
+                        <tr>
+                            <td>Resistance training + aggressive deficit (25-40%)</td>
+                            <td>2.4 g/kg body weight</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="warning-box">
+                    <strong>Body Weight vs. Lean Body Mass:</strong>
+                    <p style="margin-top: 8px;">Research studies typically use total body weight, but leading specialists (Peter Attia, Layne Norton) recommend calculating protein based on <strong>lean body mass (LBM)</strong> instead. Why? Fat tissue has minimal protein requirements—lean mass explains 70-80% of metabolic rate. For people with higher body fat (>25% men, >35% women), using total body weight can give unnecessarily high targets. If you know your LBM, use these same numbers per kg LBM rather than body weight.</p>
+                </div>
+
+                <div class="study">
+                    <div class="study-title">High Protein During Caloric Deficit</div>
+                    <div class="study-meta">Longland et al., 2016 • Am J Clin Nutr • 103(3):738-746 • doi:10.3945/ajcn.115.119339</div>
+                    <div class="study-finding">During a 40% caloric deficit (young trained men), 2.4 g/kg body weight/day produced dramatically better results: participants <strong>gained 1.2 kg lean mass while losing 4.8 kg fat</strong>, versus only +0.1 kg lean and −3.5 kg fat at 1.2 g/kg/day.</div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/26817506/" target="_blank" class="study-link">View on PubMed →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="faq-item" id="q6">
+            <button class="faq-question">
+                <span><span class="faq-number">6</span>Does protein intake enhance the effects of strength training?</span>
+            </button>
+            <div class="faq-answer">
+                <div class="quick-answer">
+                    <strong>Quick Answer:</strong> Yes—protein and resistance training are <span class="key-number">synergistic</span>. Protein alone doesn't build strength, but it significantly amplifies the effects of training.
+                </div>
+
+                <div class="study">
+                    <div class="study-title">Protein + Strength Training Meta-Analysis</div>
+                    <div class="study-meta">Tagawa et al., 2022 • Sports Medicine - Open • 8:110 • doi:10.1186/s40798-022-00508-w</div>
+                    <div class="study-finding">Protein supplementation increased strength by <strong>2.01% when combined with resistance training</strong>, but only 0.13% without training (not statistically significant).</div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/36057893/" target="_blank" class="study-link">View on PubMed →</a>
+                </div>
+
+                <div class="summary-box">
+                    <p><strong>Key numbers:</strong></p>
+                    <ul style="margin: 8px 0 0 20px;">
+                        <li>Each 0.1 g/kg/day increase adds <strong>0.72% strength gain</strong>, up to 1.5 g/kg/day</li>
+                        <li>Protein + training adds ~2.5 kg to your one-rep max vs. training alone</li>
+                        <li>Protein + training adds ~0.3 kg lean mass vs. training alone</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ 7 -->
+        <div class="faq-item" id="q7">
+            <button class="faq-question">
+                <span><span class="faq-number">7</span>Can higher protein help with weight management?</span>
+            </button>
+            <div class="faq-answer">
+                <div class="quick-answer">
+                    <strong>Quick Answer:</strong> Yes—protein is the <span class="key-number">most satiating macronutrient</span>. It reduces hunger, burns more calories during digestion, and preserves muscle during weight loss.
+                </div>
+
+                <table class="age-table">
+                    <thead>
+                        <tr>
+                            <th>Benefit</th>
+                            <th>Evidence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Thermic effect</td>
+                            <td>Protein burns <strong>20-30%</strong> of its calories during digestion vs. 5-10% for carbs</td>
+                        </tr>
+                        <tr>
+                            <td>Appetite reduction</td>
+                            <td>High-protein meals reduced subsequent calorie intake by <strong>14-22%</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Metabolism</td>
+                            <td>High-protein dieters maintained <strong>142 kcal/day higher</strong> resting metabolism</td>
+                        </tr>
+                        <tr>
+                            <td>Weight loss</td>
+                            <td>Meta-analysis of 37 RCTs: higher protein = <strong>1.6 kg more weight loss</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="study">
+                    <div class="study-title">Protein for Weight Management Meta-Analysis</div>
+                    <div class="study-meta">Hansen, Astrup & Sjödin, 2021 • Nutrients • 13(9):3193 • doi:10.3390/nu13093193</div>
+                    <div class="study-finding">Systematic review of 43 RCTs: Higher protein intake (18-59% energy) resulted in <strong>1.6 kg greater weight loss</strong> compared to control diets.</div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/34579069/" target="_blank" class="study-link">View on PubMed →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- CATEGORY: Practical Implementation -->
+        <h2 class="faq-category">Practical Implementation</h2>
+
+        <!-- FAQ 8 -->
+        <div class="faq-item" id="q8">
+            <button class="faq-question">
+                <span><span class="faq-number">8</span>What does 30g of protein actually look like?</span>
+            </button>
+            <div class="faq-answer">
+                <div class="quick-answer">
+                    <strong>Quick Answer:</strong> About the size of a deck of cards for meat/fish, or combinations of dairy and plant foods. Here are practical examples:
+                </div>
+
+                <p style="margin-bottom: 8px;"><strong>Animal Sources (~30g each):</strong></p>
+                <div class="protein-examples">
+                    <div class="protein-example">
+                        <div class="protein-amount">~30g</div>
+                        <div class="protein-food">4 oz chicken breast</div>
+                    </div>
+                    <div class="protein-example">
+                        <div class="protein-amount">~30g</div>
+                        <div class="protein-food">4.5 oz salmon</div>
+                    </div>
+                    <div class="protein-example">
+                        <div class="protein-amount">~30g</div>
+                        <div class="protein-food">5 eggs</div>
+                    </div>
+                    <div class="protein-example">
+                        <div class="protein-amount">~30g</div>
+                        <div class="protein-food">4 oz lean beef</div>
+                    </div>
+                </div>
+
+                <p style="margin: 16px 0 8px;"><strong>Dairy Sources (~30g each):</strong></p>
+                <div class="protein-examples">
+                    <div class="protein-example">
+                        <div class="protein-amount">~28g</div>
+                        <div class="protein-food">1.5 cups cottage cheese</div>
+                    </div>
+                    <div class="protein-example">
+                        <div class="protein-amount">~30g</div>
+                        <div class="protein-food">1 cup Greek yogurt + 1 egg</div>
+                    </div>
+                </div>
+
+                <p style="margin: 16px 0 8px;"><strong>Plant Sources (~30g each):</strong></p>
+                <div class="protein-examples">
+                    <div class="protein-example">
+                        <div class="protein-amount">~27g</div>
+                        <div class="protein-food">1.5 cups lentils</div>
+                    </div>
+                    <div class="protein-example">
+                        <div class="protein-amount">~30g</div>
+                        <div class="protein-food">1 block firm tofu</div>
+                    </div>
+                    <div class="protein-example">
+                        <div class="protein-amount">~30g</div>
+                        <div class="protein-food">2 cups edamame</div>
+                    </div>
+                    <div class="protein-example">
+                        <div class="protein-amount">~30g</div>
+                        <div class="protein-food">Beans + quinoa + peanut butter</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ 9 -->
+        <div class="faq-item" id="q9">
+            <button class="faq-question">
+                <span><span class="faq-number">9</span>Can I meet protein targets with plant protein alone?</span>
+            </button>
+            <div class="faq-answer">
+                <div class="quick-answer">
+                    <strong>Quick Answer:</strong> Yes, but it requires more planning. Plant proteins have lower leucine content and digestibility, so you may need <span class="key-number">20-30% more</span> total protein.
+                </div>
+
+                <div class="study">
+                    <div class="study-title">Plant vs. Animal Protein Bioavailability</div>
+                    <div class="study-meta">Gorissen et al., 2018 • Amino Acids • 50(12):1685-1695 • doi:10.1007/s00726-018-2640-5</div>
+                    <div class="study-finding">Plant proteins have lower leucine content and digestibility. To achieve the same muscle-building response, consume <strong>20-30% more total protein</strong> from plant sources, or aim for <strong>35-40g per meal</strong> instead of 30g.</div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/30167963/" target="_blank" class="study-link">View on PubMed →</a>
+                </div>
+
+                <div class="summary-box">
+                    <p><strong>Strategies for plant-based eaters:</strong></p>
+                    <ul style="margin: 8px 0 0 20px;">
+                        <li>Emphasize high-leucine plant foods: soy, lentils, peanuts</li>
+                        <li>Combine complementary proteins at meals (legumes + grains)</li>
+                        <li>Aim for 35-40g protein per meal instead of 30g</li>
+                        <li>Consider a leucine supplement to match animal protein response</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ 10 -->
+        <div class="faq-item" id="q10">
+            <button class="faq-question">
+                <span><span class="faq-number">10</span>Do I need protein supplements to hit these targets?</span>
+            </button>
+            <div class="faq-answer">
+                <div class="quick-answer">
+                    <strong>Quick Answer:</strong> Not necessarily—supplements are a <span class="key-number">convenience, not a requirement</span>. Many people successfully meet 1.2-1.6 g/kg/day through food alone.
+                </div>
+
+                <p>However, supplements can help if you:</p>
+                <ul style="margin: 8px 0 16px 20px;">
+                    <li>Struggle with appetite (common with aging)</li>
+                    <li>Find it difficult to eat 30+ grams at breakfast</li>
+                    <li>Need portable options for travel or work</li>
+                    <li>Follow dietary restrictions that limit protein sources</li>
+                    <li>Practice intermittent fasting or time-restricted eating</li>
+                </ul>
+
+                <div class="warning-box">
+                    <strong>Caution: Fasting and Protein</strong>
+                    <p style="margin-top: 8px;">Peter Attia notes that fasting and time-restricted eating can be "problematic due to the heightened risk of protein deficiency and subsequent loss of muscle mass." If you practice intermittent fasting, ensure you still hit your total daily protein target. For muscle preservation during extended fasts, some specialists recommend prioritizing protein in your eating window—potentially using supplements to reach 1.6+ g/kg in fewer meals.</p>
+                </div>
+
+                <div class="summary-box">
+                    <p><strong>If you do supplement:</strong> Whey protein is well-studied and effective. Plant-based options like pea or soy protein work too but may benefit from added leucine.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Line -->
+        <div class="bottom-line" style="margin-top: 32px;">
+            <h3>Key Recommendations</h3>
+            <p style="margin-bottom: 12px;"><strong>Daily target:</strong> 1.2-1.6 g/kg body weight (higher if training or in deficit)</p>
+            <p style="margin-bottom: 12px;"><strong>Per-meal target:</strong> 25-40g depending on age (older adults need more)</p>
+            <p><strong>Distribution:</strong> Spread protein evenly across 3-4 meals for 25% better muscle synthesis</p>
+        </div>
+
+        <!-- References -->
+        <div class="references-section">
+            <h2>References</h2>
+
+            <p class="reference">[1] Bauer, J., et al. (2013). "Evidence-based recommendations for optimal dietary protein intake in older people: A position paper from the PROT-AGE Study Group." <em>Journal of the American Medical Directors Association</em>, 14(8), 542-559. <a href="https://doi.org/10.1016/j.jamda.2013.05.021" target="_blank">doi:10.1016/j.jamda.2013.05.021</a></p>
+
+            <p class="reference">[2] Han, M., Woo, K., & Kim, K. (2024). "Association of Protein Intake with Sarcopenia and Related Indicators Among Korean Older Adults: A Systematic Review and Meta-Analysis." <em>Nutrients</em>, 16(24), 4350. <a href="https://doi.org/10.3390/nu16244350" target="_blank">doi:10.3390/nu16244350</a></p>
+
+            <p class="reference">[3] Houston, D.K., et al. (2008). "Dietary protein intake is associated with lean mass change in older, community-dwelling adults: the Health, Aging, and Body Composition (Health ABC) Study." <em>American Journal of Clinical Nutrition</em>, 87(1), 150-155. <a href="https://doi.org/10.1093/ajcn/87.1.150" target="_blank">doi:10.1093/ajcn/87.1.150</a></p>
+
+            <p class="reference">[4] Naghshi, S., et al. (2020). "Dietary intake of total, animal, and plant proteins and risk of all cause, cardiovascular, and cancer mortality: systematic review and dose-response meta-analysis of prospective cohort studies." <em>BMJ</em>, 370:m2412. <a href="https://doi.org/10.1136/bmj.m2412" target="_blank">doi:10.1136/bmj.m2412</a></p>
+
+            <p class="reference">[5] Kühn, T., et al. (2024). "Protein intake and cancer: an umbrella review of systematic reviews for the evidence-based guideline of the German Nutrition Society." <em>European Journal of Nutrition</em>, 63, 1471-1486. <a href="https://doi.org/10.1007/s00394-024-03380-4" target="_blank">doi:10.1007/s00394-024-03380-4</a></p>
+
+            <p class="reference">[6] Devries, M.C., et al. (2018). "Changes in Kidney Function Do Not Differ between Healthy Adults Consuming Higher- Compared with Lower- or Normal-Protein Diets: A Systematic Review and Meta-Analysis." <em>Journal of Nutrition</em>, 148(11), 1760-1775. <a href="https://doi.org/10.1093/jn/nxy197" target="_blank">doi:10.1093/jn/nxy197</a></p>
+
+            <p class="reference">[7] Mamerow, M.M., et al. (2014). "Dietary protein distribution positively influences 24-h muscle protein synthesis in healthy adults." <em>Journal of Nutrition</em>, 144(6), 876-880. <a href="https://doi.org/10.3945/jn.113.185280" target="_blank">doi:10.3945/jn.113.185280</a></p>
+
+            <p class="reference">[8] Moore, D.R., et al. (2015). "Protein ingestion to stimulate myofibrillar protein synthesis requires greater relative protein intakes in healthy older versus younger men." <em>Journals of Gerontology Series A</em>, 70(1), 57-62. <a href="https://doi.org/10.1093/gerona/glu103" target="_blank">doi:10.1093/gerona/glu103</a></p>
+
+            <p class="reference">[9] Longland, T.M., et al. (2016). "Higher compared with lower dietary protein during an energy deficit combined with intense exercise promotes greater lean mass gain and fat mass loss: a randomized trial." <em>American Journal of Clinical Nutrition</em>, 103(3), 738-746. <a href="https://doi.org/10.3945/ajcn.115.119339" target="_blank">doi:10.3945/ajcn.115.119339</a></p>
+
+            <p class="reference">[10] Tagawa, R., et al. (2022). "Synergistic Effect of Increased Total Protein Intake and Strength Training on Muscle Strength: A Dose-Response Meta-analysis of Randomized Controlled Trials." <em>Sports Medicine - Open</em>, 8, 110. <a href="https://doi.org/10.1186/s40798-022-00508-w" target="_blank">doi:10.1186/s40798-022-00508-w</a></p>
+
+            <p class="reference">[11] Hansen, T.T., Astrup, A., & Sjödin, A. (2021). "Are Dietary Proteins the Key to Successful Body Weight Management? A Systematic Review and Meta-Analysis of Studies Assessing Body Weight Outcomes after Interventions with Increased Dietary Protein." <em>Nutrients</em>, 13(9), 3193. <a href="https://doi.org/10.3390/nu13093193" target="_blank">doi:10.3390/nu13093193</a></p>
+
+            <p class="reference">[12] Gorissen, S.H.M., et al. (2018). "Protein content and amino acid composition of commercially available plant-based protein isolates." <em>Amino Acids</em>, 50(12), 1685-1695. <a href="https://doi.org/10.1007/s00726-018-2640-5" target="_blank">doi:10.1007/s00726-018-2640-5</a></p>
+        </div>
+
+        <p class="text-center text-muted" style="margin-top: 32px; font-size: 0.85rem;">
+            Last updated: February 2026 • Based on peer-reviewed research<br>
+            <em>Have a question not answered here? <a href="mailto:info@longevitypath.com">Let us know</a></em>
+        </p>
+    </div>
+
+    <script>
+        // FAQ accordion functionality
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const item = button.parentElement;
+                item.classList.toggle('open');
+            });
+        });
+    </script>
+</body>
+</html>

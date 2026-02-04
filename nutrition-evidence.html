@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Evidence - Nutrition Principles</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-bg: #F7F4EB;
+            --color-card: #FFFBF5;
+            --color-text: #0D3137;
+            --color-text-muted: #29484C;
+            --color-teal: #0D3137;
+            --color-border: #E7E5E4;
+            --color-primary: #00905A;
+            --color-primary-light: rgba(0, 144, 90, 0.1);
+            --radius: 20px;
+            --radius-sm: 12px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.7;
+            padding: 24px 16px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-family: 'Lora', serif;
+            font-size: 2rem;
+            color: var(--color-teal);
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: var(--color-text-muted);
+            margin-bottom: 32px;
+            font-size: 1rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: var(--color-teal);
+            text-decoration: none;
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .principle-card {
+            background: var(--color-card);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 20px rgba(13, 49, 55, 0.08);
+        }
+
+        .principle-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .principle-number {
+            width: 32px;
+            height: 32px;
+            background: var(--color-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .principle-title {
+            font-family: 'Lora', serif;
+            font-size: 1.2rem;
+            color: var(--color-text);
+            flex: 1;
+        }
+
+        .evidence-badge {
+            background: var(--color-primary-light);
+            color: var(--color-teal);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .study {
+            background: var(--color-bg);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+
+        .study:last-child {
+            margin-bottom: 0;
+        }
+
+        .study-title {
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: 8px;
+        }
+
+        .study-meta {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            margin-bottom: 8px;
+        }
+
+        .study-finding {
+            font-size: 0.9rem;
+            color: var(--color-text);
+        }
+
+        .study-finding strong {
+            color: var(--color-teal);
+            font-weight: 700;
+        }
+
+        .study-link {
+            display: inline-block;
+            margin-top: 8px;
+            color: var(--color-teal);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+
+        .study-link:hover {
+            text-decoration: underline;
+        }
+
+        .consensus-box {
+            background: linear-gradient(135deg, var(--color-primary-light) 0%, rgba(0, 144, 90, 0.2) 100%);
+            border-left: 4px solid var(--color-primary);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: 20px;
+            margin-bottom: 32px;
+        }
+
+        .consensus-box h2 {
+            font-family: 'Lora', serif;
+            font-size: 1.1rem;
+            color: var(--color-teal);
+            margin-bottom: 8px;
+        }
+
+        .consensus-box p {
+            font-size: 0.95rem;
+            color: var(--color-text);
+        }
+
+        .veg-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            margin-top: 8px;
+        }
+
+        .veg-table th {
+            background: var(--color-primary-light);
+            color: var(--color-teal);
+            padding: 10px 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .veg-table.starchy th {
+            background: #FEE2E2;
+            color: #DC2626;
+        }
+
+        .veg-table td {
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .veg-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .veg-table tr:hover {
+            background: var(--color-bg);
+        }
+
+        @media (max-width: 640px) {
+            h1 { font-size: 1.5rem; }
+            .principle-header { flex-wrap: wrap; }
+            .evidence-badge { margin-top: 8px; }
+            .veg-table { font-size: 0.8rem; }
+            .veg-table th, .veg-table td { padding: 6px 8px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index-editable-en.html" class="back-link">&larr; Back to Assessment</a>
+
+        <h1>Scientific Evidence</h1>
+        <p class="subtitle">The 5 nutrition principles are based on meta-analyses and systematic reviews involving millions of participants.</p>
+
+        <div class="consensus-box">
+            <h2>Scientific Consensus</h2>
+            <p>The <strong>True Health Initiative</strong> brought together 500+ experts from 40+ countries who agreed: <em>"The healthiest diet is one generally comprised mostly of minimally processed plants."</em></p>
+        </div>
+
+        <!-- Principle 1: Vegetables -->
+        <div class="principle-card">
+            <div class="principle-header">
+                <div class="principle-number">1</div>
+                <div class="principle-title">Eat at least 3 servings of vegetables daily</div>
+                <span class="evidence-badge">13% lower mortality</span>
+            </div>
+
+            <div class="study">
+                <div class="study-title">Wang et al. 2021 - Circulation</div>
+                <div class="study-meta">108,735 participants | 30-year follow-up | 33,898 deaths</div>
+                <div class="study-finding">
+                    <strong>Key finding:</strong> 5 servings/day vs 2 servings/day = 13% lower all-cause mortality. Leafy greens and cruciferous vegetables showed strongest benefits. Starchy vegetables (potatoes, corn) showed NO mortality benefit.
+                </div>
+                <a href="https://pubmed.ncbi.nlm.nih.gov/33641343/" target="_blank" class="study-link">View on PubMed &rarr;</a>
+            </div>
+
+            <div class="study">
+                <div class="study-title">Aune et al. 2017 - Meta-Analysis</div>
+                <div class="study-meta">95 prospective studies | ~2 million participants</div>
+                <div class="study-finding">
+                    <strong>Key finding:</strong> Per 200g vegetables/day: 10-15% mortality reduction. Vegetables showed STRONGER associations with reduced cancer and CVD mortality than fruits.
+                </div>
+                <a href="https://pubmed.ncbi.nlm.nih.gov/28338764/" target="_blank" class="study-link">View on PubMed &rarr;</a>
+            </div>
+
+            <!-- Vegetable Lists -->
+            <div class="veg-lists">
+                <h4 style="color: var(--color-teal); margin: 20px 0 12px; font-family: 'Lora', serif;">✅ Non-Starchy Vegetables (Proven Mortality Benefit)</h4>
+                <table class="veg-table">
+                    <thead>
+                        <tr><th>Vegetable</th><th>Calories per 100g</th><th>Category</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Spinach</td><td>23 kcal</td><td>Leafy green</td></tr>
+                        <tr><td>Kale</td><td>35 kcal</td><td>Leafy green</td></tr>
+                        <tr><td>Arugula</td><td>25 kcal</td><td>Leafy green</td></tr>
+                        <tr><td>Lettuce (romaine)</td><td>17 kcal</td><td>Leafy green</td></tr>
+                        <tr><td>Broccoli</td><td>34 kcal</td><td>Cruciferous</td></tr>
+                        <tr><td>Cauliflower</td><td>25 kcal</td><td>Cruciferous</td></tr>
+                        <tr><td>Brussels sprouts</td><td>43 kcal</td><td>Cruciferous</td></tr>
+                        <tr><td>Cabbage</td><td>25 kcal</td><td>Cruciferous</td></tr>
+                        <tr><td>Bell peppers</td><td>31 kcal</td><td>Colorful</td></tr>
+                        <tr><td>Tomatoes</td><td>18 kcal</td><td>Colorful</td></tr>
+                        <tr><td>Carrots</td><td>41 kcal</td><td>Colorful</td></tr>
+                        <tr><td>Zucchini</td><td>17 kcal</td><td>Colorful</td></tr>
+                        <tr><td>Cucumber</td><td>16 kcal</td><td>Colorful</td></tr>
+                        <tr><td>Asparagus</td><td>20 kcal</td><td>Other</td></tr>
+                        <tr><td>Green beans</td><td>31 kcal</td><td>Other</td></tr>
+                        <tr><td>Mushrooms</td><td>22 kcal</td><td>Other</td></tr>
+                    </tbody>
+                </table>
+
+                <h4 style="color: var(--color-danger); margin: 24px 0 12px; font-family: 'Lora', serif;">❌ Starchy Vegetables (No Mortality Benefit in Studies)</h4>
+                <table class="veg-table starchy">
+                    <thead>
+                        <tr><th>Vegetable</th><th>Calories per 100g</th><th>Note</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Potato (white)</td><td>77 kcal</td><td>High glycemic index</td></tr>
+                        <tr><td>Sweet potato</td><td>86 kcal</td><td>High carbohydrate</td></tr>
+                        <tr><td>Corn</td><td>96 kcal</td><td>High glycemic index</td></tr>
+                        <tr><td>Peas</td><td>81 kcal</td><td>High carbohydrate</td></tr>
+                        <tr><td>Parsnips</td><td>75 kcal</td><td>High glycemic index</td></tr>
+                        <tr><td>Butternut squash</td><td>45 kcal</td><td>Moderate starch</td></tr>
+                    </tbody>
+                </table>
+                <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-top: 12px;">
+                    <strong>Why the difference?</strong> Non-starchy vegetables average ~25 kcal/100g vs ~77 kcal/100g for starchy.
+                    Starchy vegetables cause blood sugar spikes similar to refined grains and displace more nutrient-dense options.
+                </p>
+            </div>
+        </div>
+
+        <!-- Principle 2: Whole Foods -->
+        <div class="principle-card">
+            <div class="principle-header">
+                <div class="principle-number">2</div>
+                <div class="principle-title">Home-cooked meals from whole ingredients</div>
+                <span class="evidence-badge">15% lower mortality</span>
+            </div>
+
+            <div class="study">
+                <div class="study-title">BMJ Umbrella Review 2024</div>
+                <div class="study-meta">45 pooled analyses | 9.9 million participants</div>
+                <div class="study-finding">
+                    <strong>Key finding:</strong> Higher ultra-processed food (UPF) intake associated with 32 adverse health outcomes including +15% all-cause mortality, +50% CVD mortality, increased cancer, diabetes, and mental health disorders.
+                </div>
+                <a href="https://pubmed.ncbi.nlm.nih.gov/38418082/" target="_blank" class="study-link">View on PubMed &rarr;</a>
+            </div>
+
+            <div class="study">
+                <div class="study-title">Hall NIH RCT 2019 - Cell Metabolism</div>
+                <div class="study-meta">Randomized controlled trial | Inpatient metabolic ward</div>
+                <div class="study-finding">
+                    <strong>Key finding:</strong> UPF diet caused +508 kcal/day consumed vs whole foods diet (matched for calories, protein, fat, carbs, fiber). UPF causes passive overeating through faster eating and bypassed satiety signals.
+                </div>
+                <a href="https://pubmed.ncbi.nlm.nih.gov/31105044/" target="_blank" class="study-link">View on PubMed &rarr;</a>
+            </div>
+        </div>
+
+        <!-- Principle 3: Healthy Fats -->
+        <div class="principle-card">
+            <div class="principle-header">
+                <div class="principle-number">3</div>
+                <div class="principle-title">Include healthy fats regularly</div>
+                <span class="evidence-badge">30% less CVD</span>
+            </div>
+
+            <div class="study">
+                <div class="study-title">PREDIMED Trial 2018 - NEJM</div>
+                <div class="study-meta">7,447 participants | Randomized controlled trial | 4.8 years</div>
+                <div class="study-finding">
+                    <strong>Key finding:</strong> Mediterranean diet with extra virgin olive oil (50g/day) or nuts (30g/day) = 30% reduction in major cardiovascular events vs low-fat control diet. Benefit independent of weight loss.
+                </div>
+                <a href="https://pubmed.ncbi.nlm.nih.gov/29897866/" target="_blank" class="study-link">View on PubMed &rarr;</a>
+            </div>
+        </div>
+
+        <!-- Principle 4: Avoid Trans Fats -->
+        <div class="principle-card">
+            <div class="principle-header">
+                <div class="principle-number">4</div>
+                <div class="principle-title">Avoid trans fats and limit processed meats</div>
+                <span class="evidence-badge">34% mortality reduction</span>
+            </div>
+
+            <div class="study">
+                <div class="study-title">de Souza et al. 2015 - BMJ Meta-Analysis</div>
+                <div class="study-meta">Systematic review of observational studies</div>
+                <div class="study-finding">
+                    <strong>Key finding:</strong> Trans fat intake associated with +34% all-cause mortality, +28% CHD mortality, +21% CHD events per 2% of energy from trans fats. Trans fats show STRONGEST evidence for harm among all dietary fats.
+                </div>
+                <a href="https://pubmed.ncbi.nlm.nih.gov/26268692/" target="_blank" class="study-link">View on PubMed &rarr;</a>
+            </div>
+
+            <div class="study">
+                <div class="study-title">AHA Presidential Advisory 2017</div>
+                <div class="study-meta">American Heart Association scientific statement</div>
+                <div class="study-finding">
+                    <strong>Key finding:</strong> Industrial trans fats consistently associated with CHD death. Recommendation: Eliminate partially hydrogenated oils from diet completely.
+                </div>
+                <a href="https://www.ahajournals.org/doi/10.1161/cir.0000000000000510" target="_blank" class="study-link">View on AHA &rarr;</a>
+            </div>
+        </div>
+
+        <!-- Principle 5: Alcohol -->
+        <div class="principle-card">
+            <div class="principle-header">
+                <div class="principle-number">5</div>
+                <div class="principle-title">Moderate alcohol or none at all</div>
+                <span class="evidence-badge">Linear dose-response</span>
+            </div>
+
+            <div class="study">
+                <div class="study-title">GBD 2016 - Lancet Global Study</div>
+                <div class="study-meta">195 countries | 28 million people | 694 data sources</div>
+                <div class="study-finding">
+                    <strong>Key finding:</strong> Zero alcohol = lowest risk for all-cause mortality. NO safe level of alcohol identified. Previous "J-curve" (protective effect of moderate drinking) was methodological artifact.
+                </div>
+                <a href="https://pubmed.ncbi.nlm.nih.gov/30146330/" target="_blank" class="study-link">View on PubMed &rarr;</a>
+            </div>
+
+            <div class="study">
+                <div class="study-title">Wood et al. 2018 - Lancet</div>
+                <div class="study-meta">83 prospective studies | 599,912 current drinkers</div>
+                <div class="study-finding">
+                    <strong>Key finding:</strong> &gt;7 drinks/week: mortality increases. 14 drinks/week: -1 to -2 years life expectancy. 25 drinks/week: -4 to -5 years life expectancy. Linear dose-response with no safe threshold.
+                </div>
+                <a href="https://pubmed.ncbi.nlm.nih.gov/29676281/" target="_blank" class="study-link">View on PubMed &rarr;</a>
+            </div>
+        </div>
+
+        <p style="text-align: center; color: var(--color-text-muted); margin-top: 32px; font-size: 0.85rem;">
+            All studies are peer-reviewed and published in high-impact medical journals.
+        </p>
+    </div>
+</body>
+</html>

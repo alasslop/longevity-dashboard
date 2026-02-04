@@ -1,0 +1,505 @@
+/**
+ * LongevityPath Brand Style Guide
+ * ================================
+ * Single source of truth for all brand styling.
+ * Import this file in all HTML pages to ensure consistency.
+ *
+ * Usage: <link rel="stylesheet" href="brand.css">
+ *
+ * IMPORTANT COLOR RULES:
+ * - ALL TEXT must use --color-teal (#0D3137) or --color-text-muted (#29484C)
+ * - NEVER use --color-primary (#00905A green) for text
+ * - Green (#00905A) is ONLY for: backgrounds, borders, icons, buttons
+ */
+
+/* ===========================================
+   CSS VARIABLES - Brand Colors & Typography
+   =========================================== */
+:root {
+    /* Primary Colors */
+    --color-bg: #F7F4EB;              /* Light cream background */
+    --color-card: #FFFBF5;            /* Card/section background */
+    --color-text: #0D3137;            /* Main body text - dark teal */
+    --color-teal: #0D3137;            /* Headings, titles, links - dark teal */
+    --color-text-muted: #29484C;      /* Secondary text, captions */
+    --color-border: #E7E5E4;          /* Borders, dividers */
+
+    /* Accent Colors - USE ONLY FOR BACKGROUNDS/BORDERS/ICONS */
+    --color-accent: #00905A;          /* Green - backgrounds, borders, icons only */
+    --color-accent-light: rgba(0, 144, 90, 0.1);  /* Light green background */
+
+    /* Warning/Alert Colors */
+    --color-warning-bg: #FFF3CD;
+    --color-warning-border: #FFA500;
+    --color-warning-text: #856404;
+
+    /* Border Radius */
+    --radius: 20px;
+    --radius-sm: 12px;
+    --radius-xs: 8px;
+
+    /* Shadows */
+    --shadow-card: 0 4px 20px rgba(13, 49, 55, 0.08);
+    --shadow-hover: 0 6px 24px rgba(13, 49, 55, 0.12);
+
+    /* Typography */
+    --font-heading: 'Lora', serif;
+    --font-body: 'Poppins', sans-serif;
+}
+
+/* ===========================================
+   BASE STYLES
+   =========================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    background: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.7;
+    padding: 24px 16px;
+}
+
+/* ===========================================
+   TYPOGRAPHY - All text uses dark teal
+   =========================================== */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: var(--color-teal);
+    line-height: 1.3;
+}
+
+h1 { font-size: 2rem; margin-bottom: 8px; }
+h2 { font-size: 1.5rem; margin-bottom: 16px; }
+h3 { font-size: 1.25rem; margin-bottom: 12px; }
+h4 { font-size: 1.1rem; margin-bottom: 8px; }
+
+p {
+    margin-bottom: 16px;
+    color: var(--color-text);
+}
+
+/* Links - dark teal, NOT green */
+a {
+    color: var(--color-teal);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Strong/emphasis text - dark teal, NOT green */
+strong, b {
+    color: var(--color-teal);
+    font-weight: 700;
+}
+
+/* Muted text */
+.text-muted, .subtitle, .caption {
+    color: var(--color-text-muted);
+}
+
+/* ===========================================
+   LAYOUT COMPONENTS
+   =========================================== */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.container-wide {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ===========================================
+   CARDS & SECTIONS
+   =========================================== */
+.card, .section-card {
+    background: var(--color-card);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-card);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-hover);
+}
+
+/* Section Headers */
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.section-title {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    color: var(--color-teal);  /* Dark teal, NOT green */
+    flex: 1;
+}
+
+/* Section Icon - Green background is OK here */
+.section-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--color-accent);  /* Green background OK */
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* ===========================================
+   BADGES & TAGS
+   =========================================== */
+.badge, .key-point, .evidence-badge {
+    background: var(--color-accent-light);  /* Light green background OK */
+    color: var(--color-teal);               /* Dark teal text, NOT green */
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* ===========================================
+   BOXES & CALLOUTS
+   =========================================== */
+/* Summary/Info Box */
+.summary-box, .info-box {
+    background: var(--color-bg);
+    border-left: 4px solid var(--color-accent);  /* Green border OK */
+    padding: 16px;
+    margin-bottom: 16px;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.summary-box p:last-child,
+.info-box p:last-child {
+    margin-bottom: 0;
+}
+
+/* Warning Box */
+.warning-box {
+    background: var(--color-warning-bg);
+    border-left: 4px solid var(--color-warning-border);
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.warning-box strong {
+    color: var(--color-warning-text);
+}
+
+/* Success Box */
+.success-box {
+    background: var(--color-accent-light);  /* Light green background OK */
+    border-left: 4px solid var(--color-accent);  /* Green border OK */
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+/* ===========================================
+   STUDY/REFERENCE CARDS
+   =========================================== */
+.study {
+    background: var(--color-bg);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    margin-bottom: 12px;
+}
+
+.study:last-child {
+    margin-bottom: 0;
+}
+
+.study-title {
+    font-weight: 600;
+    color: var(--color-teal);  /* Dark teal, NOT green */
+    margin-bottom: 8px;
+}
+
+.study-meta {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-bottom: 8px;
+}
+
+.study-finding {
+    font-size: 0.9rem;
+    color: var(--color-text);
+}
+
+.study-finding strong {
+    color: var(--color-teal);  /* Dark teal for emphasis, NOT green */
+    font-weight: 700;
+}
+
+.study-link {
+    display: inline-block;
+    margin-top: 8px;
+    color: var(--color-teal);  /* Dark teal, NOT green */
+    text-decoration: none;
+    font-size: 0.85rem;
+}
+
+.study-link:hover {
+    text-decoration: underline;
+}
+
+/* ===========================================
+   TABLES
+   =========================================== */
+.table, .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 0.9rem;
+}
+
+.table th, .comparison-table th,
+.table td, .comparison-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.table th, .comparison-table th {
+    background: var(--color-bg);
+    font-weight: 600;
+    color: var(--color-teal);  /* Dark teal, NOT green */
+}
+
+.table tr:last-child td,
+.comparison-table tr:last-child td {
+    border-bottom: none;
+}
+
+.highlight-row {
+    background: var(--color-accent-light);  /* Light green background OK */
+}
+
+/* ===========================================
+   BUTTONS
+   =========================================== */
+.btn, .button {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+/* Primary Button - Green background is OK */
+.btn-primary {
+    background: var(--color-accent);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #007A4D;
+    text-decoration: none;
+}
+
+/* Secondary Button */
+.btn-secondary {
+    background: var(--color-bg);
+    color: var(--color-teal);
+    border: 2px solid var(--color-teal);
+}
+
+.btn-secondary:hover {
+    background: var(--color-teal);
+    color: white;
+    text-decoration: none;
+}
+
+/* ===========================================
+   ACCENT SECTION (Bottom Line, CTA)
+   Green background is OK for these
+   =========================================== */
+.bottom-line, .cta-section, .accent-section {
+    background: var(--color-accent);  /* Green background OK */
+    color: white;
+    padding: 20px;
+    border-radius: var(--radius);
+    text-align: center;
+}
+
+.bottom-line h3, .cta-section h3, .accent-section h3 {
+    font-family: var(--font-heading);
+    color: white;  /* White on green background */
+    margin-bottom: 8px;
+}
+
+.bottom-line p, .cta-section p, .accent-section p {
+    color: white;
+}
+
+/* ===========================================
+   NAVIGATION LINKS
+   =========================================== */
+.back-link, .nav-link {
+    display: inline-block;
+    color: var(--color-teal);  /* Dark teal, NOT green */
+    text-decoration: none;
+    margin-bottom: 24px;
+    font-weight: 500;
+}
+
+.back-link:hover, .nav-link:hover {
+    text-decoration: underline;
+}
+
+/* ===========================================
+   HELP LINKS (? icons)
+   =========================================== */
+.help-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    background: var(--color-accent-light);  /* Light green background OK */
+    color: var(--color-teal);               /* Dark teal text */
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 6px;
+}
+
+.help-link:hover {
+    background: var(--color-teal);
+    color: white;
+    text-decoration: none;
+}
+
+/* ===========================================
+   QUOTES
+   =========================================== */
+.expert-quote, blockquote {
+    font-style: italic;
+    padding: 16px;
+    background: var(--color-bg);
+    border-radius: var(--radius-sm);
+    margin: 16px 0;
+}
+
+.expert-quote cite, blockquote cite {
+    display: block;
+    margin-top: 8px;
+    font-style: normal;
+    font-weight: 600;
+    color: var(--color-teal);  /* Dark teal, NOT green */
+}
+
+/* ===========================================
+   REFERENCES SECTION
+   =========================================== */
+.references-section {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--color-border);
+}
+
+.references-section h2 {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    color: var(--color-teal);
+    margin-bottom: 16px;
+}
+
+.reference {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-bottom: 12px;
+    padding-left: 24px;
+    text-indent: -24px;
+}
+
+.reference a {
+    color: var(--color-teal);  /* Dark teal, NOT green */
+    text-decoration: none;
+}
+
+.reference a:hover {
+    text-decoration: underline;
+}
+
+/* ===========================================
+   FORM ELEMENTS
+   =========================================== */
+input[type="text"],
+input[type="email"],
+input[type="number"],
+select,
+textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--color-text);
+    background: white;
+    transition: border-color 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--color-teal);
+}
+
+/* ===========================================
+   UTILITY CLASSES
+   =========================================== */
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.mb-0 { margin-bottom: 0; }
+.mb-8 { margin-bottom: 8px; }
+.mb-16 { margin-bottom: 16px; }
+.mb-24 { margin-bottom: 24px; }
+.mb-32 { margin-bottom: 32px; }
+.mt-16 { margin-top: 16px; }
+.mt-24 { margin-top: 24px; }
+.mt-32 { margin-top: 32px; }
+
+/* ===========================================
+   RESPONSIVE
+   =========================================== */
+@media (max-width: 768px) {
+    h1 { font-size: 1.75rem; }
+    h2 { font-size: 1.35rem; }
+
+    .card, .section-card {
+        padding: 16px;
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
