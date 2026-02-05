@@ -13,9 +13,7 @@
     <!-- Shared Brand Styles -->
     <link rel="stylesheet" href="brand.css">
 
-    <!-- Page-specific styles -->
     <style>
-        /* Container override for this page */
         .container {
             max-width: 900px;
             margin: 0 auto;
@@ -35,8 +33,6 @@
             border-radius: var(--radius);
             color: #FFFBF5;
             margin-bottom: 32px;
-            position: relative;
-            overflow: hidden;
         }
 
         .header h1 {
@@ -60,43 +56,6 @@
             opacity: 0.95;
         }
 
-        /* Score Circle */
-        .score-section {
-            display: flex;
-            justify-content: center;
-            margin: -60px 0 32px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .score-circle {
-            width: 140px;
-            height: 140px;
-            background: var(--color-card);
-            border-radius: 50%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            border: 4px solid var(--color-accent);
-        }
-
-        .score-value {
-            font-family: var(--font-heading);
-            font-size: 2.5rem;
-            color: var(--color-accent);
-            line-height: 1;
-        }
-
-        .score-label {
-            font-size: 0.75rem;
-            color: var(--color-text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-top: 4px;
-        }
-
         /* Cards */
         .card {
             background: var(--color-card);
@@ -104,10 +63,163 @@
             padding: 24px;
             margin-bottom: 24px;
             box-shadow: var(--shadow-card);
-            border: none;
         }
 
-        /* Section Header */
+        .card-title {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--color-teal);
+            margin-bottom: 16px;
+        }
+
+        /* Radar Chart */
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            padding: 16px 0;
+        }
+
+        .radar-chart {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .chart-legend {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 8px;
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-current {
+            width: 20px;
+            height: 12px;
+            background: var(--color-accent-light);
+            border: 2px solid var(--color-accent);
+            border-radius: 2px;
+        }
+
+        .legend-goal {
+            width: 20px;
+            height: 0;
+            border-top: 2px dashed #9CA3AF;
+        }
+
+        /* Mobile-First: Full Screen Views */
+        .view {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--color-bg);
+            overflow-y: auto;
+            z-index: 100;
+            transform: translateX(100%);
+            transition: transform 0.3s ease-out;
+        }
+
+        .view.active {
+            transform: translateX(0);
+        }
+
+        .view-header {
+            position: sticky;
+            top: 0;
+            background: var(--color-card);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            z-index: 10;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            color: var(--color-accent);
+            font-size: 1.5rem;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover {
+            background: var(--color-accent-light);
+        }
+
+        .view-title {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--color-teal);
+            flex: 1;
+        }
+
+        .view-content {
+            padding: 20px;
+            padding-bottom: 40px;
+        }
+
+        /* Swipe indicator */
+        .swipe-hint {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 60px;
+            background: var(--color-border);
+            border-radius: 0 4px 4px 0;
+            opacity: 0.5;
+        }
+
+        /* Clickable Radar Labels */
+        .radar-label-group {
+            cursor: pointer;
+            transition: transform 0.15s ease-out, opacity 0.15s;
+        }
+
+        .radar-label-group:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
+        }
+
+        .radar-label-group:active {
+            transform: scale(0.95);
+            opacity: 0.6;
+        }
+
+        /* Hide main content when view is open */
+        body.view-open .container {
+            pointer-events: none;
+        }
+
+        /* Section Content */
+        .section-content {
+            display: none;
+        }
+
+        .section-content.active {
+            display: block;
+        }
+
+        /* Section Header with Step Number */
         .section-header {
             display: flex;
             align-items: center;
@@ -126,7 +238,6 @@
             margin-top: 0;
         }
 
-        /* Orange Step Number Ball */
         .step-number {
             display: inline-flex;
             align-items: center;
@@ -161,10 +272,6 @@
             background: var(--color-bg);
             border-radius: var(--radius-sm);
             margin-bottom: 12px;
-        }
-
-        .question-item:last-child {
-            margin-bottom: 0;
         }
 
         .question-label {
@@ -215,7 +322,6 @@
         .intro-link:hover {
             background: #E08C4A;
             transform: translateY(-1px);
-            text-decoration: none;
         }
 
         /* Slider Styles */
@@ -244,16 +350,6 @@
             background: var(--color-accent);
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-        }
-
-        .slider-input::-moz-range-thumb {
-            width: 28px;
-            height: 28px;
-            background: var(--color-accent);
-            border-radius: 50%;
-            cursor: pointer;
-            border: none;
             box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
 
@@ -286,7 +382,6 @@
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s;
-            min-height: 48px;
         }
 
         .radio-option:hover {
@@ -305,14 +400,12 @@
             accent-color: var(--color-accent);
             cursor: pointer;
             flex-shrink: 0;
-            pointer-events: none;
         }
 
         .radio-option label {
             flex: 1;
             cursor: pointer;
             font-size: 0.9rem;
-            pointer-events: none;
         }
 
         .radio-points {
@@ -321,7 +414,6 @@
             padding: 2px 8px;
             background: var(--color-bg);
             border-radius: 4px;
-            white-space: nowrap;
         }
 
         /* Checkbox Styles */
@@ -341,7 +433,6 @@
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s;
-            min-height: 48px;
         }
 
         .checkbox-option:hover {
@@ -359,14 +450,12 @@
             accent-color: var(--color-accent);
             cursor: pointer;
             flex-shrink: 0;
-            pointer-events: none;
         }
 
         .checkbox-option label {
             flex: 1;
             cursor: pointer;
             font-size: 0.9rem;
-            pointer-events: none;
         }
 
         .evidence-tag {
@@ -375,7 +464,6 @@
             background: var(--color-accent-light);
             padding: 2px 8px;
             border-radius: 4px;
-            white-space: nowrap;
             font-weight: 500;
         }
 
@@ -393,148 +481,13 @@
             text-decoration: none;
             margin-left: 8px;
             cursor: pointer;
-            transition: all 0.2s;
         }
 
         .help-link:hover {
             background: var(--color-teal);
-            transform: scale(1.1);
         }
 
-        /* Number Input */
-        .number-input {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .number-input input {
-            width: 120px;
-            padding: 12px 16px;
-            border: 2px solid var(--color-border);
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-family: var(--font-body);
-            text-align: center;
-        }
-
-        .number-input input:focus {
-            outline: none;
-            border-color: var(--color-accent);
-        }
-
-        .number-input span {
-            color: var(--color-text-muted);
-            font-size: 0.9rem;
-        }
-
-        /* Save Button - Orange CTA */
-        .save-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            width: 100%;
-            padding: 14px 24px;
-            background: var(--color-orange);
-            color: white;
-            border: none;
-            border-radius: 30px;
-            font-family: 'Raleway', sans-serif;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: all 0.2s;
-        }
-
-        .save-btn:hover {
-            background: #E08C4A;
-            transform: translateY(-1px);
-        }
-
-        .save-btn:active {
-            transform: translateY(0);
-        }
-
-        .save-btn.saved {
-            background: var(--color-accent);
-        }
-
-        /* Change Log */
-        .changelog-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--color-border);
-        }
-
-        .changelog-item:last-child {
-            border-bottom: none;
-        }
-
-        .changelog-date {
-            font-size: 0.8rem;
-            color: var(--color-text-muted);
-            white-space: nowrap;
-        }
-
-        .changelog-details {
-            flex: 1;
-            margin-left: 16px;
-        }
-
-        .changelog-category {
-            font-weight: 600;
-            color: var(--color-teal);
-            font-size: 0.9rem;
-        }
-
-        .changelog-change {
-            font-size: 0.85rem;
-            color: var(--color-text-muted);
-        }
-
-        /* Tabs */
-        .tabs {
-            display: flex;
-            gap: 4px;
-            background: var(--color-bg);
-            padding: 4px;
-            border-radius: var(--radius-sm);
-            margin-bottom: 20px;
-        }
-
-        .tab {
-            flex: 1;
-            padding: 12px 16px;
-            background: transparent;
-            border: none;
-            border-radius: 8px;
-            font-family: var(--font-body);
-            font-size: 0.9rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            color: var(--color-text-muted);
-        }
-
-        .tab.active {
-            background: var(--color-card);
-            color: var(--color-accent);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* Info Box - grey border for structural elements */
+        /* Info Box */
         .info-box {
             background: var(--color-accent-light);
             border-left: 4px solid var(--color-border);
@@ -542,6 +495,27 @@
             border-radius: 0 8px 8px 0;
             margin-bottom: 16px;
             font-size: 0.85rem;
+            color: var(--color-text-muted);
+        }
+
+        /* Total Score Display */
+        .total-score {
+            text-align: center;
+            padding: 20px;
+            background: var(--color-accent-light);
+            border-radius: var(--radius-sm);
+            margin-bottom: 24px;
+        }
+
+        .total-score-value {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            color: var(--color-accent);
+            font-weight: 700;
+        }
+
+        .total-score-label {
+            font-size: 0.9rem;
             color: var(--color-text-muted);
         }
 
@@ -556,44 +530,10 @@
                 gap: 12px;
             }
 
-            .slider-input {
-                flex: 1;
-            }
-
-            .slider-value {
-                min-width: 40px;
-                width: auto;
-                height: auto;
-                padding: 8px 12px;
-                border-radius: 6px;
-                font-size: 1rem;
-                flex-shrink: 0;
-            }
-
-            .tabs {
+            .chart-legend {
                 flex-direction: column;
-            }
-
-            .tab {
-                text-align: center;
-            }
-
-            .changelog-item {
-                flex-direction: column;
-            }
-
-            .changelog-details {
-                margin-left: 0;
-                margin-top: 8px;
-            }
-
-            .number-input {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .number-input input {
-                width: 100%;
+                align-items: center;
+                gap: 8px;
             }
         }
     </style>
@@ -603,171 +543,442 @@
 
         <!-- Header -->
         <header class="header">
-            <p class="greeting">Hello <span id="userName">John Doe</span>,</p>
-            <h1>Your Nutrition Score</h1>
-            <p>Last updated: <span id="testDate">02/02/2026</span></p>
+            <p class="greeting">Hello <span id="userName">Alexander</span>,</p>
+            <h1>Your Longevity Score</h1>
+            <p>Last updated: <span id="testDate">05/02/2026</span></p>
         </header>
 
-        <!-- Score Circle -->
-        <div class="score-section">
-            <div class="score-circle">
-                <div class="score-value" id="percentage">0%</div>
-                <div class="score-label" id="totalPoints">0/10 Points</div>
-            </div>
-        </div>
-
-        <!-- Tabs -->
+        <!-- Radar Chart Card -->
         <div class="card">
-            <div class="tabs">
-                <button class="tab active" onclick="switchTab('scores')">🥗 Nutrition</button>
-                <button class="tab" onclick="switchTab('history')">📈 History</button>
+            <h2 class="card-title">Your Health Profile</h2>
+            <div class="chart-container">
+                <svg id="radarChart" class="radar-chart" viewBox="0 0 500 500" width="100%" height="400"></svg>
             </div>
-
-            <!-- Scores Tab -->
-            <div id="scores-tab" class="tab-content active">
-                <div class="info-box">
-                    Answer the questions honestly. Your score is calculated automatically. Changes are logged.
+            <div class="chart-legend">
+                <div class="legend-item">
+                    <div class="legend-current"></div>
+                    <span>Current</span>
                 </div>
-                <div id="nutritionForm"></div>
-                <button class="save-btn" onclick="saveAllChanges()">
-                    💾 Save All Changes
-                </button>
-            </div>
-
-            <!-- History Tab -->
-            <div id="history-tab" class="tab-content">
-                <h3 style="font-family: var(--font-heading); margin-bottom: 16px;">Change Log</h3>
-                <div id="changelogList">
-                    <p style="color: var(--color-text-muted); text-align: center; padding: 24px;">
-                        No changes logged yet.
-                    </p>
+                <div class="legend-item">
+                    <div class="legend-goal"></div>
+                    <span>Goal (4 weeks)</span>
                 </div>
             </div>
         </div>
 
     </div>
 
+    <!-- Full Screen Category View (slides in from right) -->
+    <div class="view" id="categoryView">
+        <div class="swipe-hint"></div>
+        <div class="view-header">
+            <button class="back-btn" onclick="hideSection()">←</button>
+            <div class="view-title" id="viewTitle">Category</div>
+        </div>
+        <div class="view-content" id="sectionContent"></div>
+    </div>
+
     <script>
         // ========================================
-        // NUTRITION ASSESSMENT - EXACT SEC 0-4
+        // CATEGORY CONFIGURATION
         // ========================================
-        const NUTRITION_CONFIG = {
-            // SEC 1: Diet Adherence (25%)
-            sec1: {
-                title: "Diet Adherence",
-                weight: 0.25,
-                questions: [
-                    {
-                        id: "N1_1",
-                        question: "How much do you enjoy your food?",
-                        hint: "Rate from 1 (not at all) to 10 (always a delight)",
-                        type: "slider",
-                        min: 1,
-                        max: 10,
-                        hideLabels: true
-                    },
-                    {
-                        id: "N1_2",
-                        question: "In which situations does your diet work well?",
-                        type: "checkbox",
-                        scoring: "count",
-                        options: [
-                            { value: "restaurant", label: "Restaurant" },
-                            { value: "travel", label: "Travel" },
-                            { value: "Family and friends", label: "Family and friends" },
-                            { value: "stress", label: "Stressful or time-limited situations" }
+        const CATEGORIES = {
+            medical: {
+                symbol: "M",
+                label: "Medical",
+                labelLine1: "Medical",
+                labelLine2: "",
+                weight: 1,
+                sections: {
+                    sec1: {
+                        title: "Health Checkups",
+                        weight: 0.5,
+                        questions: [
+                            {
+                                id: "MD1_1",
+                                question: "When was your last comprehensive health checkup?",
+                                type: "radio",
+                                options: [
+                                    { value: "10", label: "Within the last year", points: 10 },
+                                    { value: "7", label: "1-2 years ago", points: 7 },
+                                    { value: "4", label: "2-3 years ago", points: 4 },
+                                    { value: "0", label: "More than 3 years ago", points: 0 }
+                                ]
+                            },
+                            {
+                                id: "MD1_2",
+                                question: "Do you know your key health numbers? (Blood pressure, cholesterol, blood sugar)",
+                                type: "radio",
+                                options: [
+                                    { value: "10", label: "Yes, all of them", points: 10 },
+                                    { value: "7", label: "Most of them", points: 7 },
+                                    { value: "4", label: "Some of them", points: 4 },
+                                    { value: "0", label: "No, I don't know them", points: 0 }
+                                ]
+                            }
                         ]
                     },
-                    {
-                        id: "N1_3",
-                        question: "How full and satisfied do you feel after eating?",
-                        type: "radio",
-                        options: [
-                            { value: "10", label: "Always full, no cravings", points: 10 },
-                            { value: "5", label: "Mostly full, rarely hungry", points: 5 },
-                            { value: "2", label: "Regularly hungry (2-3 times a week)", points: 2 },
-                            { value: "0", label: "Constantly hungry or daily struggle", points: 0 }
+                    sec2: {
+                        title: "Medications & Prevention",
+                        weight: 0.5,
+                        questions: [
+                            {
+                                id: "MD2_1",
+                                question: "Are you up to date with recommended screenings for your age?",
+                                type: "radio",
+                                options: [
+                                    { value: "10", label: "Yes, completely", points: 10 },
+                                    { value: "5", label: "Partially", points: 5 },
+                                    { value: "0", label: "No / Not sure", points: 0 }
+                                ]
+                            }
                         ]
                     }
-                ]
+                }
             },
-
-            // SEC 2: Progress (25%)
-            sec2: {
-                title: "Progress",
-                weight: 0.25,
-                questions: [
-                    {
-                        id: "N2_1",
-                        question: "How is your progress towards your goals?",
-                        type: "radio",
-                        options: [
-                            { value: "10", label: "Every week is a win - metrics on track, feeling great", points: 10 },
-                            { value: "8", label: "Most weeks are successful", points: 8 },
-                            { value: "5", label: "Slow but visible progress over months", points: 5 },
-                            { value: "2", label: "Stagnation - at least not getting worse", points: 2 },
-                            { value: "0", label: "Wrong direction - getting worse", points: 0 }
-                        ]
-                    }
-                ]
-            },
-
-            // SEC 3: Protein (25%)
-            sec3: {
-                title: "Protein",
-                weight: 0.25,
-                helpLink: "protein-evidence.html",
-                description: "Not sure how much protein you need per meal and per day?",
-                link: {
-                    text: "→ Open Nutrition Calculator",
-                    url: "nutrition-calculator.html"
-                },
-                questions: [
-                    {
-                        id: "N3_1",
-                        question: "I meet the required protein amount per day for my nutrition goal",
-                        type: "radio",
-                        options: [
-                            { value: "10", label: "Always", points: 10 },
-                            { value: "5", label: "Mostly", points: 5 },
-                            { value: "0", label: "Rarely or never", points: 0 }
+            nutrition: {
+                symbol: "N",
+                label: "Nutrition",
+                labelLine1: "Nutrition",
+                labelLine2: "",
+                weight: 1,
+                sections: {
+                    sec1: {
+                        title: "Diet Adherence",
+                        weight: 0.25,
+                        questions: [
+                            {
+                                id: "N1_1",
+                                question: "How much do you enjoy your food?",
+                                hint: "Rate from 1 (not at all) to 10 (always a delight)",
+                                type: "slider",
+                                min: 1,
+                                max: 10
+                            },
+                            {
+                                id: "N1_2",
+                                question: "In which situations does your diet work well?",
+                                type: "checkbox",
+                                scoring: "count",
+                                options: [
+                                    { value: "restaurant", label: "Restaurant" },
+                                    { value: "travel", label: "Travel" },
+                                    { value: "family", label: "Family and friends" },
+                                    { value: "stress", label: "Stressful situations" }
+                                ]
+                            },
+                            {
+                                id: "N1_3",
+                                question: "How satisfied do you feel after eating?",
+                                type: "radio",
+                                options: [
+                                    { value: "10", label: "Always full, no cravings", points: 10 },
+                                    { value: "5", label: "Mostly full, rarely hungry", points: 5 },
+                                    { value: "2", label: "Regularly hungry", points: 2 },
+                                    { value: "0", label: "Constantly hungry", points: 0 }
+                                ]
+                            }
                         ]
                     },
-                    {
-                        id: "N3_2",
-                        question: "How do you distribute your protein intake throughout the day?",
-                        type: "radio",
-                        options: [
-                            { value: "10", label: "4+ meals or shakes above my minimum per-meal amount", points: 10 },
-                            { value: "8", label: "3 meals or shakes above my minimum per-meal amount", points: 8 },
-                            { value: "4", label: "2 meals or shakes above my minimum per-meal amount", points: 4 },
-                            { value: "0", label: "1 or fewer meals above my minimum per-meal amount", points: 0 }
+                    sec2: {
+                        title: "Progress",
+                        weight: 0.25,
+                        questions: [
+                            {
+                                id: "N2_1",
+                                question: "How is your progress towards your goals?",
+                                type: "radio",
+                                options: [
+                                    { value: "10", label: "Every week is a win", points: 10 },
+                                    { value: "8", label: "Most weeks successful", points: 8 },
+                                    { value: "5", label: "Slow but visible progress", points: 5 },
+                                    { value: "2", label: "Stagnation", points: 2 },
+                                    { value: "0", label: "Getting worse", points: 0 }
+                                ]
+                            }
+                        ]
+                    },
+                    sec3: {
+                        title: "Protein",
+                        weight: 0.25,
+                        helpLink: "protein-evidence.html",
+                        description: "Not sure how much protein you need per meal and per day?",
+                        link: { text: "→ Open Nutrition Calculator", url: "nutrition-calculator.html" },
+                        questions: [
+                            {
+                                id: "N3_1",
+                                question: "I meet the required protein amount per day",
+                                type: "radio",
+                                options: [
+                                    { value: "10", label: "Always", points: 10 },
+                                    { value: "5", label: "Mostly", points: 5 },
+                                    { value: "0", label: "Rarely or never", points: 0 }
+                                ]
+                            }
+                        ]
+                    },
+                    sec4: {
+                        title: "Nutrition Principles",
+                        weight: 0.25,
+                        description: "Check habits you follow 7+ out of 10 days.",
+                        questions: [
+                            {
+                                id: "N4_principles",
+                                question: "Which nutrition principles do you follow?",
+                                helpLink: "nutrition-evidence.html",
+                                type: "checkbox",
+                                scoring: "principles",
+                                options: [
+                                    { value: "vegetables", label: "3+ servings vegetables daily", evidence: "13% lower mortality" },
+                                    { value: "whole_foods", label: "Home-cooked whole foods", evidence: "15% lower mortality" },
+                                    { value: "healthy_fats", label: "Healthy fats (olive oil, nuts)", evidence: "30% less CVD" },
+                                    { value: "avoid_harmful", label: "Avoid trans fats & processed meat", evidence: "34% reduction" },
+                                    { value: "alcohol", label: "Moderate alcohol (max 7/week)", evidence: "Linear dose-response" }
+                                ]
+                            }
                         ]
                     }
-                ]
+                }
             },
-
-            // SEC 4: Nutrition Principles (25%)
-            sec4: {
-                title: "Nutrition Principles",
-                weight: 0.25,
-                description: "Check the habits you follow most days (7+ out of 10 days). Each habit is backed by strong scientific evidence.",
-                questions: [
-                    {
-                        id: "N4_principles",
-                        question: "Which nutrition principles do you consistently follow?",
-                        helpLink: "nutrition-evidence.html",
-                        type: "checkbox",
-                        scoring: "principles",
-                        options: [
-                            { value: "vegetables", label: "I eat 3+ servings of non-starchy vegetables daily", evidence: "13% lower mortality" },
-                            { value: "whole_foods", label: "Most of my meals are home-cooked from whole ingredients", evidence: "15% lower mortality" },
-                            { value: "healthy_fats", label: "I include healthy fats regularly (olive oil, fish, nuts, avocados)", evidence: "30% less CVD" },
-                            { value: "avoid_harmful", label: "I avoid trans fats (fried food, packaged snacks) and processed meats", evidence: "34% mortality reduction" },
-                            { value: "alcohol", label: "I drink alcohol moderately or not at all (max 7/week, 2/day)", evidence: "Linear dose-response" }
+            energy: {
+                symbol: "E",
+                label: "Energy",
+                labelLine1: "Energy",
+                labelLine2: "",
+                weight: 1,
+                sections: {
+                    sec1: {
+                        title: "Daily Energy",
+                        weight: 0.5,
+                        questions: [
+                            {
+                                id: "E1_1",
+                                question: "How would you rate your energy level throughout the day?",
+                                hint: "Rate from 1 (exhausted) to 10 (full of energy)",
+                                type: "slider",
+                                min: 1,
+                                max: 10
+                            },
+                            {
+                                id: "E1_2",
+                                question: "How often do you feel exhausted?",
+                                type: "radio",
+                                options: [
+                                    { value: "10", label: "Rarely or never", points: 10 },
+                                    { value: "7", label: "Sometimes (1-2x per week)", points: 7 },
+                                    { value: "4", label: "Often (3-4x per week)", points: 4 },
+                                    { value: "0", label: "Daily", points: 0 }
+                                ]
+                            }
+                        ]
+                    },
+                    sec2: {
+                        title: "Physical Activity",
+                        weight: 0.5,
+                        questions: [
+                            {
+                                id: "E2_1",
+                                question: "How many minutes of exercise per day on average?",
+                                type: "radio",
+                                options: [
+                                    { value: "10", label: "60+ minutes", points: 10 },
+                                    { value: "8", label: "45-60 minutes", points: 8 },
+                                    { value: "6", label: "30-45 minutes", points: 6 },
+                                    { value: "4", label: "15-30 minutes", points: 4 },
+                                    { value: "0", label: "Less than 15 minutes", points: 0 }
+                                ]
+                            }
                         ]
                     }
-                ]
+                }
+            },
+            sleepStress: {
+                symbol: "S",
+                label: "Sleep & Stress",
+                labelLine1: "Sleep &",
+                labelLine2: "Stress",
+                weight: 1,
+                sections: {
+                    sec1: {
+                        title: "Sleep Quality",
+                        weight: 0.5,
+                        questions: [
+                            {
+                                id: "SS1_1",
+                                question: "How many hours of sleep do you get per night?",
+                                type: "radio",
+                                options: [
+                                    { value: "10", label: "7-9 hours", points: 10 },
+                                    { value: "7", label: "6-7 hours", points: 7 },
+                                    { value: "4", label: "5-6 hours", points: 4 },
+                                    { value: "0", label: "Less than 5 hours", points: 0 }
+                                ]
+                            },
+                            {
+                                id: "SS1_2",
+                                question: "How would you rate your sleep quality?",
+                                hint: "Rate from 1 (terrible) to 10 (excellent)",
+                                type: "slider",
+                                min: 1,
+                                max: 10
+                            }
+                        ]
+                    },
+                    sec2: {
+                        title: "Stress Management",
+                        weight: 0.5,
+                        questions: [
+                            {
+                                id: "SS2_1",
+                                question: "How stressed do you feel on a typical day?",
+                                type: "radio",
+                                options: [
+                                    { value: "10", label: "Rarely stressed", points: 10 },
+                                    { value: "7", label: "Mildly stressed", points: 7 },
+                                    { value: "4", label: "Moderately stressed", points: 4 },
+                                    { value: "0", label: "Highly stressed", points: 0 }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            wellbeing: {
+                symbol: "W",
+                label: "Wellbeing",
+                labelLine1: "Wellbeing",
+                labelLine2: "",
+                weight: 1,
+                sections: {
+                    sec1: {
+                        title: "Life Satisfaction",
+                        weight: 0.5,
+                        questions: [
+                            {
+                                id: "W1_1",
+                                question: "How satisfied are you with your life overall?",
+                                hint: "Rate from 1 (not at all) to 10 (extremely satisfied)",
+                                type: "slider",
+                                min: 1,
+                                max: 10
+                            }
+                        ]
+                    },
+                    sec2: {
+                        title: "Social Connection",
+                        weight: 0.5,
+                        questions: [
+                            {
+                                id: "W2_1",
+                                question: "Quality of your social relationships?",
+                                type: "radio",
+                                options: [
+                                    { value: "10", label: "Excellent - strong support network", points: 10 },
+                                    { value: "7", label: "Good - regular meaningful connections", points: 7 },
+                                    { value: "4", label: "Fair - some connections but could be better", points: 4 },
+                                    { value: "0", label: "Poor - feeling isolated", points: 0 }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            mindset: {
+                symbol: "M",
+                label: "Mindset",
+                labelLine1: "Mindset",
+                labelLine2: "",
+                weight: 1,
+                sections: {
+                    sec1: {
+                        title: "Growth Mindset",
+                        weight: 1,
+                        questions: [
+                            {
+                                id: "M1_1",
+                                question: "I believe I can improve my health through effort",
+                                type: "radio",
+                                options: [
+                                    { value: "10", label: "Strongly agree", points: 10 },
+                                    { value: "7", label: "Agree", points: 7 },
+                                    { value: "4", label: "Neutral", points: 4 },
+                                    { value: "0", label: "Disagree", points: 0 }
+                                ]
+                            },
+                            {
+                                id: "M1_2",
+                                question: "I persist when facing difficult health challenges",
+                                type: "radio",
+                                options: [
+                                    { value: "10", label: "Always", points: 10 },
+                                    { value: "7", label: "Usually", points: 7 },
+                                    { value: "4", label: "Sometimes", points: 4 },
+                                    { value: "0", label: "Rarely", points: 0 }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            habitsTime: {
+                symbol: "H",
+                label: "Habits & Time",
+                labelLine1: "Habits &",
+                labelLine2: "Time",
+                weight: 1,
+                sections: {
+                    sec1: {
+                        title: "Daily Routine",
+                        weight: 0.5,
+                        description: "Your existing routines serve as anchors for new habits.",
+                        questions: [
+                            {
+                                id: "HT1_1",
+                                question: "When do you usually wake up?",
+                                type: "radio",
+                                options: [
+                                    { value: "before_6", label: "Before 6:00 AM", points: 10 },
+                                    { value: "6_7", label: "6:00 - 7:00 AM", points: 10 },
+                                    { value: "7_8", label: "7:00 - 8:00 AM", points: 8 },
+                                    { value: "8_9", label: "8:00 - 9:00 AM", points: 6 },
+                                    { value: "after_9", label: "After 9:00 AM", points: 4 }
+                                ]
+                            },
+                            {
+                                id: "HT1_2",
+                                question: "Which routines do you already have?",
+                                type: "checkbox",
+                                scoring: "count",
+                                options: [
+                                    { value: "morning_coffee", label: "Morning coffee" },
+                                    { value: "breakfast", label: "Breakfast" },
+                                    { value: "lunch_break", label: "Lunch break" },
+                                    { value: "end_work", label: "End of work day" },
+                                    { value: "dinner", label: "Dinner" },
+                                    { value: "brushing_teeth", label: "Brushing teeth" }
+                                ]
+                            }
+                        ]
+                    },
+                    sec2: {
+                        title: "Habit Challenges",
+                        weight: 0.5,
+                        questions: [
+                            {
+                                id: "HT2_1",
+                                question: "What is your biggest hurdle with new habits?",
+                                type: "radio",
+                                options: [
+                                    { value: "time", label: "Not enough time", points: 5 },
+                                    { value: "motivation", label: "Lack of motivation", points: 5 },
+                                    { value: "forgetting", label: "I forget", points: 5 },
+                                    { value: "energy", label: "Too little energy", points: 5 },
+                                    { value: "unsure", label: "Don't know where to start", points: 5 }
+                                ]
+                            }
+                        ]
+                    }
+                }
             }
         };
 
@@ -775,48 +986,48 @@
         // DATA MANAGEMENT
         // ========================================
         let currentData = {
-            userName: "John Doe",
+            userName: "Alexander",
             answers: {},
-            changelog: []
+            scores: {}
         };
 
-        let lastSavedAnswers = {};
+        let activeCategory = null;
 
         function loadData() {
-            const saved = localStorage.getItem('nutritionAssessmentEN');
+            const saved = localStorage.getItem('longevityTestExpanded');
             if (saved) {
                 currentData = JSON.parse(saved);
             } else {
-                Object.keys(NUTRITION_CONFIG).forEach(section => {
-                    currentData.answers[section] = {};
-                    NUTRITION_CONFIG[section].questions.forEach(q => {
-                        if (q.type === 'slider') {
-                            currentData.answers[section][q.id] = q.min === 1 ? 5 : 5;
-                        } else if (q.type === 'radio') {
-                            currentData.answers[section][q.id] = q.options[0].value;
-                        } else if (q.type === 'checkbox') {
-                            currentData.answers[section][q.id] = [];
-                        } else if (q.type === 'number') {
-                            currentData.answers[section][q.id] = q.id === 'current_weight' ? 165 : 155;
-                        }
+                // Initialize with defaults
+                Object.keys(CATEGORIES).forEach(catKey => {
+                    currentData.answers[catKey] = {};
+                    Object.keys(CATEGORIES[catKey].sections).forEach(secKey => {
+                        currentData.answers[catKey][secKey] = {};
+                        CATEGORIES[catKey].sections[secKey].questions.forEach(q => {
+                            if (q.type === 'slider') {
+                                currentData.answers[catKey][secKey][q.id] = 5;
+                            } else if (q.type === 'radio') {
+                                currentData.answers[catKey][secKey][q.id] = q.options[0].value;
+                            } else if (q.type === 'checkbox') {
+                                currentData.answers[catKey][secKey][q.id] = [];
+                            }
+                        });
                     });
                 });
             }
-            lastSavedAnswers = JSON.parse(JSON.stringify(currentData.answers));
+            calculateAllScores();
         }
 
         function saveData() {
-            localStorage.setItem('nutritionAssessmentEN', JSON.stringify(currentData));
+            localStorage.setItem('longevityTestExpanded', JSON.stringify(currentData));
         }
 
         // ========================================
         // SCORE CALCULATION
         // ========================================
-        function calculateSectionScore(sectionKey) {
-            const section = NUTRITION_CONFIG[sectionKey];
-            if (section.weight === 0) return null;
-
-            const answers = currentData.answers[sectionKey] || {};
+        function calculateSectionScore(catKey, secKey) {
+            const section = CATEGORIES[catKey].sections[secKey];
+            const answers = currentData.answers[catKey]?.[secKey] || {};
             let totalScore = 0;
             let maxScore = 0;
 
@@ -825,19 +1036,15 @@
 
                 if (q.type === 'slider') {
                     const sliderValue = parseFloat(value) || q.min;
-                    if (q.min === 1) {
-                        totalScore += sliderValue - 1;
-                        maxScore += 9;
-                    } else {
-                        totalScore += sliderValue;
-                        maxScore += q.max;
-                    }
+                    totalScore += sliderValue - 1;
+                    maxScore += 9;
                 } else if (q.type === 'radio' && q.options[0].points !== undefined) {
                     totalScore += parseFloat(value) || 0;
                     maxScore += 10;
                 } else if (q.type === 'checkbox' && q.scoring === 'count') {
                     const count = Array.isArray(value) ? value.length : 0;
-                    totalScore += (count / 4) * 10;
+                    const maxOptions = q.options.length;
+                    totalScore += (count / maxOptions) * 10;
                     maxScore += 10;
                 } else if (q.type === 'checkbox' && q.scoring === 'principles') {
                     const count = Array.isArray(value) ? value.length : 0;
@@ -849,364 +1056,394 @@
             return maxScore > 0 ? (totalScore / maxScore) * 10 : 0;
         }
 
-        function calculateTotalScore() {
+        function calculateCategoryScore(catKey) {
+            const category = CATEGORIES[catKey];
             let weightedSum = 0;
             let totalWeight = 0;
 
-            Object.keys(NUTRITION_CONFIG).forEach(sectionKey => {
-                const section = NUTRITION_CONFIG[sectionKey];
-                if (section.weight > 0) {
-                    const score = calculateSectionScore(sectionKey);
-                    weightedSum += score * section.weight;
-                    totalWeight += section.weight;
-                }
+            Object.keys(category.sections).forEach(secKey => {
+                const section = category.sections[secKey];
+                const score = calculateSectionScore(catKey, secKey);
+                weightedSum += score * section.weight;
+                totalWeight += section.weight;
             });
 
-            return totalWeight > 0 ? Math.round(weightedSum / totalWeight * 10) / 10 : 0;
+            return totalWeight > 0 ? weightedSum / totalWeight : 0;
+        }
+
+        function calculateAllScores() {
+            Object.keys(CATEGORIES).forEach(catKey => {
+                currentData.scores[catKey] = Math.round(calculateCategoryScore(catKey) * 10) / 10;
+            });
+        }
+
+        function getTotalScore() {
+            const scores = Object.values(currentData.scores);
+            return scores.length > 0 ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) : 0;
         }
 
         // ========================================
-        // CHANGELOG
+        // RADAR CHART
         // ========================================
-        function logChange(sectionKey, questionId, oldValue, newValue) {
-            const section = NUTRITION_CONFIG[sectionKey];
-            const question = section.questions.find(q => q.id === questionId);
-            const oldScore = calculateTotalScore();
-            let description = generateChangeDescription(question, oldValue, newValue);
+        function drawRadarChart() {
+            const svg = document.getElementById('radarChart');
+            const centerX = 250;
+            const centerY = 250;
+            const maxRadius = 140;
+            const categories = Object.keys(CATEGORIES);
+            const values = categories.map(cat => currentData.scores[cat] || 0);
+            const numCategories = categories.length;
+            const angleStep = (2 * Math.PI) / numCategories;
 
-            const tempValue = currentData.answers[sectionKey][questionId];
-            currentData.answers[sectionKey][questionId] = oldValue;
-            const oldTotalScore = calculateTotalScore();
-            currentData.answers[sectionKey][questionId] = tempValue;
+            // Get brand accent color
+            const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--color-accent').trim() || '#00905A';
 
-            const scoreChange = (oldScore - oldTotalScore).toFixed(1);
-            const scoreChangeText = scoreChange > 0 ? `+${scoreChange}` : scoreChange;
+            svg.innerHTML = '';
 
-            const change = {
-                date: new Date().toISOString(),
-                section: sectionKey,
-                sectionTitle: section.title,
-                description: description,
-                scoreChange: scoreChangeText
-            };
+            // Background rings
+            [10, 8, 6, 4, 2].forEach(level => {
+                const radius = (level / 10) * maxRadius;
+                let points = [];
+                for (let i = 0; i < numCategories; i++) {
+                    const angle = i * angleStep - Math.PI / 2;
+                    const x = centerX + radius * Math.cos(angle);
+                    const y = centerY + radius * Math.sin(angle);
+                    points.push(`${x},${y}`);
+                }
+                const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+                polygon.setAttribute('points', points.join(' '));
+                polygon.setAttribute('fill', 'none');
+                polygon.setAttribute('stroke', '#E7E5E4');
+                polygon.setAttribute('stroke-width', '1');
+                svg.appendChild(polygon);
+            });
 
-            currentData.changelog.unshift(change);
-            if (currentData.changelog.length > 100) {
-                currentData.changelog = currentData.changelog.slice(0, 100);
+            // Axis lines
+            for (let i = 0; i < numCategories; i++) {
+                const angle = i * angleStep - Math.PI / 2;
+                const x = centerX + maxRadius * Math.cos(angle);
+                const y = centerY + maxRadius * Math.sin(angle);
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line.setAttribute('x1', centerX);
+                line.setAttribute('y1', centerY);
+                line.setAttribute('x2', x);
+                line.setAttribute('y2', y);
+                line.setAttribute('stroke', '#E7E5E4');
+                line.setAttribute('stroke-width', '1');
+                svg.appendChild(line);
+            }
+
+            // Data polygon
+            let dataPoints = [];
+            for (let i = 0; i < numCategories; i++) {
+                const value = values[i];
+                const radius = (value / 10) * maxRadius;
+                const angle = i * angleStep - Math.PI / 2;
+                const x = centerX + radius * Math.cos(angle);
+                const y = centerY + radius * Math.sin(angle);
+                dataPoints.push({ x, y, value, category: categories[i] });
+            }
+
+            const dataPolygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+            dataPolygon.setAttribute('points', dataPoints.map(p => `${p.x},${p.y}`).join(' '));
+            dataPolygon.setAttribute('fill', 'rgba(0, 144, 90, 0.2)');
+            dataPolygon.setAttribute('stroke', accentColor);
+            dataPolygon.setAttribute('stroke-width', '2');
+            svg.appendChild(dataPolygon);
+
+            // Data points
+            dataPoints.forEach(point => {
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('cx', point.x);
+                circle.setAttribute('cy', point.y);
+                circle.setAttribute('r', '5');
+                circle.setAttribute('fill', accentColor);
+                circle.setAttribute('stroke', 'white');
+                circle.setAttribute('stroke-width', '2');
+                svg.appendChild(circle);
+            });
+
+            // Labels (clickable)
+            for (let i = 0; i < numCategories; i++) {
+                const angle = i * angleStep - Math.PI / 2;
+                const labelRadius = maxRadius + 45;
+                const x = centerX + labelRadius * Math.cos(angle);
+                const y = centerY + labelRadius * Math.sin(angle);
+
+                const catKey = categories[i];
+                const config = CATEGORIES[catKey];
+                const labelLine1 = config.labelLine1;
+                const labelLine2 = config.labelLine2;
+                const hasSecondLine = labelLine2 && labelLine2.length > 0;
+
+                // Create clickable group
+                const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                group.setAttribute('class', 'radar-label-group');
+                group.setAttribute('data-category', catKey);
+                group.style.cursor = 'pointer';
+                group.onclick = () => showCategory(catKey);
+
+                const text1 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text1.setAttribute('x', x);
+                text1.setAttribute('y', hasSecondLine ? y - 7 : y);
+                text1.setAttribute('text-anchor', 'middle');
+                text1.setAttribute('dominant-baseline', 'middle');
+                text1.setAttribute('fill', '#29484C');
+                text1.setAttribute('font-size', '11');
+                text1.setAttribute('font-family', 'Poppins, sans-serif');
+                text1.textContent = labelLine1;
+                group.appendChild(text1);
+
+                if (hasSecondLine) {
+                    const text2 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    text2.setAttribute('x', x);
+                    text2.setAttribute('y', y + 7);
+                    text2.setAttribute('text-anchor', 'middle');
+                    text2.setAttribute('fill', '#29484C');
+                    text2.setAttribute('font-size', '11');
+                    text2.textContent = labelLine2;
+                    group.appendChild(text2);
+                }
+
+                // Score with chevron
+                const scoreY = hasSecondLine ? y + 22 : y + 14;
+                const scoreText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                scoreText.setAttribute('x', x);
+                scoreText.setAttribute('y', scoreY);
+                scoreText.setAttribute('text-anchor', 'middle');
+                scoreText.setAttribute('fill', accentColor);
+                scoreText.setAttribute('font-size', '10');
+                scoreText.setAttribute('font-weight', '600');
+                scoreText.textContent = values[i].toFixed(1) + '/10  ›';
+                group.appendChild(scoreText);
+
+                // Add group to SVG
+                svg.appendChild(group);
             }
         }
 
-        function generateChangeDescription(question, oldValue, newValue) {
-            const questionText = question.question;
+        // ========================================
+        // UI RENDERING (Mobile-First Navigation)
+        // ========================================
+        function showCategory(catKey) {
+            activeCategory = catKey;
+            const category = CATEGORIES[catKey];
 
-            if (question.type === 'slider') {
-                return `${questionText.split(' - ')[0]}: ${oldValue} → ${newValue}`;
-            } else if (question.type === 'radio') {
-                const newOpt = question.options.find(o => o.value === newValue);
-                return `${questionText.split('?')[0]}: ${newOpt ? newOpt.label : newValue}`;
-            } else if (question.type === 'checkbox') {
-                const oldArr = Array.isArray(oldValue) ? oldValue : [];
-                const newArr = Array.isArray(newValue) ? newValue : [];
-                const added = newArr.filter(v => !oldArr.includes(v));
-                const removed = oldArr.filter(v => !newArr.includes(v));
+            // Set view title
+            document.getElementById('viewTitle').textContent = category.label;
 
-                const shortLabels = {
-                    'vegetables': 'Vegetables 3x daily',
-                    'whole_foods': 'Whole foods focus',
-                    'healthy_fats': 'Healthy fats',
-                    'avoid_harmful': 'Avoid trans fats',
-                    'alcohol': 'Alcohol moderation',
-                    'restaurant': 'Restaurant',
-                    'travel': 'Travel',
-                    'Family and friends': 'Family/friends',
-                    'stress': 'Stress situations'
-                };
+            // Render content
+            renderCategoryContent(catKey);
 
-                if (added.length > 0) {
-                    const addedLabels = added.map(v => shortLabels[v] || v);
-                    return `Added: ${addedLabels.join(', ')}`;
-                } else if (removed.length > 0) {
-                    const removedLabels = removed.map(v => shortLabels[v] || v);
-                    return `Removed: ${removedLabels.join(', ')}`;
-                }
-            } else if (question.type === 'number') {
-                return `${questionText}: ${oldValue} → ${newValue}`;
-            }
+            // Show view with slide animation
+            const view = document.getElementById('categoryView');
+            view.classList.add('active');
+            document.body.classList.add('view-open');
 
-            return `${questionText}: updated`;
+            // Scroll view to top
+            view.scrollTop = 0;
+        }
+
+        function hideSection() {
+            activeCategory = null;
+            const view = document.getElementById('categoryView');
+            view.classList.remove('active');
+            document.body.classList.remove('view-open');
         }
 
         // ========================================
-        // UI RENDERING
+        // SWIPE GESTURE (Left-to-Right to go back)
         // ========================================
-        function renderForm() {
-            const form = document.getElementById('nutritionForm');
-            form.innerHTML = '';
+        function initSwipeGesture() {
+            let touchStartX = 0;
+            let touchStartY = 0;
+            let touchCurrentX = 0;
+            const view = document.getElementById('categoryView');
 
-            let stepNumber = 0; // Counter for step numbers
+            view.addEventListener('touchstart', (e) => {
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+            }, { passive: true });
 
-            Object.keys(NUTRITION_CONFIG).forEach(sectionKey => {
-                const section = NUTRITION_CONFIG[sectionKey];
-                const answers = currentData.answers[sectionKey] || {};
-                const sectionScore = calculateSectionScore(sectionKey);
+            view.addEventListener('touchmove', (e) => {
+                if (!view.classList.contains('active')) return;
 
-                stepNumber++; // Increment step number for each section
+                touchCurrentX = e.touches[0].clientX;
+                const diffX = touchCurrentX - touchStartX;
+                const diffY = Math.abs(e.touches[0].clientY - touchStartY);
 
-                const sectionHelpLink = section.helpLink ? `<a href="${section.helpLink}" target="_blank" class="help-link" title="View scientific evidence">?</a>` : '';
-                let headerHTML = `<div class="section-header">
-                    <span class="step-number">${stepNumber}</span>
-                    <span class="section-title">${section.title}${sectionHelpLink}</span>
-                    ${section.weight > 0 ? `<span class="section-weight">Score: ${sectionScore !== null ? sectionScore.toFixed(1) + '/10' : 'N/A'}</span>` : ''}
-                </div>`;
+                // Only trigger if horizontal swipe from left edge
+                if (diffX > 0 && diffX > diffY && touchStartX < 50) {
+                    view.style.transform = `translateX(${Math.min(diffX, 100)}px)`;
+                    view.style.transition = 'none';
+                }
+            }, { passive: true });
 
-                if (section.type === 'intro') {
-                    headerHTML += `
-                        <div class="intro-section">
-                            <p>${section.description}</p>
-                            ${section.link ? `<a href="${section.link.url}" target="_blank" class="intro-link">${section.link.text}</a>` : ''}
-                        </div>
-                    `;
-                    form.innerHTML += headerHTML;
-                    return;
+            view.addEventListener('touchend', (e) => {
+                const diffX = touchCurrentX - touchStartX;
+
+                view.style.transition = 'transform 0.3s ease-out';
+
+                if (diffX > 80 && touchStartX < 50) {
+                    hideSection();
+                } else {
+                    view.style.transform = '';
                 }
 
-                // Show description with link in styled box (for Protein section)
+                touchStartX = 0;
+                touchCurrentX = 0;
+            }, { passive: true });
+        }
+
+        function renderCategoryContent(catKey) {
+            const category = CATEGORIES[catKey];
+            const content = document.getElementById('sectionContent');
+            content.innerHTML = ''; // Title is in view-header now
+
+            let stepNumber = 0;
+            Object.keys(category.sections).forEach(secKey => {
+                const section = category.sections[secKey];
+                const answers = currentData.answers[catKey][secKey] || {};
+                const sectionScore = calculateSectionScore(catKey, secKey);
+                stepNumber++;
+
+                const helpLink = section.helpLink ?
+                    `<a href="${section.helpLink}" target="_blank" class="help-link">?</a>` : '';
+
+                let html = `
+                    <div class="section-header">
+                        <span class="step-number">${stepNumber}</span>
+                        <span class="section-title">${section.title}${helpLink}</span>
+                        <span class="section-weight">Score: ${sectionScore.toFixed(1)}/10</span>
+                    </div>
+                `;
+
                 if (section.link) {
-                    headerHTML += `
+                    html += `
                         <div class="intro-section">
                             ${section.description ? `<p>${section.description}</p>` : ''}
                             <a href="${section.link.url}" target="_blank" class="intro-link">${section.link.text}</a>
                         </div>
                     `;
                 } else if (section.description) {
-                    // Simple text description without box (for Nutrition Principles)
-                    headerHTML += `<p style="font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 16px;">${section.description}</p>`;
+                    html += `<p style="font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 16px;">${section.description}</p>`;
                 }
-
-                form.innerHTML += headerHTML;
 
                 section.questions.forEach(q => {
                     const value = answers[q.id];
-                    const helpLinkHTML = q.helpLink ? `<a href="${q.helpLink}" target="_blank" class="help-link" title="View scientific evidence">?</a>` : '';
-                    let questionHTML = `
-                        <div class="question-item" data-section="${sectionKey}" data-question="${q.id}">
-                            <div class="question-label">${q.question}${helpLinkHTML}</div>
-                    `;
+                    const qHelpLink = q.helpLink ?
+                        `<a href="${q.helpLink}" target="_blank" class="help-link">?</a>` : '';
+
+                    html += `<div class="question-item">`;
+                    html += `<div class="question-label">${q.question}${qHelpLink}</div>`;
 
                     if (q.hint) {
-                        questionHTML += `<div class="question-hint">${q.hint}</div>`;
+                        html += `<div class="question-hint">${q.hint}</div>`;
                     }
 
                     if (q.type === 'slider') {
                         const currentValue = value !== undefined ? value : q.min;
-                        questionHTML += `
+                        html += `
                             <div class="slider-container">
-                                <input type="range" class="slider-input"
-                                    min="${q.min}" max="${q.max}" value="${currentValue}"
-                                    data-section="${sectionKey}" data-question="${q.id}"
-                                    oninput="updateSliderDisplay(this)">
-                                <div class="slider-value" id="value-${sectionKey}-${q.id}">${currentValue}</div>
+                                <input type="range" class="slider-input" min="${q.min}" max="${q.max}"
+                                    value="${currentValue}" data-cat="${catKey}" data-sec="${secKey}" data-q="${q.id}"
+                                    oninput="updateSlider(this)">
+                                <div class="slider-value" id="val-${catKey}-${secKey}-${q.id}">${currentValue}</div>
                             </div>
                         `;
                     } else if (q.type === 'radio') {
-                        questionHTML += `<div class="radio-group" data-section="${sectionKey}" data-question="${q.id}">`;
+                        html += `<div class="radio-group">`;
                         q.options.forEach(opt => {
                             const isSelected = value === opt.value;
-                            const hasPoints = opt.points !== undefined;
-                            questionHTML += `
+                            const points = opt.points !== undefined ? `<span class="radio-points">${opt.points} pts</span>` : '';
+                            html += `
                                 <div class="radio-option ${isSelected ? 'selected' : ''}"
-                                    onclick="selectRadio('${sectionKey}', '${q.id}', '${opt.value}', this)">
-                                    <input type="radio" name="${sectionKey}-${q.id}" value="${opt.value}" ${isSelected ? 'checked' : ''}>
+                                    onclick="selectRadio('${catKey}', '${secKey}', '${q.id}', '${opt.value}', this)">
+                                    <input type="radio" ${isSelected ? 'checked' : ''}>
                                     <label>${opt.label}</label>
-                                    ${hasPoints ? `<span class="radio-points">${opt.points} pts</span>` : ''}
+                                    ${points}
                                 </div>
                             `;
                         });
-                        questionHTML += `</div>`;
+                        html += `</div>`;
                     } else if (q.type === 'checkbox') {
-                        questionHTML += `<div class="checkbox-group" data-section="${sectionKey}" data-question="${q.id}">`;
+                        html += `<div class="checkbox-group">`;
                         q.options.forEach(opt => {
                             const isSelected = Array.isArray(value) && value.includes(opt.value);
-                            const evidenceTag = opt.evidence ? `<span class="evidence-tag">${opt.evidence}</span>` : '';
-                            questionHTML += `
+                            const evidence = opt.evidence ? `<span class="evidence-tag">${opt.evidence}</span>` : '';
+                            html += `
                                 <div class="checkbox-option ${isSelected ? 'selected' : ''}"
-                                    onclick="toggleCheckbox('${sectionKey}', '${q.id}', '${opt.value}', this)">
-                                    <input type="checkbox" value="${opt.value}" ${isSelected ? 'checked' : ''}>
+                                    onclick="toggleCheckbox('${catKey}', '${secKey}', '${q.id}', '${opt.value}', this)">
+                                    <input type="checkbox" ${isSelected ? 'checked' : ''}>
                                     <label>${opt.label}</label>
-                                    ${evidenceTag}
+                                    ${evidence}
                                 </div>
                             `;
                         });
-                        questionHTML += `</div>`;
-                    } else if (q.type === 'number') {
-                        questionHTML += `
-                            <div class="number-input">
-                                <input type="number" value="${value || ''}" min="${q.min}" max="${q.max}"
-                                    data-section="${sectionKey}" data-question="${q.id}">
-                                <span>${q.unit}</span>
-                            </div>
-                        `;
+                        html += `</div>`;
                     }
 
-                    questionHTML += `</div>`;
-                    form.innerHTML += questionHTML;
-                });
-            });
-        }
-
-        function renderChangelog() {
-            const changelogList = document.getElementById('changelogList');
-
-            if (!currentData.changelog || currentData.changelog.length === 0) {
-                changelogList.innerHTML = `
-                    <p style="color: var(--color-text-muted); text-align: center; padding: 24px;">
-                        No changes logged yet.
-                    </p>
-                `;
-                return;
-            }
-
-            let html = '';
-            currentData.changelog.forEach(change => {
-                const date = new Date(change.date);
-                const dateStr = date.toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit'
-                }) + ', ' + date.toLocaleTimeString('en-US', {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: false
+                    html += `</div>`;
                 });
 
-                const description = change.description || `${change.questionId}: ${change.oldValue} → ${change.newValue}`;
-                const scoreText = change.scoreChange ? ` Score: ${change.scoreChange}` : '';
-
-                html += `
-                    <div class="changelog-item">
-                        <div class="changelog-date">${dateStr}</div>
-                        <div class="changelog-details">
-                            <div class="changelog-category">${change.sectionTitle}</div>
-                            <div class="changelog-change">
-                                ${description}${scoreText}
-                            </div>
-                        </div>
-                    </div>
-                `;
+                content.innerHTML += html;
             });
-
-            changelogList.innerHTML = html;
-        }
-
-        function updateScoreDisplay() {
-            const totalScore = calculateTotalScore();
-            const percentage = Math.round(totalScore * 10);
-
-            document.getElementById('percentage').textContent = `${percentage}%`;
-            document.getElementById('totalPoints').textContent = `${totalScore.toFixed(1)}/10 Points`;
-            document.getElementById('userName').textContent = currentData.userName;
-            document.getElementById('testDate').textContent = new Date().toLocaleDateString('en-US');
         }
 
         // ========================================
         // EVENT HANDLERS
         // ========================================
-        function switchTab(tabName) {
-            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        function updateSlider(el) {
+            const catKey = el.dataset.cat;
+            const secKey = el.dataset.sec;
+            const qId = el.dataset.q;
+            const value = el.value;
 
-            event.target.classList.add('active');
-            document.getElementById(`${tabName}-tab`).classList.add('active');
+            document.getElementById(`val-${catKey}-${secKey}-${qId}`).textContent = value;
+            currentData.answers[catKey][secKey][qId] = parseFloat(value);
+
+            updateScoresAndChart();
         }
 
-        function updateSliderDisplay(slider) {
-            const value = slider.value;
-            const section = slider.dataset.section;
-            const questionId = slider.dataset.question;
-            document.getElementById(`value-${section}-${questionId}`).textContent = value;
-
-            currentData.answers[section][questionId] = value;
-            updateScoreDisplay();
-            updateSectionScoreDisplay(section);
-        }
-
-        function selectRadio(section, questionId, value, element) {
-            const group = element.parentElement;
+        function selectRadio(catKey, secKey, qId, value, el) {
+            const group = el.parentElement;
             group.querySelectorAll('.radio-option').forEach(opt => opt.classList.remove('selected'));
-            element.classList.add('selected');
-            element.querySelector('input').checked = true;
+            el.classList.add('selected');
+            el.querySelector('input').checked = true;
 
-            currentData.answers[section][questionId] = value;
-            updateScoreDisplay();
-            updateSectionScoreDisplay(section);
+            currentData.answers[catKey][secKey][qId] = value;
+            updateScoresAndChart();
         }
 
-        function toggleCheckbox(section, questionId, value, element) {
-            const checkbox = element.querySelector('input');
+        function toggleCheckbox(catKey, secKey, qId, value, el) {
+            const checkbox = el.querySelector('input');
             const newState = !checkbox.checked;
             checkbox.checked = newState;
-            element.classList.toggle('selected', newState);
+            el.classList.toggle('selected', newState);
 
-            if (!Array.isArray(currentData.answers[section][questionId])) {
-                currentData.answers[section][questionId] = [];
+            if (!Array.isArray(currentData.answers[catKey][secKey][qId])) {
+                currentData.answers[catKey][secKey][qId] = [];
             }
+
             if (newState) {
-                currentData.answers[section][questionId].push(value);
+                currentData.answers[catKey][secKey][qId].push(value);
             } else {
-                currentData.answers[section][questionId] = currentData.answers[section][questionId].filter(v => v !== value);
+                currentData.answers[catKey][secKey][qId] =
+                    currentData.answers[catKey][secKey][qId].filter(v => v !== value);
             }
-            updateScoreDisplay();
-            updateSectionScoreDisplay(section);
+
+            updateScoresAndChart();
         }
 
-        function updateSectionScoreDisplay(sectionKey) {
-            const section = NUTRITION_CONFIG[sectionKey];
-            if (section.weight === 0) return;
-
-            const sectionScore = calculateSectionScore(sectionKey);
-            const headers = document.querySelectorAll('.section-header');
-
-            headers.forEach(header => {
-                const titleSpan = header.querySelector('.section-title');
-                if (titleSpan && titleSpan.textContent.includes(section.title)) {
-                    const weightSpan = header.querySelector('.section-weight');
-                    if (weightSpan) {
-                        weightSpan.textContent = `Score: ${sectionScore.toFixed(1)}/10`;
-                    }
-                }
-            });
-        }
-
-        function saveAllChanges() {
-            Object.keys(NUTRITION_CONFIG).forEach(sectionKey => {
-                const section = NUTRITION_CONFIG[sectionKey];
-
-                section.questions.forEach(q => {
-                    const newValue = currentData.answers[sectionKey][q.id];
-                    const oldValue = lastSavedAnswers[sectionKey]?.[q.id];
-
-                    const oldStr = Array.isArray(oldValue) ? [...oldValue].sort().join(',') : String(oldValue);
-                    const newStr = Array.isArray(newValue) ? [...newValue].sort().join(',') : String(newValue);
-
-                    if (oldStr !== newStr) {
-                        logChange(sectionKey, q.id, oldValue, newValue);
-                    }
-                });
-            });
-
-            lastSavedAnswers = JSON.parse(JSON.stringify(currentData.answers));
-
+        function updateScoresAndChart() {
+            calculateAllScores();
             saveData();
-            updateScoreDisplay();
-            renderChangelog();
+            drawRadarChart();
 
-            const btn = document.querySelector('.save-btn');
-            btn.classList.add('saved');
-            btn.innerHTML = '✅ Saved!';
-            setTimeout(() => {
-                btn.classList.remove('saved');
-                btn.innerHTML = '💾 Save All Changes';
-            }, 2000);
+            // Update section scores in current view
+            if (activeCategory) {
+                renderCategoryContent(activeCategory);
+            }
         }
 
         // ========================================
@@ -1214,19 +1451,11 @@
         // ========================================
         document.addEventListener('DOMContentLoaded', function() {
             loadData();
-            renderForm();
-            updateScoreDisplay();
-            renderChangelog();
+            document.getElementById('userName').textContent = currentData.userName;
+            document.getElementById('testDate').textContent = new Date().toLocaleDateString('en-US');
 
-            document.querySelectorAll('.number-input input').forEach(input => {
-                input.addEventListener('input', function() {
-                    const section = this.dataset.section;
-                    const questionId = this.dataset.question;
-                    currentData.answers[section][questionId] = this.value;
-                    updateScoreDisplay();
-                    updateSectionScoreDisplay(section);
-                });
-            });
+            drawRadarChart();
+            initSwipeGesture();
         });
     </script>
 </body>
