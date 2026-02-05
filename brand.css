@@ -27,6 +27,7 @@
     /* Accent Colors - USE ONLY FOR BACKGROUNDS/BORDERS/ICONS */
     --color-accent: #00905A;          /* Green - backgrounds, borders, icons only */
     --color-accent-light: rgba(0, 144, 90, 0.1);  /* Light green background */
+    --color-orange: #F4A261;          /* Orange - section icons, highlights */
 
     /* Warning/Alert Colors */
     --color-warning-bg: #FFF3CD;
@@ -149,11 +150,11 @@ strong, b {
     flex: 1;
 }
 
-/* Section Icon - Green background is OK here */
+/* Section Icon - Orange background */
 .section-icon {
     width: 32px;
     height: 32px;
-    background: var(--color-accent);  /* Green background OK */
+    background: var(--color-orange);  /* Orange background */
     color: white;
     border-radius: 50%;
     display: flex;
