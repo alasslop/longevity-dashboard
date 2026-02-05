@@ -192,17 +192,18 @@
         /* Clickable Radar Labels */
         .radar-label-group {
             cursor: pointer;
-            transition: transform 0.15s ease-out, opacity 0.15s;
         }
 
-        .radar-label-group:hover {
-            opacity: 0.8;
-            transform: scale(1.05);
+        .radar-label-group .label-bg {
+            transition: opacity 0.15s;
         }
 
-        .radar-label-group:active {
-            transform: scale(0.95);
-            opacity: 0.6;
+        .radar-label-group:hover .label-bg {
+            opacity: 0.85;
+        }
+
+        .radar-label-group:active .label-bg {
+            opacity: 1;
         }
 
         /* Hide main content when view is open */
@@ -552,7 +553,7 @@
         <div class="card">
             <h2 class="card-title">Your Health Profile</h2>
             <div class="chart-container">
-                <svg id="radarChart" class="radar-chart" viewBox="0 0 500 500" width="100%" height="400"></svg>
+                <svg id="radarChart" class="radar-chart" viewBox="0 0 540 540" width="100%" height="440"></svg>
             </div>
             <div class="chart-legend">
                 <div class="legend-item">
@@ -1087,8 +1088,8 @@
         // ========================================
         function drawRadarChart() {
             const svg = document.getElementById('radarChart');
-            const centerX = 250;
-            const centerY = 250;
+            const centerX = 270;
+            const centerY = 270;
             const maxRadius = 140;
             const categories = Object.keys(CATEGORIES);
             const values = categories.map(cat => currentData.scores[cat] || 0);
@@ -1163,10 +1164,10 @@
                 svg.appendChild(circle);
             });
 
-            // Labels (clickable)
+            // Labels (clickable orange buttons)
             for (let i = 0; i < numCategories; i++) {
                 const angle = i * angleStep - Math.PI / 2;
-                const labelRadius = maxRadius + 45;
+                const labelRadius = maxRadius + 55;
                 const x = centerX + labelRadius * Math.cos(angle);
                 const y = centerY + labelRadius * Math.sin(angle);
 
@@ -1183,13 +1184,30 @@
                 group.style.cursor = 'pointer';
                 group.onclick = () => showCategory(catKey);
 
+                // Orange pill button background (CI compliant - Orange = Action)
+                const orangeColor = getComputedStyle(document.documentElement).getPropertyValue('--color-orange').trim() || '#E9A04E';
+                const pillWidth = hasSecondLine ? 80 : 70;
+                const pillHeight = hasSecondLine ? 46 : 34;
+                const pillCenterY = y;
+
+                const pill = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                pill.setAttribute('class', 'label-bg');
+                pill.setAttribute('x', x - pillWidth/2);
+                pill.setAttribute('y', pillCenterY - pillHeight/2);
+                pill.setAttribute('width', pillWidth);
+                pill.setAttribute('height', pillHeight);
+                pill.setAttribute('rx', '17');
+                pill.setAttribute('fill', orangeColor);
+                group.appendChild(pill);
+
                 const text1 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
                 text1.setAttribute('x', x);
-                text1.setAttribute('y', hasSecondLine ? y - 7 : y);
+                text1.setAttribute('y', hasSecondLine ? pillCenterY - 6 : pillCenterY);
                 text1.setAttribute('text-anchor', 'middle');
                 text1.setAttribute('dominant-baseline', 'middle');
-                text1.setAttribute('fill', '#29484C');
+                text1.setAttribute('fill', 'white');
                 text1.setAttribute('font-size', '11');
+                text1.setAttribute('font-weight', '600');
                 text1.setAttribute('font-family', 'Poppins, sans-serif');
                 text1.textContent = labelLine1;
                 group.appendChild(text1);
@@ -1197,24 +1215,26 @@
                 if (hasSecondLine) {
                     const text2 = document.createElementNS('http://www.w3.org/2000/svg', 'text');
                     text2.setAttribute('x', x);
-                    text2.setAttribute('y', y + 7);
+                    text2.setAttribute('y', pillCenterY + 8);
                     text2.setAttribute('text-anchor', 'middle');
-                    text2.setAttribute('fill', '#29484C');
+                    text2.setAttribute('dominant-baseline', 'middle');
+                    text2.setAttribute('fill', 'white');
                     text2.setAttribute('font-size', '11');
+                    text2.setAttribute('font-weight', '600');
                     text2.textContent = labelLine2;
                     group.appendChild(text2);
                 }
 
-                // Score with chevron
-                const scoreY = hasSecondLine ? y + 22 : y + 14;
+                // Score below button
+                const scoreY = pillCenterY + pillHeight/2 + 12;
                 const scoreText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
                 scoreText.setAttribute('x', x);
                 scoreText.setAttribute('y', scoreY);
                 scoreText.setAttribute('text-anchor', 'middle');
-                scoreText.setAttribute('fill', accentColor);
+                scoreText.setAttribute('fill', '#29484C');
                 scoreText.setAttribute('font-size', '10');
                 scoreText.setAttribute('font-weight', '600');
-                scoreText.textContent = values[i].toFixed(1) + '/10  ›';
+                scoreText.textContent = values[i].toFixed(1) + '/10';
                 group.appendChild(scoreText);
 
                 // Add group to SVG
