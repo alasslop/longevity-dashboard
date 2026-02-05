@@ -66,7 +66,7 @@
         .calculate-btn {
             width: 100%;
             padding: 16px 24px;
-            background: var(--color-accent);
+            background: var(--color-orange);
             color: white;
             border: none;
             border-radius: var(--radius-sm);
@@ -78,7 +78,7 @@
         }
 
         .calculate-btn:hover {
-            background: #007A4D;
+            background: #E08C4A;
         }
 
         /* Results Section */
@@ -89,7 +89,6 @@
             padding: 24px;
             margin-bottom: 24px;
             box-shadow: var(--shadow-card);
-            border-left: 4px solid var(--color-accent);
         }
 
         .results-card.visible {
@@ -282,9 +281,8 @@
         /* Calculation Details */
         .calculation-details {
             background: var(--color-bg);
-            border-left: 4px solid var(--color-accent);
             padding: 20px;
-            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            border-radius: var(--radius-sm);
             font-size: 0.9rem;
         }
 
@@ -317,7 +315,7 @@
         }
 
         .calc-section-title .step-num {
-            background: var(--color-accent);
+            background: var(--color-teal);
             color: white;
             width: 24px;
             height: 24px;
@@ -347,7 +345,7 @@
         }
 
         .calc-line.total {
-            border-top: 2px solid var(--color-accent);
+            border-top: 2px solid var(--color-border);
             margin-top: 10px;
             padding-top: 10px;
             font-weight: 600;
@@ -382,9 +380,8 @@
         /* Info Box (for recomp explanation) */
         .info-box-calc {
             background: #e3f2fd;
-            border-left: 4px solid #1976d2;
             padding: 16px;
-            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            border-radius: var(--radius-sm);
             margin-top: 16px;
             font-size: 0.9rem;
             color: var(--color-text);
@@ -435,7 +432,7 @@
                     <input type="number" id="targetBodyfat" placeholder="e.g., 18" min="3" max="60" step="0.1">
                 </div>
             </div>
-            <p class="input-hint">Body fat from DEXA, calipers, or smart scale. See estimation guide below.</p>
+            <p class="input-hint">Body fat from DEXA, calipers, or smart scale. <a href="body-fat-guide.html" class="help-link-inline">?</a></p>
 
             <div class="input-row-3" style="margin-top: 16px;">
                 <div class="input-group">
@@ -610,65 +607,6 @@
             <div class="info-box-calc" id="infoBox" style="display: none;">
                 <!-- Info displayed here -->
             </div>
-        </div>
-
-        <!-- Body Fat Guide -->
-        <div class="section-card">
-            <div class="section-header">
-                <div class="section-icon">?</div>
-                <div class="section-title">Body Fat % Estimation Guide</div>
-            </div>
-
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Body Fat %</th>
-                        <th>Men</th>
-                        <th>Women</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td><strong>10-14%</strong></td><td>Visible abs, veins</td><td>Very lean, athletic</td></tr>
-                    <tr><td><strong>15-19%</strong></td><td>Some ab definition</td><td>Fit, toned</td></tr>
-                    <tr class="highlight-row"><td><strong>20-24%</strong></td><td>Soft midsection</td><td>Healthy average</td></tr>
-                    <tr><td><strong>25-29%</strong></td><td>Noticeable belly</td><td>Average</td></tr>
-                    <tr><td><strong>30-35%</strong></td><td>Significant belly</td><td>Higher body fat</td></tr>
-                    <tr><td><strong>35%+</strong></td><td>Large midsection</td><td>Significantly overweight</td></tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Muscle Gain Rates -->
-        <div class="section-card">
-            <div class="section-header">
-                <div class="section-icon">?</div>
-                <div class="section-title">Realistic Muscle Gain Rates</div>
-                <span class="key-point">With resistance training</span>
-            </div>
-
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Age</th>
-                        <th>Men (kg/month)</th>
-                        <th>Women (kg/month)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td><strong>Under 30</strong></td><td>~1.0 kg</td><td>~0.5 kg</td></tr>
-                    <tr><td><strong>30-39</strong></td><td>~0.8 kg</td><td>~0.4 kg</td></tr>
-                    <tr><td><strong>40-49</strong></td><td>~0.6 kg</td><td>~0.3 kg</td></tr>
-                    <tr><td><strong>50-59</strong></td><td>~0.4 kg</td><td>~0.2 kg</td></tr>
-                    <tr><td><strong>60-69</strong></td><td>~0.3 kg</td><td>~0.15 kg</td></tr>
-                    <tr><td><strong>70+</strong></td><td>~0.2 kg</td><td>~0.1 kg</td></tr>
-                </tbody>
-            </table>
-
-            <p class="input-hint" style="margin-top: 12px;">Based on meta-analyses. Without resistance training, expect ~30% of these rates. Rates decrease with training experience.</p>
-        </div>
-
-        <div class="summary-box">
-            <p><strong>Want to understand the science?</strong> See our <a href="protein-evidence.html">Protein FAQ</a> for the research behind these recommendations.</p>
         </div>
 
         <p class="text-center text-muted mt-32" style="font-size: 0.85rem;">
@@ -865,9 +803,21 @@
 
             if (goalType === 'maintain') {
                 targetCalories = Math.round(tdee);
-            } else if (goalType === 'recomp' || goalType === 'recomp-weight-change') {
-                dailyDeficit = RECOMP_DEFICIT;
-                targetCalories = Math.round(tdee - dailyDeficit);
+            } else if (goalType === 'recomp') {
+                // Same weight recomp: slight surplus to fuel muscle building
+                // Muscle is anabolic - needs energy. Plus metabolic rate rises with more muscle.
+                dailySurplus = 150;  // Small surplus for muscle synthesis
+                targetCalories = Math.round(tdee + dailySurplus);
+            } else if (goalType === 'recomp-weight-change') {
+                // Losing weight while recomping - depends on body fat level
+                const isLean = (sex === 'male' && bodyfat <= 15) || (sex === 'female' && bodyfat <= 22);
+                if (isLean) {
+                    dailyDeficit = 0;  // Maintenance for lean individuals
+                    targetCalories = Math.round(tdee);
+                } else {
+                    dailyDeficit = RECOMP_DEFICIT;  // Small deficit OK for higher BF
+                    targetCalories = Math.round(tdee - dailyDeficit);
+                }
             } else if (goalType === 'fat-loss') {
                 dailyDeficit = (fatLossRate * KCAL_PER_KG_FAT) / 7;
                 targetCalories = Math.round(tdee - dailyDeficit);
@@ -889,9 +839,15 @@
             if (goalType === 'maintain') {
                 proteinMultiplier = PROTEIN_MULTIPLIERS.maintain;
                 proteinRationale = 'Maintenance protein for muscle preservation';
-            } else if (goalType === 'recomp' || goalType === 'recomp-weight-change') {
+            } else if (goalType === 'recomp') {
                 proteinMultiplier = PROTEIN_MULTIPLIERS.recomp;
-                proteinRationale = 'Maximum protein for muscle synthesis in deficit (Longland et al. 2016)';
+                proteinRationale = 'Maximum protein for recomposition with slight surplus';
+            } else if (goalType === 'recomp-weight-change') {
+                proteinMultiplier = PROTEIN_MULTIPLIERS.recomp;
+                const isLean = (sex === 'male' && bodyfat <= 15) || (sex === 'female' && bodyfat <= 22);
+                proteinRationale = isLean
+                    ? 'Maximum protein for lean recomp at maintenance calories'
+                    : 'Maximum protein for recomp in mild deficit (Longland et al. 2016)';
             } else if (goalType === 'fat-loss') {
                 if (fatLossRate <= 0.5) {
                     proteinMultiplier = PROTEIN_MULTIPLIERS.mildDeficit;
@@ -936,7 +892,7 @@
             const goalLabels = {
                 'maintain': '⚖️ Maintenance',
                 'recomp': '🔄 Body Recomposition',
-                'recomp-weight-change': '🔄 Recomposition + Weight Change',
+                'recomp-weight-change': '🔄 Recomp + Weight Loss',
                 'fat-loss': '🔥 Fat Loss',
                 'muscle-gain': '💪 Muscle Building'
             };
@@ -1064,7 +1020,9 @@
                     <div class="calc-section-title"><span class="step-num">4</span> Daily Calories</div>
                     <div class="calc-line"><span>TDEE</span><span>${Math.round(tdee)} kcal</span></div>
                     ${dailyDeficit > 0 ? `<div class="calc-line"><span>Deficit</span><span>−${Math.round(dailyDeficit)} kcal</span></div>` : ''}
-                    ${dailySurplus > 0 ? `<div class="calc-line"><span>Surplus</span><span>+${Math.round(dailySurplus)} kcal</span></div>` : ''}
+                    ${dailySurplus > 0 && goalType === 'recomp' ? `<div class="calc-line"><span>Recomp surplus</span><span>+${Math.round(dailySurplus)} kcal (fuels muscle building)</span></div>` : ''}
+                    ${dailySurplus > 0 && goalType === 'muscle-gain' ? `<div class="calc-line"><span>Surplus</span><span>+${Math.round(dailySurplus)} kcal</span></div>` : ''}
+                    ${goalType === 'recomp-weight-change' && dailyDeficit === 0 ? `<div class="calc-line"><span>Lean recomp</span><span>Maintenance (no deficit at ${bodyfat}% BF)</span></div>` : ''}
                     ${hitFloor ? `<div class="calc-line" style="color: #c62828;"><span>⚠️ Safety floor applied</span><span>${minCalories} kcal</span></div>` : ''}
                     <div class="calc-line result"><span>Target Calories</span><span>${targetCalories} kcal/day</span></div>
                 </div>
@@ -1111,15 +1069,38 @@
 
             // Info box for recomp
             const infoBox = document.getElementById('infoBox');
-            if (goalType === 'recomp' || goalType === 'recomp-weight-change') {
+            if (goalType === 'recomp') {
+                // Same weight recomp - slight surplus
                 infoBox.innerHTML = `
-                    <strong>About Recomposition:</strong> You're losing fat while gaining muscle. This requires:
-                    <br>• <strong>High protein (2.4 g/kg LBM)</strong> — the highest recommendation
-                    <br>• <strong>Small deficit (${RECOMP_DEFICIT} kcal)</strong> — supports both fat loss and muscle growth
-                    <br>• <strong>Resistance training</strong> — essential for muscle stimulus
-                    <br>• <strong>Patience</strong> — muscle builds slowly (${muscleGainRate.toFixed(2)} kg/month at age ${age})
-                    <br><br><em>Research: Longland et al. (2016) showed 2.4g/kg protein enabled +1.2kg muscle while losing 4.8kg fat.</em>
+                    <strong>Body Recomposition (Same Weight):</strong> You're replacing fat with muscle. This requires:
+                    <br>• <strong>Slight surplus (+150 kcal)</strong> — muscle building is anabolic and needs energy
+                    <br>• <strong>High protein (2.4 g/kg LBM)</strong> — maximizes muscle protein synthesis
+                    <br>• <strong>Progressive resistance training</strong> — the primary driver of recomposition
+                    <br>• <strong>Patience</strong> — recomp takes time (${muscleGainRate.toFixed(2)} kg muscle/month at age ${age})
+                    <br><br><em>Science: As you gain muscle, your metabolic rate increases. A slight surplus fuels muscle building while your body gradually shifts composition.</em>
                 `;
+                infoBox.style.display = 'block';
+            } else if (goalType === 'recomp-weight-change') {
+                const isLean = (sex === 'male' && bodyfat <= 15) || (sex === 'female' && bodyfat <= 22);
+                if (isLean) {
+                    infoBox.innerHTML = `
+                        <strong>Lean Recomposition:</strong> At ${bodyfat}% body fat, you're already lean. This requires:
+                        <br>• <strong>Maintenance calories</strong> — no deficit; your body can use stored fat while building muscle
+                        <br>• <strong>High protein (2.4 g/kg LBM)</strong> — maximizes muscle protein synthesis
+                        <br>• <strong>Progressive resistance training</strong> — the primary driver of recomposition
+                        <br>• <strong>Patience</strong> — lean recomp is slower (${muscleGainRate.toFixed(2)} kg/month at age ${age})
+                        <br><br><em>Science: For lean individuals, a deficit impairs muscle building. Maintenance + high protein + training = optimal.</em>
+                    `;
+                } else {
+                    infoBox.innerHTML = `
+                        <strong>Recomposition + Weight Loss:</strong> Losing fat while preserving/building muscle. This requires:
+                        <br>• <strong>High protein (2.4 g/kg LBM)</strong> — the highest recommendation
+                        <br>• <strong>Small deficit (${RECOMP_DEFICIT} kcal)</strong> — your fat stores can fuel the process
+                        <br>• <strong>Resistance training</strong> — essential for muscle stimulus
+                        <br>• <strong>Patience</strong> — muscle builds slowly (${muscleGainRate.toFixed(2)} kg/month at age ${age})
+                        <br><br><em>Research: Longland et al. (2016) showed 2.4g/kg protein enabled +1.2kg muscle while losing 4.8kg fat.</em>
+                    `;
+                }
                 infoBox.style.display = 'block';
             } else {
                 infoBox.style.display = 'none';

@@ -9,66 +9,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
+    <!-- Shared Brand Styles -->
+    <link rel="stylesheet" href="brand.css">
+
+    <!-- Page-specific styles -->
     <style>
-        :root {
-            --color-bg: #F7F4EB;
-            --color-card: #FFFBF5;
-            --color-text: #0D3137;
-            --color-text-muted: #29484C;
-            --color-teal: #0D3137;
-            --color-border: #E7E5E4;
-            --color-primary: #00905A;
-            --color-primary-light: rgba(0, 144, 90, 0.1);
-            --radius: 20px;
-            --radius-sm: 12px;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--color-bg);
-            color: var(--color-text);
-            line-height: 1.7;
-            padding: 24px 16px;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        h1 {
-            font-family: 'Lora', serif;
-            font-size: 2rem;
-            color: var(--color-teal);
-            margin-bottom: 8px;
-        }
-
-        .subtitle {
-            color: var(--color-text-muted);
-            margin-bottom: 32px;
-            font-size: 1rem;
-        }
-
-        .back-link {
-            display: inline-block;
-            color: var(--color-teal);
-            text-decoration: none;
-            margin-bottom: 24px;
-            font-weight: 500;
-        }
-
-        .back-link:hover {
-            text-decoration: underline;
-        }
-
         .principle-card {
             background: var(--color-card);
             border-radius: var(--radius);
             padding: 24px;
             margin-bottom: 24px;
-            box-shadow: 0 4px 20px rgba(13, 49, 55, 0.08);
+            box-shadow: var(--shadow-card);
         }
 
         .principle-header {
@@ -78,10 +29,11 @@
             margin-bottom: 16px;
         }
 
+        /* Teal for INFO/structural enumeration (not action) */
         .principle-number {
             width: 32px;
             height: 32px;
-            background: var(--color-primary);
+            background: var(--color-teal);
             color: white;
             border-radius: 50%;
             display: flex;
@@ -92,76 +44,23 @@
         }
 
         .principle-title {
-            font-family: 'Lora', serif;
+            font-family: var(--font-heading);
             font-size: 1.2rem;
             color: var(--color-text);
             flex: 1;
         }
 
-        .evidence-badge {
-            background: var(--color-primary-light);
-            color: var(--color-teal);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .study {
-            background: var(--color-bg);
-            border-radius: var(--radius-sm);
-            padding: 16px;
-            margin-bottom: 12px;
-        }
-
-        .study:last-child {
-            margin-bottom: 0;
-        }
-
-        .study-title {
-            font-weight: 600;
-            color: var(--color-text);
-            margin-bottom: 8px;
-        }
-
-        .study-meta {
-            font-size: 0.85rem;
-            color: var(--color-text-muted);
-            margin-bottom: 8px;
-        }
-
-        .study-finding {
-            font-size: 0.9rem;
-            color: var(--color-text);
-        }
-
-        .study-finding strong {
-            color: var(--color-teal);
-            font-weight: 700;
-        }
-
-        .study-link {
-            display: inline-block;
-            margin-top: 8px;
-            color: var(--color-teal);
-            text-decoration: none;
-            font-size: 0.85rem;
-        }
-
-        .study-link:hover {
-            text-decoration: underline;
-        }
-
+        /* Grey border for structural elements */
         .consensus-box {
-            background: linear-gradient(135deg, var(--color-primary-light) 0%, rgba(0, 144, 90, 0.2) 100%);
-            border-left: 4px solid var(--color-primary);
+            background: var(--color-accent-light);
+            border-left: 4px solid var(--color-border);
             border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
             padding: 20px;
             margin-bottom: 32px;
         }
 
         .consensus-box h2 {
-            font-family: 'Lora', serif;
+            font-family: var(--font-heading);
             font-size: 1.1rem;
             color: var(--color-teal);
             margin-bottom: 8px;
@@ -170,6 +69,7 @@
         .consensus-box p {
             font-size: 0.95rem;
             color: var(--color-text);
+            margin-bottom: 0;
         }
 
         .veg-table {
@@ -180,16 +80,23 @@
         }
 
         .veg-table th {
-            background: var(--color-primary-light);
-            color: var(--color-teal);
+            background: var(--color-teal);
+            color: white;
             padding: 10px 12px;
             text-align: left;
             font-weight: 600;
         }
 
+        .veg-table th:first-child {
+            border-radius: var(--radius-sm) 0 0 0;
+        }
+
+        .veg-table th:last-child {
+            border-radius: 0 var(--radius-sm) 0 0;
+        }
+
         .veg-table.starchy th {
-            background: #FEE2E2;
-            color: #DC2626;
+            background: #DC2626;
         }
 
         .veg-table td {
@@ -203,6 +110,16 @@
 
         .veg-table tr:hover {
             background: var(--color-bg);
+        }
+
+        .veg-lists h4 {
+            color: var(--color-teal);
+            margin: 20px 0 12px;
+            font-family: var(--font-heading);
+        }
+
+        .veg-lists h4.starchy {
+            color: #DC2626;
         }
 
         @media (max-width: 640px) {
@@ -254,7 +171,7 @@
 
             <!-- Vegetable Lists -->
             <div class="veg-lists">
-                <h4 style="color: var(--color-teal); margin: 20px 0 12px; font-family: 'Lora', serif;">✅ Non-Starchy Vegetables (Proven Mortality Benefit)</h4>
+                <h4>Non-Starchy Vegetables (Proven Mortality Benefit)</h4>
                 <table class="veg-table">
                     <thead>
                         <tr><th>Vegetable</th><th>Calories per 100g</th><th>Category</th></tr>
@@ -279,7 +196,7 @@
                     </tbody>
                 </table>
 
-                <h4 style="color: var(--color-danger); margin: 24px 0 12px; font-family: 'Lora', serif;">❌ Starchy Vegetables (No Mortality Benefit in Studies)</h4>
+                <h4 class="starchy">Starchy Vegetables (No Mortality Benefit in Studies)</h4>
                 <table class="veg-table starchy">
                     <thead>
                         <tr><th>Vegetable</th><th>Calories per 100g</th><th>Note</th></tr>
@@ -293,7 +210,7 @@
                         <tr><td>Butternut squash</td><td>45 kcal</td><td>Moderate starch</td></tr>
                     </tbody>
                 </table>
-                <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-top: 12px;">
+                <p class="text-muted" style="margin-top: 12px; font-size: 0.85rem;">
                     <strong>Why the difference?</strong> Non-starchy vegetables average ~25 kcal/100g vs ~77 kcal/100g for starchy.
                     Starchy vegetables cause blood sugar spikes similar to refined grains and displace more nutrient-dense options.
                 </p>
@@ -399,7 +316,7 @@
             </div>
         </div>
 
-        <p style="text-align: center; color: var(--color-text-muted); margin-top: 32px; font-size: 0.85rem;">
+        <p class="text-center text-muted" style="margin-top: 32px; font-size: 0.85rem;">
             All studies are peer-reviewed and published in high-impact medical journals.
         </p>
     </div>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Body Fat % Estimation Guide - LongevityPath</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Shared Brand Styles -->
+    <link rel="stylesheet" href="brand.css">
+
+    <!-- Page-specific styles -->
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            margin-bottom: 32px;
+        }
+
+        .page-header h1 {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .visual-guide {
+            background: var(--color-card);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .visual-guide h3 {
+            margin-bottom: 16px;
+        }
+
+        .bf-category {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            background: var(--color-bg);
+            border-radius: var(--radius-sm);
+            margin-bottom: 12px;
+        }
+
+        .bf-category:last-child {
+            margin-bottom: 0;
+        }
+
+        .bf-range {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--color-teal);
+            min-width: 80px;
+        }
+
+        .bf-descriptions {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-left: 16px;
+        }
+
+        .bf-gender {
+            font-size: 0.9rem;
+        }
+
+        .bf-gender strong {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+            margin-bottom: 4px;
+        }
+
+        .highlight-category {
+            background: var(--color-accent-light);
+            border-left: 4px solid var(--color-border);
+        }
+
+        .measurement-methods {
+            background: var(--color-card);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .method-item {
+            padding: 16px;
+            background: var(--color-bg);
+            border-radius: var(--radius-sm);
+            margin-bottom: 12px;
+        }
+
+        .method-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .method-name {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            color: var(--color-teal);
+            margin-bottom: 4px;
+        }
+
+        .method-accuracy {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+        }
+
+        .accuracy-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-left: 8px;
+        }
+
+        .accuracy-high {
+            background: var(--color-accent-light);
+            color: var(--color-accent);
+        }
+
+        .accuracy-medium {
+            background: #FFF3CD;
+            color: #856404;
+        }
+
+        .accuracy-low {
+            background: #FEE2E2;
+            color: #DC2626;
+        }
+
+        @media (max-width: 600px) {
+            .bf-descriptions {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="nutrition-calculator.html" class="back-link">← Back to Calculator</a>
+
+        <div class="page-header">
+            <h1>Body Fat % Estimation Guide</h1>
+            <p class="subtitle">Visual guide to estimate your body fat percentage</p>
+        </div>
+
+        <!-- Visual Guide -->
+        <div class="visual-guide">
+            <h3>Body Fat Ranges by Appearance</h3>
+
+            <div class="bf-category">
+                <div class="bf-range">10-14%</div>
+                <div class="bf-descriptions">
+                    <div class="bf-gender">
+                        <strong>Men</strong>
+                        Visible abs, veins showing, very lean
+                    </div>
+                    <div class="bf-gender">
+                        <strong>Women</strong>
+                        Very lean, athletic, competition level
+                    </div>
+                </div>
+            </div>
+
+            <div class="bf-category">
+                <div class="bf-range">15-19%</div>
+                <div class="bf-descriptions">
+                    <div class="bf-gender">
+                        <strong>Men</strong>
+                        Some ab definition, fit appearance
+                    </div>
+                    <div class="bf-gender">
+                        <strong>Women</strong>
+                        Fit, toned, athletic
+                    </div>
+                </div>
+            </div>
+
+            <div class="bf-category highlight-category">
+                <div class="bf-range">20-24%</div>
+                <div class="bf-descriptions">
+                    <div class="bf-gender">
+                        <strong>Men</strong>
+                        Soft midsection, minimal definition
+                    </div>
+                    <div class="bf-gender">
+                        <strong>Women</strong>
+                        Healthy average, some curves
+                    </div>
+                </div>
+            </div>
+
+            <div class="bf-category">
+                <div class="bf-range">25-29%</div>
+                <div class="bf-descriptions">
+                    <div class="bf-gender">
+                        <strong>Men</strong>
+                        Noticeable belly, waist wider
+                    </div>
+                    <div class="bf-gender">
+                        <strong>Women</strong>
+                        Average, fuller figure
+                    </div>
+                </div>
+            </div>
+
+            <div class="bf-category">
+                <div class="bf-range">30-35%</div>
+                <div class="bf-descriptions">
+                    <div class="bf-gender">
+                        <strong>Men</strong>
+                        Significant belly, round midsection
+                    </div>
+                    <div class="bf-gender">
+                        <strong>Women</strong>
+                        Higher body fat, fuller shape
+                    </div>
+                </div>
+            </div>
+
+            <div class="bf-category">
+                <div class="bf-range">35%+</div>
+                <div class="bf-descriptions">
+                    <div class="bf-gender">
+                        <strong>Men</strong>
+                        Large midsection, obesity range
+                    </div>
+                    <div class="bf-gender">
+                        <strong>Women</strong>
+                        Significantly overweight
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Measurement Methods -->
+        <div class="measurement-methods">
+            <h3>How to Measure Body Fat</h3>
+
+            <div class="method-item">
+                <div class="method-name">
+                    DEXA Scan
+                    <span class="accuracy-badge accuracy-high">Most Accurate</span>
+                </div>
+                <div class="method-accuracy">
+                    Gold standard. Available at clinics and some gyms. ~$50-150 per scan.
+                </div>
+            </div>
+
+            <div class="method-item">
+                <div class="method-name">
+                    Hydrostatic Weighing
+                    <span class="accuracy-badge accuracy-high">Very Accurate</span>
+                </div>
+                <div class="method-accuracy">
+                    Underwater weighing. Less common but highly reliable.
+                </div>
+            </div>
+
+            <div class="method-item">
+                <div class="method-name">
+                    Calipers (Skinfold)
+                    <span class="accuracy-badge accuracy-medium">Good</span>
+                </div>
+                <div class="method-accuracy">
+                    Manual measurement at multiple sites. Accuracy depends on technician skill.
+                </div>
+            </div>
+
+            <div class="method-item">
+                <div class="method-name">
+                    Smart Scale (BIA)
+                    <span class="accuracy-badge accuracy-medium">Moderate</span>
+                </div>
+                <div class="method-accuracy">
+                    Convenient for tracking trends. Can vary with hydration. Best used consistently.
+                </div>
+            </div>
+
+            <div class="method-item">
+                <div class="method-name">
+                    Visual Estimation
+                    <span class="accuracy-badge accuracy-low">Rough Estimate</span>
+                </div>
+                <div class="method-accuracy">
+                    Compare to reference photos. Useful starting point, ±5% accuracy.
+                </div>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <strong>Tip:</strong> For the nutrition calculator, consistency matters more than precision. Pick one method and use it to track changes over time.
+        </div>
+
+    </div>
+</body>
+</html>

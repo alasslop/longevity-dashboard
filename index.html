@@ -5,56 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Longevity Lifestyle Test - Your Results</title>
 
-    <!-- Fonts: Lora (Headlines), Poppins (Body), Raleway (CTAs) -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&family=Raleway:wght@500;600;700&display=swap" rel="stylesheet">
 
+    <!-- Shared Brand Styles -->
+    <link rel="stylesheet" href="brand.css">
+
+    <!-- Page-specific styles -->
     <style>
-        :root {
-            /* LongevityPath Brand Colors */
-            --color-bg: #F7F4EB;
-            --color-card: #FFFBF5;
-            --color-text: #0D3137;
-            --color-text-muted: #29484C;
-            --color-border: #E7E5E4;
-            --color-primary: #00905A;
-            --color-primary-light: rgba(0, 144, 90, 0.1);
-            --color-accent: #F4A261;
-            --color-teal: #0D3137;
-            --color-teal-accent: #29484C;
-            --color-danger: #DC2626;
-            --color-danger-light: #FEE2E2;
-            --radius: 20px;
-            --radius-sm: 12px;
-            --radius-button: 30px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--color-bg);
-            color: var(--color-text);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-
+        /* Container override for this page */
         .container {
             max-width: 900px;
             margin: 0 auto;
             padding: 24px 16px;
         }
 
+        body {
+            min-height: 100vh;
+            padding: 0;
+        }
+
         /* Header */
         .header {
             text-align: center;
             padding: 24px 24px;
-            background: #00905A;
+            background: var(--color-accent);
             border-radius: var(--radius);
             color: #FFFBF5;
             margin-bottom: 32px;
@@ -63,15 +40,18 @@
         }
 
         .header h1 {
-            font-family: 'Lora', Georgia, serif;
+            font-family: var(--font-heading);
             font-size: 2rem;
             font-weight: 600;
             margin-bottom: 8px;
+            color: #FFFBF5;
         }
 
         .header p {
             opacity: 0.9;
             font-size: 1rem;
+            color: #FFFBF5;
+            margin-bottom: 0;
         }
 
         .greeting {
@@ -99,13 +79,13 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            border: 4px solid var(--color-primary);
+            border: 4px solid var(--color-accent);
         }
 
         .score-value {
-            font-family: 'Lora', Georgia, serif;
+            font-family: var(--font-heading);
             font-size: 2.5rem;
-            color: var(--color-primary);
+            color: var(--color-accent);
             line-height: 1;
         }
 
@@ -123,22 +103,17 @@
             border-radius: var(--radius);
             padding: 24px;
             margin-bottom: 24px;
-            box-shadow: 0 4px 20px rgba(13, 49, 55, 0.08);
+            box-shadow: var(--shadow-card);
             border: none;
-        }
-
-        .card-title {
-            font-family: 'Lora', Georgia, serif;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
         }
 
         /* Section Header */
         .section-header {
-            font-family: 'Lora', Georgia, serif;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-family: var(--font-heading);
             font-size: 1.1rem;
             font-weight: 600;
             color: var(--color-teal);
@@ -151,13 +126,36 @@
             margin-top: 0;
         }
 
+        /* Orange Step Number Ball */
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: var(--color-orange);
+            color: white;
+            border-radius: 50%;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .section-title {
+            flex: 1;
+        }
+
         .section-weight {
             font-size: 0.85rem;
             font-weight: 400;
             color: var(--color-text-muted);
+            width: 100%;
+            margin-top: -4px;
+            padding-left: 44px;
         }
 
-        /* Question Items - Editable */
+        /* Question Items */
         .question-item {
             padding: 16px;
             background: var(--color-bg);
@@ -183,19 +181,12 @@
             font-style: italic;
         }
 
-        .question-id {
-            font-size: 0.8rem;
-            color: var(--color-primary);
-            font-weight: 600;
-            margin-right: 8px;
-        }
-
-        /* Intro Section Styles */
+        /* Intro Section */
         .intro-section {
             padding: 20px;
-            background: var(--color-primary-light);
+            background: var(--color-accent-light);
             border-radius: var(--radius-sm);
-            border-left: 4px solid var(--color-primary);
+            border-left: 4px solid var(--color-border);
             margin-bottom: 16px;
         }
 
@@ -211,10 +202,10 @@
             align-items: center;
             gap: 8px;
             padding: 12px 24px;
-            background: var(--color-primary);
+            background: var(--color-orange);
             color: white;
             text-decoration: none;
-            border-radius: var(--radius-button);
+            border-radius: 30px;
             font-family: 'Raleway', sans-serif;
             font-weight: 600;
             font-size: 0.95rem;
@@ -222,11 +213,12 @@
         }
 
         .intro-link:hover {
-            background: #007A4D;
+            background: #E08C4A;
             transform: translateY(-1px);
+            text-decoration: none;
         }
 
-        /* Slider Styles - Mobile Friendly */
+        /* Slider Styles */
         .slider-container {
             display: flex;
             align-items: center;
@@ -238,7 +230,7 @@
             -webkit-appearance: none;
             appearance: none;
             height: 8px;
-            background: #E7E5E4;
+            background: var(--color-border);
             border-radius: 4px;
             outline: none;
             cursor: pointer;
@@ -249,7 +241,7 @@
             appearance: none;
             width: 28px;
             height: 28px;
-            background: var(--color-primary);
+            background: var(--color-accent);
             border-radius: 50%;
             cursor: pointer;
             box-shadow: 0 2px 6px rgba(0,0,0,0.2);
@@ -258,7 +250,7 @@
         .slider-input::-moz-range-thumb {
             width: 28px;
             height: 28px;
-            background: var(--color-primary);
+            background: var(--color-accent);
             border-radius: 50%;
             cursor: pointer;
             border: none;
@@ -268,7 +260,7 @@
         .slider-value {
             min-width: 50px;
             padding: 8px 12px;
-            background: var(--color-primary);
+            background: var(--color-accent);
             color: white;
             border-radius: 8px;
             text-align: center;
@@ -276,15 +268,7 @@
             font-size: 1rem;
         }
 
-        .slider-labels {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 8px;
-            font-size: 0.75rem;
-            color: var(--color-text-muted);
-        }
-
-        /* Radio Button Styles - Mobile Friendly */
+        /* Radio Button Styles */
         .radio-group {
             display: flex;
             flex-direction: column;
@@ -305,19 +289,19 @@
         }
 
         .radio-option:hover {
-            border-color: var(--color-primary);
-            background: var(--color-primary-light);
+            border-color: var(--color-accent);
+            background: var(--color-accent-light);
         }
 
         .radio-option.selected {
-            border-color: var(--color-primary);
-            background: var(--color-primary-light);
+            border-color: var(--color-accent);
+            background: var(--color-accent-light);
         }
 
         .radio-option input[type="radio"] {
             width: 20px;
             height: 20px;
-            accent-color: var(--color-primary);
+            accent-color: var(--color-accent);
             cursor: pointer;
             flex-shrink: 0;
             pointer-events: none;
@@ -360,18 +344,18 @@
         }
 
         .checkbox-option:hover {
-            border-color: var(--color-primary);
+            border-color: var(--color-accent);
         }
 
         .checkbox-option.selected {
-            border-color: var(--color-primary);
-            background: var(--color-primary-light);
+            border-color: var(--color-accent);
+            background: var(--color-accent-light);
         }
 
         .checkbox-option input[type="checkbox"] {
             width: 20px;
             height: 20px;
-            accent-color: var(--color-primary);
+            accent-color: var(--color-accent);
             cursor: pointer;
             flex-shrink: 0;
             pointer-events: none;
@@ -386,8 +370,8 @@
 
         .evidence-tag {
             font-size: 0.7rem;
-            color: var(--color-primary);
-            background: var(--color-primary-light);
+            color: var(--color-accent);
+            background: var(--color-accent-light);
             padding: 2px 8px;
             border-radius: 4px;
             white-space: nowrap;
@@ -400,7 +384,7 @@
             justify-content: center;
             width: 20px;
             height: 20px;
-            background: var(--color-primary);
+            background: var(--color-accent);
             color: white;
             border-radius: 50%;
             font-size: 0.75rem;
@@ -429,13 +413,13 @@
             border: 2px solid var(--color-border);
             border-radius: 8px;
             font-size: 1.1rem;
-            font-family: 'Poppins', sans-serif;
+            font-family: var(--font-body);
             text-align: center;
         }
 
         .number-input input:focus {
             outline: none;
-            border-color: var(--color-primary);
+            border-color: var(--color-accent);
         }
 
         .number-input span {
@@ -443,7 +427,7 @@
             font-size: 0.9rem;
         }
 
-        /* Save Button */
+        /* Save Button - Orange CTA */
         .save-btn {
             display: flex;
             align-items: center;
@@ -451,10 +435,10 @@
             gap: 8px;
             width: 100%;
             padding: 14px 24px;
-            background: var(--color-primary);
+            background: var(--color-orange);
             color: white;
             border: none;
-            border-radius: var(--radius-button);
+            border-radius: 30px;
             font-family: 'Raleway', sans-serif;
             font-size: 1rem;
             font-weight: 600;
@@ -464,7 +448,7 @@
         }
 
         .save-btn:hover {
-            background: #007A4D;
+            background: #E08C4A;
             transform: translateY(-1px);
         }
 
@@ -527,7 +511,7 @@
             background: transparent;
             border: none;
             border-radius: 8px;
-            font-family: 'Poppins', sans-serif;
+            font-family: var(--font-body);
             font-size: 0.9rem;
             font-weight: 500;
             cursor: pointer;
@@ -537,7 +521,7 @@
 
         .tab.active {
             background: var(--color-card);
-            color: var(--color-primary);
+            color: var(--color-accent);
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
@@ -549,10 +533,10 @@
             display: block;
         }
 
-        /* Info Box */
+        /* Info Box - grey border for structural elements */
         .info-box {
-            background: var(--color-primary-light);
-            border-left: 4px solid var(--color-primary);
+            background: var(--color-accent-light);
+            border-left: 4px solid var(--color-border);
             padding: 12px 16px;
             border-radius: 0 8px 8px 0;
             margin-bottom: 16px;
@@ -646,7 +630,7 @@
 
             <!-- History Tab -->
             <div id="history-tab" class="tab-content">
-                <h3 style="font-family: 'Lora', serif; margin-bottom: 16px;">Change Log</h3>
+                <h3 style="font-family: var(--font-heading); margin-bottom: 16px;">Change Log</h3>
                 <div id="changelogList">
                     <p style="color: var(--color-text-muted); text-align: center; padding: 24px;">
                         No changes logged yet.
@@ -662,19 +646,6 @@
         // NUTRITION ASSESSMENT - EXACT SEC 0-4
         // ========================================
         const NUTRITION_CONFIG = {
-            // SEC 0: Getting Started (intro section, not scored)
-            sec0: {
-                title: "Getting Started with Nutrition",
-                weight: 0, // Not scored
-                type: "intro",
-                description: "Before tracking your nutrition habits, we recommend using our Nutrition Calculator to determine your personalized calorie and protein targets based on your body composition and goals.",
-                link: {
-                    text: "→ Open Nutrition Calculator",
-                    url: "nutrition-calculator.html"
-                },
-                questions: [] // No questions - intro section only
-            },
-
             // SEC 1: Diet Adherence (25%)
             sec1: {
                 title: "Diet Adherence",
@@ -740,6 +711,11 @@
                 title: "Protein",
                 weight: 0.25,
                 helpLink: "protein-evidence.html",
+                description: "Not sure how much protein you need per meal and per day?",
+                link: {
+                    text: "→ Open Nutrition Calculator",
+                    url: "nutrition-calculator.html"
+                },
                 questions: [
                     {
                         id: "N3_1",
@@ -765,7 +741,7 @@
                 ]
             },
 
-            // SEC 4: Nutrition Principles (25%) - Simplified checkboxes based on scientific consensus
+            // SEC 4: Nutrition Principles (25%)
             sec4: {
                 title: "Nutrition Principles",
                 weight: 0.25,
@@ -776,7 +752,7 @@
                         question: "Which nutrition principles do you consistently follow?",
                         helpLink: "nutrition-evidence.html",
                         type: "checkbox",
-                        scoring: "principles", // Each checked = 2 points, max 10
+                        scoring: "principles",
                         options: [
                             { value: "vegetables", label: "I eat 3+ servings of non-starchy vegetables daily", evidence: "13% lower mortality" },
                             { value: "whole_foods", label: "Most of my meals are home-cooked from whole ingredients", evidence: "15% lower mortality" },
@@ -798,16 +774,13 @@
             changelog: []
         };
 
-        // Track last saved state for change detection
         let lastSavedAnswers = {};
 
-        // Load from localStorage
         function loadData() {
             const saved = localStorage.getItem('nutritionAssessmentEN');
             if (saved) {
                 currentData = JSON.parse(saved);
             } else {
-                // Initialize with default values
                 Object.keys(NUTRITION_CONFIG).forEach(section => {
                     currentData.answers[section] = {};
                     NUTRITION_CONFIG[section].questions.forEach(q => {
@@ -823,11 +796,9 @@
                     });
                 });
             }
-            // Store initial state for change tracking
             lastSavedAnswers = JSON.parse(JSON.stringify(currentData.answers));
         }
 
-        // Save to localStorage
         function saveData() {
             localStorage.setItem('nutritionAssessmentEN', JSON.stringify(currentData));
         }
@@ -837,7 +808,7 @@
         // ========================================
         function calculateSectionScore(sectionKey) {
             const section = NUTRITION_CONFIG[sectionKey];
-            if (section.weight === 0) return null; // SEC 0 is not scored
+            if (section.weight === 0) return null;
 
             const answers = currentData.answers[sectionKey] || {};
             let totalScore = 0;
@@ -849,7 +820,6 @@
                 if (q.type === 'slider') {
                     const sliderValue = parseFloat(value) || q.min;
                     if (q.min === 1) {
-                        // Convert 1-10 to 0-10 for scoring
                         totalScore += sliderValue - 1;
                         maxScore += 9;
                     } else {
@@ -860,12 +830,10 @@
                     totalScore += parseFloat(value) || 0;
                     maxScore += 10;
                 } else if (q.type === 'checkbox' && q.scoring === 'count') {
-                    // N1.2: 4 situations = 10 points
                     const count = Array.isArray(value) ? value.length : 0;
                     totalScore += (count / 4) * 10;
                     maxScore += 10;
                 } else if (q.type === 'checkbox' && q.scoring === 'principles') {
-                    // N4: Each principle = 2 points, max 10
                     const count = Array.isArray(value) ? value.length : 0;
                     totalScore += count * 2;
                     maxScore += 10;
@@ -891,26 +859,15 @@
             return totalWeight > 0 ? Math.round(weightedSum / totalWeight * 10) / 10 : 0;
         }
 
-        function getScoreClass(value) {
-            if (value >= 7) return 'excellent';
-            if (value >= 4) return 'good';
-            return 'needs-work';
-        }
-
         // ========================================
         // CHANGELOG
         // ========================================
         function logChange(sectionKey, questionId, oldValue, newValue) {
             const section = NUTRITION_CONFIG[sectionKey];
             const question = section.questions.find(q => q.id === questionId);
-
-            // Calculate score change
             const oldScore = calculateTotalScore();
-
-            // Generate meaningful description
             let description = generateChangeDescription(question, oldValue, newValue);
 
-            // Temporarily set old value to calculate old score
             const tempValue = currentData.answers[sectionKey][questionId];
             currentData.answers[sectionKey][questionId] = oldValue;
             const oldTotalScore = calculateTotalScore();
@@ -947,7 +904,6 @@
                 const added = newArr.filter(v => !oldArr.includes(v));
                 const removed = oldArr.filter(v => !newArr.includes(v));
 
-                // Shorter labels for principles
                 const shortLabels = {
                     'vegetables': 'Vegetables 3x daily',
                     'whole_foods': 'Whole foods focus',
@@ -981,19 +937,22 @@
             const form = document.getElementById('nutritionForm');
             form.innerHTML = '';
 
+            let stepNumber = 0; // Counter for step numbers
+
             Object.keys(NUTRITION_CONFIG).forEach(sectionKey => {
                 const section = NUTRITION_CONFIG[sectionKey];
                 const answers = currentData.answers[sectionKey] || {};
                 const sectionScore = calculateSectionScore(sectionKey);
 
-                // Section Header
+                stepNumber++; // Increment step number for each section
+
                 const sectionHelpLink = section.helpLink ? `<a href="${section.helpLink}" target="_blank" class="help-link" title="View scientific evidence">?</a>` : '';
                 let headerHTML = `<div class="section-header">
-                    ${section.title}${sectionHelpLink}
-                    ${section.weight > 0 ? `<span class="section-weight">(${section.weight * 100}% weight) - Score: ${sectionScore !== null ? sectionScore.toFixed(1) + '/10' : 'Not scored'}</span>` : ''}
+                    <span class="step-number">${stepNumber}</span>
+                    <span class="section-title">${section.title}${sectionHelpLink}</span>
+                    ${section.weight > 0 ? `<span class="section-weight">Score: ${sectionScore !== null ? sectionScore.toFixed(1) + '/10' : 'N/A'}</span>` : ''}
                 </div>`;
 
-                // Handle intro section type
                 if (section.type === 'intro') {
                     headerHTML += `
                         <div class="intro-section">
@@ -1002,16 +961,24 @@
                         </div>
                     `;
                     form.innerHTML += headerHTML;
-                    return; // Skip questions for intro sections
+                    return;
                 }
 
-                if (section.description) {
+                // Show description with link in styled box (for Protein section)
+                if (section.link) {
+                    headerHTML += `
+                        <div class="intro-section">
+                            ${section.description ? `<p>${section.description}</p>` : ''}
+                            <a href="${section.link.url}" target="_blank" class="intro-link">${section.link.text}</a>
+                        </div>
+                    `;
+                } else if (section.description) {
+                    // Simple text description without box (for Nutrition Principles)
                     headerHTML += `<p style="font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 16px;">${section.description}</p>`;
                 }
 
                 form.innerHTML += headerHTML;
 
-                // Questions
                 section.questions.forEach(q => {
                     const value = answers[q.id];
                     const helpLinkHTML = q.helpLink ? `<a href="${q.helpLink}" target="_blank" class="help-link" title="View scientific evidence">?</a>` : '';
@@ -1035,14 +1002,6 @@
                                 <div class="slider-value" id="value-${sectionKey}-${q.id}">${currentValue}</div>
                             </div>
                         `;
-                        if (!q.hideLabels && q.labels) {
-                            questionHTML += `
-                                <div class="slider-labels">
-                                    <span>${q.labels[q.min] || q.min}</span>
-                                    <span>${q.labels[q.max] || q.max}</span>
-                                </div>
-                            `;
-                        }
                     } else if (q.type === 'radio') {
                         questionHTML += `<div class="radio-group" data-section="${sectionKey}" data-question="${q.id}">`;
                         q.options.forEach(opt => {
@@ -1114,7 +1073,6 @@
                     hour12: false
                 });
 
-                // Handle both old and new changelog formats
                 const description = change.description || `${change.questionId}: ${change.oldValue} → ${change.newValue}`;
                 const scoreText = change.scoreChange ? ` Score: ${change.scoreChange}` : '';
 
@@ -1161,7 +1119,6 @@
             const questionId = slider.dataset.question;
             document.getElementById(`value-${section}-${questionId}`).textContent = value;
 
-            // Update score in real-time
             currentData.answers[section][questionId] = value;
             updateScoreDisplay();
             updateSectionScoreDisplay(section);
@@ -1173,7 +1130,6 @@
             element.classList.add('selected');
             element.querySelector('input').checked = true;
 
-            // Update score in real-time
             currentData.answers[section][questionId] = value;
             updateScoreDisplay();
             updateSectionScoreDisplay(section);
@@ -1185,7 +1141,6 @@
             checkbox.checked = newState;
             element.classList.toggle('selected', newState);
 
-            // Update score in real-time
             if (!Array.isArray(currentData.answers[section][questionId])) {
                 currentData.answers[section][questionId] = [];
             }
@@ -1200,23 +1155,23 @@
 
         function updateSectionScoreDisplay(sectionKey) {
             const section = NUTRITION_CONFIG[sectionKey];
-            if (section.weight === 0) return; // Goals section not scored
+            if (section.weight === 0) return;
 
             const sectionScore = calculateSectionScore(sectionKey);
             const headers = document.querySelectorAll('.section-header');
 
             headers.forEach(header => {
-                if (header.textContent.includes(section.title)) {
+                const titleSpan = header.querySelector('.section-title');
+                if (titleSpan && titleSpan.textContent.includes(section.title)) {
                     const weightSpan = header.querySelector('.section-weight');
                     if (weightSpan) {
-                        weightSpan.textContent = `(${section.weight * 100}% weight) - Score: ${sectionScore.toFixed(1)}/10`;
+                        weightSpan.textContent = `Score: ${sectionScore.toFixed(1)}/10`;
                     }
                 }
             });
         }
 
         function saveAllChanges() {
-            // Compare against last saved state (not current state which updates in real-time)
             Object.keys(NUTRITION_CONFIG).forEach(sectionKey => {
                 const section = NUTRITION_CONFIG[sectionKey];
 
@@ -1224,7 +1179,6 @@
                     const newValue = currentData.answers[sectionKey][q.id];
                     const oldValue = lastSavedAnswers[sectionKey]?.[q.id];
 
-                    // Check if value changed since last save
                     const oldStr = Array.isArray(oldValue) ? [...oldValue].sort().join(',') : String(oldValue);
                     const newStr = Array.isArray(newValue) ? [...newValue].sort().join(',') : String(newValue);
 
@@ -1234,14 +1188,12 @@
                 });
             });
 
-            // Update last saved state
             lastSavedAnswers = JSON.parse(JSON.stringify(currentData.answers));
 
             saveData();
             updateScoreDisplay();
             renderChangelog();
 
-            // Visual feedback
             const btn = document.querySelector('.save-btn');
             btn.classList.add('saved');
             btn.innerHTML = '✅ Saved!';
@@ -1260,7 +1212,6 @@
             updateScoreDisplay();
             renderChangelog();
 
-            // Add real-time updates for number inputs
             document.querySelectorAll('.number-input input').forEach(input => {
                 input.addEventListener('input', function() {
                     const section = this.dataset.section;

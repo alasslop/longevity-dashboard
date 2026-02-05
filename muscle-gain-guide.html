@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realistic Muscle Gain Rates - LongevityPath</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Shared Brand Styles -->
+    <link rel="stylesheet" href="brand.css">
+
+    <!-- Page-specific styles -->
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            margin-bottom: 32px;
+        }
+
+        .page-header h1 {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .content-card {
+            background: var(--color-card);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .content-card h3 {
+            margin-bottom: 16px;
+            color: var(--color-teal);
+        }
+
+        .rate-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 16px;
+        }
+
+        .rate-table th {
+            background: var(--color-teal);
+            color: white;
+            padding: 12px 16px;
+            text-align: left;
+            font-family: var(--font-heading);
+            font-weight: 600;
+        }
+
+        .rate-table th:first-child {
+            border-radius: var(--radius-sm) 0 0 0;
+        }
+
+        .rate-table th:last-child {
+            border-radius: 0 var(--radius-sm) 0 0;
+        }
+
+        .rate-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .rate-table tbody tr:hover {
+            background: var(--color-accent-light);
+        }
+
+        .rate-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .rate-table tbody tr:last-child td:first-child {
+            border-radius: 0 0 0 var(--radius-sm);
+        }
+
+        .rate-table tbody tr:last-child td:last-child {
+            border-radius: 0 0 var(--radius-sm) 0;
+        }
+
+        .highlight-row {
+            background: var(--color-accent-light);
+        }
+
+        .factor-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .factor-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .factor-item {
+            background: var(--color-bg);
+            padding: 16px;
+            border-radius: var(--radius-sm);
+        }
+
+        .factor-name {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            color: var(--color-teal);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .factor-icon {
+            font-size: 1.2rem;
+        }
+
+        .factor-desc {
+            font-size: 0.9rem;
+            color: var(--color-text);
+        }
+
+        .training-status {
+            display: flex;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .training-status {
+                flex-direction: column;
+            }
+        }
+
+        .status-card {
+            flex: 1;
+            padding: 16px;
+            border-radius: var(--radius-sm);
+            text-align: center;
+        }
+
+        .status-card.with-training {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+        }
+
+        .status-card.without-training {
+            background: #fff3e0;
+            border: 2px solid #ff9800;
+        }
+
+        .status-value {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .status-card.with-training .status-value {
+            color: #2e7d32;
+        }
+
+        .status-card.without-training .status-value {
+            color: #e65100;
+        }
+
+        .status-label {
+            font-size: 0.9rem;
+            margin-top: 4px;
+        }
+
+        .key-point {
+            background: var(--color-accent-light);
+            border-left: 4px solid var(--color-border);
+            padding: 16px;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            margin: 16px 0;
+        }
+
+        .key-point strong {
+            color: var(--color-teal);
+        }
+
+        .timeline-example {
+            background: var(--color-bg);
+            padding: 20px;
+            border-radius: var(--radius-sm);
+            margin-top: 16px;
+        }
+
+        .timeline-example h4 {
+            color: var(--color-teal);
+            margin-bottom: 12px;
+            font-family: var(--font-heading);
+        }
+
+        .timeline-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .timeline-row:last-child {
+            border-bottom: none;
+        }
+
+        .timeline-row span:last-child {
+            font-weight: 600;
+            color: var(--color-teal);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="nutrition-calculator.html" class="back-link">← Back to Calculator</a>
+
+        <div class="page-header">
+            <h1>Realistic Muscle Gain Rates</h1>
+            <p class="subtitle">Evidence-based expectations for building lean mass</p>
+        </div>
+
+        <!-- Main Rate Table -->
+        <div class="content-card">
+            <h3>Monthly Muscle Gain Potential by Age</h3>
+            <p style="margin-bottom: 16px;">These rates assume consistent resistance training and adequate protein intake.</p>
+
+            <table class="rate-table">
+                <thead>
+                    <tr>
+                        <th>Age Group</th>
+                        <th>Men (kg/month)</th>
+                        <th>Women (kg/month)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Under 30</strong></td>
+                        <td>~1.0 kg (2.2 lbs)</td>
+                        <td>~0.5 kg (1.1 lbs)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>30-39</strong></td>
+                        <td>~0.8 kg (1.8 lbs)</td>
+                        <td>~0.4 kg (0.9 lbs)</td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td><strong>40-49</strong></td>
+                        <td>~0.6 kg (1.3 lbs)</td>
+                        <td>~0.3 kg (0.7 lbs)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>50-59</strong></td>
+                        <td>~0.4 kg (0.9 lbs)</td>
+                        <td>~0.2 kg (0.4 lbs)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>60-69</strong></td>
+                        <td>~0.3 kg (0.7 lbs)</td>
+                        <td>~0.15 kg (0.3 lbs)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>70+</strong></td>
+                        <td>~0.2 kg (0.4 lbs)</td>
+                        <td>~0.1 kg (0.2 lbs)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="key-point">
+                <strong>Why women build muscle more slowly:</strong> Lower testosterone levels mean women typically gain muscle at about 50% the rate of men. However, women can still make significant strength and physique improvements with consistent training.
+            </div>
+        </div>
+
+        <!-- Resistance Training Impact -->
+        <div class="content-card">
+            <h3>The Critical Role of Resistance Training</h3>
+            <p>Resistance training isn't just helpful—it's essential for muscle growth.</p>
+
+            <div class="training-status">
+                <div class="status-card with-training">
+                    <div class="status-value">100%</div>
+                    <div class="status-label">With Resistance Training</div>
+                </div>
+                <div class="status-card without-training">
+                    <div class="status-value">~30%</div>
+                    <div class="status-label">Without Resistance Training</div>
+                </div>
+            </div>
+
+            <div class="key-point" style="margin-top: 16px;">
+                <strong>Without resistance training:</strong> Expect only ~30% of these muscle gain rates. Extra calories without training stimulus will primarily be stored as fat, not muscle.
+            </div>
+        </div>
+
+        <!-- Factors Affecting Muscle Gain -->
+        <div class="content-card">
+            <h3>Factors That Affect Your Rate</h3>
+
+            <div class="factor-grid">
+                <div class="factor-item">
+                    <div class="factor-name">
+                        <span class="factor-icon">📅</span>
+                        Training Experience
+                    </div>
+                    <div class="factor-desc">
+                        Beginners gain faster ("newbie gains"). After 2+ years of training, rates slow by 50% or more.
+                    </div>
+                </div>
+                <div class="factor-item">
+                    <div class="factor-name">
+                        <span class="factor-icon">🧬</span>
+                        Genetics
+                    </div>
+                    <div class="factor-desc">
+                        Individual variation of ±30% around average rates. Some build muscle faster naturally.
+                    </div>
+                </div>
+                <div class="factor-item">
+                    <div class="factor-name">
+                        <span class="factor-icon">🥩</span>
+                        Protein Intake
+                    </div>
+                    <div class="factor-desc">
+                        Inadequate protein limits gains. Aim for 1.6-2.4 g/kg lean body mass depending on goals.
+                    </div>
+                </div>
+                <div class="factor-item">
+                    <div class="factor-name">
+                        <span class="factor-icon">😴</span>
+                        Sleep & Recovery
+                    </div>
+                    <div class="factor-desc">
+                        Poor sleep reduces muscle protein synthesis. Aim for 7-9 hours for optimal recovery.
+                    </div>
+                </div>
+                <div class="factor-item">
+                    <div class="factor-name">
+                        <span class="factor-icon">⚖️</span>
+                        Calorie Status
+                    </div>
+                    <div class="factor-desc">
+                        Slight surplus optimizes gains. Deep deficits limit muscle building, but recomp is possible.
+                    </div>
+                </div>
+                <div class="factor-item">
+                    <div class="factor-name">
+                        <span class="factor-icon">💪</span>
+                        Training Quality
+                    </div>
+                    <div class="factor-desc">
+                        Progressive overload and proper form matter more than time in the gym.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Realistic Timeline Example -->
+        <div class="content-card">
+            <h3>Example: Building 5 kg of Muscle</h3>
+            <p>How long would it realistically take to gain 5 kg (11 lbs) of muscle?</p>
+
+            <div class="timeline-example">
+                <h4>Timeline by Age (with consistent training)</h4>
+                <div class="timeline-row">
+                    <span>Age 25, Male</span>
+                    <span>~5 months</span>
+                </div>
+                <div class="timeline-row">
+                    <span>Age 25, Female</span>
+                    <span>~10 months</span>
+                </div>
+                <div class="timeline-row">
+                    <span>Age 45, Male</span>
+                    <span>~8 months</span>
+                </div>
+                <div class="timeline-row">
+                    <span>Age 45, Female</span>
+                    <span>~17 months</span>
+                </div>
+                <div class="timeline-row">
+                    <span>Age 60, Male</span>
+                    <span>~17 months</span>
+                </div>
+                <div class="timeline-row">
+                    <span>Age 60, Female</span>
+                    <span>~33 months</span>
+                </div>
+            </div>
+
+            <p style="margin-top: 16px; font-size: 0.9rem; color: var(--color-text-muted);">
+                These timelines assume: regular resistance training (3+ days/week), adequate protein, reasonable sleep, and starting from an untrained state. Experienced lifters will be slower.
+            </p>
+        </div>
+
+        <!-- Anabolic Resistance -->
+        <div class="content-card">
+            <h3>Understanding Anabolic Resistance</h3>
+            <p>As we age, our muscles become less responsive to protein and training—a phenomenon called "anabolic resistance."</p>
+
+            <table class="rate-table" style="margin-top: 16px;">
+                <thead>
+                    <tr>
+                        <th>Age</th>
+                        <th>Anabolic Response</th>
+                        <th>Compensation Strategy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Under 40</strong></td>
+                        <td>Optimal response</td>
+                        <td>Standard protein (1.6-2.0 g/kg)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>40-59</strong></td>
+                        <td>Mild-moderate resistance</td>
+                        <td>Higher protein per meal (25-30g+)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>60+</strong></td>
+                        <td>Significant resistance</td>
+                        <td>Higher total protein (2.0-2.4 g/kg), 35-40g+ per meal</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="key-point">
+                <strong>Good news:</strong> Anabolic resistance can be partially overcome with higher protein intake and consistent resistance training. You can still build muscle at any age—it just takes more effort and patience.
+            </div>
+        </div>
+
+        <div class="info-box">
+            <strong>Research basis:</strong> These rates are derived from meta-analyses of resistance training studies. Individual results vary based on genetics, training history, and adherence to nutrition and training protocols.
+        </div>
+
+    </div>
+</body>
+</html>
