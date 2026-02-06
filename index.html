@@ -195,7 +195,7 @@
         .radio-option, .checkbox-option { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: white; border: 2px solid var(--color-border); border-radius: 8px; cursor: pointer; transition: all 0.2s; }
         .radio-option:hover, .checkbox-option:hover { border-color: var(--color-orange); background: var(--color-orange-light); }
         .radio-option.selected, .checkbox-option.selected { border-color: var(--color-orange); background: var(--color-orange-light); }
-        .radio-option input, .checkbox-option input { width: 20px; height: 20px; accent-color: var(--color-orange); cursor: pointer; flex-shrink: 0; }
+        .radio-option input, .checkbox-option input { width: 20px; height: 20px; accent-color: var(--color-orange); cursor: pointer; flex-shrink: 0; pointer-events: none; }
         .radio-option label, .checkbox-option label { flex: 1; cursor: pointer; font-size: 0.9rem; }
         .radio-points { font-size: 0.75rem; color: var(--color-text-muted); }
         .evidence-tag { font-size: 0.7rem; color: var(--color-teal); background: var(--color-teal-light); padding: 2px 8px; border-radius: 10px; }
@@ -467,19 +467,26 @@
             const saved = localStorage.getItem('longevityPathData');
             if (saved) {
                 currentData = JSON.parse(saved);
-            } else {
-                Object.keys(CATEGORIES).forEach(catKey => {
-                    currentData.answers[catKey] = {};
-                    Object.keys(CATEGORIES[catKey].sections).forEach(secKey => {
-                        currentData.answers[catKey][secKey] = {};
-                        CATEGORIES[catKey].sections[secKey].questions.forEach(q => {
+                // Ensure previousScores and scores exist (for data saved before this update)
+                if (!currentData.previousScores) currentData.previousScores = {};
+                if (!currentData.scores) currentData.scores = {};
+                if (!currentData.answers) currentData.answers = {};
+            }
+
+            // Always ensure all questions have default answers (handles new questions added to CATEGORIES)
+            Object.keys(CATEGORIES).forEach(catKey => {
+                if (!currentData.answers[catKey]) currentData.answers[catKey] = {};
+                Object.keys(CATEGORIES[catKey].sections).forEach(secKey => {
+                    if (!currentData.answers[catKey][secKey]) currentData.answers[catKey][secKey] = {};
+                    CATEGORIES[catKey].sections[secKey].questions.forEach(q => {
+                        if (currentData.answers[catKey][secKey][q.id] === undefined) {
                             if (q.type === 'slider') currentData.answers[catKey][secKey][q.id] = 5;
                             else if (q.type === 'radio') currentData.answers[catKey][secKey][q.id] = q.options[0].value;
                             else if (q.type === 'checkbox') currentData.answers[catKey][secKey][q.id] = [];
-                        });
+                        }
                     });
                 });
-            }
+            });
             calculateAllScores();
         }
 
@@ -534,12 +541,12 @@
             Object.entries(CATEGORIES).forEach(([key, cat]) => {
                 const score = currentData.scores[key] || 0;
                 const score100 = Math.round(score * 10);
-                const prevScore = currentData.previousScores[key] || 0;
-                const prevScore100 = Math.round(prevScore * 10);
-                const trend = score100 - prevScore100;
+                const prevScore = currentData.previousScores[key];
+                const hasPrevious = prevScore !== undefined && prevScore !== null;
+                const prevScore100 = hasPrevious ? Math.round(prevScore * 10) : null;
+                const trend = hasPrevious ? score100 - prevScore100 : 0;
                 const trendClass = trend > 0 ? 'trend-up' : trend < 0 ? 'trend-down' : 'trend-neutral';
-                const trendIcon = trend > 0 ? 'trending-up' : trend < 0 ? 'trending-down' : 'minus';
-                const trendText = trend > 0 ? `+${trend}` : trend < 0 ? `${trend}` : '—';
+                const trendText = hasPrevious ? `${prevScore100}→${score100}` : '—';
 
                 container.innerHTML += `
                     <div class="dimension-card" onclick="openDimension('${key}')">
@@ -548,7 +555,7 @@
                         <div class="dimension-score">
                             <span class="dimension-score-value">${score100}</span>
                             <span class="dimension-score-max">/100</span>
-                            <span class="dimension-trend ${trendClass}"><i data-lucide="${trendIcon}" style="width:14px;height:14px;"></i> ${trendText}</span>
+                            <span class="dimension-trend ${trendClass}">${trendText}</span>
                         </div>
                     </div>
                 `;
@@ -593,8 +600,26 @@
             const category = CATEGORIES[catKey];
             const content = document.getElementById('detailContent');
             content.innerHTML = '';
-            let stepNumber = 0;
 
+            // Category total score with change
+            const score = currentData.scores[catKey] || 0;
+            const score100 = Math.round(score * 10);
+            const prevScore = currentData.previousScores[catKey];
+            const hasPrevious = prevScore !== undefined && prevScore !== null;
+            const prevScore100 = hasPrevious ? Math.round(prevScore * 10) : null;
+            const trend = hasPrevious ? score100 - prevScore100 : 0;
+            const trendClass = trend > 0 ? 'trend-up' : trend < 0 ? 'trend-down' : 'trend-neutral';
+            const trendText = hasPrevious ? `${prevScore100}→${score100}` : '';
+
+            content.innerHTML += `
+                <div class="category-score-header" style="text-align:center;padding:16px;margin-bottom:20px;background:var(--color-card);border-radius:12px;box-shadow:var(--shadow-card);">
+                    <div style="font-size:2.5rem;font-weight:700;color:var(--color-text);">${score100}<span style="font-size:1rem;color:var(--color-text-muted);">/100</span></div>
+                    <div style="font-size:0.9rem;color:var(--color-text-muted);">Total ${category.name} Score</div>
+                    ${hasPrevious ? `<div class="dimension-trend ${trendClass}" style="margin-top:8px;font-size:0.85rem;">${trendText}</div>` : ''}
+                </div>
+            `;
+
+            let stepNumber = 0;
             Object.keys(category.sections).forEach(secKey => {
                 const section = category.sections[secKey];
                 const answers = currentData.answers[catKey]?.[secKey] || {};
@@ -694,9 +719,17 @@
         }
 
         function updateScoresAndUI() {
-            // Save current scores as previous before recalculating
-            currentData.previousScores = { ...currentData.scores };
+            // Store old scores before recalculating
+            const oldScores = { ...currentData.scores };
             calculateAllScores();
+
+            // Only update previousScores for categories whose scores actually changed
+            Object.keys(currentData.scores).forEach(catKey => {
+                if (oldScores[catKey] !== undefined && oldScores[catKey] !== currentData.scores[catKey]) {
+                    currentData.previousScores[catKey] = oldScores[catKey];
+                }
+            });
+
             saveData();
             renderDimensions();
             updateTotalScore();
