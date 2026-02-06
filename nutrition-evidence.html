@@ -14,6 +14,52 @@
 
     <!-- Page-specific styles -->
     <style>
+        /* Mobile header and swipe navigation */
+        .swipe-hint {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to right, var(--color-accent), transparent);
+            opacity: 0.5;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .mobile-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 0;
+            margin-bottom: 8px;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--color-bg);
+            border-radius: 50%;
+            color: var(--color-teal);
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .mobile-header-title {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            color: var(--color-text);
+        }
+
+        @media (min-width: 768px) {
+            .swipe-hint { display: none; }
+        }
+
         .principle-card {
             background: var(--color-card);
             border-radius: var(--radius);
@@ -132,8 +178,12 @@
     </style>
 </head>
 <body>
+    <div class="swipe-hint"></div>
     <div class="container">
-        <a href="index.html" class="back-link">&larr; Back to Assessment</a>
+        <div class="mobile-header">
+            <a href="index.html" class="back-btn">←</a>
+            <span class="mobile-header-title">Scientific Evidence</span>
+        </div>
 
         <h1>Scientific Evidence</h1>
         <p class="subtitle">The 5 nutrition principles are based on meta-analyses and systematic reviews involving millions of participants.</p>
@@ -320,5 +370,35 @@
             All studies are peer-reviewed and published in high-impact medical journals.
         </p>
     </div>
+
+    <script>
+        // Swipe gesture for back navigation
+        (function initSwipeGesture() {
+            let touchStartX = 0;
+            let touchStartY = 0;
+            let touchCurrentX = 0;
+
+            document.addEventListener('touchstart', (e) => {
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+            }, { passive: true });
+
+            document.addEventListener('touchmove', (e) => {
+                touchCurrentX = e.touches[0].clientX;
+            }, { passive: true });
+
+            document.addEventListener('touchend', (e) => {
+                const diffX = touchCurrentX - touchStartX;
+                const diffY = Math.abs(e.changedTouches[0].clientY - touchStartY);
+
+                // Swipe from left edge, horizontal swipe > 80px
+                if (diffX > 80 && touchStartX < 50 && diffX > diffY) {
+                    window.location.href = 'index.html';
+                }
+                touchStartX = 0;
+                touchCurrentX = 0;
+            }, { passive: true });
+        })();
+    </script>
 </body>
 </html>

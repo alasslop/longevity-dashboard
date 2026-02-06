@@ -390,14 +390,71 @@
         .info-box-calc strong {
             color: var(--color-teal);
         }
+
+        /* Swipe-back indicator */
+        .swipe-hint {
+            position: fixed;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 60px;
+            background: var(--color-border);
+            border-radius: 0 4px 4px 0;
+            opacity: 0.5;
+            z-index: 100;
+        }
+
+        /* Mobile header with back button */
+        .mobile-header {
+            position: sticky;
+            top: 0;
+            background: var(--color-card);
+            padding: 12px 16px;
+            margin: -24px -16px 20px -16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            z-index: 50;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            color: var(--color-accent);
+            font-size: 1.5rem;
+            cursor: pointer;
+            border-radius: 50%;
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            background: var(--color-accent-light);
+        }
+
+        .mobile-header-title {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--color-teal);
+        }
     </style>
 </head>
 <body>
+    <div class="swipe-hint"></div>
     <div class="container">
-        <a href="index.html" class="back-link">← Back to Assessment</a>
+        <div class="mobile-header">
+            <a href="index.html" class="back-btn">←</a>
+            <span class="mobile-header-title">Nutrition Calculator</span>
+        </div>
 
-        <h1>Nutrition Calculator</h1>
-        <p class="subtitle">Personalized calories and protein based on your goals</p>
+        <p class="subtitle" style="margin-top: 0;">Personalized calories and protein based on your goals</p>
 
         <!-- No JavaScript Fallback -->
         <noscript>
@@ -1115,6 +1172,47 @@
                 if (e.key === 'Enter') calculateNutrition();
             });
         });
+
+        // Swipe-back gesture (left edge swipe to go back to index)
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchCurrentX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+
+        document.addEventListener('touchmove', (e) => {
+            touchCurrentX = e.touches[0].clientX;
+            const diffX = touchCurrentX - touchStartX;
+            const diffY = Math.abs(e.touches[0].clientY - touchStartY);
+
+            // Only trigger if horizontal swipe from left edge
+            if (diffX > 0 && diffX > diffY && touchStartX < 50) {
+                document.body.style.transform = `translateX(${Math.min(diffX, 100)}px)`;
+                document.body.style.transition = 'none';
+            }
+        }, { passive: true });
+
+        document.addEventListener('touchend', (e) => {
+            const diffX = touchCurrentX - touchStartX;
+
+            document.body.style.transition = 'transform 0.3s ease-out';
+
+            if (diffX > 80 && touchStartX < 50) {
+                // Swipe completed - navigate back
+                document.body.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 200);
+            } else {
+                document.body.style.transform = '';
+            }
+
+            touchStartX = 0;
+            touchCurrentX = 0;
+        }, { passive: true });
     </script>
 </body>
 </html>
