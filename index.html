@@ -457,13 +457,10 @@
             }
         };
 
-        // Trend data (simulated)
-        const TRENDS = { medical: +2, nutrition: -1, energy: +3, sleep: -2, wellbeing: +1, mindset: +2 };
-
         // ========================================
         // DATA MANAGEMENT
         // ========================================
-        let currentData = { userName: "Alexander", answers: {}, scores: {} };
+        let currentData = { userName: "Alexander", answers: {}, scores: {}, previousScores: {} };
         let activeCategory = null;
 
         function loadData() {
@@ -537,10 +534,12 @@
             Object.entries(CATEGORIES).forEach(([key, cat]) => {
                 const score = currentData.scores[key] || 0;
                 const score100 = Math.round(score * 10);
-                const trend = TRENDS[key] || 0;
+                const prevScore = currentData.previousScores[key] || 0;
+                const prevScore100 = Math.round(prevScore * 10);
+                const trend = score100 - prevScore100;
                 const trendClass = trend > 0 ? 'trend-up' : trend < 0 ? 'trend-down' : 'trend-neutral';
                 const trendIcon = trend > 0 ? 'trending-up' : trend < 0 ? 'trending-down' : 'minus';
-                const trendText = trend > 0 ? `+${trend}` : trend < 0 ? `${trend}` : '0';
+                const trendText = trend > 0 ? `+${trend}` : trend < 0 ? `${trend}` : '—';
 
                 container.innerHTML += `
                     <div class="dimension-card" onclick="openDimension('${key}')">
@@ -695,6 +694,8 @@
         }
 
         function updateScoresAndUI() {
+            // Save current scores as previous before recalculating
+            currentData.previousScores = { ...currentData.scores };
             calculateAllScores();
             saveData();
             renderDimensions();
