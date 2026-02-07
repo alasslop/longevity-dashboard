@@ -60,6 +60,14 @@
         /* Section Title */
         .section-title { font-size: 1rem; font-weight: 600; color: var(--color-text); margin-bottom: 12px; }
 
+        /* CTA Card for new users */
+        .cta-card { background: linear-gradient(135deg, var(--color-orange) 0%, #D4902F 100%); border-radius: 16px; padding: 24px; margin-bottom: 24px; color: white; text-align: center; }
+        .cta-icon { width: 48px; height: 48px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+        .cta-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; }
+        .cta-text { font-size: 0.9rem; opacity: 0.95; margin-bottom: 20px; line-height: 1.5; }
+        .cta-button { display: inline-flex; align-items: center; gap: 8px; background: white; color: var(--color-orange); padding: 14px 28px; border-radius: 12px; font-weight: 600; font-size: 0.95rem; border: none; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+        .cta-button:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+
         /* Dimension Cards */
         .dimension-card {
             background: var(--color-card);
@@ -204,6 +212,35 @@
         .intro-section p { font-size: 0.9rem; color: var(--color-text); margin-bottom: 12px; line-height: 1.6; }
         .intro-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: var(--color-orange); color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 0.9rem; }
         .intro-link:hover { background: #D4902F; }
+
+        /* Section Breakdown Card */
+        .section-breakdown { background: var(--color-card); border-radius: 12px; padding: 16px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .section-breakdown-title { font-size: 0.85rem; font-weight: 600; color: var(--color-text-muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .section-breakdown-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--color-border); }
+        .section-breakdown-item:last-child { border-bottom: none; }
+        .section-breakdown-number { width: 24px; height: 24px; background: var(--color-orange); color: white; border-radius: 50%; font-size: 0.75rem; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .section-breakdown-info { flex: 1; min-width: 0; }
+        .section-breakdown-name { font-size: 0.9rem; font-weight: 500; color: var(--color-text); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .section-breakdown-bar { height: 6px; background: var(--color-border); border-radius: 3px; overflow: hidden; }
+        .section-breakdown-fill { height: 100%; border-radius: 3px; transition: width 0.3s ease; }
+        .section-breakdown-fill.high { background: var(--color-teal); }
+        .section-breakdown-fill.medium { background: var(--color-orange); }
+        .section-breakdown-fill.low { background: var(--color-red); }
+        .section-breakdown-score { font-size: 0.85rem; font-weight: 600; color: var(--color-text); min-width: 60px; text-align: right; }
+        .room-to-grow { font-size: 0.7rem; font-weight: 500; color: var(--color-red); background: var(--color-red-light); padding: 2px 8px; border-radius: 10px; }
+        .not-started { font-size: 0.7rem; font-weight: 500; color: var(--color-text-muted); background: var(--color-border); padding: 2px 8px; border-radius: 10px; }
+
+        /* Detail CTA for empty assessments */
+        .detail-cta { background: var(--color-orange-light); border-radius: 12px; padding: 20px; margin-bottom: 20px; border-left: 4px solid var(--color-orange); }
+        .detail-cta-title { font-size: 1rem; font-weight: 600; color: var(--color-orange); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        .detail-cta-text { font-size: 0.9rem; color: var(--color-text); line-height: 1.5; }
+
+        /* Updated Section Header with weighted scores */
+        .section-score-weighted { font-size: 0.85rem; color: var(--color-text); font-weight: 600; margin-left: auto; display: flex; align-items: center; gap: 6px; }
+        .section-score-weighted .current { color: var(--color-text); }
+        .section-score-weighted .max { color: var(--color-text-muted); }
+        .section-score-weighted.low .current { color: var(--color-red); }
+        .section-score-weighted.not-started .current { color: var(--color-text-muted); }
     </style>
 </head>
 <body>
@@ -224,6 +261,12 @@
             </div>
             <div class="score-title">Your Longevity Lifestyle Score</div>
             <div class="score-date">Last updated: <span id="lastUpdated">Feb 6, 2026</span></div>
+        </div>
+        <div id="ctaCard" class="cta-card">
+            <div class="cta-icon"><i data-lucide="sparkles" style="width:24px;height:24px;"></i></div>
+            <div class="cta-title">Discover Your Longevity Score</div>
+            <div class="cta-text">Just 2 minutes to complete. Get personalized insights into how your lifestyle supports a longer, healthier life.</div>
+            <button class="cta-button" onclick="openDimension('medical')"><i data-lucide="play" style="width:18px;height:18px;"></i> Start Now</button>
         </div>
         <h2 class="section-title">Health Dimensions</h2>
         <div id="dimensionsList"></div>
@@ -480,8 +523,8 @@
                     if (!currentData.answers[catKey][secKey]) currentData.answers[catKey][secKey] = {};
                     CATEGORIES[catKey].sections[secKey].questions.forEach(q => {
                         if (currentData.answers[catKey][secKey][q.id] === undefined) {
-                            if (q.type === 'slider') currentData.answers[catKey][secKey][q.id] = 5;
-                            else if (q.type === 'radio') currentData.answers[catKey][secKey][q.id] = q.options[0].value;
+                            if (q.type === 'slider') currentData.answers[catKey][secKey][q.id] = 1; // Start at minimum
+                            else if (q.type === 'radio') currentData.answers[catKey][secKey][q.id] = null; // No selection
                             else if (q.type === 'checkbox') currentData.answers[catKey][secKey][q.id] = [];
                         }
                     });
@@ -503,7 +546,11 @@
             section.questions.forEach(q => {
                 const value = answers[q.id];
                 if (q.type === 'slider') { totalScore += (parseFloat(value) || q.min) - 1; maxScore += 9; }
-                else if (q.type === 'radio' && q.options[0].points !== undefined) { totalScore += parseFloat(value) || 0; maxScore += 10; }
+                else if (q.type === 'radio' && q.options[0].points !== undefined) {
+                    // null means unanswered = 0 points
+                    totalScore += value !== null ? (parseFloat(value) || 0) : 0;
+                    maxScore += 10;
+                }
                 else if (q.type === 'checkbox' && q.scoring === 'count') { const count = Array.isArray(value) ? value.length : 0; totalScore += (count / q.options.length) * 10; maxScore += 10; }
                 else if (q.type === 'checkbox' && q.scoring === 'principles') { const count = Array.isArray(value) ? value.length : 0; totalScore += count * 2; maxScore += 10; }
             });
@@ -546,7 +593,8 @@
                 const prevScore100 = hasPrevious ? Math.round(prevScore * 10) : null;
                 const trend = hasPrevious ? score100 - prevScore100 : 0;
                 const trendClass = trend > 0 ? 'trend-up' : trend < 0 ? 'trend-down' : 'trend-neutral';
-                const trendText = hasPrevious ? `${prevScore100}→${score100}` : '—';
+                const trendIcon = trend > 0 ? 'trending-up' : trend < 0 ? 'trending-down' : '';
+                const trendText = hasPrevious && trend !== 0 ? (trend > 0 ? `+${trend}` : `${trend}`) : '—';
 
                 container.innerHTML += `
                     <div class="dimension-card" onclick="openDimension('${key}')">
@@ -555,7 +603,7 @@
                         <div class="dimension-score">
                             <span class="dimension-score-value">${score100}</span>
                             <span class="dimension-score-max">/100</span>
-                            <span class="dimension-trend ${trendClass}">${trendText}</span>
+                            <span class="dimension-trend ${trendClass}">${trendIcon ? `<i data-lucide="${trendIcon}" style="width:14px;height:14px;"></i>` : ''} ${trendText}</span>
                         </div>
                     </div>
                 `;
@@ -568,6 +616,10 @@
             document.getElementById('totalScoreValue').textContent = total;
             const circumference = 2 * Math.PI * 78;
             document.getElementById('scoreRingProgress').style.strokeDashoffset = circumference - (total / 100) * circumference;
+
+            // Show/hide CTA card based on score
+            const ctaCard = document.getElementById('ctaCard');
+            ctaCard.style.display = total <= 5 ? 'block' : 'none';
         }
 
         // ========================================
@@ -609,30 +661,100 @@
             const prevScore100 = hasPrevious ? Math.round(prevScore * 10) : null;
             const trend = hasPrevious ? score100 - prevScore100 : 0;
             const trendClass = trend > 0 ? 'trend-up' : trend < 0 ? 'trend-down' : 'trend-neutral';
-            const trendText = hasPrevious ? `${prevScore100}→${score100}` : '';
+            const trendIcon = trend > 0 ? 'trending-up' : trend < 0 ? 'trending-down' : '';
+            const trendText = hasPrevious && trend !== 0 ? (trend > 0 ? `+${trend}` : `${trend}`) : '';
 
             content.innerHTML += `
-                <div class="category-score-header" style="text-align:center;padding:16px;margin-bottom:20px;background:var(--color-card);border-radius:12px;box-shadow:var(--shadow-card);">
+                <div class="category-score-header" style="text-align:center;padding:16px;margin-bottom:20px;background:var(--color-card);border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
                     <div style="font-size:2.5rem;font-weight:700;color:var(--color-text);">${score100}<span style="font-size:1rem;color:var(--color-text-muted);">/100</span></div>
                     <div style="font-size:0.9rem;color:var(--color-text-muted);">Total ${category.name} Score</div>
-                    ${hasPrevious ? `<div class="dimension-trend ${trendClass}" style="margin-top:8px;font-size:0.85rem;">${trendText}</div>` : ''}
+                    ${hasPrevious && trend !== 0 ? `<div class="dimension-trend ${trendClass}" style="margin-top:8px;font-size:0.85rem;display:inline-flex;align-items:center;gap:4px;"><i data-lucide="${trendIcon}" style="width:16px;height:16px;"></i> ${trendText}</div>` : ''}
                 </div>
             `;
+
+            // Show EITHER motivating CTA (when not started) OR Section Breakdown (when started)
+            if (score100 === 0) {
+                // Show CTA when category is not started
+                const ctaMessages = {
+                    medical: { title: "Know your numbers", text: "Just 1 minute. Find out if your health checkups and screenings are on track for longevity." },
+                    nutrition: { title: "How well does your diet support longevity?", text: "Just 2 minutes. Discover your nutrition strengths and find easy wins for a healthier life." },
+                    energy: { title: "Unlock your energy potential", text: "Just 1 minute. See how your daily habits impact your vitality and what you can improve." },
+                    sleep: { title: "Sleep is your superpower", text: "Just 1 minute. Assess your sleep quality and stress levels — key factors for longevity." },
+                    wellbeing: { title: "Measure what matters most", text: "Just 1 minute. Your life satisfaction and social connections play a huge role in healthspan." },
+                    mindset: { title: "Your mindset shapes your health", text: "Just 1 minute. A growth mindset is linked to better health outcomes and longer life." }
+                };
+                const cta = ctaMessages[catKey] || { title: "Get started", text: "Answer a few questions to see your score." };
+                content.innerHTML += `
+                    <div class="detail-cta">
+                        <div class="detail-cta-title"><i data-lucide="lightbulb" style="width:18px;height:18px;"></i> ${cta.title}</div>
+                        <div class="detail-cta-text">${cta.text}</div>
+                        <div class="detail-cta-hint" style="margin-top:12px;font-size:0.8rem;color:var(--color-text-muted);display:flex;align-items:center;gap:6px;">
+                            <span class="help-link" style="position:static;margin:0;">?</span> Curious about the science? Tap the green <strong>?</strong> for research-backed insights.
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Show Section Breakdown when assessment has started
+                let breakdownHTML = `<div class="section-breakdown">
+                    <div class="section-breakdown-title">Section Breakdown</div>`;
+
+                let secNumber = 0;
+                Object.keys(category.sections).forEach(secKey => {
+                    const section = category.sections[secKey];
+                    const sectionScore = calculateSectionScore(catKey, secKey);
+                    const weightedMax = section.weight * 10;
+                    const weightedScore = (sectionScore / 10) * weightedMax;
+                    const percentage = (sectionScore / 10) * 100;
+                    const isLow = sectionScore < 5;
+                    const isMedium = sectionScore >= 5 && sectionScore < 7;
+                    const fillClass = isLow ? 'low' : (isMedium ? 'medium' : 'high');
+                    secNumber++;
+
+                    // Determine badge: "Room to grow" if low score
+                    const badge = isLow ? '<span class="room-to-grow">Room to grow</span>' : '';
+
+                    breakdownHTML += `
+                        <div class="section-breakdown-item">
+                            <span class="section-breakdown-number">${secNumber}</span>
+                            <div class="section-breakdown-info">
+                                <div class="section-breakdown-name">
+                                    ${section.title}
+                                    ${badge}
+                                </div>
+                                <div class="section-breakdown-bar">
+                                    <div class="section-breakdown-fill ${fillClass}" style="width: ${percentage}%"></div>
+                                </div>
+                            </div>
+                            <div class="section-breakdown-score">${weightedScore.toFixed(1)} / ${weightedMax.toFixed(1)}</div>
+                        </div>`;
+                });
+                breakdownHTML += `</div>`;
+                content.innerHTML += breakdownHTML;
+            }
+
+            lucide.createIcons();
 
             let stepNumber = 0;
             Object.keys(category.sections).forEach(secKey => {
                 const section = category.sections[secKey];
                 const answers = currentData.answers[catKey]?.[secKey] || {};
                 const sectionScore = calculateSectionScore(catKey, secKey);
+                const weightedMax = section.weight * 10;
+                const weightedScore = (sectionScore / 10) * weightedMax;
+                const isLow = sectionScore < 5;
                 stepNumber++;
 
                 const helpLink = section.helpLink ? `<a href="${section.helpLink}" class="help-link">?</a>` : '';
+                const isNotStarted = sectionScore === 0;
 
                 let html = `<div class="assessment-section">
                     <div class="section-header">
                         <span class="step-number">${stepNumber}</span>
                         <span class="section-title-text">${section.title}${helpLink}</span>
-                        <span class="section-score">${sectionScore.toFixed(1)}/10</span>
+                        <span class="section-score-weighted ${isNotStarted ? 'not-started' : (isLow ? 'low' : '')}">
+                            <span class="current">${weightedScore.toFixed(1)}</span>
+                            <span class="max">/ ${weightedMax.toFixed(1)}</span>
+                        </span>
                     </div>`;
 
                 if (section.link) {
@@ -661,7 +783,7 @@
                     } else if (q.type === 'radio') {
                         html += `<div class="radio-group">`;
                         q.options.forEach(opt => {
-                            const isSelected = value === opt.value;
+                            const isSelected = value !== null && value === opt.value;
                             const points = opt.points !== undefined ? `<span class="radio-points">${opt.points} pts</span>` : '';
                             html += `<div class="radio-option ${isSelected ? 'selected' : ''}" onclick="selectRadio('${catKey}','${secKey}','${q.id}','${opt.value}',this)">
                                 <input type="radio" ${isSelected ? 'checked' : ''}><label>${opt.label}</label>${points}</div>`;
