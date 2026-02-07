@@ -2,541 +2,457 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Protein FAQ - Scientific Evidence</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Protein FAQ - LongevityPath</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Shared Brand Styles -->
-    <link rel="stylesheet" href="brand.css">
-
-    <!-- Page-specific styles -->
     <style>
-        /* Mobile header and swipe navigation */
-        .swipe-hint {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(to right, var(--color-accent), transparent);
-            opacity: 0.5;
-            z-index: 1000;
-            pointer-events: none;
+        :root {
+            --color-orange: #E9A04E;
+            --color-orange-light: #FDF6EC;
+            --color-teal: #00905A;
+            --color-teal-light: #E8F5F0;
+            --color-red: #EF4444;
+            --color-red-light: #FEE2E2;
+            --color-bg: #FAF9F6;
+            --color-card: #FFFFFF;
+            --color-text: #1F2937;
+            --color-text-muted: #6B7280;
+            --color-border: #E5E7EB;
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
-        .mobile-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 16px 0;
-            margin-bottom: 8px;
-            border-bottom: 1px solid var(--color-border);
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        .back-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
+        body {
+            font-family: var(--font-family);
             background: var(--color-bg);
-            border-radius: 50%;
-            color: var(--color-teal);
-            text-decoration: none;
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        .mobile-header-title {
-            font-family: var(--font-heading);
-            font-size: 1.1rem;
             color: var(--color-text);
+            min-height: 100vh;
+            line-height: 1.6;
         }
 
-        @media (min-width: 768px) {
-            .swipe-hint { display: none; }
+        /* Header */
+        .header {
+            position: sticky; top: 0; background: var(--color-card); padding: 16px 20px;
+            display: flex; align-items: center; gap: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05); z-index: 100;
+        }
+        .back-btn {
+            width: 40px; height: 40px; border-radius: 50%; background: var(--color-bg);
+            border: none; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; color: var(--color-text); text-decoration: none;
+        }
+        .header-title { font-weight: 600; font-size: 1.1rem; }
+        .user-badge {
+            display: none; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--color-teal);
+            background: var(--color-teal-light); padding: 4px 10px; border-radius: 20px; margin-left: auto;
+        }
+        .user-badge.visible { display: inline-flex; }
+
+        .container { max-width: 600px; margin: 0 auto; padding: 20px 16px 40px; }
+
+        .page-title { font-size: 1.5rem; font-weight: 700; color: var(--color-text); margin-bottom: 8px; }
+        .page-subtitle { font-size: 0.95rem; color: var(--color-text-muted); margin-bottom: 24px; }
+
+        /* Marketing CTA */
+        .marketing-cta {
+            background: linear-gradient(135deg, var(--color-orange) 0%, #D4902F 100%);
+            border-radius: 16px; padding: 24px; margin-bottom: 24px; color: white; text-align: center; display: none;
+        }
+        .marketing-cta.visible { display: block; }
+        .marketing-cta-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+        .marketing-cta-text { font-size: 0.9rem; opacity: 0.95; margin-bottom: 16px; }
+        .marketing-cta-button {
+            display: inline-flex; align-items: center; gap: 8px; background: white; color: var(--color-orange);
+            padding: 12px 24px; border-radius: 10px; font-weight: 600; font-size: 0.9rem; text-decoration: none;
         }
 
-        /* FAQ-specific styles */
-        .faq-item {
-            background: var(--color-card);
-            border-radius: var(--radius);
-            margin-bottom: 16px;
-            box-shadow: var(--shadow-card);
-            overflow: hidden;
-        }
-
-        .faq-question {
-            font-family: var(--font-heading);
-            font-size: 1.1rem;
-            color: var(--color-teal);
-            padding: 20px 24px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: none;
-            background: none;
-            width: 100%;
-            text-align: left;
-        }
-
-        .faq-question:hover {
-            background: var(--color-bg);
-        }
-
-        .faq-question::after {
-            content: '+';
-            font-size: 1.5rem;
-            font-weight: 300;
-            color: var(--color-accent);
-            transition: transform 0.2s;
-        }
-
-        .faq-item.open .faq-question::after {
-            content: '−';
-        }
-
-        .faq-answer {
-            padding: 0 24px 24px;
-            display: none;
-        }
-
-        .faq-item.open .faq-answer {
-            display: block;
-        }
-
-        /* Teal for INFO/structural enumeration (not action) */
-        .faq-number {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 28px;
-            height: 28px;
-            background: var(--color-teal);
-            color: white;
-            border-radius: 50%;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-right: 12px;
-            flex-shrink: 0;
-        }
-
-        .faq-category {
-            font-family: var(--font-heading);
-            font-size: 1.3rem;
-            color: var(--color-teal);
-            margin: 32px 0 16px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid var(--color-border);
-        }
-
-        .faq-category:first-of-type {
-            margin-top: 0;
-        }
-
-        /* Key numbers highlight */
-        .key-number {
-            display: inline-block;
-            background: var(--color-accent-light);
-            color: var(--color-teal);
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-weight: 600;
-        }
-
-        /* Protein examples grid */
-        .protein-examples {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 12px;
-            margin: 16px 0;
-        }
-
-        .protein-example {
-            background: var(--color-bg);
-            padding: 12px;
-            border-radius: var(--radius-sm);
-            text-align: center;
-        }
-
-        .protein-amount {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--color-teal);
-        }
-
-        .protein-food {
-            font-size: 0.85rem;
-            color: var(--color-text-muted);
-        }
-
-        /* Age table */
-        .age-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 16px 0;
-            font-size: 0.9rem;
-        }
-
-        .age-table th, .age-table td {
-            padding: 10px 12px;
-            text-align: left;
-            border-bottom: 1px solid var(--color-border);
-        }
-
-        .age-table th {
-            background: var(--color-bg);
-            font-weight: 600;
-            color: var(--color-teal);
-        }
-
-        .age-table .highlight {
-            background: var(--color-accent-light);
-        }
-
-        /* Quick answer box - grey border for structural elements */
+        /* Quick Answer */
         .quick-answer {
-            background: var(--color-accent-light);
-            border-left: 4px solid var(--color-border);
-            padding: 16px;
-            margin-bottom: 16px;
-            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            background: var(--color-teal-light); border-radius: 12px; padding: 20px;
+            margin-bottom: 24px; border-left: 4px solid var(--color-teal);
         }
-
-        .quick-answer strong {
-            color: var(--color-teal);
+        .quick-answer-label {
+            display: inline-flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-teal); margin-bottom: 8px;
         }
+        .quick-answer-text { font-size: 1rem; font-weight: 500; color: var(--color-text); }
 
-        /* Table of contents */
+        /* Table of Contents */
         .toc {
-            background: var(--color-card);
-            border-radius: var(--radius);
-            padding: 20px 24px;
-            margin-bottom: 24px;
+            background: var(--color-card); border-radius: 12px; padding: 20px;
+            margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
-
-        .toc h3 {
-            font-size: 1rem;
-            margin-bottom: 12px;
-            color: var(--color-teal);
-        }
-
-        .toc-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            columns: 2;
-            column-gap: 24px;
-        }
-
-        .toc-list li {
-            margin-bottom: 8px;
-            break-inside: avoid;
-        }
-
+        .toc-title { font-size: 0.9rem; font-weight: 600; color: var(--color-text); margin-bottom: 12px; }
+        .toc-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
         .toc-list a {
-            color: var(--color-teal);
-            text-decoration: none;
-            font-size: 0.9rem;
+            color: var(--color-teal); text-decoration: none; font-size: 0.85rem;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .toc-list a:hover { text-decoration: underline; }
+        .toc-num {
+            width: 20px; height: 20px; background: var(--color-teal-light); color: var(--color-teal);
+            border-radius: 50%; font-size: 0.7rem; font-weight: 600;
+            display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        @media (max-width: 500px) { .toc-list { grid-template-columns: 1fr; } }
+
+        /* Category Header */
+        .category-header {
+            font-size: 1rem; font-weight: 600; color: var(--color-text); margin: 28px 0 16px;
+            padding-bottom: 8px; border-bottom: 2px solid var(--color-border);
         }
 
-        .toc-list a:hover {
-            text-decoration: underline;
+        /* FAQ Item */
+        .faq-item {
+            background: var(--color-card); border-radius: 12px; margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05); overflow: hidden;
+        }
+        .faq-question {
+            width: 100%; padding: 16px 20px; background: none; border: none; cursor: pointer;
+            display: flex; align-items: center; gap: 12px; text-align: left;
+        }
+        .faq-question:hover { background: var(--color-bg); }
+        .faq-number {
+            width: 28px; height: 28px; background: var(--color-teal); color: white; border-radius: 50%;
+            font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .faq-question-text { flex: 1; font-size: 0.95rem; font-weight: 600; color: var(--color-text); }
+        .faq-toggle { color: var(--color-text-muted); transition: transform 0.2s; }
+        .faq-toggle.open { transform: rotate(180deg); }
+        .faq-answer { display: none; padding: 0 20px 20px; }
+        .faq-answer.open { display: block; }
+
+        /* Answer Content Styles */
+        .answer-box {
+            background: var(--color-bg); border-radius: 8px; padding: 14px; margin-bottom: 16px;
+        }
+        .answer-box.highlight { background: var(--color-orange-light); border-left: 3px solid var(--color-orange); }
+        .answer-box.warning { background: var(--color-red-light); border-left: 3px solid var(--color-red); }
+        .answer-box.success { background: var(--color-teal-light); border-left: 3px solid var(--color-teal); }
+        .answer-box-title { font-weight: 600; font-size: 0.85rem; color: var(--color-text); margin-bottom: 6px; }
+        .answer-box p, .answer-box ul { font-size: 0.85rem; color: var(--color-text); }
+        .answer-box ul { margin: 8px 0 0 16px; }
+        .answer-box li { margin-bottom: 4px; }
+
+        .key-number {
+            display: inline-block; background: var(--color-orange-light); color: var(--color-orange);
+            padding: 2px 8px; border-radius: 4px; font-weight: 600;
         }
 
-        @media (max-width: 600px) {
-            .toc-list {
-                columns: 1;
-            }
+        /* Study Card */
+        .study {
+            background: var(--color-bg); border-radius: 8px; padding: 14px; margin-bottom: 12px;
         }
+        .study-title { font-weight: 600; font-size: 0.85rem; color: var(--color-text); margin-bottom: 4px; }
+        .study-meta { font-size: 0.75rem; color: var(--color-text-muted); margin-bottom: 8px; }
+        .study-finding { font-size: 0.85rem; color: var(--color-text); line-height: 1.5; }
+        .study-finding strong { color: var(--color-teal); }
+        .study-link {
+            display: inline-flex; align-items: center; gap: 4px; margin-top: 8px;
+            color: var(--color-teal); font-size: 0.8rem; font-weight: 500; text-decoration: none;
+        }
+        .study-link:hover { text-decoration: underline; }
+
+        /* Data Table */
+        .data-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin: 12px 0; }
+        .data-table th {
+            background: var(--color-teal); color: white; padding: 10px 12px; text-align: left; font-weight: 600;
+        }
+        .data-table th:first-child { border-radius: 8px 0 0 0; }
+        .data-table th:last-child { border-radius: 0 8px 0 0; }
+        .data-table td { padding: 10px 12px; border-bottom: 1px solid var(--color-border); }
+        .data-table tr:last-child td { border-bottom: none; }
+        .data-table tr:hover { background: var(--color-bg); }
+        .data-table tr.highlight { background: var(--color-orange-light); }
+
+        /* Protein Examples Grid */
+        .protein-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin: 12px 0; }
+        .protein-item {
+            background: var(--color-bg); padding: 12px; border-radius: 8px; text-align: center;
+        }
+        .protein-amount { font-size: 1.1rem; font-weight: 700; color: var(--color-teal); }
+        .protein-food { font-size: 0.75rem; color: var(--color-text-muted); margin-top: 4px; }
+
+        /* Expert Quote */
+        .expert-quote {
+            background: var(--color-bg); border-radius: 8px; padding: 16px; margin: 16px 0;
+            font-style: italic; font-size: 0.9rem; color: var(--color-text);
+        }
+        .expert-quote cite { display: block; margin-top: 8px; font-style: normal; font-weight: 600; font-size: 0.8rem; color: var(--color-teal); }
+
+        /* Footer CTA */
+        .footer-cta {
+            background: var(--color-orange-light); border-radius: 12px; padding: 20px;
+            margin-top: 24px; text-align: center; border: 2px solid var(--color-orange);
+        }
+        .footer-cta-text { font-size: 0.95rem; color: var(--color-text); margin-bottom: 12px; }
+        .footer-cta-button {
+            display: inline-flex; align-items: center; gap: 8px; background: var(--color-orange); color: white;
+            padding: 12px 24px; border-radius: 10px; font-weight: 600; font-size: 0.9rem; text-decoration: none;
+        }
+
+        p { margin-bottom: 12px; font-size: 0.9rem; }
     </style>
 </head>
 <body>
-    <div class="swipe-hint"></div>
+    <header class="header">
+        <a href="index.html" class="back-btn"><i data-lucide="arrow-left" style="width:20px;height:20px;"></i></a>
+        <span class="header-title">Protein FAQ</span>
+        <span class="user-badge" id="userBadge"><i data-lucide="user" style="width:12px;height:12px;"></i> <span id="userNameBadge">User</span></span>
+    </header>
+
     <div class="container">
-        <div class="mobile-header">
-            <a href="index.html" class="back-btn">←</a>
-            <span class="mobile-header-title">Protein FAQ</span>
+        <!-- Marketing CTA -->
+        <div class="marketing-cta" id="marketingCta">
+            <div class="marketing-cta-title">Discover Your Nutrition Score</div>
+            <div class="marketing-cta-text">Take our free 2-minute assessment and get personalized protein recommendations.</div>
+            <a href="index.html" class="marketing-cta-button">
+                <i data-lucide="play" style="width:16px;height:16px;"></i> Start Free Assessment
+            </a>
         </div>
 
-        <h1>Protein: Questions & Answers</h1>
-        <p class="subtitle">Evidence-based answers to common protein questions</p>
+        <h1 class="page-title">Protein: Questions & Answers</h1>
+        <p class="page-subtitle">Evidence-based answers to the 10 most common protein questions</p>
 
-        <!-- Key Takeaway -->
-        <div class="bottom-line" style="margin-top: 0; margin-bottom: 24px;">
-            <h3>The Bottom Line</h3>
-            <p>Adults 40+ should aim for <strong>1.2–1.6 g protein per kg body weight per day</strong>, distributed across 3-4 meals. The RDA of 0.8 g/kg is a minimum to prevent deficiency, not optimal for health and longevity.</p>
+        <!-- Quick Answer -->
+        <div class="quick-answer">
+            <div class="quick-answer-label"><i data-lucide="zap" style="width:14px;height:14px;"></i> The Bottom Line</div>
+            <div class="quick-answer-text">
+                Adults 40+ should aim for <strong>1.2–1.6 g protein per kg body weight per day</strong>, distributed across 3-4 meals. The RDA of 0.8 g/kg is a minimum to prevent deficiency, not optimal for health and longevity.
+            </div>
         </div>
 
         <!-- Table of Contents -->
         <div class="toc">
-            <h3>Jump to a Question</h3>
+            <div class="toc-title">Jump to a Question</div>
             <ol class="toc-list">
-                <li><a href="#q1">How much protein do I really need?</a></li>
-                <li><a href="#q2">Will high protein increase my cancer risk?</a></li>
-                <li><a href="#q3">Is high protein bad for my kidneys?</a></li>
-                <li><a href="#q4">How much protein should I eat per meal?</a></li>
-                <li><a href="#q5">How do I adjust protein for my goals?</a></li>
-                <li><a href="#q6">Does protein enhance strength training?</a></li>
-                <li><a href="#q7">Can protein help with weight management?</a></li>
-                <li><a href="#q8">What does 30g of protein look like?</a></li>
-                <li><a href="#q9">Can I meet targets with plant protein?</a></li>
-                <li><a href="#q10">Do I need protein supplements?</a></li>
+                <li><a href="#q1"><span class="toc-num">1</span> How much protein do I need?</a></li>
+                <li><a href="#q2"><span class="toc-num">2</span> Cancer risk?</a></li>
+                <li><a href="#q3"><span class="toc-num">3</span> Kidney health?</a></li>
+                <li><a href="#q4"><span class="toc-num">4</span> Protein per meal?</a></li>
+                <li><a href="#q5"><span class="toc-num">5</span> Adjust for goals?</a></li>
+                <li><a href="#q6"><span class="toc-num">6</span> Strength training?</a></li>
+                <li><a href="#q7"><span class="toc-num">7</span> Weight management?</a></li>
+                <li><a href="#q8"><span class="toc-num">8</span> What's 30g look like?</a></li>
+                <li><a href="#q9"><span class="toc-num">9</span> Plant protein?</a></li>
+                <li><a href="#q10"><span class="toc-num">10</span> Supplements?</a></li>
             </ol>
         </div>
 
-        <!-- CATEGORY: Understanding Your Needs -->
-        <h2 class="faq-category">Understanding Your Protein Needs</h2>
+        <!-- CATEGORY 1 -->
+        <h2 class="category-header">Understanding Your Protein Needs</h2>
 
-        <!-- FAQ 1 -->
-        <div class="faq-item open" id="q1">
-            <button class="faq-question">
-                <span><span class="faq-number">1</span>How much protein do I really need?</span>
+        <!-- Q1 -->
+        <div class="faq-item" id="q1">
+            <button class="faq-question" onclick="toggleFaq(this)">
+                <span class="faq-number">1</span>
+                <span class="faq-question-text">How much protein do I really need?</span>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
             </button>
             <div class="faq-answer">
-                <div class="quick-answer">
-                    <strong>Quick Answer:</strong> Adults 40+ should aim for <span class="key-number">1.2–1.6 g/kg/day</span>. The RDA of 0.8 g/kg is a minimum to prevent deficiency—not optimal for maintaining muscle, strength, or longevity.
+                <div class="answer-box highlight">
+                    <div class="answer-box-title">Quick Answer</div>
+                    <p>Adults 40+ should aim for <span class="key-number">1.2–1.6 g/kg/day</span>. The RDA of 0.8 g/kg is a minimum to prevent deficiency—not optimal for maintaining muscle, strength, or longevity.</p>
                 </div>
 
                 <p>The current RDA (0.8 g/kg/day) was established to prevent protein deficiency in sedentary adults—it was never designed to optimize health, preserve muscle mass, or support active aging.</p>
 
-                <p style="margin-top: 12px;">Evidence consistently shows higher intakes are beneficial:</p>
-
                 <div class="study">
                     <div class="study-title">PROT-AGE Study Group Position Paper</div>
-                    <div class="study-meta">Bauer et al., 2013 • JAMDA • 14(8):542-559 • doi:10.1016/j.jamda.2013.05.021</div>
-                    <div class="study-finding">International expert consensus: Older adults need <strong>1.0–1.2 g/kg/day minimum</strong>, with <strong>1.2–1.5 g/kg/day</strong> for those with acute/chronic illness or engaged in exercise.</div>
-                    <a href="https://pubmed.ncbi.nlm.nih.gov/23867520/" target="_blank" class="study-link">View on PubMed →</a>
+                    <div class="study-meta">Bauer et al., 2013 • JAMDA • doi:10.1016/j.jamda.2013.05.021</div>
+                    <div class="study-finding"><strong>Key finding:</strong> International expert consensus: Older adults need <strong>1.0–1.2 g/kg/day minimum</strong>, with 1.2–1.5 g/kg/day for those with illness or engaged in exercise.</div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/23867520/" target="_blank" class="study-link">View on PubMed <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
                 </div>
 
                 <div class="study">
                     <div class="study-title">Protein and Sarcopenia Meta-Analysis</div>
-                    <div class="study-meta">Han, Woo & Kim, 2024 • Nutrients • 16(24):4350 • doi:10.3390/nu16244350</div>
-                    <div class="study-finding">Adults consuming <strong>&lt;0.8 g/kg/day had significantly higher sarcopenia risk</strong> compared to those eating ≥1.2 g/kg/day.</div>
-                    <a href="https://pubmed.ncbi.nlm.nih.gov/39770971/" target="_blank" class="study-link">View on PubMed →</a>
+                    <div class="study-meta">Han, Woo & Kim, 2024 • Nutrients • doi:10.3390/nu16244350</div>
+                    <div class="study-finding"><strong>Key finding:</strong> Adults consuming <strong>&lt;0.8 g/kg/day had significantly higher sarcopenia risk</strong> compared to those eating ≥1.2 g/kg/day.</div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/39770971/" target="_blank" class="study-link">View on PubMed <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
                 </div>
 
                 <div class="study">
                     <div class="study-title">Health ABC Study</div>
-                    <div class="study-meta">Houston et al., 2008 • Am J Clin Nutr • 87(1):150-155 • doi:10.1093/ajcn/87.1.150</div>
-                    <div class="study-finding">Following 2,000+ older adults over 3 years: Those in the <strong>lowest protein intake group lost 40% more muscle</strong>.</div>
-                    <a href="https://pubmed.ncbi.nlm.nih.gov/18175749/" target="_blank" class="study-link">View on PubMed →</a>
+                    <div class="study-meta">Houston et al., 2008 • Am J Clin Nutr • doi:10.1093/ajcn/87.1.150</div>
+                    <div class="study-finding"><strong>Key finding:</strong> Following 2,000+ older adults over 3 years: Those in the <strong>lowest protein intake group lost 40% more muscle</strong>.</div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/18175749/" target="_blank" class="study-link">View on PubMed <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
                 </div>
             </div>
         </div>
 
-        <!-- FAQ 2 -->
+        <!-- Q2 -->
         <div class="faq-item" id="q2">
-            <button class="faq-question">
-                <span><span class="faq-number">2</span>Will high protein intake increase my cancer risk?</span>
+            <button class="faq-question" onclick="toggleFaq(this)">
+                <span class="faq-number">2</span>
+                <span class="faq-question-text">Will high protein intake increase my cancer risk?</span>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
             </button>
             <div class="faq-answer">
-                <div class="quick-answer">
-                    <strong>Quick Answer:</strong> No. While mechanistic theories (mTOR, IGF-1) suggest a possible link, large-scale human studies consistently find <span class="key-number">no association</span> between protein intake and cancer mortality.
+                <div class="answer-box highlight">
+                    <div class="answer-box-title">Quick Answer</div>
+                    <p>No. While mechanistic theories (mTOR, IGF-1) suggest a possible link, large-scale human studies consistently find <span class="key-number">no association</span> between protein intake and cancer mortality.</p>
                 </div>
 
-                <div class="warning-box">
-                    <strong>The Levine et al. Study—Why It's Misleading:</strong>
-                    <p style="margin-top: 8px;">The oft-cited NHANES III study claiming 4× cancer risk in high-protein consumers aged 50-65 has significant problems:</p>
-                    <ul style="margin: 8px 0 0 20px; font-size: 0.9rem;">
+                <div class="answer-box warning">
+                    <div class="answer-box-title">The Levine et al. Study—Why It's Misleading</div>
+                    <p>The oft-cited NHANES III study claiming 4× cancer risk in high-protein consumers aged 50-65 has significant problems:</p>
+                    <ul>
                         <li>The same study found high protein was associated with <strong>60% lower</strong> cancer mortality after age 65</li>
                         <li>The high-protein group aged 50-65 likely had fewer than 35 cancer deaths—highly susceptible to chance</li>
-                        <li>Couldn't adjust for cancer screening, family history, or other key variables</li>
                         <li>Multiple larger meta-analyses find no association</li>
                     </ul>
                 </div>
 
                 <div class="study">
                     <div class="study-title">Protein and Cancer Mortality Meta-Analysis</div>
-                    <div class="study-meta">Naghshi et al., 2020 • BMJ • 370:m2412 • doi:10.1136/bmj.m2412</div>
-                    <div class="study-finding">Analyzed 12 prospective cohort studies (292,629 participants): Each 3% increment in energy from protein showed <strong>no association with cancer mortality</strong>.</div>
-                    <a href="https://pubmed.ncbi.nlm.nih.gov/32699048/" target="_blank" class="study-link">View on PubMed →</a>
+                    <div class="study-meta">Naghshi et al., 2020 • BMJ • doi:10.1136/bmj.m2412</div>
+                    <div class="study-finding"><strong>Key finding:</strong> Analyzed 12 prospective cohort studies (292,629 participants): Each 3% increment in energy from protein showed <strong>no association with cancer mortality</strong>.</div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/32699048/" target="_blank" class="study-link">View on PubMed <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
                 </div>
 
-                <div class="study">
-                    <div class="study-title">German Nutrition Society Umbrella Review</div>
-                    <div class="study-meta">Kühn et al., 2024 • European Journal of Nutrition • 63:1471-1486 • doi:10.1007/s00394-024-03380-4</div>
-                    <div class="study-finding">Comprehensive review: Higher protein intake was <strong>not associated with risks of breast, prostate, colorectal, ovarian, or pancreatic cancer</strong>.</div>
-                    <a href="https://pubmed.ncbi.nlm.nih.gov/38643440/" target="_blank" class="study-link">View on PubMed →</a>
-                </div>
-
-                <div class="success-box">
-                    <strong>Why the mTOR Mechanism Doesn't Translate:</strong>
-                    <p style="margin-top: 8px;">Protein activates mTORC1, but this is normal, tightly regulated physiology—not the chronic hyperactivation seen in cancer. Notably, <strong>resistance exercise activates mTORC1 even more than protein</strong>, yet is consistently associated with <strong>reduced</strong> cancer risk.</p>
+                <div class="answer-box success">
+                    <div class="answer-box-title">Why the mTOR Mechanism Doesn't Translate</div>
+                    <p>Protein activates mTORC1, but this is normal, tightly regulated physiology. Notably, <strong>resistance exercise activates mTORC1 even more than protein</strong>, yet is consistently associated with <strong>reduced</strong> cancer risk.</p>
                 </div>
 
                 <div class="expert-quote">
-                    "For adults 40+, the evidence supports protein intake of 1.2–1.6 g/kg/day. The theoretical cancer concerns are not supported by human data, while the benefits for muscle preservation, metabolic health, and longevity are well-established. Getting too little protein poses a far greater health risk than getting too much."
+                    "For adults 40+, the evidence supports protein intake of 1.2–1.6 g/kg/day. The theoretical cancer concerns are not supported by human data, while the benefits for muscle preservation are well-established."
                     <cite>— Peter Attia, MD (recommends 1.6-2.0 g/kg/day)</cite>
                 </div>
             </div>
         </div>
 
-        <!-- FAQ 3 -->
+        <!-- Q3 -->
         <div class="faq-item" id="q3">
-            <button class="faq-question">
-                <span><span class="faq-number">3</span>Is high protein bad for my kidneys?</span>
+            <button class="faq-question" onclick="toggleFaq(this)">
+                <span class="faq-number">3</span>
+                <span class="faq-question-text">Is high protein bad for my kidneys?</span>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
             </button>
             <div class="faq-answer">
-                <div class="quick-answer">
-                    <strong>Quick Answer:</strong> Not if your kidneys are healthy. The concern originated from observations that protein restriction helps people with <em>existing</em> kidney disease—but this doesn't mean protein <span class="key-number">damages healthy kidneys</span>.
+                <div class="answer-box highlight">
+                    <div class="answer-box-title">Quick Answer</div>
+                    <p>Not if your kidneys are healthy. The concern originated from observations that protein restriction helps people with <em>existing</em> kidney disease—but this doesn't mean protein <span class="key-number">damages healthy kidneys</span>.</p>
                 </div>
 
                 <div class="study">
                     <div class="study-title">Kidney Function Meta-Analysis</div>
-                    <div class="study-meta">Devries et al., 2018 • J Nutr • 148(11):1760-1775 • doi:10.1093/jn/nxy197</div>
-                    <div class="study-finding">28 RCTs (1,358 participants): Higher protein intakes (≥1.5 g/kg/day) <strong>do not adversely affect kidney function</strong> in adults without pre-existing kidney disease.</div>
-                    <a href="https://pubmed.ncbi.nlm.nih.gov/30383278/" target="_blank" class="study-link">View on PubMed →</a>
+                    <div class="study-meta">Devries et al., 2018 • J Nutr • doi:10.1093/jn/nxy197</div>
+                    <div class="study-finding"><strong>Key finding:</strong> 28 RCTs (1,358 participants): Higher protein intakes (≥1.5 g/kg/day) <strong>do not adversely affect kidney function</strong> in adults without pre-existing kidney disease.</div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/30383278/" target="_blank" class="study-link">View on PubMed <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
                 </div>
 
-                <div class="warning-box">
-                    <strong>Important Exception:</strong> If you have diagnosed kidney disease or significantly reduced kidney function, discuss protein targets with your healthcare provider, as recommendations differ.
+                <div class="answer-box warning">
+                    <div class="answer-box-title">Important Exception</div>
+                    <p>If you have diagnosed kidney disease or significantly reduced kidney function, discuss protein targets with your healthcare provider, as recommendations differ.</p>
                 </div>
             </div>
         </div>
 
-        <!-- FAQ 4 -->
+        <!-- Q4 -->
         <div class="faq-item" id="q4">
-            <button class="faq-question">
-                <span><span class="faq-number">4</span>How much protein should I eat per meal?</span>
+            <button class="faq-question" onclick="toggleFaq(this)">
+                <span class="faq-number">4</span>
+                <span class="faq-question-text">How much protein should I eat per meal?</span>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
             </button>
             <div class="faq-answer">
-                <div class="quick-answer">
-                    <strong>Quick Answer:</strong> It depends on your age. Due to "anabolic resistance," older adults need <span class="key-number">more protein per meal</span> to trigger the same muscle-building response as younger people.
+                <div class="answer-box highlight">
+                    <div class="answer-box-title">Quick Answer</div>
+                    <p>It depends on your age. Due to "anabolic resistance," older adults need <span class="key-number">more protein per meal</span> to trigger the same muscle-building response as younger people.</p>
                 </div>
 
-                <p>Moore et al. (2015, doi:<a href="https://doi.org/10.1093/gerona/glu103" target="_blank">10.1093/gerona/glu103</a>) found that older adults need approximately <strong>0.40 g/kg body weight per meal</strong> (vs 0.24 g/kg for young adults) to maximally stimulate muscle protein synthesis—about 68% more.</p>
+                <p>Moore et al. (2015) found that older adults need approximately <strong>0.40 g/kg body weight per meal</strong> (vs 0.24 g/kg for young adults) to maximally stimulate muscle protein synthesis—about 68% more.</p>
 
-                <table class="age-table">
-                    <thead>
-                        <tr>
-                            <th>Your Age</th>
-                            <th>Per-Meal Target</th>
-                            <th>Example (70kg person)</th>
-                        </tr>
-                    </thead>
+                <table class="data-table">
+                    <thead><tr><th>Your Age</th><th>Per-Meal Target</th><th>Example (70kg)</th></tr></thead>
                     <tbody>
-                        <tr>
-                            <td>20-30</td>
-                            <td>~0.24 g/kg body weight</td>
-                            <td>~17g</td>
-                        </tr>
-                        <tr>
-                            <td>40</td>
-                            <td>~0.30 g/kg body weight</td>
-                            <td>~21g</td>
-                        </tr>
-                        <tr>
-                            <td>50</td>
-                            <td>~0.35 g/kg body weight</td>
-                            <td>~25g</td>
-                        </tr>
-                        <tr class="highlight">
-                            <td>60</td>
-                            <td>~0.38 g/kg body weight</td>
-                            <td>~27g</td>
-                        </tr>
-                        <tr class="highlight">
-                            <td>70+</td>
-                            <td>~0.40 g/kg body weight</td>
-                            <td>~28-30g</td>
-                        </tr>
+                        <tr><td>20-30</td><td>~0.24 g/kg</td><td>~17g</td></tr>
+                        <tr><td>40</td><td>~0.30 g/kg</td><td>~21g</td></tr>
+                        <tr><td>50</td><td>~0.35 g/kg</td><td>~25g</td></tr>
+                        <tr class="highlight"><td>60</td><td>~0.38 g/kg</td><td>~27g</td></tr>
+                        <tr class="highlight"><td>70+</td><td>~0.40 g/kg</td><td>~28-30g</td></tr>
                     </tbody>
                 </table>
-
-                <p style="font-size: 0.85rem; color: var(--color-text-muted); margin-top: 8px;"><em>Note: Moore et al. also reported values per kg lean body mass (0.60 g/kg LBM for older adults). The body weight values above are more practical for most people.</em></p>
 
                 <div class="study">
                     <div class="study-title">Protein Distribution Study</div>
-                    <div class="study-meta">Mamerow et al., 2014 • J Nutr • 144(6):876-880 • doi:10.3945/jn.113.185280</div>
-                    <div class="study-finding">Distributing protein evenly across meals (30g each) resulted in <strong>25% higher 24-hour muscle protein synthesis</strong> compared to the same total protein in a skewed pattern (e.g., 10g breakfast, 20g lunch, 60g dinner).</div>
-                    <a href="https://pubmed.ncbi.nlm.nih.gov/24477298/" target="_blank" class="study-link">View on PubMed →</a>
+                    <div class="study-meta">Mamerow et al., 2014 • J Nutr • doi:10.3945/jn.113.185280</div>
+                    <div class="study-finding"><strong>Key finding:</strong> Distributing protein evenly across meals (30g each) resulted in <strong>25% higher 24-hour muscle protein synthesis</strong> compared to the same total protein in a skewed pattern.</div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/24477298/" target="_blank" class="study-link">View on PubMed <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
                 </div>
 
-                <div class="summary-box">
-                    <p><strong>Practical tip:</strong> Most people eat too little protein at breakfast. Switching from toast/cereal (5-10g) to eggs or Greek yogurt (20-30g) is often the highest-impact change.</p>
+                <div class="answer-box success">
+                    <div class="answer-box-title">Practical Tip</div>
+                    <p>Most people eat too little protein at breakfast. Switching from toast/cereal (5-10g) to eggs or Greek yogurt (20-30g) is often the highest-impact change.</p>
                 </div>
             </div>
         </div>
 
-        <!-- CATEGORY: Optimizing for Goals -->
-        <h2 class="faq-category">Optimizing for Your Goals</h2>
+        <!-- CATEGORY 2 -->
+        <h2 class="category-header">Optimizing for Your Goals</h2>
 
-        <!-- FAQ 5 -->
+        <!-- Q5 -->
         <div class="faq-item" id="q5">
-            <button class="faq-question">
-                <span><span class="faq-number">5</span>How do I adjust protein intake for weight loss or muscle building?</span>
+            <button class="faq-question" onclick="toggleFaq(this)">
+                <span class="faq-number">5</span>
+                <span class="faq-question-text">How do I adjust protein for weight loss or muscle building?</span>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
             </button>
             <div class="faq-answer">
-                <div class="quick-answer">
-                    <strong>Quick Answer:</strong> Increase protein when in a caloric deficit or doing resistance training. The harder you train or diet, the <span class="key-number">more protein you need</span> to preserve muscle.
+                <div class="answer-box highlight">
+                    <div class="answer-box-title">Quick Answer</div>
+                    <p>Increase protein when in a caloric deficit or doing resistance training. The harder you train or diet, the <span class="key-number">more protein you need</span> to preserve muscle.</p>
                 </div>
 
-                <table class="age-table">
-                    <thead>
-                        <tr>
-                            <th>Your Situation</th>
-                            <th>Daily Target</th>
-                        </tr>
-                    </thead>
+                <table class="data-table">
+                    <thead><tr><th>Your Situation</th><th>Daily Target</th></tr></thead>
                     <tbody>
-                        <tr>
-                            <td>No resistance training, maintaining weight</td>
-                            <td>1.2 g/kg body weight</td>
-                        </tr>
-                        <tr class="highlight">
-                            <td>Resistance training, maintaining weight</td>
-                            <td>1.6 g/kg body weight</td>
-                        </tr>
-                        <tr>
-                            <td>Resistance training + moderate deficit (10-25%)</td>
-                            <td>2.0 g/kg body weight</td>
-                        </tr>
-                        <tr>
-                            <td>Resistance training + aggressive deficit (25-40%)</td>
-                            <td>2.4 g/kg body weight</td>
-                        </tr>
+                        <tr><td>No resistance training, maintaining weight</td><td>1.2 g/kg</td></tr>
+                        <tr class="highlight"><td>Resistance training, maintaining weight</td><td>1.6 g/kg</td></tr>
+                        <tr><td>Training + moderate deficit (10-25%)</td><td>2.0 g/kg</td></tr>
+                        <tr><td>Training + aggressive deficit (25-40%)</td><td>2.4 g/kg</td></tr>
                     </tbody>
                 </table>
 
-                <div class="warning-box">
-                    <strong>Body Weight vs. Lean Body Mass:</strong>
-                    <p style="margin-top: 8px;">Research studies typically use total body weight, but leading specialists (Peter Attia, Layne Norton) recommend calculating protein based on <strong>lean body mass (LBM)</strong> instead. Why? Fat tissue has minimal protein requirements—lean mass explains 70-80% of metabolic rate. For people with higher body fat (>25% men, >35% women), using total body weight can give unnecessarily high targets. If you know your LBM, use these same numbers per kg LBM rather than body weight.</p>
-                </div>
-
                 <div class="study">
                     <div class="study-title">High Protein During Caloric Deficit</div>
-                    <div class="study-meta">Longland et al., 2016 • Am J Clin Nutr • 103(3):738-746 • doi:10.3945/ajcn.115.119339</div>
-                    <div class="study-finding">During a 40% caloric deficit (young trained men), 2.4 g/kg body weight/day produced dramatically better results: participants <strong>gained 1.2 kg lean mass while losing 4.8 kg fat</strong>, versus only +0.1 kg lean and −3.5 kg fat at 1.2 g/kg/day.</div>
-                    <a href="https://pubmed.ncbi.nlm.nih.gov/26817506/" target="_blank" class="study-link">View on PubMed →</a>
+                    <div class="study-meta">Longland et al., 2016 • Am J Clin Nutr • doi:10.3945/ajcn.115.119339</div>
+                    <div class="study-finding"><strong>Key finding:</strong> During a 40% caloric deficit, 2.4 g/kg/day produced dramatically better results: <strong>gained 1.2 kg lean mass while losing 4.8 kg fat</strong>, versus only +0.1 kg lean and −3.5 kg fat at 1.2 g/kg/day.</div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/26817506/" target="_blank" class="study-link">View on PubMed <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
                 </div>
             </div>
         </div>
 
-        <!-- FAQ 6 -->
+        <!-- Q6 -->
         <div class="faq-item" id="q6">
-            <button class="faq-question">
-                <span><span class="faq-number">6</span>Does protein intake enhance the effects of strength training?</span>
+            <button class="faq-question" onclick="toggleFaq(this)">
+                <span class="faq-number">6</span>
+                <span class="faq-question-text">Does protein intake enhance the effects of strength training?</span>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
             </button>
             <div class="faq-answer">
-                <div class="quick-answer">
-                    <strong>Quick Answer:</strong> Yes—protein and resistance training are <span class="key-number">synergistic</span>. Protein alone doesn't build strength, but it significantly amplifies the effects of training.
+                <div class="answer-box highlight">
+                    <div class="answer-box-title">Quick Answer</div>
+                    <p>Yes—protein and resistance training are <span class="key-number">synergistic</span>. Protein alone doesn't build strength, but it significantly amplifies the effects of training.</p>
                 </div>
 
                 <div class="study">
                     <div class="study-title">Protein + Strength Training Meta-Analysis</div>
-                    <div class="study-meta">Tagawa et al., 2022 • Sports Medicine - Open • 8:110 • doi:10.1186/s40798-022-00508-w</div>
-                    <div class="study-finding">Protein supplementation increased strength by <strong>2.01% when combined with resistance training</strong>, but only 0.13% without training (not statistically significant).</div>
-                    <a href="https://pubmed.ncbi.nlm.nih.gov/36057893/" target="_blank" class="study-link">View on PubMed →</a>
+                    <div class="study-meta">Tagawa et al., 2022 • Sports Medicine - Open • doi:10.1186/s40798-022-00508-w</div>
+                    <div class="study-finding"><strong>Key finding:</strong> Protein supplementation increased strength by <strong>2.01% when combined with resistance training</strong>, but only 0.13% without training (not statistically significant).</div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/36057893/" target="_blank" class="study-link">View on PubMed <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
                 </div>
 
-                <div class="summary-box">
-                    <p><strong>Key numbers:</strong></p>
-                    <ul style="margin: 8px 0 0 20px;">
+                <div class="answer-box success">
+                    <div class="answer-box-title">Key Numbers</div>
+                    <ul>
                         <li>Each 0.1 g/kg/day increase adds <strong>0.72% strength gain</strong>, up to 1.5 g/kg/day</li>
                         <li>Protein + training adds ~2.5 kg to your one-rep max vs. training alone</li>
                         <li>Protein + training adds ~0.3 kg lean mass vs. training alone</li>
@@ -545,139 +461,100 @@
             </div>
         </div>
 
-        <!-- FAQ 7 -->
+        <!-- Q7 -->
         <div class="faq-item" id="q7">
-            <button class="faq-question">
-                <span><span class="faq-number">7</span>Can higher protein help with weight management?</span>
+            <button class="faq-question" onclick="toggleFaq(this)">
+                <span class="faq-number">7</span>
+                <span class="faq-question-text">Can higher protein help with weight management?</span>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
             </button>
             <div class="faq-answer">
-                <div class="quick-answer">
-                    <strong>Quick Answer:</strong> Yes—protein is the <span class="key-number">most satiating macronutrient</span>. It reduces hunger, burns more calories during digestion, and preserves muscle during weight loss.
+                <div class="answer-box highlight">
+                    <div class="answer-box-title">Quick Answer</div>
+                    <p>Yes—protein is the <span class="key-number">most satiating macronutrient</span>. It reduces hunger, burns more calories during digestion, and preserves muscle during weight loss.</p>
                 </div>
 
-                <table class="age-table">
-                    <thead>
-                        <tr>
-                            <th>Benefit</th>
-                            <th>Evidence</th>
-                        </tr>
-                    </thead>
+                <table class="data-table">
+                    <thead><tr><th>Benefit</th><th>Evidence</th></tr></thead>
                     <tbody>
-                        <tr>
-                            <td>Thermic effect</td>
-                            <td>Protein burns <strong>20-30%</strong> of its calories during digestion vs. 5-10% for carbs</td>
-                        </tr>
-                        <tr>
-                            <td>Appetite reduction</td>
-                            <td>High-protein meals reduced subsequent calorie intake by <strong>14-22%</strong></td>
-                        </tr>
-                        <tr>
-                            <td>Metabolism</td>
-                            <td>High-protein dieters maintained <strong>142 kcal/day higher</strong> resting metabolism</td>
-                        </tr>
-                        <tr>
-                            <td>Weight loss</td>
-                            <td>Meta-analysis of 37 RCTs: higher protein = <strong>1.6 kg more weight loss</strong></td>
-                        </tr>
+                        <tr><td>Thermic effect</td><td>Protein burns <strong>20-30%</strong> of its calories during digestion vs. 5-10% for carbs</td></tr>
+                        <tr><td>Appetite reduction</td><td>High-protein meals reduced subsequent calorie intake by <strong>14-22%</strong></td></tr>
+                        <tr><td>Metabolism</td><td>High-protein dieters maintained <strong>142 kcal/day higher</strong> resting metabolism</td></tr>
+                        <tr><td>Weight loss</td><td>Meta-analysis: higher protein = <strong>1.6 kg more weight loss</strong></td></tr>
                     </tbody>
                 </table>
 
                 <div class="study">
                     <div class="study-title">Protein for Weight Management Meta-Analysis</div>
-                    <div class="study-meta">Hansen, Astrup & Sjödin, 2021 • Nutrients • 13(9):3193 • doi:10.3390/nu13093193</div>
-                    <div class="study-finding">Systematic review of 43 RCTs: Higher protein intake (18-59% energy) resulted in <strong>1.6 kg greater weight loss</strong> compared to control diets.</div>
-                    <a href="https://pubmed.ncbi.nlm.nih.gov/34579069/" target="_blank" class="study-link">View on PubMed →</a>
+                    <div class="study-meta">Hansen, Astrup & Sjödin, 2021 • Nutrients • doi:10.3390/nu13093193</div>
+                    <div class="study-finding"><strong>Key finding:</strong> Systematic review of 43 RCTs: Higher protein intake (18-59% energy) resulted in <strong>1.6 kg greater weight loss</strong> compared to control diets.</div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/34579069/" target="_blank" class="study-link">View on PubMed <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
                 </div>
             </div>
         </div>
 
-        <!-- CATEGORY: Practical Implementation -->
-        <h2 class="faq-category">Practical Implementation</h2>
+        <!-- CATEGORY 3 -->
+        <h2 class="category-header">Practical Implementation</h2>
 
-        <!-- FAQ 8 -->
+        <!-- Q8 -->
         <div class="faq-item" id="q8">
-            <button class="faq-question">
-                <span><span class="faq-number">8</span>What does 30g of protein actually look like?</span>
+            <button class="faq-question" onclick="toggleFaq(this)">
+                <span class="faq-number">8</span>
+                <span class="faq-question-text">What does 30g of protein actually look like?</span>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
             </button>
             <div class="faq-answer">
-                <div class="quick-answer">
-                    <strong>Quick Answer:</strong> About the size of a deck of cards for meat/fish, or combinations of dairy and plant foods. Here are practical examples:
+                <div class="answer-box highlight">
+                    <div class="answer-box-title">Quick Answer</div>
+                    <p>About the size of a deck of cards for meat/fish, or combinations of dairy and plant foods.</p>
                 </div>
 
-                <p style="margin-bottom: 8px;"><strong>Animal Sources (~30g each):</strong></p>
-                <div class="protein-examples">
-                    <div class="protein-example">
-                        <div class="protein-amount">~30g</div>
-                        <div class="protein-food">4 oz chicken breast</div>
-                    </div>
-                    <div class="protein-example">
-                        <div class="protein-amount">~30g</div>
-                        <div class="protein-food">4.5 oz salmon</div>
-                    </div>
-                    <div class="protein-example">
-                        <div class="protein-amount">~30g</div>
-                        <div class="protein-food">5 eggs</div>
-                    </div>
-                    <div class="protein-example">
-                        <div class="protein-amount">~30g</div>
-                        <div class="protein-food">4 oz lean beef</div>
-                    </div>
+                <p><strong>Animal Sources (~30g each):</strong></p>
+                <div class="protein-grid">
+                    <div class="protein-item"><div class="protein-amount">~30g</div><div class="protein-food">4 oz chicken breast</div></div>
+                    <div class="protein-item"><div class="protein-amount">~30g</div><div class="protein-food">4.5 oz salmon</div></div>
+                    <div class="protein-item"><div class="protein-amount">~30g</div><div class="protein-food">5 eggs</div></div>
+                    <div class="protein-item"><div class="protein-amount">~30g</div><div class="protein-food">4 oz lean beef</div></div>
                 </div>
 
-                <p style="margin: 16px 0 8px;"><strong>Dairy Sources (~30g each):</strong></p>
-                <div class="protein-examples">
-                    <div class="protein-example">
-                        <div class="protein-amount">~28g</div>
-                        <div class="protein-food">1.5 cups cottage cheese</div>
-                    </div>
-                    <div class="protein-example">
-                        <div class="protein-amount">~30g</div>
-                        <div class="protein-food">1 cup Greek yogurt + 1 egg</div>
-                    </div>
+                <p><strong>Dairy Sources (~30g each):</strong></p>
+                <div class="protein-grid">
+                    <div class="protein-item"><div class="protein-amount">~28g</div><div class="protein-food">1.5 cups cottage cheese</div></div>
+                    <div class="protein-item"><div class="protein-amount">~30g</div><div class="protein-food">1 cup Greek yogurt + 1 egg</div></div>
                 </div>
 
-                <p style="margin: 16px 0 8px;"><strong>Plant Sources (~30g each):</strong></p>
-                <div class="protein-examples">
-                    <div class="protein-example">
-                        <div class="protein-amount">~27g</div>
-                        <div class="protein-food">1.5 cups lentils</div>
-                    </div>
-                    <div class="protein-example">
-                        <div class="protein-amount">~30g</div>
-                        <div class="protein-food">1 block firm tofu</div>
-                    </div>
-                    <div class="protein-example">
-                        <div class="protein-amount">~30g</div>
-                        <div class="protein-food">2 cups edamame</div>
-                    </div>
-                    <div class="protein-example">
-                        <div class="protein-amount">~30g</div>
-                        <div class="protein-food">Beans + quinoa + peanut butter</div>
-                    </div>
+                <p><strong>Plant Sources (~30g each):</strong></p>
+                <div class="protein-grid">
+                    <div class="protein-item"><div class="protein-amount">~27g</div><div class="protein-food">1.5 cups lentils</div></div>
+                    <div class="protein-item"><div class="protein-amount">~30g</div><div class="protein-food">1 block firm tofu</div></div>
+                    <div class="protein-item"><div class="protein-amount">~30g</div><div class="protein-food">2 cups edamame</div></div>
                 </div>
             </div>
         </div>
 
-        <!-- FAQ 9 -->
+        <!-- Q9 -->
         <div class="faq-item" id="q9">
-            <button class="faq-question">
-                <span><span class="faq-number">9</span>Can I meet protein targets with plant protein alone?</span>
+            <button class="faq-question" onclick="toggleFaq(this)">
+                <span class="faq-number">9</span>
+                <span class="faq-question-text">Can I meet protein targets with plant protein alone?</span>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
             </button>
             <div class="faq-answer">
-                <div class="quick-answer">
-                    <strong>Quick Answer:</strong> Yes, but it requires more planning. Plant proteins have lower leucine content and digestibility, so you may need <span class="key-number">20-30% more</span> total protein.
+                <div class="answer-box highlight">
+                    <div class="answer-box-title">Quick Answer</div>
+                    <p>Yes, but it requires more planning. Plant proteins have lower leucine content and digestibility, so you may need <span class="key-number">20-30% more</span> total protein.</p>
                 </div>
 
                 <div class="study">
                     <div class="study-title">Plant vs. Animal Protein Bioavailability</div>
-                    <div class="study-meta">Gorissen et al., 2018 • Amino Acids • 50(12):1685-1695 • doi:10.1007/s00726-018-2640-5</div>
-                    <div class="study-finding">Plant proteins have lower leucine content and digestibility. To achieve the same muscle-building response, consume <strong>20-30% more total protein</strong> from plant sources, or aim for <strong>35-40g per meal</strong> instead of 30g.</div>
-                    <a href="https://pubmed.ncbi.nlm.nih.gov/30167963/" target="_blank" class="study-link">View on PubMed →</a>
+                    <div class="study-meta">Gorissen et al., 2018 • Amino Acids • doi:10.1007/s00726-018-2640-5</div>
+                    <div class="study-finding"><strong>Key finding:</strong> Plant proteins have lower leucine content and digestibility. To achieve the same muscle-building response, consume <strong>20-30% more total protein</strong> from plant sources, or aim for 35-40g per meal instead of 30g.</div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/30167963/" target="_blank" class="study-link">View on PubMed <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
                 </div>
 
-                <div class="summary-box">
-                    <p><strong>Strategies for plant-based eaters:</strong></p>
-                    <ul style="margin: 8px 0 0 20px;">
+                <div class="answer-box success">
+                    <div class="answer-box-title">Strategies for Plant-Based Eaters</div>
+                    <ul>
                         <li>Emphasize high-leucine plant foods: soy, lentils, peanuts</li>
                         <li>Combine complementary proteins at meals (legumes + grains)</li>
                         <li>Aim for 35-40g protein per meal instead of 30g</li>
@@ -687,18 +564,21 @@
             </div>
         </div>
 
-        <!-- FAQ 10 -->
+        <!-- Q10 -->
         <div class="faq-item" id="q10">
-            <button class="faq-question">
-                <span><span class="faq-number">10</span>Do I need protein supplements to hit these targets?</span>
+            <button class="faq-question" onclick="toggleFaq(this)">
+                <span class="faq-number">10</span>
+                <span class="faq-question-text">Do I need protein supplements to hit these targets?</span>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
             </button>
             <div class="faq-answer">
-                <div class="quick-answer">
-                    <strong>Quick Answer:</strong> Not necessarily—supplements are a <span class="key-number">convenience, not a requirement</span>. Many people successfully meet 1.2-1.6 g/kg/day through food alone.
+                <div class="answer-box highlight">
+                    <div class="answer-box-title">Quick Answer</div>
+                    <p>Not necessarily—supplements are a <span class="key-number">convenience, not a requirement</span>. Many people successfully meet 1.2-1.6 g/kg/day through food alone.</p>
                 </div>
 
                 <p>However, supplements can help if you:</p>
-                <ul style="margin: 8px 0 16px 20px;">
+                <ul style="margin: 8px 0 16px 20px; font-size: 0.9rem;">
                     <li>Struggle with appetite (common with aging)</li>
                     <li>Find it difficult to eat 30+ grams at breakfast</li>
                     <li>Need portable options for travel or work</li>
@@ -706,96 +586,64 @@
                     <li>Practice intermittent fasting or time-restricted eating</li>
                 </ul>
 
-                <div class="warning-box">
-                    <strong>Caution: Fasting and Protein</strong>
-                    <p style="margin-top: 8px;">Peter Attia notes that fasting and time-restricted eating can be "problematic due to the heightened risk of protein deficiency and subsequent loss of muscle mass." If you practice intermittent fasting, ensure you still hit your total daily protein target. For muscle preservation during extended fasts, some specialists recommend prioritizing protein in your eating window—potentially using supplements to reach 1.6+ g/kg in fewer meals.</p>
+                <div class="answer-box warning">
+                    <div class="answer-box-title">Caution: Fasting and Protein</div>
+                    <p>Peter Attia notes that fasting and time-restricted eating can be "problematic due to the heightened risk of protein deficiency and subsequent loss of muscle mass." If you practice intermittent fasting, ensure you still hit your total daily protein target.</p>
                 </div>
 
-                <div class="summary-box">
-                    <p><strong>If you do supplement:</strong> Whey protein is well-studied and effective. Plant-based options like pea or soy protein work too but may benefit from added leucine.</p>
+                <div class="answer-box success">
+                    <div class="answer-box-title">If You Do Supplement</div>
+                    <p>Whey protein is well-studied and effective. Plant-based options like pea or soy protein work too but may benefit from added leucine.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Bottom Line -->
-        <div class="bottom-line" style="margin-top: 32px;">
-            <h3>Key Recommendations</h3>
-            <p style="margin-bottom: 12px;"><strong>Daily target:</strong> 1.2-1.6 g/kg body weight (higher if training or in deficit)</p>
-            <p style="margin-bottom: 12px;"><strong>Per-meal target:</strong> 25-40g depending on age (older adults need more)</p>
-            <p><strong>Distribution:</strong> Spread protein evenly across 3-4 meals for 25% better muscle synthesis</p>
-        </div>
-
-        <!-- References -->
-        <div class="references-section">
-            <h2>References</h2>
-
-            <p class="reference">[1] Bauer, J., et al. (2013). "Evidence-based recommendations for optimal dietary protein intake in older people: A position paper from the PROT-AGE Study Group." <em>Journal of the American Medical Directors Association</em>, 14(8), 542-559. <a href="https://doi.org/10.1016/j.jamda.2013.05.021" target="_blank">doi:10.1016/j.jamda.2013.05.021</a></p>
-
-            <p class="reference">[2] Han, M., Woo, K., & Kim, K. (2024). "Association of Protein Intake with Sarcopenia and Related Indicators Among Korean Older Adults: A Systematic Review and Meta-Analysis." <em>Nutrients</em>, 16(24), 4350. <a href="https://doi.org/10.3390/nu16244350" target="_blank">doi:10.3390/nu16244350</a></p>
-
-            <p class="reference">[3] Houston, D.K., et al. (2008). "Dietary protein intake is associated with lean mass change in older, community-dwelling adults: the Health, Aging, and Body Composition (Health ABC) Study." <em>American Journal of Clinical Nutrition</em>, 87(1), 150-155. <a href="https://doi.org/10.1093/ajcn/87.1.150" target="_blank">doi:10.1093/ajcn/87.1.150</a></p>
-
-            <p class="reference">[4] Naghshi, S., et al. (2020). "Dietary intake of total, animal, and plant proteins and risk of all cause, cardiovascular, and cancer mortality: systematic review and dose-response meta-analysis of prospective cohort studies." <em>BMJ</em>, 370:m2412. <a href="https://doi.org/10.1136/bmj.m2412" target="_blank">doi:10.1136/bmj.m2412</a></p>
-
-            <p class="reference">[5] Kühn, T., et al. (2024). "Protein intake and cancer: an umbrella review of systematic reviews for the evidence-based guideline of the German Nutrition Society." <em>European Journal of Nutrition</em>, 63, 1471-1486. <a href="https://doi.org/10.1007/s00394-024-03380-4" target="_blank">doi:10.1007/s00394-024-03380-4</a></p>
-
-            <p class="reference">[6] Devries, M.C., et al. (2018). "Changes in Kidney Function Do Not Differ between Healthy Adults Consuming Higher- Compared with Lower- or Normal-Protein Diets: A Systematic Review and Meta-Analysis." <em>Journal of Nutrition</em>, 148(11), 1760-1775. <a href="https://doi.org/10.1093/jn/nxy197" target="_blank">doi:10.1093/jn/nxy197</a></p>
-
-            <p class="reference">[7] Mamerow, M.M., et al. (2014). "Dietary protein distribution positively influences 24-h muscle protein synthesis in healthy adults." <em>Journal of Nutrition</em>, 144(6), 876-880. <a href="https://doi.org/10.3945/jn.113.185280" target="_blank">doi:10.3945/jn.113.185280</a></p>
-
-            <p class="reference">[8] Moore, D.R., et al. (2015). "Protein ingestion to stimulate myofibrillar protein synthesis requires greater relative protein intakes in healthy older versus younger men." <em>Journals of Gerontology Series A</em>, 70(1), 57-62. <a href="https://doi.org/10.1093/gerona/glu103" target="_blank">doi:10.1093/gerona/glu103</a></p>
-
-            <p class="reference">[9] Longland, T.M., et al. (2016). "Higher compared with lower dietary protein during an energy deficit combined with intense exercise promotes greater lean mass gain and fat mass loss: a randomized trial." <em>American Journal of Clinical Nutrition</em>, 103(3), 738-746. <a href="https://doi.org/10.3945/ajcn.115.119339" target="_blank">doi:10.3945/ajcn.115.119339</a></p>
-
-            <p class="reference">[10] Tagawa, R., et al. (2022). "Synergistic Effect of Increased Total Protein Intake and Strength Training on Muscle Strength: A Dose-Response Meta-analysis of Randomized Controlled Trials." <em>Sports Medicine - Open</em>, 8, 110. <a href="https://doi.org/10.1186/s40798-022-00508-w" target="_blank">doi:10.1186/s40798-022-00508-w</a></p>
-
-            <p class="reference">[11] Hansen, T.T., Astrup, A., & Sjödin, A. (2021). "Are Dietary Proteins the Key to Successful Body Weight Management? A Systematic Review and Meta-Analysis of Studies Assessing Body Weight Outcomes after Interventions with Increased Dietary Protein." <em>Nutrients</em>, 13(9), 3193. <a href="https://doi.org/10.3390/nu13093193" target="_blank">doi:10.3390/nu13093193</a></p>
-
-            <p class="reference">[12] Gorissen, S.H.M., et al. (2018). "Protein content and amino acid composition of commercially available plant-based protein isolates." <em>Amino Acids</em>, 50(12), 1685-1695. <a href="https://doi.org/10.1007/s00726-018-2640-5" target="_blank">doi:10.1007/s00726-018-2640-5</a></p>
-        </div>
-
-        <p class="text-center text-muted" style="margin-top: 32px; font-size: 0.85rem;">
-            Last updated: February 2026 • Based on peer-reviewed research<br>
-            <em>Have a question not answered here? <a href="mailto:info@longevitypath.com">Let us know</a></em>
+        <p style="text-align:center;color:var(--color-text-muted);font-size:0.8rem;margin-top:32px;">
+            All studies are peer-reviewed and published in high-impact medical journals.<br>
+            Last updated: February 2026
         </p>
+
+        <!-- Footer CTA -->
+        <div class="footer-cta" id="footerCta">
+            <div class="footer-cta-text">Ready to optimize your protein intake?</div>
+            <a href="index.html" class="footer-cta-button">
+                <i data-lucide="clipboard-check" style="width:16px;height:16px;"></i> Take the Assessment
+            </a>
+        </div>
     </div>
 
     <script>
-        // FAQ accordion functionality
-        document.querySelectorAll('.faq-question').forEach(button => {
-            button.addEventListener('click', () => {
-                const item = button.parentElement;
-                item.classList.toggle('open');
-            });
-        });
+        lucide.createIcons();
 
-        // Swipe gesture for back navigation
-        (function initSwipeGesture() {
-            let touchStartX = 0;
-            let touchStartY = 0;
-            let touchCurrentX = 0;
+        function toggleFaq(button) {
+            const answer = button.nextElementSibling;
+            const toggle = button.querySelector('.faq-toggle');
+            answer.classList.toggle('open');
+            toggle.classList.toggle('open');
+        }
 
-            document.addEventListener('touchstart', (e) => {
-                touchStartX = e.touches[0].clientX;
-                touchStartY = e.touches[0].clientY;
-            }, { passive: true });
+        function checkUserStatus() {
+            const saved = localStorage.getItem('longevityPathData');
+            const marketingCta = document.getElementById('marketingCta');
+            const footerCta = document.getElementById('footerCta');
+            const userBadge = document.getElementById('userBadge');
+            const userNameBadge = document.getElementById('userNameBadge');
 
-            document.addEventListener('touchmove', (e) => {
-                touchCurrentX = e.touches[0].clientX;
-            }, { passive: true });
+            if (saved) {
+                const data = JSON.parse(saved);
+                userBadge.classList.add('visible');
+                userNameBadge.textContent = data.userName || 'User';
+                marketingCta.classList.remove('visible');
+                footerCta.querySelector('.footer-cta-text').textContent = 'Apply these insights to your nutrition assessment';
+                footerCta.querySelector('.footer-cta-button').innerHTML = '<i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back to Assessment';
+                lucide.createIcons();
+            } else {
+                marketingCta.classList.add('visible');
+                userBadge.classList.remove('visible');
+            }
+        }
 
-            document.addEventListener('touchend', (e) => {
-                const diffX = touchCurrentX - touchStartX;
-                const diffY = Math.abs(e.changedTouches[0].clientY - touchStartY);
-
-                // Swipe from left edge, horizontal swipe > 80px
-                if (diffX > 80 && touchStartX < 50 && diffX > diffY) {
-                    window.location.href = 'index.html';
-                }
-                touchStartX = 0;
-                touchCurrentX = 0;
-            }, { passive: true });
-        })();
+        checkUserStatus();
     </script>
 </body>
 </html>
