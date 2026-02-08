@@ -413,7 +413,9 @@
                         link: { text: "→ Open Nutrition Calculator", url: "nutrition-calculator.html" },
                         questions: [
                             { id: "N3_1", question: "I meet the required protein amount per day", type: "radio",
-                              options: [{ value: "10", label: "Always", points: 10 }, { value: "5", label: "Mostly", points: 5 }, { value: "0", label: "Rarely or never", points: 0 }] }
+                              options: [{ value: "10", label: "Always", points: 10 }, { value: "5", label: "Mostly", points: 5 }, { value: "0", label: "Rarely or never", points: 0 }] },
+                            { id: "N3_2", question: "How many meals per day contain our suggested minimum protein per portion?", type: "radio", helpLink: "nutrition-calculator.html",
+                              options: [{ value: "10", label: "4 or more meals/snacks", points: 10 }, { value: "6", label: "3 meals", points: 6 }, { value: "2", label: "2 meals", points: 2 }, { value: "0", label: "1 or fewer", points: 0 }] }
                         ]
                     },
                     sec4: {
@@ -504,6 +506,7 @@
         // DATA MANAGEMENT
         // ========================================
         let currentData = { userName: "Alexander", answers: {}, scores: {}, previousScores: {} };
+        let sessionStartScores = {}; // Baseline scores captured once when page loads
         let activeCategory = null;
 
         function loadData() {
@@ -588,13 +591,14 @@
             Object.entries(CATEGORIES).forEach(([key, cat]) => {
                 const score = currentData.scores[key] || 0;
                 const score100 = Math.round(score * 10);
-                const prevScore = currentData.previousScores[key];
-                const hasPrevious = prevScore !== undefined && prevScore !== null;
-                const prevScore100 = hasPrevious ? Math.round(prevScore * 10) : null;
-                const trend = hasPrevious ? score100 - prevScore100 : 0;
+                // Use session start scores for accurate change tracking
+                const baselineScore = sessionStartScores[key];
+                const hasBaseline = baselineScore !== undefined && baselineScore !== null;
+                const baselineScore100 = hasBaseline ? Math.round(baselineScore * 10) : 0;
+                const trend = score100 - baselineScore100;
                 const trendClass = trend > 0 ? 'trend-up' : trend < 0 ? 'trend-down' : 'trend-neutral';
                 const trendIcon = trend > 0 ? 'trending-up' : trend < 0 ? 'trending-down' : '';
-                const trendText = hasPrevious && trend !== 0 ? (trend > 0 ? `+${trend}` : `${trend}`) : '—';
+                const trendText = trend !== 0 ? (trend > 0 ? `+${trend}` : `${trend}`) : '—';
 
                 container.innerHTML += `
                     <div class="dimension-card" onclick="openDimension('${key}')">
@@ -653,22 +657,21 @@
             const content = document.getElementById('detailContent');
             content.innerHTML = '';
 
-            // Category total score with change
+            // Category total score with change (using session baseline)
             const score = currentData.scores[catKey] || 0;
             const score100 = Math.round(score * 10);
-            const prevScore = currentData.previousScores[catKey];
-            const hasPrevious = prevScore !== undefined && prevScore !== null;
-            const prevScore100 = hasPrevious ? Math.round(prevScore * 10) : null;
-            const trend = hasPrevious ? score100 - prevScore100 : 0;
+            const baselineScore = sessionStartScores[catKey];
+            const baselineScore100 = (baselineScore !== undefined && baselineScore !== null) ? Math.round(baselineScore * 10) : 0;
+            const trend = score100 - baselineScore100;
             const trendClass = trend > 0 ? 'trend-up' : trend < 0 ? 'trend-down' : 'trend-neutral';
             const trendIcon = trend > 0 ? 'trending-up' : trend < 0 ? 'trending-down' : '';
-            const trendText = hasPrevious && trend !== 0 ? (trend > 0 ? `+${trend}` : `${trend}`) : '';
+            const trendText = trend !== 0 ? (trend > 0 ? `+${trend}` : `${trend}`) : '';
 
             content.innerHTML += `
                 <div class="category-score-header" style="text-align:center;padding:16px;margin-bottom:20px;background:var(--color-card);border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
                     <div style="font-size:2.5rem;font-weight:700;color:var(--color-text);">${score100}<span style="font-size:1rem;color:var(--color-text-muted);">/100</span></div>
                     <div style="font-size:0.9rem;color:var(--color-text-muted);">Total ${category.name} Score</div>
-                    ${hasPrevious && trend !== 0 ? `<div class="dimension-trend ${trendClass}" style="margin-top:8px;font-size:0.85rem;display:inline-flex;align-items:center;gap:4px;"><i data-lucide="${trendIcon}" style="width:16px;height:16px;"></i> ${trendText}</div>` : ''}
+                    ${trend !== 0 ? `<div class="dimension-trend ${trendClass}" style="margin-top:8px;font-size:0.85rem;display:inline-flex;align-items:center;gap:4px;"><i data-lucide="${trendIcon}" style="width:16px;height:16px;"></i> ${trendText}</div>` : ''}
                 </div>
             `;
 
@@ -841,17 +844,7 @@
         }
 
         function updateScoresAndUI() {
-            // Store old scores before recalculating
-            const oldScores = { ...currentData.scores };
             calculateAllScores();
-
-            // Only update previousScores for categories whose scores actually changed
-            Object.keys(currentData.scores).forEach(catKey => {
-                if (oldScores[catKey] !== undefined && oldScores[catKey] !== currentData.scores[catKey]) {
-                    currentData.previousScores[catKey] = oldScores[catKey];
-                }
-            });
-
             saveData();
             renderDimensions();
             updateTotalScore();
@@ -891,6 +884,8 @@
         document.addEventListener('DOMContentLoaded', function() {
             lucide.createIcons();
             loadData();
+            // Capture baseline scores for this session (for accurate change tracking)
+            sessionStartScores = { ...currentData.scores };
             document.getElementById('userName').textContent = currentData.userName;
             document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
             renderDimensions();
