@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credibility Components - Design Mockup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --color-orange: #E9A04E;
+            --color-orange-light: #FDF6EC;
+            --color-teal: #00905A;
+            --color-teal-light: #E8F5F0;
+            --color-red: #EF4444;
+            --color-bg: #FAF9F6;
+            --color-card: #FFFFFF;
+            --color-text: #1F2937;
+            --color-text-muted: #6B7280;
+            --color-border: #E5E7EB;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; }
+
+        h1 { font-size: 1.5rem; margin-bottom: 8px; }
+        h2 { font-size: 1.1rem; margin: 32px 0 16px; color: var(--color-text-muted); border-bottom: 2px solid var(--color-border); padding-bottom: 8px; }
+        h3 { font-size: 0.9rem; margin: 24px 0 12px; color: var(--color-teal); }
+        p.intro { color: var(--color-text-muted); margin-bottom: 24px; font-size: 0.9rem; }
+
+        /* ==================== */
+        /* STUDY CARD - CURRENT */
+        /* ==================== */
+        .study-current {
+            background: var(--color-bg);
+            border-radius: 8px;
+            padding: 14px;
+            margin-bottom: 12px;
+        }
+        .study-current .study-title { font-weight: 600; font-size: 0.85rem; margin-bottom: 4px; }
+        .study-current .study-meta { font-size: 0.75rem; color: var(--color-text-muted); margin-bottom: 8px; }
+        .study-current .study-finding { font-size: 0.85rem; line-height: 1.5; }
+        .study-current .study-finding strong { color: var(--color-teal); }
+        .study-current .study-link {
+            display: inline-flex; align-items: center; gap: 4px; margin-top: 8px;
+            color: var(--color-teal); font-size: 0.8rem; font-weight: 500; text-decoration: none;
+        }
+
+        /* ==================== */
+        /* STUDY CARD - OPTION A */
+        /* ==================== */
+        .study-a {
+            background: var(--color-card);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border: 1px solid var(--color-border);
+        }
+        .study-a-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            gap: 12px;
+        }
+        .study-a-badge {
+            background: var(--color-teal);
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+        .study-a-sample {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--color-teal);
+        }
+        .study-a-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; }
+        .study-a-meta { font-size: 0.75rem; color: var(--color-text-muted); margin-bottom: 12px; }
+        .study-a-finding {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            padding: 12px;
+            background: var(--color-bg);
+            border-radius: 8px;
+            border-left: 3px solid var(--color-teal);
+        }
+        .study-a-finding strong { color: var(--color-teal); }
+        .study-a-link {
+            display: inline-flex; align-items: center; gap: 4px; margin-top: 12px;
+            color: var(--color-teal); font-size: 0.8rem; font-weight: 500; text-decoration: none;
+        }
+        .study-a-link:hover { text-decoration: underline; }
+
+        /* ==================== */
+        /* STUDY CARD - OPTION B */
+        /* ==================== */
+        .study-b {
+            background: var(--color-card);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-left: 4px solid var(--color-teal);
+        }
+        .study-b-top {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .study-b-badge {
+            background: var(--color-teal-light);
+            color: var(--color-teal);
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 20px;
+        }
+        .study-b-sample {
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+        }
+        .study-b-title { font-weight: 600; font-size: 0.9rem; margin-bottom: 2px; }
+        .study-b-meta { font-size: 0.7rem; color: var(--color-text-muted); margin-bottom: 10px; }
+        .study-b-finding {
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+        .study-b-finding strong { color: var(--color-teal); font-weight: 600; }
+        .study-b-link {
+            display: inline-flex; align-items: center; gap: 4px; margin-top: 10px;
+            color: var(--color-teal); font-size: 0.75rem; font-weight: 500; text-decoration: none;
+        }
+
+        /* ==================== */
+        /* EXPERT CARD - CURRENT */
+        /* ==================== */
+        .expert-current {
+            background: var(--color-bg);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+        .expert-current cite {
+            display: block;
+            margin-top: 8px;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: var(--color-teal);
+        }
+
+        /* ==================== */
+        /* EXPERT CARD - OPTION A */
+        /* ==================== */
+        .expert-a {
+            background: var(--color-card);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border: 1px solid var(--color-border);
+        }
+        .expert-a-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .expert-a-avatar {
+            width: 48px;
+            height: 48px;
+            background: var(--color-teal);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        .expert-a-info { flex: 1; }
+        .expert-a-name { font-weight: 600; font-size: 0.95rem; }
+        .expert-a-title { font-size: 0.8rem; color: var(--color-text-muted); }
+        .expert-a-quote {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            font-style: italic;
+            padding: 12px;
+            background: var(--color-bg);
+            border-radius: 8px;
+            border-left: 3px solid var(--color-orange);
+        }
+        .expert-a-source {
+            margin-top: 10px;
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* ==================== */
+        /* EXPERT CARD - OPTION B */
+        /* ==================== */
+        .expert-b {
+            background: linear-gradient(135deg, var(--color-teal-light) 0%, #f0faf6 100%);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+        .expert-b-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .expert-b-avatar {
+            width: 44px;
+            height: 44px;
+            background: var(--color-teal);
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+        .expert-b-info { flex: 1; }
+        .expert-b-name { font-weight: 600; font-size: 0.9rem; }
+        .expert-b-title { font-size: 0.75rem; color: var(--color-text-muted); margin-top: 2px; }
+        .expert-b-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 4px;
+            font-size: 0.7rem;
+            color: var(--color-teal);
+            background: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+        .expert-b-quote {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--color-text);
+        }
+        .expert-b-quote::before { content: '"'; font-size: 1.5rem; color: var(--color-teal); opacity: 0.5; }
+
+        /* ==================== */
+        /* EXPERT CARD - OPTION C (Minimal) */
+        /* ==================== */
+        .expert-c {
+            background: var(--color-card);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .expert-c-quote {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            font-style: italic;
+            margin-bottom: 12px;
+            padding-left: 12px;
+            border-left: 3px solid var(--color-orange);
+        }
+        .expert-c-footer {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .expert-c-avatar {
+            width: 36px;
+            height: 36px;
+            background: var(--color-teal);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+        .expert-c-info { flex: 1; }
+        .expert-c-name { font-weight: 600; font-size: 0.85rem; }
+        .expert-c-title { font-size: 0.7rem; color: var(--color-text-muted); }
+
+        /* Divider */
+        .divider {
+            height: 1px;
+            background: var(--color-border);
+            margin: 32px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Credibility Components</h1>
+        <p class="intro">Design mockups for study citations and expert quotes. Compare options below.</p>
+
+        <!-- ==================== -->
+        <!-- STUDY CARDS -->
+        <!-- ==================== -->
+        <h2>📊 Study Citation Cards</h2>
+
+        <h3>Current Design</h3>
+        <div class="study-current">
+            <div class="study-title">Protein Requirements Increase with Age</div>
+            <div class="study-meta">Moore et al., 2015 • Journal of Gerontology Series A • doi:10.1093/gerona/glu103</div>
+            <div class="study-finding"><strong>Key finding:</strong> Older adults need approximately <strong>0.40 g/kg body weight per meal</strong> (vs 0.24 g/kg for young adults) to maximally stimulate muscle protein synthesis—about 68% more.</div>
+            <a href="#" class="study-link">View on PubMed <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+        </div>
+
+        <h3>Option A: Badge + Sample Size Prominent</h3>
+        <div class="study-a">
+            <div class="study-a-header">
+                <span class="study-a-badge">META-ANALYSIS</span>
+                <span class="study-a-sample">n = 49 studies</span>
+            </div>
+            <div class="study-a-title">Protein Requirements Increase with Age</div>
+            <div class="study-a-meta">Moore et al., 2015 • Journal of Gerontology Series A • doi:10.1093/gerona/glu103</div>
+            <div class="study-a-finding">
+                <strong>Key finding:</strong> Older adults need approximately <strong>0.40 g/kg body weight per meal</strong> (vs 0.24 g/kg for young adults) to maximally stimulate muscle protein synthesis—about 68% more.
+            </div>
+            <a href="#" class="study-a-link">View on PubMed <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+        </div>
+
+        <div class="study-a">
+            <div class="study-a-header">
+                <span class="study-a-badge">RCT</span>
+                <span class="study-a-sample">n = 40 participants</span>
+            </div>
+            <div class="study-a-title">High Protein During Caloric Deficit</div>
+            <div class="study-a-meta">Longland et al., 2016 • Am J Clin Nutr • doi:10.3945/ajcn.115.119339</div>
+            <div class="study-a-finding">
+                <strong>Key finding:</strong> During a 40% caloric deficit, <strong>2.4 g/kg/day</strong> produced dramatically better results: gained 1.2 kg lean mass while losing 4.8 kg fat.
+            </div>
+            <a href="#" class="study-a-link">View on PubMed <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+        </div>
+
+        <h3>Option B: Compact with Left Border</h3>
+        <div class="study-b">
+            <div class="study-b-top">
+                <span class="study-b-badge">META-ANALYSIS</span>
+                <span class="study-b-sample">• 49 studies pooled</span>
+            </div>
+            <div class="study-b-title">Protein Requirements Increase with Age</div>
+            <div class="study-b-meta">Moore et al., 2015 • Journal of Gerontology Series A • doi:10.1093/gerona/glu103</div>
+            <div class="study-b-finding">
+                <strong>Key finding:</strong> Older adults need approximately <strong>0.40 g/kg body weight per meal</strong> (vs 0.24 g/kg for young adults) to maximally stimulate muscle protein synthesis—about 68% more.
+            </div>
+            <a href="#" class="study-b-link">View on PubMed <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+        </div>
+
+        <div class="study-b">
+            <div class="study-b-top">
+                <span class="study-b-badge">COHORT STUDY</span>
+                <span class="study-b-sample">• n = 292,629</span>
+            </div>
+            <div class="study-b-title">Protein and Cancer Mortality</div>
+            <div class="study-b-meta">Naghshi et al., 2020 • BMJ • doi:10.1136/bmj.m2412</div>
+            <div class="study-b-finding">
+                <strong>Key finding:</strong> <strong>No association</strong> between protein intake and cancer mortality across 12 prospective cohort studies.
+            </div>
+            <a href="#" class="study-b-link">View on PubMed <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- ==================== -->
+        <!-- EXPERT CARDS -->
+        <!-- ==================== -->
+        <h2>👤 Expert Quote Cards</h2>
+
+        <h3>Current Design</h3>
+        <div class="expert-current">
+            "For adults 40+, the evidence supports protein intake of 1.2–1.6 g/kg/day. The theoretical cancer concerns are not supported by human data, while the benefits for muscle preservation are well-established."
+            <cite>— Peter Attia, MD</cite>
+        </div>
+
+        <h3>Option A: Card with Avatar + Bio</h3>
+        <div class="expert-a">
+            <div class="expert-a-header">
+                <div class="expert-a-avatar">PA</div>
+                <div class="expert-a-info">
+                    <div class="expert-a-name">Dr. Peter Attia, MD</div>
+                    <div class="expert-a-title">Longevity physician • Author of "Outlive"</div>
+                </div>
+            </div>
+            <div class="expert-a-quote">
+                "For adults 40+, the evidence supports protein intake of 1.2–1.6 g/kg/day. The theoretical cancer concerns are not supported by human data, while the benefits for muscle preservation are well-established."
+            </div>
+            <div class="expert-a-source">
+                <i data-lucide="book-open" style="width:12px;height:12px;"></i>
+                Outlive: The Science and Art of Longevity (2023)
+            </div>
+        </div>
+
+        <h3>Option B: Gradient Background with Badge</h3>
+        <div class="expert-b">
+            <div class="expert-b-header">
+                <div class="expert-b-avatar">PA</div>
+                <div class="expert-b-info">
+                    <div class="expert-b-name">Dr. Peter Attia, MD</div>
+                    <div class="expert-b-title">Longevity physician • Host of "The Drive" podcast</div>
+                    <div class="expert-b-badge">
+                        <i data-lucide="award" style="width:10px;height:10px;"></i>
+                        200+ episodes on longevity
+                    </div>
+                </div>
+            </div>
+            <div class="expert-b-quote">
+                For adults 40+, the evidence supports protein intake of 1.2–1.6 g/kg/day. The theoretical cancer concerns are not supported by human data."
+            </div>
+        </div>
+
+        <h3>Option C: Quote-First (Minimal)</h3>
+        <div class="expert-c">
+            <div class="expert-c-quote">
+                "For adults 40+, the evidence supports protein intake of 1.2–1.6 g/kg/day. The theoretical cancer concerns are not supported by human data, while the benefits for muscle preservation are well-established."
+            </div>
+            <div class="expert-c-footer">
+                <div class="expert-c-avatar">PA</div>
+                <div class="expert-c-info">
+                    <div class="expert-c-name">Dr. Peter Attia, MD</div>
+                    <div class="expert-c-title">Longevity physician • Author of "Outlive"</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h2>💡 Recommendations</h2>
+        <p style="font-size:0.9rem; color: var(--color-text-muted); margin-bottom: 16px;">
+            <strong>For Studies:</strong> Option A or B - the study type badge and sample size add instant credibility.<br><br>
+            <strong>For Experts:</strong> Option A or C - professional but not overwhelming. Option A shows more authority, Option C puts quote first.
+        </p>
+
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
