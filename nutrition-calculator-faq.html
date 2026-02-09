@@ -10,280 +10,6 @@
 
     <!-- Lucide Icons (consistent with rest of app) -->
     <script src="https://unpkg.com/lucide@latest"></script>
-
-    <style>
-        /* ===========================================
-           FAQ-specific styles
-           Uses brand.css variables & classes as base
-           =========================================== */
-
-        .faq-header {
-            text-align: center;
-            margin-bottom: 32px;
-        }
-
-        .faq-header h1 {
-            color: var(--color-text);
-            font-size: 1.6rem;
-            margin-bottom: 8px;
-        }
-
-        .faq-header .subtitle {
-            color: var(--color-text-muted);
-            font-size: 0.95rem;
-        }
-
-        /* Card paragraph styling */
-        .card p {
-            font-size: 0.95rem;
-            line-height: 1.65;
-            margin-bottom: 14px;
-        }
-
-        /* Formula display */
-        .formula-box {
-            background: var(--color-bg);
-            border-radius: var(--radius-xs);
-            padding: 14px 18px;
-            margin: 14px 0;
-            font-family: 'Courier New', monospace;
-            font-size: 0.88rem;
-            line-height: 1.6;
-            color: var(--color-text);
-            overflow-x: auto;
-        }
-
-        .formula-box .label {
-            font-family: var(--font-family);
-            font-weight: 600;
-            color: var(--color-teal);
-            display: block;
-            margin-bottom: 6px;
-            font-size: 0.85rem;
-        }
-
-        /* Reference tables */
-        .faq-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 14px 0;
-            font-size: 0.88rem;
-        }
-
-        .faq-table th {
-            background: var(--color-teal);
-            color: white;
-            padding: 10px 14px;
-            text-align: left;
-            font-weight: 600;
-            border-bottom: 2px solid var(--color-teal);
-        }
-
-        .faq-table td {
-            padding: 10px 14px;
-            border-bottom: 1px solid var(--color-border);
-            color: var(--color-text);
-        }
-
-        .faq-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .faq-table td:first-child {
-            font-weight: 500;
-        }
-
-        /* Inline citation */
-        .cite {
-            color: var(--color-text);
-            font-weight: 600;
-            font-size: 0.82rem;
-            vertical-align: super;
-            cursor: help;
-        }
-
-        /* Q&A items inside card */
-        .qa-heading {
-            color: var(--color-text);
-            font-size: 1.15rem;
-            margin-bottom: 20px;
-        }
-
-        .qa-item {
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--color-border);
-        }
-
-        .qa-item:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
-        }
-
-        .qa-item .question {
-            font-weight: 600;
-            color: var(--color-text);
-            margin-bottom: 8px;
-            font-size: 0.95rem;
-        }
-
-        .qa-item .answer {
-            color: var(--color-text);
-            font-size: 0.92rem;
-            line-height: 1.65;
-        }
-
-        /* Why-it-matters callout */
-        .why-box {
-            background: var(--color-orange-light);
-            border-left: 4px solid var(--color-orange);
-            padding: 14px 16px;
-            border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
-            margin: 14px 0;
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        .why-box strong {
-            color: var(--color-orange);
-        }
-
-        /* Note callout */
-        .note-box {
-            background: var(--color-teal-light);
-            border-left: 4px solid var(--color-teal);
-            padding: 14px 16px;
-            border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
-            margin: 14px 0;
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        .note-box strong {
-            color: var(--color-teal);
-        }
-
-        /* Back to calculator button */
-        .back-bar {
-            text-align: center;
-            margin: 32px 0 16px;
-        }
-
-        /* Mobile header — matches calculator pattern */
-        .mobile-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 16px 0;
-            margin-bottom: 8px;
-            border-bottom: 1px solid var(--color-border);
-        }
-
-        .back-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background: var(--color-bg);
-            border-radius: var(--radius-full);
-            color: var(--color-teal);
-            text-decoration: none;
-        }
-
-        .back-btn:hover {
-            background: var(--color-teal-light);
-        }
-
-        .mobile-header-title {
-            font-family: var(--font-heading);
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--color-text);
-        }
-
-        /* Expert citation (matches protein-evidence.html pattern) */
-        .expert-citation {
-            margin: 20px 0;
-        }
-        .expert-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-        }
-        .expert-avatar {
-            width: 32px;
-            height: 32px;
-            background: var(--color-teal);
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 0.75rem;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-        .expert-name {
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: var(--color-text);
-        }
-        .expert-affiliation {
-            font-size: 0.8rem;
-            color: var(--color-text-muted);
-            margin-left: 4px;
-        }
-        .expert-quote {
-            font-style: italic;
-            font-size: 0.95rem;
-            color: var(--color-text);
-            line-height: 1.6;
-            padding-left: 42px;
-            position: relative;
-        }
-        .expert-quote::before {
-            content: '\201C';
-            position: absolute;
-            left: 16px;
-            top: -4px;
-            font-size: 1.5rem;
-            color: var(--color-teal);
-            font-style: normal;
-        }
-
-        /* References */
-        .reference {
-            font-size: 0.85rem;
-            line-height: 1.5;
-            color: var(--color-text-muted);
-            margin-bottom: 8px;
-        }
-        .reference a {
-            color: var(--color-teal);
-            text-decoration: none;
-            font-weight: 500;
-            margin-left: 6px;
-            white-space: nowrap;
-        }
-        .reference a:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 640px) {
-            .card {
-                padding: 18px;
-            }
-            .faq-table {
-                font-size: 0.82rem;
-            }
-            .faq-table th, .faq-table td {
-                padding: 8px 10px;
-            }
-        }
-    </style>
 </head>
 <body>
     <div class="container-wide">
@@ -294,7 +20,7 @@
             <span class="mobile-header-title">How the Calculator Works</span>
         </div>
 
-        <div class="faq-header">
+        <div class="page-intro">
             <h1>How the Nutrition Calculator Works</h1>
             <p class="subtitle">The science and formulas behind your personalized targets</p>
         </div>
@@ -342,14 +68,14 @@
                 <span class="section-title">BMR &amp; TDEE (Energy Expenditure)</span>
             </div>
 
-            <p>Your <strong>Basal Metabolic Rate</strong> (BMR) is the energy your body burns at complete rest — just keeping organs running, body temperature stable, and cells functioning. The calculator uses the <strong>Katch-McArdle formula</strong>, which bases BMR on lean body mass rather than total weight. This is important because muscle tissue is far more metabolically active than fat tissue, making LBM the strongest predictor of resting energy expenditure <span class="cite" title="Katch, F.I., et al. (1996). Medicine & Science in Sports & Exercise">[1]</span>.</p>
+            <p>Your <strong>Basal Metabolic Rate</strong> (BMR) is the energy your body burns at complete rest — just keeping organs running, body temperature stable, and cells functioning. The calculator uses the <strong>Katch-McArdle formula</strong>, a variant of the LBM-based BMR equation first validated by Cunningham in a reanalysis of the Harris-Benedict data. It bases BMR on lean body mass rather than total weight because muscle tissue is far more metabolically active than fat tissue, making LBM the single strongest predictor of resting energy expenditure <span class="cite" title="Cunningham, J.J. (1980). American Journal of Clinical Nutrition, 33(11), 2372-2374. doi:10.1093/ajcn/33.11.2372">[1]</span>.</p>
 
             <div class="formula-box">
                 <span class="label">Katch-McArdle Formula</span>
                 BMR = 370 + (21.6 × Lean Body Mass in kg)
             </div>
 
-            <p>Your <strong>Total Daily Energy Expenditure</strong> (TDEE) accounts for physical activity on top of BMR. The calculator multiplies BMR by an activity factor based on the system developed by Harris and Benedict and refined in subsequent metabolic research <span class="cite" title="Harris, J.A. & Benedict, F.G. (1918). Carnegie Institution of Washington">[2]</span>.</p>
+            <p>Your <strong>Total Daily Energy Expenditure</strong> (TDEE) accounts for physical activity on top of BMR. The calculator multiplies BMR by a standard activity factor. These multipliers were developed from metabolic research and are widely used in clinical nutrition; the underlying basal metabolism framework originates from Harris and Benedict <span class="cite" title="Harris, J.A. & Benedict, F.G. (1918). Carnegie Institution of Washington">[2]</span>.</p>
 
             <table class="faq-table">
                 <thead>
@@ -412,7 +138,7 @@
                 </tbody>
             </table>
 
-            <p>The calculator personalizes your ceiling using a height-adjusted model for men (maximum lean body mass = height in cm × 0.407 + 8.6 kg, with a floor of FFMI 24.5), consistent with the upper limits observed in natural athletes by Kouri et al. <span class="cite" title="Kouri, E.M., et al. (1995). Clinical Journal of Sport Medicine, 5(4), 223-228. doi:10.1097/00042752-199510000-00003">[3]</span><span class="cite" title="Schutz, Y., et al. (2002). International Journal of Obesity, 26(7), 953-960. doi:10.1038/sj.ijo.0802037">[4]</span>. For women, a constant FFMI ceiling of 21.0 is used. After age 40, the ceiling decreases slightly due to age-related sarcopenia — approximately 0.3 FFMI points per decade for men and 0.15 for women, consistent with longitudinal data on age-related muscle loss <span class="cite" title="Mitchell, W.K., et al. (2012). Frontiers in Physiology, 3, 260. doi:10.3389/fphys.2012.00260">[6]</span>.</p>
+            <p>The calculator personalizes your ceiling using a height-adjusted model for men (maximum lean body mass = height in cm × 0.407 + 8.6 kg, with a floor of FFMI 24.5), consistent with the upper limits observed in natural athletes by Kouri et al. <span class="cite" title="Kouri, E.M., et al. (1995). Clinical Journal of Sport Medicine, 5(4), 223-228. doi:10.1097/00042752-199510000-00003">[3]</span><span class="cite" title="Schutz, Y., et al. (2002). International Journal of Obesity, 26(7), 953-960. doi:10.1038/sj.ijo.0802037">[4]</span>. For women, a constant FFMI ceiling of 21.0 is used. After age 40, the ceiling decreases slightly due to age-related sarcopenia. Longitudinal data show that adults lose roughly 0.5% of muscle mass per year after age 50, with the rate accelerating after 60 <span class="cite" title="Mitchell, W.K., et al. (2012). Frontiers in Physiology, 3, 260. doi:10.3389/fphys.2012.00260">[6]</span>. The calculator applies a conservative FFMI reduction (0.3 points per decade for men, 0.15 for women) to model this decline.</p>
 
             <p><strong>Proximity to ceiling</strong> is the key output. It represents how much growth potential remains, scaled from 0 (at ceiling) to 1 (untrained baseline):</p>
 
@@ -439,7 +165,7 @@
 
             <p>The timeline is not a guess — it is derived from two biological rate limits: how fast you can safely lose fat and how fast you can build muscle. The slower process becomes the bottleneck that determines total duration.</p>
 
-            <p><strong>Muscle gain rate</strong> combines three factors: the proximity-to-ceiling value from Step 3, a sex-based maximum rate, and an age modifier reflecting the decline in muscle protein synthesis efficiency with age <span class="cite" title="Phillips, S.M. (2016). Sports Medicine, 46, 1-8. doi:10.1007/s40279-015-0373-y">[8]</span>.</p>
+            <p><strong>Muscle gain rate</strong> combines three factors: the proximity-to-ceiling value from Step 3, a sex-based maximum rate, and an age modifier reflecting the decline in muscle protein synthesis efficiency with age. Kumar et al. demonstrated that older adults (~70 years) show approximately 30% lower muscle protein synthesis in response to resistance exercise compared to young adults, with intermediate reductions at middle ages <span class="cite" title="Kumar, V., et al. (2009). The Journal of Physiology, 587(1), 211-217. doi:10.1113/jphysiol.2008.164483">[8]</span>.</p>
 
             <div class="formula-box">
                 <span class="label">Muscle Gain Rate (kg/month)</span>
@@ -468,7 +194,7 @@
                 </tbody>
             </table>
 
-            <p><strong>Fat loss rate</strong> scales the safe rate of weight loss to your current body fat percentage. The principle is straightforward: people with more body fat can sustain a faster rate of loss without muscle sacrifice, while leaner individuals need to go slower. A controlled trial in elite athletes by Garthe et al. demonstrated that a slow rate (0.7% body weight per week) preserved lean mass significantly better than a fast rate (1.4% per week) <span class="cite" title="Garthe, I., et al. (2011). International Journal of Sport Nutrition and Exercise Metabolism, 21(2), 97-104. doi:10.1123/ijsnem.21.2.97">[9]</span>.</p>
+            <p><strong>Fat loss rate</strong> scales the safe rate of weight loss to your current body fat percentage. The principle is grounded in Alpert's finding that human fat stores can release a maximum of approximately 31 kcal per pound of body fat per day — meaning leaner individuals have a lower ceiling for safe daily energy deficit <span class="cite" title="Alpert, S.S. (2005). Journal of Theoretical Biology, 233(1), 1-13. doi:10.1016/j.jtbi.2004.08.020">[5]</span>. People with more body fat can sustain a faster rate of loss without muscle sacrifice, while leaner individuals need to go slower. A controlled trial in elite athletes by Garthe et al. confirmed this in practice: a slow rate (0.7% body weight per week) preserved lean mass significantly better than a fast rate (1.4% per week) <span class="cite" title="Garthe, I., et al. (2011). International Journal of Sport Nutrition and Exercise Metabolism, 21(2), 97-104. doi:10.1123/ijsnem.21.2.97">[9]</span>.</p>
 
             <div class="formula-box">
                 <span class="label">Body-Fat-Scaled Fat Loss Rate</span>
@@ -478,7 +204,9 @@
                 Example: 25% BF → 1.25%/week → 1.06 kg/week for 85 kg person<br>
                 <br>
                 Caps: min 0.25 kg/week, max 1.0 kg/week (fat loss mode)<br>
-                Recomposition mode: capped at 0.5 kg/week
+                Recomposition mode: capped at 0.5 kg/week<br>
+                <br>
+                Based on Alpert's energy transfer limit [5]; BF%÷20 is a practical approximation.
             </div>
 
             <p>The total timeline is whichever takes longer — gaining the required muscle or losing the required fat — plus the slower process determines the "limited by" label you see in the results.</p>
@@ -695,7 +423,7 @@
 
             <div class="qa-item">
                 <div class="question">Q: What is body recomposition, and can it really work?</div>
-                <div class="answer">Recomposition means losing fat while gaining muscle simultaneously, typically at a stable body weight. The traditional view was that this required either a surplus (to build) or a deficit (to lose), making simultaneous change impossible. Research has since shown that recomp is achievable — particularly for beginners, those returning from a training break, and individuals with higher body fat who have ample energy stores. The Longland et al. 2016 trial demonstrated this convincingly: high protein (2.4 g/kg) combined with resistance training produced simultaneous muscle gain and fat loss even in a calorie deficit <span class="cite" title="Longland, T.M., et al. (2016). American Journal of Clinical Nutrition, 103(3), 738-746. doi:10.3945/ajcn.115.119339">[11]</span>. The calculator sets recomp at maintenance calories, where your existing fat stores supply the energy needed for muscle-building.</div>
+                <div class="answer">Recomposition means losing fat while gaining muscle simultaneously, typically at a stable body weight. The traditional view was that this required either a surplus (to build) or a deficit (to lose), making simultaneous change impossible. Research has since shown that recomp is achievable — particularly for beginners, those returning from a training break, and individuals with higher body fat who have ample energy stores. A trial by Longland et al. showed that high protein (2.4 g/kg) combined with intense resistance training produced +1.2 kg lean mass and −4.8 kg fat mass during a 40% calorie deficit <span class="cite" title="Longland, T.M., et al. (2016). American Journal of Clinical Nutrition, 103(3), 738-746. doi:10.3945/ajcn.115.119339">[11]</span>. Note: this was a 4-week protocol in young, overweight men (n=40) under supervised conditions — results may be smaller in magnitude for older adults, leaner individuals, or less aggressive training programmes. The calculator sets recomp at maintenance calories, where your existing fat stores supply the energy needed for muscle-building.</div>
             </div>
 
             <div class="qa-item">
@@ -705,12 +433,12 @@
 
             <div class="qa-item">
                 <div class="question">Q: I'm over 50 — can I still build meaningful muscle?</div>
-                <div class="answer">Yes, but the rate will be slower. Anabolic resistance — the blunted response to protein and exercise that comes with age — is real but not absolute. Research consistently shows that older adults respond to resistance training with measurable muscle hypertrophy, provided protein intake is sufficient (the per-meal threshold is higher, around 30–40 g) and training stimulus is adequate <span class="cite" title="Phillips, S.M. (2016). Sports Medicine, 46, 1-8. doi:10.1007/s40279-015-0373-y">[8]</span>. The calculator applies age modifiers to set realistic expectations: a 60-year-old may gain muscle at roughly 40% of a 25-year-old's rate, but gains are still possible and clinically significant for maintaining independence and reducing fall risk.</div>
+                <div class="answer">Yes, but the rate will be slower. Anabolic resistance — the blunted response to protein and exercise that comes with age — is real but not absolute. Kumar et al. showed that muscle protein synthesis in older adults (~70 years) is approximately 30% lower than in young adults after resistance exercise <span class="cite" title="Kumar, V., et al. (2009). The Journal of Physiology, 587(1), 211-217. doi:10.1113/jphysiol.2008.164483">[8]</span>. However, older adults still respond to training with measurable hypertrophy, provided protein intake is sufficient (the per-meal threshold is higher, around 30–40 g) and training stimulus is adequate. The calculator applies age modifiers to set realistic expectations: a 60-year-old may gain muscle at roughly 40% of a 25-year-old's rate, but gains are still possible and clinically significant for maintaining independence and reducing fall risk.</div>
             </div>
 
             <div class="qa-item">
                 <div class="question">Q: Why does the calculator cap fat loss rate based on body fat percentage?</div>
-                <div class="answer">Leaner individuals have less stored energy available per day. Attempting to lose weight at the same absolute rate as someone at a higher body fat percentage risks excessive muscle loss. The body-fat-scaled formula (BF% ÷ 20 = weekly % body weight loss) ensures that the deficit scales down as you get leaner. At 30% body fat, you can safely lose ~1.5% of body weight per week; at 12% body fat, the safe rate drops to ~0.6%. Research in elite athletes confirms that slower rates of loss (0.7% per week) preserve lean mass significantly better than faster rates <span class="cite" title="Garthe, I., et al. (2011). International Journal of Sport Nutrition and Exercise Metabolism, 21(2), 97-104. doi:10.1123/ijsnem.21.2.97">[9]</span>. The calculator enforces a hard ceiling of 1 kg/week and a floor of 0.25 kg/week.</div>
+                <div class="answer">Leaner individuals have less stored energy available per day. Alpert showed that fat stores can release a maximum of roughly 31 kcal per pound of fat per day, so people with less body fat simply cannot fuel large deficits without breaking down muscle <span class="cite" title="Alpert, S.S. (2005). Journal of Theoretical Biology, 233(1), 1-13. doi:10.1016/j.jtbi.2004.08.020">[5]</span>. The body-fat-scaled formula (BF% ÷ 20 = weekly % body weight loss) is a practical approximation of this principle: at 30% body fat, you can safely lose ~1.5% of body weight per week; at 12%, the safe rate drops to ~0.6%. Research in elite athletes confirms that slower rates (0.7% per week) preserve lean mass significantly better than faster rates <span class="cite" title="Garthe, I., et al. (2011). International Journal of Sport Nutrition and Exercise Metabolism, 21(2), 97-104. doi:10.1123/ijsnem.21.2.97">[9]</span>. The calculator enforces a hard ceiling of 1 kg/week and a floor of 0.25 kg/week.</div>
             </div>
 
             <div class="qa-item">
@@ -740,7 +468,7 @@
         <div class="card">
             <h2>References</h2>
 
-            <p class="reference">[1] Katch, F.I., & McArdle, W.D. (1996). "Validity of body composition prediction equations for college men and women." <em>American Journal of Clinical Nutrition</em>, 25(1), 28-35. <a href="https://pubmed.ncbi.nlm.nih.gov/1115020/" target="_blank">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></p>
+            <p class="reference">[1] Cunningham, J.J. (1980). "A reanalysis of the factors influencing basal metabolic rate in normal adults." <em>American Journal of Clinical Nutrition</em>, 33(11), 2372-2374. DOI: 10.1093/ajcn/33.11.2372. <a href="https://doi.org/10.1093/ajcn/33.11.2372" target="_blank">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></p>
 
             <p class="reference">[2] Harris, J.A., & Benedict, F.G. (1918). "A biometric study of human basal metabolism." <em>Proceedings of the National Academy of Sciences</em>, 4(12), 370-373. <a href="https://doi.org/10.1073/pnas.4.12.370" target="_blank">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></p>
 
@@ -748,11 +476,13 @@
 
             <p class="reference">[4] Schutz, Y., Kyle, U.U.G., & Pichard, C. (2002). "Fat-free mass index and fat mass index percentiles in Caucasians aged 18-98 y." <em>International Journal of Obesity</em>, 26(7), 953-960. <a href="https://doi.org/10.1038/sj.ijo.0802037" target="_blank">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></p>
 
+            <p class="reference">[5] Alpert, S.S. (2005). "A limit on the energy transfer rate from the human fat store in hypophagia." <em>Journal of Theoretical Biology</em>, 233(1), 1-13. <a href="https://doi.org/10.1016/j.jtbi.2004.08.020" target="_blank">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></p>
+
             <p class="reference">[6] Mitchell, W.K., Williams, J., Atherton, P., Larvin, M., Lund, J., & Narici, M. (2012). "Sarcopenia, dynapenia, and the impact of advancing age on human skeletal muscle size and strength." <em>Frontiers in Physiology</em>, 3, 260. <a href="https://doi.org/10.3389/fphys.2012.00260" target="_blank">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></p>
 
             <p class="reference">[7] Aragon, A.A. (2020). <em>The Aragon Model for Rates of Muscle Gain.</em> In: Aragon's Applied Nutrition for Healthy Performance. (Book)</p>
 
-            <p class="reference">[8] Phillips, S.M. (2016). "The impact of protein quality on the promotion of resistance exercise-induced changes in muscle mass." <em>Nutrition & Metabolism</em>, 13, 64. <a href="https://doi.org/10.1186/s12986-016-0124-8" target="_blank">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></p>
+            <p class="reference">[8] Kumar, V., Selby, A., Rankin, D., et al. (2009). "Age-related differences in the dose-response relationship of muscle protein synthesis to resistance exercise in young and old men." <em>The Journal of Physiology</em>, 587(1), 211-217. <a href="https://doi.org/10.1113/jphysiol.2008.164483" target="_blank">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></p>
 
             <p class="reference">[9] Garthe, I., Raastad, T., Refsnes, P.E., Koivisto, A., & Sundgot-Borgen, J. (2011). "Effect of two different weight-loss rates on body composition and strength and power-related performance in elite athletes." <em>International Journal of Sport Nutrition and Exercise Metabolism</em>, 21(2), 97-104. <a href="https://doi.org/10.1123/ijsnem.21.2.97" target="_blank">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></p>
 

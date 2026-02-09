@@ -778,8 +778,8 @@
             }
 
             // Age-adjusted ceiling: sarcopenia reduces achievable maximum
-            // Males: ~0.3 FFMI points per decade after 40 (Phillips et al.)
-            // Females: ~0.15 FFMI points per decade (lower absolute loss)
+            // Mitchell et al. 2012: ~0.5%/yr muscle loss after 50; we use a conservative
+            // FFMI reduction: Males ~0.3 pts/decade, Females ~0.15 pts/decade after 40
             if (age > 40) {
                 const decadesOver40 = (age - 40) / 10;
                 const ageReduction = sex === 'male' ? decadesOver40 * 0.3 : decadesOver40 * 0.15;
@@ -812,7 +812,7 @@
             let baseRate = maxRate * proximity;
 
             // Age modifier: hormonal decline reduces muscle protein synthesis efficiency
-            // Phillips, Stuart et al.: older adults show blunted anabolic response
+            // Kumar et al. 2009: ~30% reduced MPS at age 70 vs young adults
             let ageModifier;
             if (age < 30) ageModifier = 1.0;
             else if (age < 40) ageModifier = 0.85;
@@ -839,10 +839,11 @@
             };
         }
 
-        // Fat loss rate: Nuckols formula (BF% ÷ 20 = % BW loss/week)
-        // More aggressive when fatter, conservative when lean
+        // Fat loss rate: BF%-scaled formula (BF% ÷ 20 = % BW loss/week)
+        // Based on Alpert 2005: fat stores release max ~31 kcal/lb fat/day
+        // BF%÷20 is a practical approximation of this energy transfer limit
         function getFatLossRate(weight, bodyfat, goalType) {
-            // Nuckols formula: BF% ÷ 20 = target % BW loss per week
+            // BF% ÷ 20 = target % BW loss per week (Alpert-derived)
             // e.g., 20% BF → 1.0%/week → 0.85 kg/week for 85kg person
             // e.g., 30% BF → 1.5%/week → 0.98 kg/week for 65kg person
             const weeklyPercent = bodyfat / 20;
@@ -961,7 +962,7 @@
             const bmr = calculateBMR_KatchMcArdle(currentLBM);
             const tdee = bmr * activityLevel;
 
-            // STEP 4: Timeline (FFMI-based muscle gain + Nuckols fat loss)
+            // STEP 4: Timeline (FFMI-based muscle gain + Alpert-derived fat loss)
             const muscleData = getMuscleGainRate(age, hasResistance, sex, currentLBM, height);
             const muscleGainRate = muscleData.rate;
             let weeksForFatLoss = 0;
@@ -1040,7 +1041,7 @@
                     // Net energy to liberate = fat energy released - muscle energy needed
                     const netEnergy = fatEnergy - muscleEnergy;
                     dailyDeficit = Math.round(netEnergy / (totalWeeks * 7));
-                    // Cap deficit for safety (Nuckols: BF%/20 rate)
+                    // Cap deficit for safety (Alpert-derived: BF%/20 rate)
                     const maxSafeDeficit = (fatLossRate * KCAL_PER_KG_FAT) / 7;
                     dailyDeficit = Math.min(dailyDeficit, maxSafeDeficit);
                     dailyDeficit = Math.max(0, dailyDeficit); // never negative
@@ -1257,7 +1258,7 @@
                 </div>
 
                 <div class="calc-section">
-                    <div class="calc-section-title"><span class="step-num">3</span> FFMI & Muscle Potential (Kouri/McDonald/Aragon)</div>
+                    <div class="calc-section-title"><span class="step-num">3</span> FFMI & Muscle Potential (Kouri/Aragon)</div>
                     <div class="calc-line"><span>Current FFMI</span><span>${muscleData.currentFFMI.toFixed(1)} (${sex === 'male'
                         ? (muscleData.currentFFMI < 20 ? 'beginner range' : muscleData.currentFFMI < 22 ? 'intermediate' : muscleData.currentFFMI < 24 ? 'advanced' : 'elite natural')
                         : (muscleData.currentFFMI < 16.5 ? 'beginner range' : muscleData.currentFFMI < 18 ? 'intermediate' : muscleData.currentFFMI < 20 ? 'advanced' : 'elite natural')
@@ -1270,7 +1271,7 @@
 
                 <div class="calc-section">
                     <div class="calc-section-title"><span class="step-num">4</span> Timeline (Biology-Limited)</div>
-                    ${isLosingFat ? `<div class="calc-line"><span>Fat loss rate</span><span>${fatLossRate.toFixed(2)} kg/week (Nuckols: BF${bodyfat}% ÷ 20 = ${(bodyfat/20).toFixed(1)}%/week)</span></div><div class="calc-line formula">Fat loss time = ${Math.abs(fatChange).toFixed(2)} kg ÷ ${fatLossRate.toFixed(2)} kg/wk = ${weeksForFatLoss.toFixed(1)} weeks</div>` : ''}
+                    ${isLosingFat ? `<div class="calc-line"><span>Fat loss rate</span><span>${fatLossRate.toFixed(2)} kg/week (BF${bodyfat}% ÷ 20 = ${(bodyfat/20).toFixed(1)}%/week)</span></div><div class="calc-line formula">Fat loss time = ${Math.abs(fatChange).toFixed(2)} kg ÷ ${fatLossRate.toFixed(2)} kg/wk = ${weeksForFatLoss.toFixed(1)} weeks</div>` : ''}
                     ${isGainingMuscle ? `<div class="calc-line"><span>Muscle to gain</span><span>${lbmChange.toFixed(2)} kg at ${muscleGainRate.toFixed(2)} kg/month</span></div><div class="calc-line formula">Muscle time = ${(lbmChange / muscleGainRate).toFixed(1)} months = ${weeksForMuscleGain.toFixed(1)} weeks</div>` : ''}
                     <div class="calc-line result"><span>Timeline</span><span>${totalWeeks} weeks • ${limitingFactor}</span></div>
                 </div>
