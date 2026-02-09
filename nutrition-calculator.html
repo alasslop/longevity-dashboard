@@ -5,15 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nutrition Calculator - LongevityPath</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-    <!-- Shared Brand Styles -->
+    <!-- Shared Brand Styles (includes Inter font) -->
     <link rel="stylesheet" href="brand.css">
 
+    <!-- Lucide Icons (consistent with rest of app) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
     <style>
-        /* Calculator-specific styles using brand variables */
+        /* ===========================================
+           Calculator-specific styles
+           Uses brand.css variables & classes as base
+           =========================================== */
 
         /* Input Grid Layouts */
         .input-row {
@@ -49,9 +51,8 @@
 
         .input-group label {
             display: block;
-            font-family: var(--font-heading);
-            font-size: 0.95rem;
-            color: var(--color-teal);
+            font-size: 0.9rem;
+            color: var(--color-text);
             margin-bottom: 6px;
             font-weight: 500;
         }
@@ -62,33 +63,43 @@
             margin-top: 4px;
         }
 
-        /* Calculate Button */
-        .calculate-btn {
-            width: 100%;
-            padding: 16px 24px;
-            background: var(--color-orange);
-            color: white;
-            border: none;
-            border-radius: var(--radius-sm);
-            font-family: var(--font-heading);
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: background 0.2s;
-            margin-top: 16px;
+        .help-link-inline {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            background: var(--color-teal-light);
+            color: var(--color-teal);
+            border-radius: var(--radius-full);
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-decoration: none;
+            vertical-align: middle;
+            margin-left: 4px;
         }
 
-        .calculate-btn:hover {
-            background: #E08C4A;
+        .help-link-inline:hover {
+            background: var(--color-teal);
+            color: white;
+            text-decoration: none;
+        }
+
+        .help-link-inline.help-link-lg {
+            width: 30px;
+            height: 30px;
+            font-size: 1rem;
+            background: var(--color-teal);
+            color: white;
+        }
+
+        .help-link-inline.help-link-lg:hover {
+            opacity: 0.85;
         }
 
         /* Results Section */
         .results-card {
             display: none;
-            background: var(--color-card);
-            border-radius: var(--radius);
-            padding: 24px;
-            margin-bottom: 24px;
-            box-shadow: var(--shadow-card);
         }
 
         .results-card.visible {
@@ -101,7 +112,7 @@
         }
 
         .results-header h2 {
-            color: var(--color-teal);
+            color: var(--color-text);
             margin-bottom: 12px;
         }
 
@@ -119,11 +130,11 @@
 
         .timeline-badge {
             display: inline-block;
-            background: var(--color-accent);
+            background: var(--color-orange);
             color: white;
             padding: 8px 16px;
             border-radius: 20px;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 600;
         }
 
@@ -131,7 +142,7 @@
         .results-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 16px;
+            gap: 12px;
             margin-bottom: 24px;
         }
 
@@ -147,12 +158,11 @@
         }
 
         .result-box.highlight {
-            background: var(--color-accent-light);
-            border: 2px solid var(--color-accent);
+            background: var(--color-teal-light);
+            border: 2px solid var(--color-teal);
         }
 
         .result-value {
-            font-family: var(--font-heading);
             font-size: 2.2rem;
             font-weight: 700;
             color: var(--color-teal);
@@ -164,7 +174,7 @@
         }
 
         .result-label {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--color-text-muted);
             margin-top: 4px;
         }
@@ -192,10 +202,11 @@
         .composition-box { text-align: center; }
 
         .composition-box .label {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--color-text-muted);
             margin-bottom: 4px;
             font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
         .composition-box .weight {
@@ -205,20 +216,20 @@
         }
 
         .composition-box .detail {
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             color: var(--color-text-muted);
         }
 
         .composition-arrow {
             font-size: 2rem;
-            color: var(--color-accent);
+            color: var(--color-orange);
         }
 
         /* Change Summary */
         .change-summary {
             display: flex;
             justify-content: center;
-            gap: 24px;
+            gap: 16px;
             margin-top: 12px;
             flex-wrap: wrap;
         }
@@ -230,13 +241,13 @@
         }
 
         .change-item.fat-loss {
-            background: #e8f5e9;
-            color: #2e7d32;
+            background: var(--color-teal-light);
+            color: var(--color-teal);
         }
 
         .change-item.muscle-gain {
-            background: #e8f5e9;
-            color: #2e7d32;
+            background: var(--color-teal-light);
+            color: var(--color-teal);
         }
 
         .change-item .value {
@@ -257,9 +268,8 @@
         }
 
         .meal-breakdown h4 {
-            color: var(--color-teal);
+            color: var(--color-text);
             margin-bottom: 12px;
-            font-family: var(--font-heading);
         }
 
         .meal-row {
@@ -267,12 +277,13 @@
             justify-content: space-between;
             padding: 10px 0;
             border-bottom: 1px solid var(--color-border);
+            font-size: 0.9rem;
         }
 
         .meal-row:last-child { border-bottom: none; }
 
         .meal-row.shake {
-            background: var(--color-accent-light);
+            background: var(--color-orange-light);
             margin: 4px -8px;
             padding: 10px 8px;
             border-radius: var(--radius-xs);
@@ -287,9 +298,8 @@
         }
 
         .calculation-details h4 {
-            color: var(--color-teal);
+            color: var(--color-text);
             margin-bottom: 16px;
-            font-family: var(--font-heading);
         }
 
         .calc-section {
@@ -307,7 +317,7 @@
         .calc-section-title {
             font-size: 0.9rem;
             font-weight: 600;
-            color: var(--color-teal);
+            color: var(--color-text);
             margin-bottom: 10px;
             display: flex;
             align-items: center;
@@ -315,16 +325,17 @@
         }
 
         .calc-section-title .step-num {
-            background: var(--color-teal);
+            background: var(--color-orange);
             color: white;
             width: 24px;
             height: 24px;
-            border-radius: 50%;
+            border-radius: var(--radius-full);
             display: inline-flex;
             align-items: center;
             justify-content: center;
             font-size: 0.8rem;
             font-weight: 700;
+            flex-shrink: 0;
         }
 
         .calc-line {
@@ -333,6 +344,7 @@
             padding: 4px 0;
             padding-left: 34px;
             color: var(--color-text);
+            font-size: 0.85rem;
         }
 
         .calc-line.formula {
@@ -341,7 +353,7 @@
             padding: 8px 12px;
             border-radius: var(--radius-xs);
             margin: 6px 0 6px 34px;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
         }
 
         .calc-line.total {
@@ -352,12 +364,28 @@
         }
 
         .calc-line.result {
-            background: var(--color-accent);
+            background: var(--color-teal);
             color: white;
             padding: 10px 14px;
             border-radius: var(--radius-xs);
             margin: 10px 0 10px 34px;
             font-weight: 600;
+        }
+
+        /* Info Box (for recomp explanation) — extends brand .info-box */
+        .info-box-calc {
+            padding: 16px;
+            background: var(--color-teal-light);
+            border-radius: var(--radius-sm);
+            border-left: 4px solid var(--color-teal);
+            margin-top: 16px;
+            font-size: 0.9rem;
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        .info-box-calc strong {
+            color: var(--color-teal);
         }
 
         /* Privacy Notice */
@@ -372,51 +400,31 @@
             gap: 6px;
         }
 
-        .privacy-notice svg {
-            width: 14px;
-            height: 14px;
-        }
-
-        /* Info Box (for recomp explanation) */
-        .info-box-calc {
-            background: #e3f2fd;
-            padding: 16px;
-            border-radius: var(--radius-sm);
-            margin-top: 16px;
-            font-size: 0.9rem;
-            color: var(--color-text);
-        }
-
-        .info-box-calc strong {
-            color: var(--color-teal);
-        }
-
         /* Swipe-back indicator */
         .swipe-hint {
             position: fixed;
             left: 0;
-            top: 50%;
-            transform: translateY(-50%);
+            top: 0;
             width: 4px;
-            height: 60px;
-            background: var(--color-border);
-            border-radius: 0 4px 4px 0;
+            height: 100%;
+            background: linear-gradient(to right, var(--color-teal), transparent);
             opacity: 0.5;
             z-index: 100;
+            pointer-events: none;
         }
 
-        /* Mobile header with back button */
+        @media (min-width: 768px) {
+            .swipe-hint { display: none; }
+        }
+
+        /* Mobile header with back button — matches body-fat-guide pattern */
         .mobile-header {
-            position: sticky;
-            top: 0;
-            background: var(--color-card);
-            padding: 12px 16px;
-            margin: -24px -16px 20px -16px;
             display: flex;
             align-items: center;
             gap: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            z-index: 50;
+            padding: 16px 0;
+            margin-bottom: 8px;
+            border-bottom: 1px solid var(--color-border);
         }
 
         .back-btn {
@@ -425,36 +433,48 @@
             justify-content: center;
             width: 40px;
             height: 40px;
-            background: none;
-            border: none;
-            color: var(--color-accent);
-            font-size: 1.5rem;
-            cursor: pointer;
-            border-radius: 50%;
+            background: var(--color-bg);
+            border-radius: var(--radius-full);
+            color: var(--color-teal);
             text-decoration: none;
         }
 
         .back-btn:hover {
-            background: var(--color-accent-light);
+            background: var(--color-teal-light);
+            text-decoration: none;
         }
 
         .mobile-header-title {
-            font-family: var(--font-heading);
             font-size: 1.1rem;
             font-weight: 600;
-            color: var(--color-teal);
+            color: var(--color-text);
         }
+
+        /* FAQ link */
+        .faq-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--color-teal);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .faq-link:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
     <div class="swipe-hint"></div>
     <div class="container">
         <div class="mobile-header">
-            <a href="index.html" class="back-btn">←</a>
+            <a href="index.html" class="back-btn">
+                <i data-lucide="arrow-left" style="width:20px;height:20px;"></i>
+            </a>
             <span class="mobile-header-title">Nutrition Calculator</span>
+            <a href="nutrition-calculator-faq.html" class="help-link-inline help-link-lg" title="How does this calculator work?">?</a>
         </div>
 
-        <p class="subtitle" style="margin-top: 0;">Personalized calories and protein based on your goals</p>
+        <p class="text-muted mb-16" style="font-size: 0.9rem;">Enter your details below to get science-based calorie and protein targets tailored to your body and goals.</p>
 
         <!-- No JavaScript Fallback -->
         <noscript>
@@ -465,10 +485,10 @@
         </noscript>
 
         <!-- Input Form: Body -->
-        <div class="section-card">
+        <div class="card mb-16">
             <div class="section-header">
-                <div class="section-icon">1</div>
-                <div class="section-title">Your Body Composition</div>
+                <span class="step-number">1</span>
+                <span class="section-title">Your Body Composition</span>
             </div>
 
             <div class="input-row-4">
@@ -489,7 +509,7 @@
                     <input type="number" id="targetBodyfat" placeholder="e.g., 18" min="3" max="60" step="0.1">
                 </div>
             </div>
-            <p class="input-hint">Body fat from DEXA, calipers, or smart scale. <a href="body-fat-guide.html" class="help-link-inline">?</a></p>
+            <p class="input-hint">Don't know your body fat? Use a DEXA scan, calipers, or smart scale. <a href="body-fat-guide.html" class="help-link-inline">?</a></p>
 
             <div class="input-row-3" style="margin-top: 16px;">
                 <div class="input-group">
@@ -516,43 +536,43 @@
                     <option value="vegetarian">Vegetarian</option>
                     <option value="vegan">Vegan</option>
                 </select>
-                <p class="input-hint">Plant-based diets need ~10-25% more protein for equivalent muscle protein synthesis</p>
+                <p class="input-hint">Plant protein is less bioavailable — vegetarian and vegan targets are adjusted upward automatically.</p>
             </div>
         </div>
 
         <!-- Input Form: Activity -->
-        <div class="section-card">
+        <div class="card mb-16">
             <div class="section-header">
-                <div class="section-icon">2</div>
-                <div class="section-title">Your Activity Level</div>
+                <span class="step-number">2</span>
+                <span class="section-title">Your Activity Level</span>
             </div>
 
             <div class="input-group">
                 <label for="activityLevel">Activity Level</label>
                 <select id="activityLevel">
-                    <option value="1.2">Sedentary (little or no exercise, desk job)</option>
-                    <option value="1.375">Lightly Active (light exercise 1-3 days/week)</option>
-                    <option value="1.55" selected>Moderately Active (moderate exercise 3-5 days/week)</option>
-                    <option value="1.725">Very Active (hard exercise 6-7 days/week)</option>
-                    <option value="1.9">Extremely Active (hard daily exercise + physical job)</option>
+                    <option value="1.2">Sedentary — desk job, little movement</option>
+                    <option value="1.375">Lightly Active — easy exercise 1-3 days/week</option>
+                    <option value="1.55" selected>Moderately Active — exercise 3-5 days/week</option>
+                    <option value="1.725">Very Active — hard training 6-7 days/week</option>
+                    <option value="1.9">Extremely Active — intense daily training + physical job</option>
                 </select>
             </div>
 
             <div class="input-group">
                 <label for="hasResistance">Resistance Training</label>
                 <select id="hasResistance">
-                    <option value="no">No resistance training</option>
-                    <option value="yes">Yes, I do resistance training</option>
+                    <option value="no">No — I don't lift weights</option>
+                    <option value="yes">Yes — I train with weights regularly</option>
                 </select>
-                <p class="input-hint">Essential for muscle gain and preservation. Without it, muscle building is severely limited.</p>
+                <p class="input-hint">Resistance training is key for building and preserving lean mass — targets adjust accordingly.</p>
             </div>
         </div>
 
         <!-- Input Form: Meals -->
-        <div class="section-card">
+        <div class="card mb-16">
             <div class="section-header">
-                <div class="section-icon">3</div>
-                <div class="section-title">Meal Distribution</div>
+                <span class="step-number">3</span>
+                <span class="section-title">Meal Distribution</span>
             </div>
 
             <div class="input-row">
@@ -574,90 +594,105 @@
                         <option value="1">1 shake</option>
                         <option value="2">2 shakes</option>
                     </select>
-                    <p class="input-hint">Shake protein calculated by age. Rest distributed across meals.</p>
+                    <p class="input-hint">Shake protein is adjusted by age. Remaining protein is split evenly across meals.</p>
                 </div>
             </div>
 
-            <button class="calculate-btn" onclick="calculateNutrition()">Calculate My Targets</button>
+            <button class="btn btn-primary btn-full mt-16" onclick="calculateNutrition()">
+                <i data-lucide="calculator" style="width:18px;height:18px;"></i>
+                Calculate My Targets
+            </button>
 
             <p class="privacy-notice">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                </svg>
+                <i data-lucide="lock" style="width:14px;height:14px;"></i>
                 All calculations happen in your browser. No data is sent or stored.
             </p>
         </div>
 
         <!-- Results Section -->
         <div class="results-card" id="results">
-            <div class="results-header">
-                <h2>Your Personalized Targets</h2>
-                <div class="goal-badge" id="goalBadge">— Mode</div>
-                <br><br>
-                <div class="timeline-badge" id="timeline">— weeks to goal</div>
-            </div>
+            <div class="card mb-16">
+                <div class="results-header">
+                    <h2>Your Personalized Targets</h2>
+                    <div class="goal-badge" id="goalBadge">— Mode</div>
+                    <br><br>
+                    <div class="timeline-badge" id="timeline">— weeks to goal</div>
+                </div>
 
-            <!-- Body Composition Summary -->
-            <div class="composition-summary" id="compositionSummary">
-                <div class="composition-box">
-                    <div class="label">CURRENT</div>
-                    <div class="weight" id="currentWeightDisplay">85 kg</div>
-                    <div class="detail" id="currentCompDisplay">25% BF • 21.3 kg fat • 63.7 kg lean</div>
+                <!-- Body Composition Summary -->
+                <div class="composition-summary" id="compositionSummary">
+                    <div class="composition-box">
+                        <div class="label">CURRENT</div>
+                        <div class="weight" id="currentWeightDisplay">85 kg</div>
+                        <div class="detail" id="currentCompDisplay">25% BF • 21.3 kg fat • 63.7 kg lean</div>
+                    </div>
+                    <div class="composition-arrow">
+                        <i data-lucide="arrow-right" style="width:24px;height:24px;"></i>
+                    </div>
+                    <div class="composition-box">
+                        <div class="label">TARGET</div>
+                        <div class="weight" id="targetWeightDisplay">80 kg</div>
+                        <div class="detail" id="targetCompDisplay">18% BF • 14.4 kg fat • 65.6 kg lean</div>
+                    </div>
                 </div>
-                <div class="composition-arrow">→</div>
-                <div class="composition-box">
-                    <div class="label">TARGET</div>
-                    <div class="weight" id="targetWeightDisplay">80 kg</div>
-                    <div class="detail" id="targetCompDisplay">18% BF • 14.4 kg fat • 65.6 kg lean</div>
-                </div>
-            </div>
 
-            <div class="change-summary" id="changeSummary">
-                <div class="change-item fat-loss">
-                    <div class="value" id="fatChangeValue">−6.9 kg</div>
-                    <div class="label">Fat Loss</div>
-                </div>
-                <div class="change-item muscle-gain">
-                    <div class="value" id="muscleChangeValue">+1.9 kg</div>
-                    <div class="label">Lean Mass</div>
-                </div>
-            </div>
-
-            <div class="results-grid" style="margin-top: 24px;">
-                <div class="result-box highlight">
-                    <div class="result-value" id="dailyCalories">—</div>
-                    <div class="result-unit">kcal/day</div>
-                    <div class="result-label">Daily Calories</div>
-                </div>
-                <div class="result-box highlight">
-                    <div class="result-value" id="dailyProtein">—</div>
-                    <div class="result-unit">g/day</div>
-                    <div class="result-label">Daily Protein</div>
-                </div>
-                <div class="result-box">
-                    <div class="result-value" id="proteinPercent">—</div>
-                    <div class="result-unit">%</div>
-                    <div class="result-label">Protein (% of calories)</div>
-                </div>
-                <div class="result-box">
-                    <div class="result-value" id="deficit">—</div>
-                    <div class="result-unit">kcal/day</div>
-                    <div class="result-label" id="deficitLabel">Calorie Deficit</div>
+                <div class="change-summary" id="changeSummary">
+                    <div class="change-item fat-loss">
+                        <div class="value" id="fatChangeValue">-6.9 kg</div>
+                        <div class="label">Fat Loss</div>
+                    </div>
+                    <div class="change-item muscle-gain">
+                        <div class="value" id="muscleChangeValue">+1.9 kg</div>
+                        <div class="label">Lean Mass</div>
+                    </div>
                 </div>
             </div>
 
-            <div class="meal-breakdown" id="mealBreakdown">
-                <h4>Daily Meal Plan</h4>
-                <!-- Filled by JavaScript -->
+            <div class="card mb-16">
+                <div class="results-grid">
+                    <div class="result-box highlight">
+                        <div class="result-value" id="dailyCalories">—</div>
+                        <div class="result-unit">kcal/day</div>
+                        <div class="result-label">Daily Calories</div>
+                    </div>
+                    <div class="result-box highlight">
+                        <div class="result-value" id="dailyProtein">—</div>
+                        <div class="result-unit">g/day</div>
+                        <div class="result-label">Daily Protein</div>
+                    </div>
+                    <div class="result-box">
+                        <div class="result-value" id="proteinPercent">—</div>
+                        <div class="result-unit">%</div>
+                        <div class="result-label">Protein (% of calories)</div>
+                    </div>
+                    <div class="result-box">
+                        <div class="result-value" id="deficit">—</div>
+                        <div class="result-unit">kcal/day</div>
+                        <div class="result-label" id="deficitLabel">Calorie Deficit</div>
+                    </div>
+                </div>
+
+                <div class="meal-breakdown" id="mealBreakdown">
+                    <h4>Daily Meal Plan</h4>
+                    <!-- Filled by JavaScript -->
+                </div>
             </div>
 
-            <div class="calculation-details" id="calculationDetails">
-                <h4>How We Calculated This</h4>
-                <!-- Filled by JavaScript -->
+            <div class="card mb-16">
+                <div class="calculation-details" id="calculationDetails">
+                    <h4>How Your Targets Were Calculated</h4>
+                    <!-- Filled by JavaScript -->
+                </div>
+
+                <div style="margin-top: 12px; text-align: center;">
+                    <a href="nutrition-calculator-faq.html" class="faq-link">
+                        <i data-lucide="book-open" style="width:16px;height:16px;"></i>
+                        Learn the science behind each step
+                    </a>
+                </div>
             </div>
 
-            <div class="warning-box" id="warningBox" style="display: none; margin-top: 16px;">
+            <div class="warning-box" id="warningBox" style="display: none; margin-bottom: 16px;">
                 <!-- Warnings displayed here -->
             </div>
 
@@ -666,8 +701,8 @@
             </div>
         </div>
 
-        <p class="text-center text-muted mt-32" style="font-size: 0.85rem;">
-            Last updated: February 2026 • Based on peer-reviewed research
+        <p class="text-center text-muted" style="font-size: 0.82rem; margin-top: 32px; margin-bottom: 24px;">
+            Last updated: February 2026 &bull; Based on peer-reviewed research
         </p>
     </div>
 
@@ -678,8 +713,6 @@
 
         const KCAL_PER_KG_FAT = 7700;
         const SHAKE_KCAL_PER_GRAM_PROTEIN = 5;
-        const MAX_FAT_LOSS_PER_WEEK = 1.0;
-        const MODERATE_FAT_LOSS_PER_WEEK = 0.5;
         const RECOMP_DEFICIT = 250;
 
         const PROTEIN_MULTIPLIERS = {
@@ -691,23 +724,136 @@
             bulk: 2.0
         };
 
+        // FFMI reference values
+        // Kouri et al. 1995: natural male mean 21.8, ceiling ~25
+        // Women: ~3-4 points lower (Schutz et al. 2002)
+        const FFMI_UNTRAINED_MALE = 18.5;
+        const FFMI_UNTRAINED_FEMALE = 15.0;
+        const FFMI_NATURAL_CEILING_MALE = 25.0;
+        const FFMI_NATURAL_CEILING_FEMALE = 21.0;
+
+        // Beginner max gain rate (kg/month) at full proximity
+        // McDonald Year-1 model: ~10 kg/yr for males = ~0.83 kg/month
+        // Aragon model: 1-1.5% BW/month for beginners
+        // Using 1.0 kg/month as optimistic-but-evidence-based peak
+        const MAX_MONTHLY_GAIN_MALE = 1.0;
+        const MAX_MONTHLY_GAIN_FEMALE = 0.5;
+
         // ============================================
-        // AGE-ADJUSTED FUNCTIONS
+        // FFMI & MUSCLE GAIN FUNCTIONS
         // ============================================
 
-        function getMuscleGainRate(age, hasResistance, sex = 'male') {
-            let baseRate;
-            if (age < 30) baseRate = 1.0;
-            else if (age < 40) baseRate = 0.8;
-            else if (age < 50) baseRate = 0.6;
-            else if (age < 60) baseRate = 0.4;
-            else if (age < 70) baseRate = 0.3;
-            else baseRate = 0.2;
+        // Fat-Free Mass Index: Kouri et al. 1995
+        function calculateFFMI(lbm, heightCm) {
+            const heightM = heightCm / 100;
+            return lbm / (heightM * heightM);
+        }
 
-            if (sex === 'female') baseRate *= 0.5;
+        // Height-adjusted FFMI: Kouri normalization to 1.80m reference
+        function calculateAdjustedFFMI(ffmi, heightCm) {
+            const heightM = heightCm / 100;
+            return ffmi + 6.1 * (1.80 - heightM);
+        }
+
+        // Individual FFMI ceiling
+        // Men:  McDonald height model (maxLBM = h×0.407+8.6), floored at 24.5 FFMI
+        //       Works well at average heights (~25 FFMI), slightly low for tall men
+        // Women: Constant FFMI ceiling of 21.0 (Kouri-equivalent female research)
+        //       McDonald's linear formula gives inverted height scaling for women
+        //       (shorter women get higher FFMI than taller — physically incorrect)
+        //       so we use the evidence-based constant instead
+        function getFFMICeiling(heightCm, sex, age) {
+            const heightM = heightCm / 100;
+            let ceiling;
+
+            if (sex === 'male') {
+                const maxLBM = heightCm * 0.407 + 8.6;
+                ceiling = maxLBM / (heightM * heightM);
+                // Floor: prevent unrealistically low ceilings for tall men
+                ceiling = Math.max(ceiling, 24.5);
+            } else {
+                // Constant FFMI ceiling for women (evidence-based)
+                // Schutz et al., Abe et al.: natural female ceiling ~20-21 FFMI
+                ceiling = FFMI_NATURAL_CEILING_FEMALE; // 21.0
+            }
+
+            // Age-adjusted ceiling: sarcopenia reduces achievable maximum
+            // Males: ~0.3 FFMI points per decade after 40 (Phillips et al.)
+            // Females: ~0.15 FFMI points per decade (lower absolute loss)
+            if (age > 40) {
+                const decadesOver40 = (age - 40) / 10;
+                const ageReduction = sex === 'male' ? decadesOver40 * 0.3 : decadesOver40 * 0.15;
+                ceiling -= ageReduction;
+            }
+            return ceiling;
+        }
+
+        // Proximity to genetic ceiling (0 = at ceiling, 1 = untrained baseline)
+        function getProximityToCeiling(currentFFMI, ceilingFFMI, sex) {
+            const baseline = sex === 'male' ? FFMI_UNTRAINED_MALE : FFMI_UNTRAINED_FEMALE;
+            const range = ceilingFFMI - baseline;
+            if (range <= 0) return 0;
+            const proximity = (ceilingFFMI - currentFFMI) / range;
+            return Math.max(0, Math.min(1, proximity));
+        }
+
+        // FFMI-based muscle gain rate (kg/month)
+        // Combines proximity-to-ceiling (Aragon/McDonald) with age modifier
+        function getMuscleGainRate(age, hasResistance, sex, currentLBM, heightCm) {
+            const currentFFMI = calculateFFMI(currentLBM, heightCm);
+            const ceilingFFMI = getFFMICeiling(heightCm, sex, age);
+            const proximity = getProximityToCeiling(currentFFMI, ceilingFFMI, sex);
+
+            // Base rate from proximity: exponential curve matching McDonald/Aragon year-by-year data
+            // At proximity 1.0 (untrained): full beginner rate
+            // At proximity 0.5 (intermediate): ~50% of beginner rate
+            // At proximity 0.1 (advanced): ~10% of beginner rate
+            const maxRate = sex === 'male' ? MAX_MONTHLY_GAIN_MALE : MAX_MONTHLY_GAIN_FEMALE;
+            let baseRate = maxRate * proximity;
+
+            // Age modifier: hormonal decline reduces muscle protein synthesis efficiency
+            // Phillips, Stuart et al.: older adults show blunted anabolic response
+            let ageModifier;
+            if (age < 30) ageModifier = 1.0;
+            else if (age < 40) ageModifier = 0.85;
+            else if (age < 50) ageModifier = 0.70;
+            else if (age < 60) ageModifier = 0.55;
+            else if (age < 70) ageModifier = 0.40;
+            else ageModifier = 0.25;
+
+            baseRate *= ageModifier;
+
+            // Training modifier
             if (!hasResistance) baseRate *= 0.3;
 
-            return baseRate;
+            // Floor: even near ceiling, some gain possible with optimal conditions
+            const floor = 0.05 * ageModifier * (hasResistance ? 1 : 0.3);
+            baseRate = Math.max(baseRate, floor);
+
+            return {
+                rate: baseRate,
+                currentFFMI: currentFFMI,
+                ceilingFFMI: ceilingFFMI,
+                proximity: proximity,
+                ageModifier: ageModifier
+            };
+        }
+
+        // Fat loss rate: Nuckols formula (BF% ÷ 20 = % BW loss/week)
+        // More aggressive when fatter, conservative when lean
+        function getFatLossRate(weight, bodyfat, goalType) {
+            // Nuckols formula: BF% ÷ 20 = target % BW loss per week
+            // e.g., 20% BF → 1.0%/week → 0.85 kg/week for 85kg person
+            // e.g., 30% BF → 1.5%/week → 0.98 kg/week for 65kg person
+            const weeklyPercent = bodyfat / 20;
+            const weeklyKg = weight * (weeklyPercent / 100);
+
+            if (goalType === 'recomp' || goalType === 'recomp-weight-change') {
+                // Recomp: cap at 0.5 kg/week to preserve muscle building environment
+                return Math.min(0.5, weeklyKg);
+            }
+            // Fat loss: cap at 1.0 kg/week for safety, floor at 0.25
+            return Math.min(1.0, Math.max(0.25, weeklyKg));
         }
 
         function getBulkingMultiplier(age) {
@@ -815,8 +961,9 @@
             const bmr = calculateBMR_KatchMcArdle(currentLBM);
             const tdee = bmr * activityLevel;
 
-            // STEP 4: Timeline
-            const muscleGainRate = getMuscleGainRate(age, hasResistance, sex);
+            // STEP 4: Timeline (FFMI-based muscle gain + Nuckols fat loss)
+            const muscleData = getMuscleGainRate(age, hasResistance, sex, currentLBM, height);
+            const muscleGainRate = muscleData.rate;
             let weeksForFatLoss = 0;
             let weeksForMuscleGain = 0;
             let limitingFactor = '';
@@ -824,9 +971,7 @@
 
             if (isLosingFat) {
                 const fatToLose = Math.abs(fatChange);
-                fatLossRate = (goalType === 'recomp' || goalType === 'recomp-weight-change')
-                    ? MODERATE_FAT_LOSS_PER_WEEK
-                    : Math.min(MAX_FAT_LOSS_PER_WEEK, fatToLose / 8);
+                fatLossRate = getFatLossRate(weight, bodyfat, goalType);
                 weeksForFatLoss = fatToLose / fatLossRate;
             }
 
@@ -851,7 +996,24 @@
                 limitingFactor = 'muscle gain rate';
             }
 
-            // STEP 5: Calories
+            // STEP 5: Calories — target-weight-aligned approach
+            // Key principle: surplus/deficit is derived FROM the body composition targets
+            // so that over the timeline, calorie balance matches intended weight change.
+            //
+            // Energy costs per kg of tissue change:
+            //   Muscle: ~2500 kcal/kg (tissue + protein synthesis overhead)
+            //   Fat:    ~7700 kcal/kg (standard energy density)
+            // Metabolic overhead factor: ×1.4 (thermic effect, futile cycling, adaptation)
+            //
+            // References:
+            //   Helms (lean bulk): 200-300 kcal surplus for beginners
+            //   Israetel: surplus scales with growth potential
+            //   Hall (energy balance): surplus must match intended tissue accretion rate
+
+            const ENERGY_PER_KG_MUSCLE = 2500;
+            const ENERGY_PER_KG_FAT = 7700;
+            const METABOLIC_OVERHEAD = 1.4;
+
             let targetCalories;
             let dailyDeficit = 0;
             let dailySurplus = 0;
@@ -860,26 +1022,54 @@
 
             if (goalType === 'maintain') {
                 targetCalories = Math.round(tdee);
+
             } else if (goalType === 'recomp') {
-                // Same weight recomp: slight surplus to fuel muscle building
-                // Muscle is anabolic - needs energy. Plus metabolic rate rises with more muscle.
-                dailySurplus = 150;  // Small surplus for muscle synthesis
-                targetCalories = Math.round(tdee + dailySurplus);
+                // Same weight: fat loss provides energy for muscle building
+                // No surplus needed — fat stores are the energy source
+                // High protein + resistance training drive the recomposition
+                // Maintenance calories prevent unwanted weight change
+                targetCalories = Math.round(tdee);
+
             } else if (goalType === 'recomp-weight-change') {
-                // Losing weight while recomping - depends on body fat level
-                const isLean = (sex === 'male' && bodyfat <= 15) || (sex === 'female' && bodyfat <= 22);
-                if (isLean) {
-                    dailyDeficit = 0;  // Maintenance for lean individuals
-                    targetCalories = Math.round(tdee);
-                } else {
-                    dailyDeficit = RECOMP_DEFICIT;  // Small deficit OK for higher BF
-                    targetCalories = Math.round(tdee - dailyDeficit);
+                // Losing weight while recomping
+                // Deficit derived from net weight change over timeline
+                if (totalWeeks > 0 && weightChange < 0) {
+                    // Net tissue change: losing fat, possibly gaining some muscle
+                    const fatEnergy = Math.abs(fatChange) * ENERGY_PER_KG_FAT;
+                    const muscleEnergy = Math.max(0, lbmChange) * ENERGY_PER_KG_MUSCLE;
+                    // Net energy to liberate = fat energy released - muscle energy needed
+                    const netEnergy = fatEnergy - muscleEnergy;
+                    dailyDeficit = Math.round(netEnergy / (totalWeeks * 7));
+                    // Cap deficit for safety (Nuckols: BF%/20 rate)
+                    const maxSafeDeficit = (fatLossRate * KCAL_PER_KG_FAT) / 7;
+                    dailyDeficit = Math.min(dailyDeficit, maxSafeDeficit);
+                    dailyDeficit = Math.max(0, dailyDeficit); // never negative
                 }
+                const isLean = (sex === 'male' && bodyfat <= 15) || (sex === 'female' && bodyfat <= 22);
+                if (isLean && dailyDeficit > 200) {
+                    // Lean individuals: limit deficit to preserve muscle building
+                    dailyDeficit = Math.min(dailyDeficit, 200);
+                }
+                targetCalories = Math.round(tdee - dailyDeficit);
+
             } else if (goalType === 'fat-loss') {
                 dailyDeficit = (fatLossRate * KCAL_PER_KG_FAT) / 7;
                 targetCalories = Math.round(tdee - dailyDeficit);
+
             } else if (goalType === 'muscle-gain') {
-                dailySurplus = 250 + (muscleGainRate * 100);
+                // Surplus derived from expected tissue accretion rate
+                // This ensures surplus matches muscle gain rate — no excess becomes fat
+                // Energy needed = (muscle gain rate × energy cost) × overhead
+                if (totalWeeks > 0) {
+                    const weeklyMuscleGain = muscleGainRate / 4.33; // kg/week
+                    const weeklyEnergy = weeklyMuscleGain * ENERGY_PER_KG_MUSCLE * METABOLIC_OVERHEAD;
+                    dailySurplus = Math.round(weeklyEnergy / 7);
+                    // Floor: minimum 50 kcal surplus for anabolic signaling
+                    // Ceiling: 500 kcal for very fast beginners
+                    dailySurplus = Math.max(50, Math.min(500, dailySurplus));
+                } else {
+                    dailySurplus = 100;
+                }
                 targetCalories = Math.round(tdee + dailySurplus);
             }
 
@@ -898,7 +1088,7 @@
                 proteinRationale = 'Maintenance protein for muscle preservation';
             } else if (goalType === 'recomp') {
                 proteinMultiplier = PROTEIN_MULTIPLIERS.recomp;
-                proteinRationale = 'Maximum protein for recomposition with slight surplus';
+                proteinRationale = 'Maximum protein for recomposition at maintenance';
             } else if (goalType === 'recomp-weight-change') {
                 proteinMultiplier = PROTEIN_MULTIPLIERS.recomp;
                 const isLean = (sex === 'male' && bodyfat <= 15) || (sex === 'female' && bodyfat <= 22);
@@ -968,22 +1158,22 @@
             const muscleBox = document.querySelector('.change-item.muscle-gain');
 
             if (fatChange > 0) {
-                fatBox.style.background = '#ffebee';
-                fatBox.style.color = '#c62828';
+                fatBox.style.background = 'var(--color-red-light)';
+                fatBox.style.color = 'var(--color-red)';
                 fatBox.querySelector('.label').textContent = 'Fat Gain';
             } else {
-                fatBox.style.background = '#e8f5e9';
-                fatBox.style.color = '#2e7d32';
+                fatBox.style.background = 'var(--color-teal-light)';
+                fatBox.style.color = 'var(--color-teal)';
                 fatBox.querySelector('.label').textContent = 'Fat Loss';
             }
 
             if (lbmChange < 0) {
-                muscleBox.style.background = '#ffebee';
-                muscleBox.style.color = '#c62828';
+                muscleBox.style.background = 'var(--color-red-light)';
+                muscleBox.style.color = 'var(--color-red)';
                 muscleBox.querySelector('.label').textContent = 'Lean Mass Loss';
             } else {
-                muscleBox.style.background = '#e8f5e9';
-                muscleBox.style.color = '#2e7d32';
+                muscleBox.style.background = 'var(--color-teal-light)';
+                muscleBox.style.color = 'var(--color-teal)';
                 muscleBox.querySelector('.label').textContent = 'Lean Mass Gain';
             }
 
@@ -1067,25 +1257,37 @@
                 </div>
 
                 <div class="calc-section">
-                    <div class="calc-section-title"><span class="step-num">3</span> Timeline (Biology-Limited)</div>
-                    ${isLosingFat ? `<div class="calc-line"><span>Fat to lose</span><span>${Math.abs(fatChange).toFixed(2)} kg at ${fatLossRate.toFixed(2)} kg/week</span></div><div class="calc-line formula">Fat loss time = ${Math.abs(fatChange).toFixed(2)} ÷ ${fatLossRate.toFixed(2)} = ${weeksForFatLoss.toFixed(1)} weeks</div>` : ''}
+                    <div class="calc-section-title"><span class="step-num">3</span> FFMI & Muscle Potential (Kouri/McDonald/Aragon)</div>
+                    <div class="calc-line"><span>Current FFMI</span><span>${muscleData.currentFFMI.toFixed(1)} (${sex === 'male'
+                        ? (muscleData.currentFFMI < 20 ? 'beginner range' : muscleData.currentFFMI < 22 ? 'intermediate' : muscleData.currentFFMI < 24 ? 'advanced' : 'elite natural')
+                        : (muscleData.currentFFMI < 16.5 ? 'beginner range' : muscleData.currentFFMI < 18 ? 'intermediate' : muscleData.currentFFMI < 20 ? 'advanced' : 'elite natural')
+                    })</span></div>
+                    <div class="calc-line"><span>Your FFMI ceiling</span><span>${muscleData.ceilingFFMI.toFixed(1)} (McDonald height model${age > 40 ? ', age-adjusted' : ''})</span></div>
+                    <div class="calc-line"><span>Proximity to ceiling</span><span>${(muscleData.proximity * 100).toFixed(0)}% remaining potential</span></div>
+                    <div class="calc-line"><span>Age modifier</span><span>${(muscleData.ageModifier * 100).toFixed(0)}% (age ${age})</span></div>
+                    <div class="calc-line formula">Gain rate = ${sex === 'male' ? '1.0' : '0.5'} kg/mo × ${(muscleData.proximity).toFixed(2)} proximity × ${muscleData.ageModifier.toFixed(2)} age${!hasResistance ? ' × 0.30 (no training)' : ''} = ${muscleGainRate.toFixed(2)} kg/mo</div>
+                </div>
+
+                <div class="calc-section">
+                    <div class="calc-section-title"><span class="step-num">4</span> Timeline (Biology-Limited)</div>
+                    ${isLosingFat ? `<div class="calc-line"><span>Fat loss rate</span><span>${fatLossRate.toFixed(2)} kg/week (Nuckols: BF${bodyfat}% ÷ 20 = ${(bodyfat/20).toFixed(1)}%/week)</span></div><div class="calc-line formula">Fat loss time = ${Math.abs(fatChange).toFixed(2)} kg ÷ ${fatLossRate.toFixed(2)} kg/wk = ${weeksForFatLoss.toFixed(1)} weeks</div>` : ''}
                     ${isGainingMuscle ? `<div class="calc-line"><span>Muscle to gain</span><span>${lbmChange.toFixed(2)} kg at ${muscleGainRate.toFixed(2)} kg/month</span></div><div class="calc-line formula">Muscle time = ${(lbmChange / muscleGainRate).toFixed(1)} months = ${weeksForMuscleGain.toFixed(1)} weeks</div>` : ''}
                     <div class="calc-line result"><span>Timeline</span><span>${totalWeeks} weeks • ${limitingFactor}</span></div>
                 </div>
 
                 <div class="calc-section">
-                    <div class="calc-section-title"><span class="step-num">4</span> Daily Calories</div>
+                    <div class="calc-section-title"><span class="step-num">5</span> Daily Calories</div>
                     <div class="calc-line"><span>TDEE</span><span>${Math.round(tdee)} kcal</span></div>
                     ${dailyDeficit > 0 ? `<div class="calc-line"><span>Deficit</span><span>−${Math.round(dailyDeficit)} kcal</span></div>` : ''}
-                    ${dailySurplus > 0 && goalType === 'recomp' ? `<div class="calc-line"><span>Recomp surplus</span><span>+${Math.round(dailySurplus)} kcal (fuels muscle building)</span></div>` : ''}
-                    ${dailySurplus > 0 && goalType === 'muscle-gain' ? `<div class="calc-line"><span>Surplus</span><span>+${Math.round(dailySurplus)} kcal</span></div>` : ''}
+                    ${goalType === 'recomp' ? `<div class="calc-line"><span>Recomp strategy</span><span>Maintenance — fat stores fuel muscle building</span></div>` : ''}
+                    ${dailySurplus > 0 && goalType === 'muscle-gain' ? `<div class="calc-line"><span>Surplus (rate-matched)</span><span>+${Math.round(dailySurplus)} kcal (matched to ${muscleGainRate.toFixed(2)} kg/mo gain rate)</span></div>` : ''}
                     ${goalType === 'recomp-weight-change' && dailyDeficit === 0 ? `<div class="calc-line"><span>Lean recomp</span><span>Maintenance (no deficit at ${bodyfat}% BF)</span></div>` : ''}
-                    ${hitFloor ? `<div class="calc-line" style="color: #c62828;"><span>⚠️ Safety floor applied</span><span>${minCalories} kcal</span></div>` : ''}
+                    ${hitFloor ? `<div class="calc-line" style="color: var(--color-red);"><span>⚠️ Safety floor applied</span><span>${minCalories} kcal</span></div>` : ''}
                     <div class="calc-line result"><span>Target Calories</span><span>${targetCalories} kcal/day</span></div>
                 </div>
 
                 <div class="calc-section">
-                    <div class="calc-section-title"><span class="step-num">5</span> Daily Protein (Age-Adjusted)</div>
+                    <div class="calc-section-title"><span class="step-num">6</span> Daily Protein (Age-Adjusted)</div>
                     <div class="calc-line"><span>Age category</span><span>${ageCategory.name} (${ageCategory.resistance})</span></div>
                     <div class="calc-line"><span>Protein multiplier</span><span>${proteinMultiplier} g/kg LBM</span></div>
                     ${dietFactor > 1 ? `<div class="calc-line"><span>Diet adjustment (${diet})</span><span>×${dietFactor}</span></div>` : ''}
@@ -1094,7 +1296,7 @@
                 </div>
 
                 <div class="calc-section">
-                    <div class="calc-section-title"><span class="step-num">6</span> Per-Meal Distribution</div>
+                    <div class="calc-section-title"><span class="step-num">7</span> Per-Meal Distribution</div>
                     <div class="calc-line"><span>Age-based threshold</span><span>${ageCategory.perMeal}</span></div>
                     <div class="calc-line"><span>Min per meal</span><span>${proteinPerShake}g protein</span></div>
                     ${proteinShakes > 0 ? `<div class="calc-line"><span>From ${proteinShakes} shake(s)</span><span>${proteinFromShakes}g</span></div><div class="calc-line"><span>From ${mealsPerDay} meal(s)</span><span>${proteinFromMeals}g</span></div>` : ''}
@@ -1129,12 +1331,12 @@
             if (goalType === 'recomp') {
                 // Same weight recomp - slight surplus
                 infoBox.innerHTML = `
-                    <strong>Body Recomposition (Same Weight):</strong> You're replacing fat with muscle. This requires:
-                    <br>• <strong>Slight surplus (+150 kcal)</strong> — muscle building is anabolic and needs energy
+                    <strong>Body Recomposition (Same Weight):</strong> You're replacing fat with muscle at ${weight} kg. This requires:
+                    <br>• <strong>Maintenance calories (TDEE)</strong> — your fat stores provide the energy for muscle building
                     <br>• <strong>High protein (2.4 g/kg LBM)</strong> — maximizes muscle protein synthesis
                     <br>• <strong>Progressive resistance training</strong> — the primary driver of recomposition
-                    <br>• <strong>Patience</strong> — recomp takes time (${muscleGainRate.toFixed(2)} kg muscle/month at age ${age})
-                    <br><br><em>Science: As you gain muscle, your metabolic rate increases. A slight surplus fuels muscle building while your body gradually shifts composition.</em>
+                    <br>• <strong>Patience</strong> — recomp takes time (${muscleGainRate.toFixed(2)} kg muscle/month at FFMI ${muscleData.currentFFMI.toFixed(1)}, age ${age})
+                    <br><br><em>Science: Your FFMI is ${muscleData.currentFFMI.toFixed(1)} of a ${muscleData.ceilingFFMI.toFixed(1)} ceiling — ${(muscleData.proximity * 100).toFixed(0)}% growth potential remains. No surplus is needed because your ${currentFatMass.toFixed(1)} kg of fat stores provide ample energy for the muscle-building process (Longland et al. 2016).</em>
                 `;
                 infoBox.style.display = 'block';
             } else if (goalType === 'recomp-weight-change') {
@@ -1145,8 +1347,8 @@
                         <br>• <strong>Maintenance calories</strong> — no deficit; your body can use stored fat while building muscle
                         <br>• <strong>High protein (2.4 g/kg LBM)</strong> — maximizes muscle protein synthesis
                         <br>• <strong>Progressive resistance training</strong> — the primary driver of recomposition
-                        <br>• <strong>Patience</strong> — lean recomp is slower (${muscleGainRate.toFixed(2)} kg/month at age ${age})
-                        <br><br><em>Science: For lean individuals, a deficit impairs muscle building. Maintenance + high protein + training = optimal.</em>
+                        <br>• <strong>Patience</strong> — lean recomp is slower (${muscleGainRate.toFixed(2)} kg/month at FFMI ${muscleData.currentFFMI.toFixed(1)}, age ${age})
+                        <br><br><em>Science: Your FFMI is ${muscleData.currentFFMI.toFixed(1)} of ${muscleData.ceilingFFMI.toFixed(1)} ceiling. For lean individuals, a deficit impairs muscle building. Maintenance + high protein + training = optimal.</em>
                     `;
                 } else {
                     infoBox.innerHTML = `
@@ -1154,8 +1356,8 @@
                         <br>• <strong>High protein (2.4 g/kg LBM)</strong> — the highest recommendation
                         <br>• <strong>Small deficit (${RECOMP_DEFICIT} kcal)</strong> — your fat stores can fuel the process
                         <br>• <strong>Resistance training</strong> — essential for muscle stimulus
-                        <br>• <strong>Patience</strong> — muscle builds slowly (${muscleGainRate.toFixed(2)} kg/month at age ${age})
-                        <br><br><em>Research: Longland et al. (2016) showed 2.4g/kg protein enabled +1.2kg muscle while losing 4.8kg fat.</em>
+                        <br>• <strong>Patience</strong> — muscle builds slowly (${muscleGainRate.toFixed(2)} kg/month at FFMI ${muscleData.currentFFMI.toFixed(1)}, age ${age})
+                        <br><br><em>Research: Longland et al. (2016) showed 2.4g/kg protein enabled +1.2kg muscle while losing 4.8kg fat. Your FFMI ${muscleData.currentFFMI.toFixed(1)} of ${muscleData.ceilingFFMI.toFixed(1)} ceiling means ${(muscleData.proximity * 100).toFixed(0)}% growth potential remains.</em>
                     `;
                 }
                 infoBox.style.display = 'block';
@@ -1213,6 +1415,9 @@
             touchStartX = 0;
             touchCurrentX = 0;
         }, { passive: true });
+
+        // Initialize Lucide icons
+        lucide.createIcons();
     </script>
 </body>
 </html>

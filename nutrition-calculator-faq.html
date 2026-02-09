@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How the Calculator Works — LongevityPath Nutrition Calculator</title>
+
+    <!-- Shared Brand Styles (includes Inter font) -->
+    <link rel="stylesheet" href="brand.css">
+
+    <!-- Lucide Icons (consistent with rest of app) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* ===========================================
+           FAQ-specific styles
+           Uses brand.css variables & classes as base
+           =========================================== */
+
+        .faq-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .faq-header h1 {
+            color: var(--color-text);
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+        }
+
+        .faq-header .subtitle {
+            color: var(--color-text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Card paragraph styling */
+        .card p {
+            font-size: 0.95rem;
+            line-height: 1.65;
+            margin-bottom: 14px;
+        }
+
+        /* Formula display */
+        .formula-box {
+            background: var(--color-bg);
+            border-radius: var(--radius-xs);
+            padding: 14px 18px;
+            margin: 14px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.88rem;
+            line-height: 1.6;
+            color: var(--color-text);
+            overflow-x: auto;
+        }
+
+        .formula-box .label {
+            font-family: var(--font-family);
+            font-weight: 600;
+            color: var(--color-teal);
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
+        }
+
+        /* Reference tables */
+        .faq-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 14px 0;
+            font-size: 0.88rem;
+        }
+
+        .faq-table th {
+            background: var(--color-teal);
+            color: white;
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid var(--color-teal);
+        }
+
+        .faq-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--color-border);
+            color: var(--color-text);
+        }
+
+        .faq-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .faq-table td:first-child {
+            font-weight: 500;
+        }
+
+        /* Inline citation */
+        .cite {
+            color: var(--color-text);
+            font-weight: 600;
+            font-size: 0.82rem;
+            vertical-align: super;
+            cursor: help;
+        }
+
+        /* Q&A items inside card */
+        .qa-heading {
+            color: var(--color-text);
+            font-size: 1.15rem;
+            margin-bottom: 20px;
+        }
+
+        .qa-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .qa-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .qa-item .question {
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .qa-item .answer {
+            color: var(--color-text);
+            font-size: 0.92rem;
+            line-height: 1.65;
+        }
+
+        /* Why-it-matters callout */
+        .why-box {
+            background: var(--color-orange-light);
+            border-left: 4px solid var(--color-orange);
+            padding: 14px 16px;
+            border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+            margin: 14px 0;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .why-box strong {
+            color: var(--color-orange);
+        }
+
+        /* Note callout */
+        .note-box {
+            background: var(--color-teal-light);
+            border-left: 4px solid var(--color-teal);
+            padding: 14px 16px;
+            border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+            margin: 14px 0;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .note-box strong {
+            color: var(--color-teal);
+        }
+
+        /* Back to calculator button */
+        .back-bar {
+            text-align: center;
+            margin: 32px 0 16px;
+        }
+
+        /* Mobile header — matches calculator pattern */
+        .mobile-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 0;
+            margin-bottom: 8px;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--color-bg);
+            border-radius: var(--radius-full);
+            color: var(--color-teal);
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            background: var(--color-teal-light);
+        }
+
+        .mobile-header-title {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        /* Expert citation (matches protein-evidence.html pattern) */
+        .expert-citation {
+            margin: 20px 0;
+        }
+        .expert-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        .expert-avatar {
+            width: 32px;
+            height: 32px;
+            background: var(--color-teal);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .expert-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--color-text);
+        }
+        .expert-affiliation {
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            margin-left: 4px;
+        }
+        .expert-quote {
+            font-style: italic;
+            font-size: 0.95rem;
+            color: var(--color-text);
+            line-height: 1.6;
+            padding-left: 42px;
+            position: relative;
+        }
+        .expert-quote::before {
+            content: '\201C';
+            position: absolute;
+            left: 16px;
+            top: -4px;
+            font-size: 1.5rem;
+            color: var(--color-teal);
+            font-style: normal;
+        }
+
+        /* References */
+        .reference {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: var(--color-text-muted);
+            margin-bottom: 8px;
+        }
+        .reference a {
+            color: var(--color-teal);
+            text-decoration: none;
+            font-weight: 500;
+            margin-left: 6px;
+            white-space: nowrap;
+        }
+        .reference a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 640px) {
+            .card {
+                padding: 18px;
+            }
+            .faq-table {
+                font-size: 0.82rem;
+            }
+            .faq-table th, .faq-table td {
+                padding: 8px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-wide">
+        <div class="mobile-header">
+            <a href="nutrition-calculator.html" class="back-btn">
+                <i data-lucide="arrow-left" style="width:20px;height:20px;"></i>
+            </a>
+            <span class="mobile-header-title">How the Calculator Works</span>
+        </div>
+
+        <div class="faq-header">
+            <h1>How the Nutrition Calculator Works</h1>
+            <p class="subtitle">The science and formulas behind your personalized targets</p>
+        </div>
+
+        <!-- ============================== -->
+        <!-- OVERVIEW -->
+        <!-- ============================== -->
+        <div class="card">
+            <p>The calculator takes your body composition, age, activity level, and goals, then runs them through seven steps grounded in peer-reviewed research. Each step builds on the previous one, so your final calorie and protein targets reflect <em>your</em> biology — not a one-size-fits-all estimate.</p>
+            <p>Below, we explain every step: what it does, which formula it uses, why it matters, and where the science comes from. All calculations happen in your browser; no data is sent anywhere.</p>
+        </div>
+
+        <!-- ============================== -->
+        <!-- STEP 1: BODY COMPOSITION -->
+        <!-- ============================== -->
+        <div class="card">
+            <div class="section-header">
+                <span class="step-number">1</span>
+                <span class="section-title">Body Composition Analysis</span>
+            </div>
+
+            <p>The first thing the calculator does is split your weight into two components: <strong>fat mass</strong> and <strong>lean body mass</strong> (LBM). It does the same for your target weight. The difference between current and target tells the calculator exactly how much fat you need to lose and how much muscle you need to gain. This two-compartment approach has been validated against multi-compartment reference models with high accuracy <span class="cite" title="Clasey, J.L., et al. (1999). Journal of Applied Physiology, 86(5), 1728-1738. doi:10.1152/jappl.1999.86.5.1728">[19]</span>.</p>
+
+            <div class="formula-box">
+                <span class="label">Formulas</span>
+                Fat mass = Weight × (Body fat % ÷ 100)<br>
+                Lean body mass = Weight − Fat mass
+            </div>
+
+            <p>For example, an 85 kg person at 25% body fat carries 21.3 kg of fat and 63.8 kg of lean mass. If their target is 80 kg at 18%, that means 14.4 kg fat and 65.6 kg lean — a net loss of 6.9 kg fat and a gain of 1.9 kg lean mass.</p>
+
+            <div class="why-box">
+                <strong>Why this matters:</strong> Working with fat and lean mass separately is more accurate than tracking weight alone. You can weigh the same but have a completely different body composition. This distinction drives every decision the calculator makes — from goal classification to calorie targets.
+            </div>
+
+            <p>The calculator then classifies your goal into one of five modes based on these tissue changes: <strong>Maintenance</strong> (minimal change), <strong>Body Recomposition</strong> (losing fat and gaining muscle at the same weight), <strong>Recomp + Weight Loss</strong> (both tissues changing while overall weight drops), <strong>Fat Loss</strong> (losing fat, preserving muscle), or <strong>Muscle Building</strong> (gaining lean mass in a surplus). Each mode triggers different calorie and protein strategies in later steps.</p>
+        </div>
+
+        <!-- ============================== -->
+        <!-- STEP 2: BMR & TDEE -->
+        <!-- ============================== -->
+        <div class="card">
+            <div class="section-header">
+                <span class="step-number">2</span>
+                <span class="section-title">BMR &amp; TDEE (Energy Expenditure)</span>
+            </div>
+
+            <p>Your <strong>Basal Metabolic Rate</strong> (BMR) is the energy your body burns at complete rest — just keeping organs running, body temperature stable, and cells functioning. The calculator uses the <strong>Katch-McArdle formula</strong>, which bases BMR on lean body mass rather than total weight. This is important because muscle tissue is far more metabolically active than fat tissue, making LBM the strongest predictor of resting energy expenditure <span class="cite" title="Katch, F.I., et al. (1996). Medicine & Science in Sports & Exercise">[1]</span>.</p>
+
+            <div class="formula-box">
+                <span class="label">Katch-McArdle Formula</span>
+                BMR = 370 + (21.6 × Lean Body Mass in kg)
+            </div>
+
+            <p>Your <strong>Total Daily Energy Expenditure</strong> (TDEE) accounts for physical activity on top of BMR. The calculator multiplies BMR by an activity factor based on the system developed by Harris and Benedict and refined in subsequent metabolic research <span class="cite" title="Harris, J.A. & Benedict, F.G. (1918). Carnegie Institution of Washington">[2]</span>.</p>
+
+            <table class="faq-table">
+                <thead>
+                    <tr>
+                        <th>Activity Level</th>
+                        <th>Multiplier</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Sedentary</td><td>×1.2</td><td>Little or no exercise, desk job</td></tr>
+                    <tr><td>Lightly Active</td><td>×1.375</td><td>Light exercise 1–3 days/week</td></tr>
+                    <tr><td>Moderately Active</td><td>×1.55</td><td>Moderate exercise 3–5 days/week</td></tr>
+                    <tr><td>Very Active</td><td>×1.725</td><td>Hard exercise 6–7 days/week</td></tr>
+                    <tr><td>Extremely Active</td><td>×1.9</td><td>Hard daily exercise + physical job</td></tr>
+                </tbody>
+            </table>
+
+            <div class="formula-box">
+                <span class="label">TDEE Calculation</span>
+                TDEE = BMR × Activity Multiplier
+            </div>
+
+            <div class="note-box">
+                <strong>Why Katch-McArdle?</strong> Unlike the Mifflin-St Jeor or Harris-Benedict equations, which use total weight, Katch-McArdle uses lean mass. This means a 90 kg person at 15% body fat gets a very different (and more accurate) BMR than a 90 kg person at 35% body fat. For anyone tracking body composition, this formula is the better choice.
+            </div>
+        </div>
+
+        <!-- ============================== -->
+        <!-- STEP 3: FFMI & MUSCLE POTENTIAL -->
+        <!-- ============================== -->
+        <div class="card">
+            <div class="section-header">
+                <span class="step-number">3</span>
+                <span class="section-title">FFMI &amp; Muscle Potential</span>
+            </div>
+
+            <p>Before estimating how fast you can build muscle, the calculator needs to know where you stand relative to your genetic ceiling. It does this using the <strong>Fat-Free Mass Index</strong> (FFMI) — a height-normalized measure of muscularity introduced by Kouri et al. in a landmark 1995 study of natural and steroid-using athletes <span class="cite" title="Kouri, E.M., et al. (1995). Clinical Journal of Sport Medicine, 5(4), 223-228">[3]</span>.</p>
+
+            <div class="formula-box">
+                <span class="label">Fat-Free Mass Index</span>
+                FFMI = Lean Body Mass ÷ (Height in meters)²
+            </div>
+
+            <p>That study found that drug-free male athletes rarely exceeded an FFMI of 25, establishing this as the practical natural ceiling. For women, research by Schutz et al. and Abe et al. places the equivalent ceiling around 21 <span class="cite" title="Schutz, Y., et al. (2002). International Journal of Obesity, 26(7), 953-960">[4]</span>.</p>
+
+            <table class="faq-table">
+                <thead>
+                    <tr>
+                        <th>FFMI Range (Men)</th>
+                        <th>FFMI Range (Women)</th>
+                        <th>Classification</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>&lt; 20</td><td>&lt; 16.5</td><td>Beginner range</td></tr>
+                    <tr><td>20 – 22</td><td>16.5 – 18</td><td>Intermediate</td></tr>
+                    <tr><td>22 – 24</td><td>18 – 20</td><td>Advanced</td></tr>
+                    <tr><td>24 – 25</td><td>20 – 21</td><td>Elite natural</td></tr>
+                </tbody>
+            </table>
+
+            <p>The calculator personalizes your ceiling using a height-adjusted model for men (maximum lean body mass = height in cm × 0.407 + 8.6 kg, with a floor of FFMI 24.5), consistent with the upper limits observed in natural athletes by Kouri et al. <span class="cite" title="Kouri, E.M., et al. (1995). Clinical Journal of Sport Medicine, 5(4), 223-228. doi:10.1097/00042752-199510000-00003">[3]</span><span class="cite" title="Schutz, Y., et al. (2002). International Journal of Obesity, 26(7), 953-960. doi:10.1038/sj.ijo.0802037">[4]</span>. For women, a constant FFMI ceiling of 21.0 is used. After age 40, the ceiling decreases slightly due to age-related sarcopenia — approximately 0.3 FFMI points per decade for men and 0.15 for women, consistent with longitudinal data on age-related muscle loss <span class="cite" title="Mitchell, W.K., et al. (2012). Frontiers in Physiology, 3, 260. doi:10.3389/fphys.2012.00260">[6]</span>.</p>
+
+            <p><strong>Proximity to ceiling</strong> is the key output. It represents how much growth potential remains, scaled from 0 (at ceiling) to 1 (untrained baseline):</p>
+
+            <div class="formula-box">
+                <span class="label">Proximity to Ceiling</span>
+                Proximity = (Ceiling FFMI − Current FFMI) ÷ (Ceiling FFMI − Baseline FFMI)
+            </div>
+
+            <p>Baseline FFMI is set at 18.5 for men and 15.0 for women, representing an untrained starting point. This proximity value directly scales your expected muscle gain rate in the next step.</p>
+
+            <div class="why-box">
+                <strong>Why this matters:</strong> A beginner with an FFMI of 19 has far more growth potential than an advanced lifter at FFMI 23. Without accounting for this, the calculator would overestimate timelines for beginners and underestimate them for experienced trainees. The proximity model, inspired by the year-by-year gain curves published by Aragon and McDonald, captures this diminishing-returns pattern <span class="cite" title="Aragon, A.A. (2020). The Aragon model for rate of muscle gain">[7]</span>.
+            </div>
+        </div>
+
+        <!-- ============================== -->
+        <!-- STEP 4: TIMELINE -->
+        <!-- ============================== -->
+        <div class="card">
+            <div class="section-header">
+                <span class="step-number">4</span>
+                <span class="section-title">Timeline (Biology-Limited)</span>
+            </div>
+
+            <p>The timeline is not a guess — it is derived from two biological rate limits: how fast you can safely lose fat and how fast you can build muscle. The slower process becomes the bottleneck that determines total duration.</p>
+
+            <p><strong>Muscle gain rate</strong> combines three factors: the proximity-to-ceiling value from Step 3, a sex-based maximum rate, and an age modifier reflecting the decline in muscle protein synthesis efficiency with age <span class="cite" title="Phillips, S.M. (2016). Sports Medicine, 46, 1-8. doi:10.1007/s40279-015-0373-y">[8]</span>.</p>
+
+            <div class="formula-box">
+                <span class="label">Muscle Gain Rate (kg/month)</span>
+                Gain rate = Max rate × Proximity × Age modifier<br>
+                <br>
+                Max rate: 1.0 kg/month (men), 0.5 kg/month (women)<br>
+                <br>
+                Without resistance training: × 0.30 (severely limited)
+            </div>
+
+            <table class="faq-table">
+                <thead>
+                    <tr>
+                        <th>Age</th>
+                        <th>Age Modifier</th>
+                        <th>Rationale</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Under 30</td><td>100%</td><td>Optimal hormonal environment</td></tr>
+                    <tr><td>30 – 39</td><td>85%</td><td>Slight hormonal decline begins</td></tr>
+                    <tr><td>40 – 49</td><td>70%</td><td>Moderate anabolic resistance</td></tr>
+                    <tr><td>50 – 59</td><td>55%</td><td>Significant anabolic resistance</td></tr>
+                    <tr><td>60 – 69</td><td>40%</td><td>Pronounced age-related decline</td></tr>
+                    <tr><td>70+</td><td>25%</td><td>Severe anabolic resistance</td></tr>
+                </tbody>
+            </table>
+
+            <p><strong>Fat loss rate</strong> scales the safe rate of weight loss to your current body fat percentage. The principle is straightforward: people with more body fat can sustain a faster rate of loss without muscle sacrifice, while leaner individuals need to go slower. A controlled trial in elite athletes by Garthe et al. demonstrated that a slow rate (0.7% body weight per week) preserved lean mass significantly better than a fast rate (1.4% per week) <span class="cite" title="Garthe, I., et al. (2011). International Journal of Sport Nutrition and Exercise Metabolism, 21(2), 97-104. doi:10.1123/ijsnem.21.2.97">[9]</span>.</p>
+
+            <div class="formula-box">
+                <span class="label">Body-Fat-Scaled Fat Loss Rate</span>
+                Weekly loss rate (% of body weight) = Body fat % ÷ 20<br>
+                Weekly loss (kg) = Weight × (rate ÷ 100)<br>
+                <br>
+                Example: 25% BF → 1.25%/week → 1.06 kg/week for 85 kg person<br>
+                <br>
+                Caps: min 0.25 kg/week, max 1.0 kg/week (fat loss mode)<br>
+                Recomposition mode: capped at 0.5 kg/week
+            </div>
+
+            <p>The total timeline is whichever takes longer — gaining the required muscle or losing the required fat — plus the slower process determines the "limited by" label you see in the results.</p>
+        </div>
+
+        <!-- ============================== -->
+        <!-- STEP 5: CALORIES -->
+        <!-- ============================== -->
+        <div class="card">
+            <div class="section-header">
+                <span class="step-number">5</span>
+                <span class="section-title">Daily Calories</span>
+            </div>
+
+            <p>The calorie target is where everything comes together. Instead of applying a fixed surplus or deficit, the calculator derives your calories directly from the tissue changes and timeline established in the previous steps. This is what we call a <strong>target-weight-aligned approach</strong>: the calorie balance is mathematically matched to the rate of change your body can sustain, so you don't accumulate unwanted fat from an oversized surplus or lose muscle from an overly aggressive deficit.</p>
+
+            <p>Two energy constants underpin the calculation. Building one kilogram of muscle requires roughly 2,500 kcal of tissue energy plus metabolic overhead. Losing one kilogram of fat liberates approximately 7,700 kcal, a figure that has been consistent across calorimetry studies for decades <span class="cite" title="Hall, K.D. (2008). International Journal of Obesity, 32(3), 573-576. doi:10.1038/sj.ijo.0803720">[10]</span>.</p>
+
+            <div class="formula-box">
+                <span class="label">Energy Constants</span>
+                Muscle: ~2,500 kcal per kg of tissue (synthesis + structural)<br>
+                Fat: ~7,700 kcal per kg (energy density of adipose tissue)<br>
+                Metabolic overhead: ×1.4 (thermic effect + adaptation)
+            </div>
+
+            <p>How calories are calculated depends on your goal mode:</p>
+
+            <table class="faq-table">
+                <thead>
+                    <tr>
+                        <th>Goal Mode</th>
+                        <th>Calorie Strategy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Maintenance</td>
+                        <td>TDEE (no adjustment)</td>
+                    </tr>
+                    <tr>
+                        <td>Recomposition</td>
+                        <td>TDEE — maintenance calories. Fat stores provide the energy for muscle building. No surplus needed <span class="cite" title="Longland, T.M., et al. (2016). American Journal of Clinical Nutrition, 103(3), 738-746. doi:10.3945/ajcn.115.119339">[11]</span>.</td>
+                    </tr>
+                    <tr>
+                        <td>Recomp + Weight Loss</td>
+                        <td>Mild deficit derived from net tissue energy change over timeline. Capped at body-fat-scaled safe rate for lean individuals.</td>
+                    </tr>
+                    <tr>
+                        <td>Fat Loss</td>
+                        <td>TDEE minus deficit based on body-fat-scaled fat loss rate × 7,700 kcal/kg ÷ 7 days.</td>
+                    </tr>
+                    <tr>
+                        <td>Muscle Building</td>
+                        <td>TDEE plus a <strong>rate-matched surplus</strong> — see below.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="formula-box">
+                <span class="label">Rate-Matched Surplus (Muscle Building)</span>
+                Weekly muscle gain = Gain rate (kg/mo) ÷ 4.33<br>
+                Weekly energy needed = Weekly gain × 2,500 kcal × 1.4 overhead<br>
+                Daily surplus = Weekly energy ÷ 7<br>
+                <br>
+                Clamped: minimum 50 kcal, maximum 500 kcal<br>
+                <br>
+                Example: 0.6 kg/mo → 0.14 kg/week → 490 kcal/week → ~70 kcal/day surplus
+            </div>
+
+            <p>This rate-matched approach is inspired by the recommendations of Helms et al., who suggest that lean bulking surpluses should be 200–300 kcal for beginners and scale down as training advancement increases <span class="cite" title="Helms, E.R., et al. (2014). Journal of the International Society of Sports Nutrition, 11, 20. doi:10.1186/1550-2783-11-20">[12]</span>. The key insight is that a beginner who can gain 1 kg of muscle per month needs a larger surplus than an advanced lifter gaining 0.15 kg per month. A fixed surplus for the advanced lifter would simply convert the excess into fat.</p>
+
+            <div class="note-box">
+                <strong>Safety floor:</strong> Calories never drop below 1,500 kcal/day for men or 1,200 kcal/day for women, regardless of deficit calculations. If the floor is triggered, the calculator extends the timeline instead.
+            </div>
+        </div>
+
+        <!-- ============================== -->
+        <!-- STEP 6: PROTEIN -->
+        <!-- ============================== -->
+        <div class="card">
+            <div class="section-header">
+                <span class="step-number">6</span>
+                <span class="section-title">Daily Protein</span>
+            </div>
+
+            <p>Protein targets are calculated per kilogram of <strong>lean body mass</strong> — not total body weight. This prevents over-prescription for people with higher body fat percentages, where the extra weight is adipose tissue that doesn't require protein for maintenance.</p>
+
+            <div class="expert-citation">
+                <div class="expert-header">
+                    <div class="expert-avatar">SP</div>
+                    <div>
+                        <span class="expert-name">Dr. Stuart Phillips</span>
+                        <span class="expert-affiliation">McMaster University, Kinesiology</span>
+                    </div>
+                </div>
+                <div class="expert-quote">Current evidence indicates intakes in the range of at least 1.2 to 1.6 g/kg/day of high-quality protein is a more ideal target for achieving optimal health outcomes in adults."</div>
+                <div style="font-size: 0.75rem; color: var(--color-text-muted); margin-top: 6px; padding-left: 42px;">
+                    &mdash; Phillips, S.M., et al., <em>Applied Physiology, Nutrition, and Metabolism</em>, 2016
+                </div>
+            </div>
+
+            <p>The multiplier varies by goal mode. During a calorie deficit, protein requirements increase because the body is more likely to break down muscle for energy, and higher protein intake helps preserve lean mass. This effect was demonstrated clearly in a landmark trial by Longland et al., which showed that participants consuming 2.4 g/kg during a 40% calorie deficit gained 1.2 kg of muscle while losing 4.8 kg of fat — compared to a lower-protein group that gained no muscle <span class="cite" title="Longland, T.M., et al. (2016). American Journal of Clinical Nutrition, 103(3), 738-746. doi:10.3945/ajcn.115.119339">[11]</span>.</p>
+
+            <table class="faq-table">
+                <thead>
+                    <tr>
+                        <th>Goal Mode</th>
+                        <th>Protein (g/kg LBM)</th>
+                        <th>Rationale</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Maintenance</td><td>1.6</td><td>Sufficient for muscle preservation</td></tr>
+                    <tr><td>Mild deficit (fat loss ≤ 0.5 kg/wk)</td><td>2.0</td><td>Elevated to offset catabolic pressure</td></tr>
+                    <tr><td>Moderate deficit (0.5–0.75 kg/wk)</td><td>2.2</td><td>Higher demand during faster loss</td></tr>
+                    <tr><td>Aggressive deficit (&gt; 0.75 kg/wk)</td><td>2.4</td><td>Maximum muscle protection</td></tr>
+                    <tr><td>Recomposition</td><td>2.4</td><td>Simultaneous fat loss + muscle gain demands peak protein</td></tr>
+                    <tr><td>Muscle building (under 40)</td><td>2.0</td><td>Sufficient for MPS in caloric surplus</td></tr>
+                    <tr><td>Muscle building (40–59)</td><td>2.2</td><td>Compensating for mild anabolic resistance</td></tr>
+                    <tr><td>Muscle building (60+)</td><td>2.4</td><td>Overcoming significant anabolic resistance</td></tr>
+                </tbody>
+            </table>
+
+            <p>These values align with the position stands of the International Society of Sports Nutrition (ISSN), which recommends 1.4–2.0 g/kg total body weight for exercising individuals, and up to 3.0 g/kg during energy restriction <span class="cite" title="Jäger, R., et al. (2017). Journal of the International Society of Sports Nutrition, 14, 20. doi:10.1186/s12970-017-0177-8">[13]</span>. A meta-analysis by Morton et al. found that protein intake above 1.6 g/kg/day showed diminishing returns for muscle gain in a surplus, which is why the bulking multiplier for young adults sits at 2.0 g/kg LBM <span class="cite" title="Morton, R.W., et al. (2018). British Journal of Sports Medicine, 52(6), 376-384. doi:10.1136/bjsports-2017-097608">[14]</span>.</p>
+
+            <p><strong>Plant-based adjustment:</strong> Vegetarian and vegan diets receive a 10% and 25% increase respectively. Plant proteins generally have lower digestibility and a less optimal amino acid profile for muscle protein synthesis, as measured by the Digestible Indispensable Amino Acid Score (DIAAS). The adjustment ensures equivalent leucine delivery to the muscle <span class="cite" title="van Vliet, S., et al. (2015). Journal of Nutrition, 145(9), 1981-1991. doi:10.3945/jn.114.204305">[15]</span>.</p>
+
+            <table class="faq-table">
+                <thead>
+                    <tr>
+                        <th>Diet Type</th>
+                        <th>Adjustment</th>
+                        <th>Reason</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Omnivore</td><td>×1.0 (no change)</td><td>High-quality complete proteins</td></tr>
+                    <tr><td>Vegetarian</td><td>×1.10 (+10%)</td><td>Dairy/eggs help, but some plant sources are limiting</td></tr>
+                    <tr><td>Vegan</td><td>×1.25 (+25%)</td><td>Lower DIAAS scores, reduced leucine per gram</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ============================== -->
+        <!-- STEP 7: PER-MEAL DISTRIBUTION -->
+        <!-- ============================== -->
+        <div class="card">
+            <div class="section-header">
+                <span class="step-number">7</span>
+                <span class="section-title">Per-Meal Protein Distribution</span>
+            </div>
+
+            <p>It is not enough to hit a daily protein total — distribution across meals matters. Muscle protein synthesis (MPS) is triggered by a threshold dose of protein at each eating occasion, and that threshold increases with age due to <strong>anabolic resistance</strong> — the blunted muscle-building response to protein that develops as we get older <span class="cite" title="Moore, D.R., et al. (2015). Clinical Nutrition, 34(4), 644-649. doi:10.1016/j.clnu.2014.09.013">[16]</span>.</p>
+
+            <div class="expert-citation">
+                <div class="expert-header">
+                    <div class="expert-avatar">JB</div>
+                    <div>
+                        <span class="expert-name">Dr. Jürgen Bauer</span>
+                        <span class="expert-affiliation">University of Heidelberg, Geriatrics &amp; PROT-AGE Group</span>
+                    </div>
+                </div>
+                <div class="expert-quote">To maintain physical function, older persons require a dietary protein intake of at least 1.0 to 1.2 g/kg body weight per day, and per-meal protein should reach 25–30 g including 2.5–2.8 g of leucine."</div>
+                <div style="font-size: 0.75rem; color: var(--color-text-muted); margin-top: 6px; padding-left: 42px;">
+                    &mdash; Bauer, J., et al., <em>Journal of the American Medical Directors Association</em>, 2013
+                </div>
+            </div>
+
+            <p>The calculator determines a per-meal protein minimum based on your age and lean body mass. If your meals fall below this threshold, your total daily protein may be adequate on paper but suboptimal for actually building or preserving muscle. This is especially critical for older adults, where research from the PROT-AGE expert group shows that the per-meal threshold rises from ~20 g in young adults to ~40 g in those over 70 <span class="cite" title="Bauer, J., et al. (2013). Journal of the American Medical Directors Association, 14(8), 542-559. doi:10.1016/j.jamda.2013.05.021">[17]</span>.</p>
+
+            <table class="faq-table">
+                <thead>
+                    <tr>
+                        <th>Age</th>
+                        <th>Per-Meal Factor (× LBM)</th>
+                        <th>Approx. Threshold</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Under 40</td><td>0.30</td><td>~20 g per meal</td></tr>
+                    <tr><td>40 – 49</td><td>0.40</td><td>~25 g per meal</td></tr>
+                    <tr><td>50 – 59</td><td>0.50</td><td>~30 g per meal</td></tr>
+                    <tr><td>60 – 69</td><td>0.55</td><td>~35 g per meal</td></tr>
+                    <tr><td>70+</td><td>0.60</td><td>~40 g per meal</td></tr>
+                </tbody>
+            </table>
+
+            <div class="formula-box">
+                <span class="label">Per-Meal Calculation</span>
+                Minimum per meal = LBM × Per-meal factor × Diet adjustment<br>
+                Protein from shakes = Shakes × Minimum per meal<br>
+                Protein from meals = (Daily total − Shake protein) ÷ Number of meals<br>
+                Calories per meal = (Total calories − Shake calories) ÷ Number of meals
+            </div>
+
+            <p>Protein shakes are calculated at approximately 5 kcal per gram of protein (accounting for a typical whey isolate with minimal carbs and fat). The remaining protein is distributed evenly across whole-food meals. If per-meal protein drops below the age-adjusted threshold, the calculator warns you to consider adding a shake or reducing the number of meals.</p>
+        </div>
+
+        <!-- ============================== -->
+        <!-- Q&A SECTION -->
+        <!-- ============================== -->
+        <div class="card">
+            <h2 class="qa-heading">Frequently Asked Questions</h2>
+
+            <div class="qa-item">
+                <div class="question">Q: Why does the calculator use lean body mass instead of total weight for protein?</div>
+                <div class="answer">Fat tissue does not require significant protein for maintenance. Calculating protein per kg of total body weight would over-prescribe for someone at 35% body fat and under-prescribe for someone at 12%. Using lean body mass standardizes the recommendation to the tissue that actually needs protein — your muscles, organs, and connective tissue. This approach is consistent with recent position stands from the ESPEN expert group for clinical populations <span class="cite" title="Deutz, N.E., et al. (2014). Clinical Nutrition, 33(6), 929-936">[18]</span>.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">Q: How accurate is the Katch-McArdle formula compared to other BMR equations?</div>
+                <div class="answer">All BMR equations are estimates — individual variation of 5–15% is normal. Katch-McArdle tends to be more accurate than Harris-Benedict or Mifflin-St Jeor when body fat percentage is known, because it accounts for the metabolic difference between fat and lean tissue. If you know your body composition (from a DEXA scan, for example), Katch-McArdle is the better choice. If you only know your height, weight, and age, Mifflin-St Jeor may perform comparably.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">Q: What is body recomposition, and can it really work?</div>
+                <div class="answer">Recomposition means losing fat while gaining muscle simultaneously, typically at a stable body weight. The traditional view was that this required either a surplus (to build) or a deficit (to lose), making simultaneous change impossible. Research has since shown that recomp is achievable — particularly for beginners, those returning from a training break, and individuals with higher body fat who have ample energy stores. The Longland et al. 2016 trial demonstrated this convincingly: high protein (2.4 g/kg) combined with resistance training produced simultaneous muscle gain and fat loss even in a calorie deficit <span class="cite" title="Longland, T.M., et al. (2016). American Journal of Clinical Nutrition, 103(3), 738-746. doi:10.3945/ajcn.115.119339">[11]</span>. The calculator sets recomp at maintenance calories, where your existing fat stores supply the energy needed for muscle-building.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">Q: Why doesn't the muscle-building mode use a fixed 500 kcal surplus?</div>
+                <div class="answer">A 500 kcal surplus would work well for a young beginner who can gain nearly 1 kg of muscle per month. But for an intermediate or advanced lifter gaining 0.15 kg per month, a 500 kcal surplus would result in the vast majority of extra energy being stored as fat. The calculator's rate-matched surplus derives the daily surplus from your actual muscle gain rate, so the energy you consume matches the energy your body can use for tissue building. This approach is recommended by Helms and Israetel for natural athletes <span class="cite" title="Helms, E.R., et al. (2014). Journal of the International Society of Sports Nutrition, 11, 20. doi:10.1186/1550-2783-11-20">[12]</span>.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">Q: I'm over 50 — can I still build meaningful muscle?</div>
+                <div class="answer">Yes, but the rate will be slower. Anabolic resistance — the blunted response to protein and exercise that comes with age — is real but not absolute. Research consistently shows that older adults respond to resistance training with measurable muscle hypertrophy, provided protein intake is sufficient (the per-meal threshold is higher, around 30–40 g) and training stimulus is adequate <span class="cite" title="Phillips, S.M. (2016). Sports Medicine, 46, 1-8. doi:10.1007/s40279-015-0373-y">[8]</span>. The calculator applies age modifiers to set realistic expectations: a 60-year-old may gain muscle at roughly 40% of a 25-year-old's rate, but gains are still possible and clinically significant for maintaining independence and reducing fall risk.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">Q: Why does the calculator cap fat loss rate based on body fat percentage?</div>
+                <div class="answer">Leaner individuals have less stored energy available per day. Attempting to lose weight at the same absolute rate as someone at a higher body fat percentage risks excessive muscle loss. The body-fat-scaled formula (BF% ÷ 20 = weekly % body weight loss) ensures that the deficit scales down as you get leaner. At 30% body fat, you can safely lose ~1.5% of body weight per week; at 12% body fat, the safe rate drops to ~0.6%. Research in elite athletes confirms that slower rates of loss (0.7% per week) preserve lean mass significantly better than faster rates <span class="cite" title="Garthe, I., et al. (2011). International Journal of Sport Nutrition and Exercise Metabolism, 21(2), 97-104. doi:10.1123/ijsnem.21.2.97">[9]</span>. The calculator enforces a hard ceiling of 1 kg/week and a floor of 0.25 kg/week.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">Q: What is FFMI and why should I care about it?</div>
+                <div class="answer">FFMI (Fat-Free Mass Index) is to muscularity what BMI is to overall size — it normalizes your lean mass for your height. A 90 kg lean person who is 190 cm tall has a very different physique than a 90 kg lean person at 170 cm. FFMI lets the calculator estimate how close you are to your natural muscular potential, which directly affects your expected rate of muscle gain. It was validated by Kouri et al. using data from natural and steroid-using bodybuilders <span class="cite" title="Kouri, E.M., et al. (1995). Clinical Journal of Sport Medicine, 5(4), 223-228">[3]</span>.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">Q: Do vegans really need 25% more protein?</div>
+                <div class="answer">The adjustment compensates for two factors: lower digestibility and a less favorable amino acid profile (particularly leucine, the key amino acid for triggering muscle protein synthesis). The Digestible Indispensable Amino Acid Score (DIAAS) for most plant sources falls below animal sources. The 25% increase brings the effective protein — the amount that reaches and stimulates muscle — roughly in line with an omnivore diet <span class="cite" title="van Vliet, S., et al. (2015). Journal of Nutrition, 145(9), 1981-1991. doi:10.3945/jn.114.204305">[15]</span>. That said, some plant proteins (soy, pea protein isolate) have scores closer to animal sources, and combining complementary plant proteins can improve overall amino acid balance.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">Q: Why are there different calorie strategies for different goals?</div>
+                <div class="answer">Each goal demands a different energy environment. Fat loss requires a deficit to force the body to use stored energy. Muscle building requires a surplus to provide raw materials and signaling for tissue construction. Recomposition works at maintenance because body fat stores serve as an internal energy reservoir — you are simultaneously losing fat (releasing energy) and building muscle (using that energy). Trying to build muscle in a large deficit or lose fat in a large surplus would work against your goal in each case.</div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question">Q: How should I use these numbers in practice?</div>
+                <div class="answer">Treat the calculator's output as a starting point. Track your weight, body measurements, and performance for 2–3 weeks and adjust. If you are losing weight faster than projected, increase calories slightly. If weight isn't changing but your goal is fat loss, decrease by 100–200 kcal. The protein target is more fixed — hit it consistently. For personalized guidance, consider working with a qualified nutritionist or using the coaching program for expert support.</div>
+            </div>
+        </div>
+
+        <!-- ============================== -->
+        <!-- REFERENCES -->
+        <!-- ============================== -->
+        <div class="card">
+            <h2>References</h2>
+
+            <p class="reference">[1] Katch, F.I., & McArdle, W.D. (1996). "Validity of body composition prediction equations for college men and women." <em>American Journal of Clinical Nutrition</em>, 25(1), 28-35. <a href="https://pubmed.ncbi.nlm.nih.gov/1115020/" target="_blank">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></p>
+
+            <p class="reference">[2] Harris, J.A., & Benedict, F.G. (1918). "A biometric study of human basal metabolism." <em>Proceedings of the National Academy of Sciences</em>, 4(12), 370-373. <a href="https://doi.org/10.1073/pnas.4.12.370" target="_blank">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></p>
+
+            <p class="reference">[3] Kouri, E.M., Pope, H.G., Katz, D.L., & Oliva, P. (1995). "Fat-free mass index in users and nonusers of anabolic-androgenic steroids." <em>Clinical Journal of Sport Medicine</em>, 5(4), 223-228. <a href="https://doi.org/10.1097/00042752-199510000-00003" target="_blank">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></p>
+
+            <p class="reference">[4] Schutz, Y., Kyle, U.U.G., & Pichard, C. (2002). "Fat-free mass index and fat mass index percentiles in Caucasians aged 18-98 y." <em>International Journal of Obesity</em>, 26(7), 953-960. <a href="https://doi.org/10.1038/sj.ijo.0802037" target="_blank">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></p>
+
+            <p class="reference">[6] Mitchell, W.K., Williams, J., Atherton, P., Larvin, M., Lund, J., & Narici, M. (2012). "Sarcopenia, dynapenia, and the impact of advancing age on human skeletal muscle size and strength." <em>Frontiers in Physiology</em>, 3, 260. <a href="https://doi.org/10.3389/fphys.2012.00260" target="_blank">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></p>
+
+            <p class="reference">[7] Aragon, A.A. (2020). <em>The Aragon Model for Rates of Muscle Gain.</em> In: Aragon's Applied Nutrition for Healthy Performance. (Book)</p>
+
+            <p class="reference">[8] Phillips, S.M. (2016). "The impact of protein quality on the promotion of resistance exercise-induced changes in muscle mass." <em>Nutrition & Metabolism</em>, 13, 64. <a href="https://doi.org/10.1186/s12986-016-0124-8" target="_blank">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></p>
+
+            <p class="reference">[9] Garthe, I., Raastad, T., Refsnes, P.E., Koivisto, A., & Sundgot-Borgen, J. (2011). "Effect of two different weight-loss rates on body composition and strength and power-related performance in elite athletes." <em>International Journal of Sport Nutrition and Exercise Metabolism</em>, 21(2), 97-104. <a href="https://doi.org/10.1123/ijsnem.21.2.97" target="_blank">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></p>
+
+            <p class="reference">[10] Hall, K.D. (2008). "What is the required energy deficit per unit weight loss?" <em>International Journal of Obesity</em>, 32(3), 573-576. <a href="https://doi.org/10.1038/sj.ijo.0803720" target="_blank">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></p>
+
+            <p class="reference">[11] Longland, T.M., Oikawa, S.Y., Mitchell, C.J., Devries, M.C., & Phillips, S.M. (2016). "Higher compared with lower dietary protein during an energy deficit combined with intense exercise promotes greater lean mass gain and fat mass loss." <em>American Journal of Clinical Nutrition</em>, 103(3), 738-746. <a href="https://doi.org/10.3945/ajcn.115.119339" target="_blank">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></p>
+
+            <p class="reference">[12] Helms, E.R., Aragon, A.A., & Fitschen, P.J. (2014). "Evidence-based recommendations for natural bodybuilding contest preparation: nutrition and supplementation." <em>Journal of the International Society of Sports Nutrition</em>, 11, 20. <a href="https://doi.org/10.1186/1550-2783-11-20" target="_blank">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></p>
+
+            <p class="reference">[13] Jäger, R., Kerksick, C.M., Campbell, B.I., et al. (2017). "International Society of Sports Nutrition position stand: protein and exercise." <em>Journal of the International Society of Sports Nutrition</em>, 14, 20. <a href="https://doi.org/10.1186/s12970-017-0177-8" target="_blank">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></p>
+
+            <p class="reference">[14] Morton, R.W., Murphy, K.T., McKellar, S.R., et al. (2018). "A systematic review, meta-analysis and meta-regression of the effect of protein supplementation on resistance training-induced gains in muscle mass and strength in healthy adults." <em>British Journal of Sports Medicine</em>, 52(6), 376-384. <a href="https://doi.org/10.1136/bjsports-2017-097608" target="_blank">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></p>
+
+            <p class="reference">[15] van Vliet, S., Burd, N.A., & van Loon, L.J.C. (2015). "The skeletal muscle anabolic response to plant- versus animal-based protein consumption." <em>Journal of Nutrition</em>, 145(9), 1981-1991. <a href="https://doi.org/10.3945/jn.114.204305" target="_blank">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></p>
+
+            <p class="reference">[16] Moore, D.R., Churchward-Venne, T.A., Witard, O., et al. (2015). "Protein ingestion to stimulate myofibrillar protein synthesis requires greater relative protein intakes in healthy older versus younger men." <em>The Journals of Gerontology Series A</em>, 70(1), 57-62. <a href="https://doi.org/10.1093/gerona/glu103" target="_blank">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></p>
+
+            <p class="reference">[17] Bauer, J., Biolo, G., Cederholm, T., et al. (2013). "Evidence-based recommendations for optimal dietary protein intake in older people: a position paper from the PROT-AGE Study Group." <em>Journal of the American Medical Directors Association</em>, 14(8), 542-559. <a href="https://doi.org/10.1016/j.jamda.2013.05.021" target="_blank">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></p>
+
+            <p class="reference">[18] Deutz, N.E., Bauer, J.M., Barazzoni, R., et al. (2014). "Protein intake and exercise for optimal muscle function with aging: recommendations from the ESPEN Expert Group." <em>Clinical Nutrition</em>, 33(6), 929-936. <a href="https://doi.org/10.1016/j.clnu.2014.04.007" target="_blank">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></p>
+
+            <p class="reference">[19] Clasey, J.L., Kanaley, J.A., Wideman, L., et al. (1999). "Validity of methods of body composition assessment in young and older men and women." <em>Journal of Applied Physiology</em>, 86(5), 1728-1738. <a href="https://doi.org/10.1152/jappl.1999.86.5.1728" target="_blank">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a></p>
+        </div>
+
+        <div class="back-bar">
+            <a href="nutrition-calculator.html" class="btn btn-primary btn-full">Back to Calculator</a>
+        </div>
+
+        <p class="text-center text-muted mt-16" style="font-size: 0.85rem; margin-bottom: 24px;">
+            Last updated: February 2026 &bull; Based on peer-reviewed research
+        </p>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
