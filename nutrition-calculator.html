@@ -69,8 +69,8 @@
             justify-content: center;
             width: 20px;
             height: 20px;
-            background: var(--color-teal-light);
-            color: var(--color-teal);
+            background: var(--color-teal);
+            color: white;
             border-radius: var(--radius-full);
             font-size: 0.7rem;
             font-weight: 600;
@@ -80,8 +80,7 @@
         }
 
         .help-link-inline:hover {
-            background: var(--color-teal);
-            color: white;
+            opacity: 0.85;
             text-decoration: none;
         }
 
@@ -536,7 +535,7 @@
                     <option value="vegetarian">Vegetarian</option>
                     <option value="vegan">Vegan</option>
                 </select>
-                <p class="input-hint">Plant protein is less bioavailable — vegetarian and vegan targets are adjusted upward automatically.</p>
+                <p class="input-hint">Vegan protein targets are adjusted +25% to compensate for lower bioavailability. Vegetarian diets with dairy/eggs need no adjustment.</p>
             </div>
         </div>
 
@@ -594,7 +593,7 @@
                         <option value="1">1 shake</option>
                         <option value="2">2 shakes</option>
                     </select>
-                    <p class="input-hint">Shake protein is adjusted by age. Remaining protein is split evenly across meals.</p>
+                    <p class="input-hint">Each shake meets your age-adjusted minimum dose for optimal muscle protein synthesis. Remaining protein is split evenly across meals.</p>
                 </div>
             </div>
 
@@ -871,9 +870,11 @@
             return 0.30;
         }
 
+        // Diet adjustment: only vegans need a protein uplift.
+        // Lacto-ovo vegetarians have access to whey, eggs, casein (DIAAS ≥ 1.0)
+        // so no adjustment is needed when dairy/eggs are part of the diet.
         function getDietFactor(diet) {
             if (diet === 'vegan') return 1.25;
-            if (diet === 'vegetarian') return 1.10;
             return 1.0;
         }
 
