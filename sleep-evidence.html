@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Sleep FAQ - LongevityPath</title>
+
+    <!-- Shared Brand Styles (includes Inter font) -->
+    <link rel="stylesheet" href="brand.css">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="back-btn"><i data-lucide="arrow-left" style="width:20px;height:20px;"></i></a>
+        <span class="header-title">Sleep FAQ</span>
+        <span class="user-badge" id="userBadge"><i data-lucide="user" style="width:12px;height:12px;"></i> <span id="userNameBadge">User</span></span>
+    </header>
+
+    <div class="container-evidence">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="index.html">LongevityPath</a>
+            <span>/</span>
+            <a href="index.html">Sleep</a>
+            <span>/</span>
+            Evidence &amp; FAQ
+        </div>
+
+        <!-- Marketing CTA -->
+        <div class="marketing-cta" id="marketingCta">
+            <div class="marketing-cta-title">How Well Are You Sleeping?</div>
+            <div class="marketing-cta-text">Take our free assessment to evaluate your sleep duration, regularity, and quality — three pillars of restorative sleep linked to longevity.</div>
+            <a href="index.html" class="marketing-cta-button">
+                <i data-lucide="play" style="width:16px;height:16px;"></i> Start Free Assessment
+            </a>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 1: Score below 25%
+             ============================================ -->
+        <div class="faq-card" id="q1">
+            <div class="faq-header" onclick="toggleFaq('q1')">
+                <div class="faq-header-content">
+                    <h1 class="faq-question-title">I scored below 25% on sleep — what health risks am I facing?</h1>
+                    <div class="faq-meta">
+                        <span>4 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 3 studies</span>
+                    </div>
+                    <div class="faq-preview">Poor sleep raises mortality risk by 12–48%, weakens immune defenses, and accelerates cardiovascular and cognitive decline — but these risks are reversible with targeted improvements...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Short sleep (<7 hours) is associated with a <strong>12% increase in all-cause mortality</strong>, while the most irregular sleepers face <strong>20–48% higher mortality risk</strong> compared to the most regular sleepers. Poor sleep also impairs immune function, cardiovascular health, and cognitive performance. The encouraging news: sleep is one of the most modifiable longevity factors.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    Sleep is not merely rest — it is an active process critical for immune regulation, cardiovascular repair, and memory consolidation. The American Heart Association now recognizes sleep as one of "Life's Essential 8" for cardiovascular health. A major meta-analysis quantified the mortality risk of insufficient sleep:
+                </p>
+
+                <!-- Study Citation: Cappuccio et al. 2010 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge">Meta-Analysis</span>
+                        <span class="study-journal">published in Sleep</span>
+                    </div>
+                    <div class="study-title">Sleep Duration and All-Cause Mortality: A Systematic Review and Meta-Analysis of Prospective Studies</div>
+                    <div class="study-meta">Cappuccio et al., 2010 · 16 studies, n=1,382,999 · DOI: 10.1093/sleep/33.5.585</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Short sleep duration was associated with a <strong>12% greater risk of death</strong> (RR 1.12, 95% CI 1.06–1.18). Long sleep (≥9 h) carried a <strong>30% greater risk</strong> (RR 1.30, 95% CI 1.22–1.38), forming a U-shaped mortality curve with 7 hours as optimal.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/20469800/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    Beyond duration, sleep regularity — how consistently you go to bed and wake up at the same time — has emerged as an even stronger predictor of mortality:
+                </p>
+
+                <!-- Study Citation: Windred et al. 2024 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge cohort">Prospective Cohort</span>
+                        <span class="study-journal">published in Sleep</span>
+                    </div>
+                    <div class="study-title">Sleep Regularity Is a Stronger Predictor of Mortality Risk Than Sleep Duration</div>
+                    <div class="study-meta">Windred et al., 2024 · n=60,977 · DOI: 10.1093/sleep/zsad253</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> The most regular sleepers had <strong>20–48% lower all-cause mortality</strong> compared to the least regular sleepers. Sleep regularity was a <strong>stronger predictor of mortality than sleep duration</strong> across all analyses.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/37738616/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    Poor sleep also undermines immune function. A comprehensive review found that sleep deprivation alters both innate and adaptive immune parameters, creating a chronic inflammatory state and increasing vulnerability to respiratory infections, cardiometabolic disease, and neurodegenerative conditions:
+                </p>
+
+                <!-- Study Citation: Garbarino et al. 2021 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge review">Review</span>
+                        <span class="study-journal">published in Communications Biology</span>
+                    </div>
+                    <div class="study-title">Role of Sleep Deprivation in Immune-Related Disease Risk and Outcomes</div>
+                    <div class="study-meta">Garbarino et al., 2021 · DOI: 10.1038/s42003-021-02825-4</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Sleep deprivation is associated with alterations in immune cell counts and inflammatory markers, leading to increased risk of infections, cardiovascular disease, metabolic disorders, and neurodegenerative conditions.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/34795404/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">The Good News</div>
+                    <div class="tip-box-text">
+                        Unlike many health risk factors, sleep responds quickly to intervention. Improving your sleep schedule consistency and duration can yield measurable health benefits within weeks. Even small changes — going to bed 30 minutes earlier or keeping a more regular schedule — compound into meaningful longevity gains over time.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 2: Score above 75%
+             ============================================ -->
+        <div class="faq-card" id="q2">
+            <div class="faq-header" onclick="toggleFaq('q2')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">I scored above 75% — what benefits am I getting from good sleep?</h2>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 2 studies</span>
+                    </div>
+                    <div class="faq-preview">Consistently good sleep protects your heart, sharpens your mind, strengthens your immune system, and is associated with substantially lower mortality risk...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Regular, sufficient sleep (7–8 hours with consistent timing) is associated with <strong>20–48% lower mortality risk</strong>, stronger immune function, better cardiovascular health, and preserved cognitive performance into older age. You're investing in one of the most powerful longevity habits available.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    Good sleep does far more than prevent disease — it actively promotes health across every organ system. The Windred et al. study found that the most regular sleepers had the lowest all-cause mortality risk, even after adjusting for sleep duration, age, sex, BMI, and numerous other confounders [1]. The American Heart Association's scientific statement on multidimensional sleep health underscores that optimal sleep — encompassing duration, regularity, quality, timing, and efficiency — is independently associated with lower cardiovascular risk, better metabolic health, and reduced inflammation [2].
+                </p>
+
+                <p class="prose">
+                    The cognitive benefits are equally compelling. Sleep is essential for memory consolidation, emotional regulation, and cognitive flexibility. Well-rested adults consistently outperform sleep-restricted peers on attention, decision-making, and creative problem-solving tasks. Over decades, maintaining good sleep habits may help protect against age-related cognitive decline.
+                </p>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Keep It Up</div>
+                    <div class="tip-box-text">
+                        Your strong sleep score reflects habits that compound over decades. The key now is consistency — maintaining your sleep schedule even on weekends and during travel. Sleep regularity may matter even more than duration for long-term health outcomes.
+                    </div>
+                </div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Windred, D.P., et al. (2024). "Sleep Regularity Is a Stronger Predictor of Mortality Risk Than Sleep Duration." Sleep, 47(1), zsad253. doi:<a href="https://doi.org/10.1093/sleep/zsad253" target="_blank">10.1093/sleep/zsad253</a></div>
+                    <div class="study-ref">[2] St-Onge, M.-P., et al. (2025). "Multidimensional Sleep Health: Definitions and Implications for Cardiometabolic Health." Circulation: Cardiovascular Quality and Outcomes, 18(5), e000139. doi:<a href="https://doi.org/10.1161/HCQ.0000000000000139" target="_blank">10.1161/HCQ.0000000000000139</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 3: Why regularity matters more than duration
+             ============================================ -->
+        <div class="faq-card" id="q3">
+            <div class="faq-header" onclick="toggleFaq('q3')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Why does sleep regularity matter more than sleep duration?</h2>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 2 studies</span>
+                    </div>
+                    <div class="faq-preview">A landmark UK Biobank study with nearly 61,000 participants found that the consistency of your sleep schedule predicts mortality risk more strongly than how many hours you sleep...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Your body runs on a circadian clock that regulates hormone release, immune function, and metabolic processes on a ~24-hour cycle. Irregular sleep disrupts this clock. A study of 60,977 adults found that <strong>sleep regularity predicted mortality more strongly than sleep duration</strong> — even after accounting for how long people slept.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    The Sleep Regularity Index (SRI) — which measures the consistency of sleep-wake patterns — was developed as an objective metric using accelerometer data from wrist-worn devices. When Windred et al. applied it to UK Biobank participants, they found a dose-response relationship: more regular sleep was consistently associated with lower mortality risk across all causes of death, including cardiovascular and cancer mortality.
+                </p>
+
+                <!-- Study Citation: Windred et al. 2024 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge cohort">Prospective Cohort</span>
+                        <span class="study-journal">published in Sleep</span>
+                    </div>
+                    <div class="study-title">Sleep Regularity Is a Stronger Predictor of Mortality Risk Than Sleep Duration</div>
+                    <div class="study-meta">Windred et al., 2024 · n=60,977 · DOI: 10.1093/sleep/zsad253</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Sleep regularity remained a significant mortality predictor even when sleep duration was added to the model, but adding duration to a regularity model did not significantly improve prediction. This demonstrates that <strong>regularity captures mortality-relevant information that duration alone misses</strong>.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/37738616/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    The biological explanation centers on circadian alignment. When you sleep at consistent times, your internal clock synchronizes hormone secretion (cortisol, melatonin, growth hormone), immune cell cycling, and metabolic processes. Irregular sleep creates a state similar to chronic jet lag, where these systems are perpetually out of sync — leading to systemic inflammation, metabolic disruption, and impaired immune surveillance.
+                </p>
+
+                <p class="prose">
+                    This is why our assessment scores sleep regularity as its own question, separate from duration. Even if you sleep 7–8 hours per night, doing so on a wildly irregular schedule may undermine much of the benefit. Conversely, keeping a highly consistent schedule — even with slightly shorter sleep — appears to offer meaningful protection.
+                </p>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 4: Is 6 hours enough?
+             ============================================ -->
+        <div class="faq-card" id="q4">
+            <div class="faq-header" onclick="toggleFaq('q4')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Is 6 hours of sleep enough if I feel fine?</h2>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 2 studies</span>
+                    </div>
+                    <div class="faq-preview">Feeling fine on 6 hours is deceptive — research shows that people adapt subjectively to sleep loss while their cognitive performance continues to decline...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Probably not. A landmark study showed that <strong>people who sleep 6 hours per night for 14 days perform as poorly as someone who has been completely sleep-deprived for 2 days</strong> — yet they rate themselves as only mildly sleepy. Your brain adapts to feeling less tired, but the cognitive impairment keeps accumulating.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    One of the most insidious aspects of chronic sleep restriction is that subjective sleepiness plateaus after a few days, creating the illusion that you've adapted. But objective measures of cognitive performance tell a different story:
+                </p>
+
+                <!-- Study Citation: Van Dongen et al. 2003 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge rct">Controlled Trial</span>
+                        <span class="study-journal">published in Sleep</span>
+                    </div>
+                    <div class="study-title">The Cumulative Cost of Additional Wakefulness: Dose-Response Effects on Neurobehavioral Functions and Sleep Physiology</div>
+                    <div class="study-meta">Van Dongen et al., 2003 · n=48 · DOI: 10.1093/sleep/26.2.117</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> After 14 days of 6-hour sleep, participants showed cognitive deficits equivalent to <strong>2 nights of total sleep deprivation</strong>. Critically, <strong>subjective sleepiness ratings plateaued after a few days</strong> even as objective performance continued to decline — participants were unaware of their growing impairment.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/12683469/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    From a longevity perspective, the Cappuccio et al. meta-analysis found that sleeping less than 7 hours is associated with a 12% higher mortality risk. While a small minority of people carry a genetic variant (DEC2 gene) that allows them to function on less sleep, this is exceptionally rare — estimated at less than 1% of the population. The vast majority of people who believe they function well on 6 hours are experiencing the subjective adaptation described by Van Dongen: they've simply stopped noticing the impairment.
+                </p>
+
+                <div class="warning-box">
+                    <div class="warning-box-label">Worth Considering</div>
+                    <div class="warning-box-text">
+                        If you consistently sleep 6 hours and feel fine, try an experiment: sleep 7–8 hours nightly for two weeks and notice if your focus, mood, or energy improve. Many people are surprised to discover they were functioning below their true baseline.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 5: Wearable sleep score accuracy
+             ============================================ -->
+        <div class="faq-card" id="q5">
+            <div class="faq-header" onclick="toggleFaq('q5')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">How accurate are wearable sleep scores?</h2>
+                    <div class="faq-meta">
+                        <span>4 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 3 studies</span>
+                    </div>
+                    <div class="faq-preview">Wearables detect sleep vs. wake with over 90% accuracy, but sleep stage classification is less reliable. Their real value lies in tracking your trends over time...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Even if your wearable's absolute sleep score isn't perfectly accurate, it will <strong>reliably show your improvement over time</strong> because the measurement error stays consistent. This is why we ask for a 30-day average — it smooths out night-to-night noise and gives you a stable trend. For precise values, a clinical sleep study (polysomnography) is the gold standard.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    Validation studies comparing consumer wearables to polysomnography (PSG) — the clinical gold standard — show a consistent pattern: wearables are good at detecting whether you're asleep or awake (sensitivity >90%), but less reliable at classifying specific sleep stages (light, deep, REM).
+                </p>
+
+                <!-- Study Citation: Schyvens et al. 2025 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge validation">Validation Study</span>
+                        <span class="study-journal">published in SLEEP Advances</span>
+                    </div>
+                    <div class="study-title">Performance Validation of Six Commercial Wrist-Worn Wearable Sleep-Tracking Devices Compared to Polysomnography</div>
+                    <div class="study-meta">Schyvens et al., 2025 · n=62 · DOI: 10.1093/sleepadvances/zpaf021</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> All six wearable devices detected <strong>>90% of sleep epochs</strong> (high sensitivity), but sleep stage classification showed only fair to moderate agreement with PSG. Cohen's kappa ranged from <strong>0.41 to 0.53</strong> across devices, compared to 0.75 for expert human sleep scorers.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/40303381/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <!-- Study Citation: Lee et al. 2023 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge validation">Validation Study</span>
+                        <span class="study-journal">published in JMIR mHealth and uHealth</span>
+                    </div>
+                    <div class="study-title">Accuracy of 11 Wearable, Nearable, and Airable Consumer Sleep Trackers</div>
+                    <div class="study-meta">Lee et al., 2023 · 11 devices tested · DOI: 10.2196/50983</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Among wearables, sleep stage classification agreement (Cohen's κ) ranged from <strong>fair (0.2–0.4) to moderate (0.4–0.6)</strong> depending on the device. No consumer device achieved substantial agreement (κ >0.6) with PSG for sleep staging.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/37917155/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    Device accuracy continues to evolve with each new hardware and firmware generation, so specific accuracy figures change rapidly. What remains stable is the underlying principle: wearables are useful trend-tracking tools, not diagnostic instruments.
+                </p>
+
+                <div class="warning-box">
+                    <div class="warning-box-label">Why We Use a 30-Day Average</div>
+                    <div class="warning-box-text">
+                        A single night's sleep score is noisy — influenced by alcohol, stress, illness, or simply wearing the device differently. Averaging over 30 days (aligned with the validated PSQI assessment window) smooths out these fluctuations and gives you a much more reliable picture of your actual sleep health. Most wearable apps display this average natively.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 6: Sleeping too much
+             ============================================ -->
+        <div class="faq-card" id="q6">
+            <div class="faq-header" onclick="toggleFaq('q6')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Does sleeping too much indicate a health problem?</h2>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 2 studies</span>
+                    </div>
+                    <div class="faq-preview">Consistently sleeping 9+ hours is associated with 30–39% higher mortality — but this likely reflects underlying health conditions rather than a direct harm of long sleep itself...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Regularly sleeping 9 or more hours is associated with a <strong>30–39% higher all-cause mortality risk</strong>. However, the leading explanation is that long sleep serves as a <strong>marker of underlying disease</strong> — not that sleeping long directly causes harm. If you consistently need 9+ hours, it may be worth investigating with your physician.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    The association between long sleep and increased mortality has been consistently found across multiple large meta-analyses. The Cappuccio et al. meta-analysis found a 30% increased risk (RR 1.30), while a more recent meta-analysis by Jike et al. found a 39% increase (RR 1.39) for long sleepers [1].
+                </p>
+
+                <p class="prose">
+                    However, researchers increasingly believe this represents reverse causation rather than a direct causal pathway. The Jike et al. meta-analysis notes that long sleep may reflect underlying systemic disease, increased sleep fragmentation (spending more time in bed but sleeping poorly), subclinical conditions not yet diagnosed, depression, or chronic inflammation [1]. In other words, the disease process may cause the long sleep, rather than long sleep causing disease.
+                </p>
+
+                <p class="prose">
+                    This is why our scoring follows the U-shaped curve: both very short and very long sleep receive lower scores, with 7–8 hours as optimal. If you consistently sleep 9+ hours despite good sleep hygiene and still feel unrefreshed, consider discussing this with your doctor to rule out conditions like sleep apnea, hypothyroidism, depression, or other underlying factors.
+                </p>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Jike, M., et al. (2018). "Long Sleep Duration and Health Outcomes: A Systematic Review, Meta-Analysis and Meta-Regression." Sleep Medicine Reviews, 39, 25–36. doi:<a href="https://doi.org/10.1016/j.smrv.2017.06.011" target="_blank">10.1016/j.smrv.2017.06.011</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 7: Weekend catch-up sleep
+             ============================================ -->
+        <div class="faq-card" id="q7">
+            <div class="faq-header" onclick="toggleFaq('q7')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Can I "catch up" on sleep during weekends?</h2>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 2 studies</span>
+                    </div>
+                    <div class="faq-preview">Weekend catch-up sleep may offer partial recovery, but it comes at a cost — social jet lag disrupts your circadian rhythm and is linked to cardiometabolic risk...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Evidence is mixed. Some studies suggest weekend catch-up sleep may partially offset health risks, but the resulting <strong>"social jet lag"</strong> — the shift in sleep timing between workdays and free days — is itself associated with <strong>increased cardiovascular risk and metabolic disruption</strong>. A consistent schedule across all 7 days is the strongest approach.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    "Social jet lag" describes the discrepancy between your body's circadian rhythm and your social schedule. If you sleep midnight–6am on weekdays but 2am–10am on weekends, you're essentially giving yourself a 2-hour jet lag every Monday. Epidemiological research associates social jet lag with increased risk of obesity, type 2 diabetes, and cardiovascular disease, with risk increasing for each additional hour of discrepancy [1].
+                </p>
+
+                <p class="prose">
+                    A device-measured study in UK Biobank participants found that weekend catch-up sleep was not significantly associated with reduced mortality or cardiovascular disease risk, challenging the assumption that weekend recovery can fully compensate for workweek sleep debt [2]. While a Brazilian cohort study (ELSA-Brasil) did find some cardiovascular benefit from weekend extension, the overall evidence suggests that prevention — sleeping consistently well across all days — is far more effective than compensation.
+                </p>
+
+                <p class="prose">
+                    This is a key reason our assessment measures sleep regularity separately from duration. Someone who sleeps 6 hours on weekdays and 10 hours on weekends may average 7.1 hours per night — which looks fine by duration alone — but the irregular pattern carries its own health costs. Aiming for a consistent schedule (±30 minutes) is more protective than trying to bank or recover sleep.
+                </p>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Caliandro, R., et al. (2021). "Social Jetlag and Related Risks for Human Health: A Timely Review." Nutrients, 13(12), 4543. doi:<a href="https://doi.org/10.3390/nu13124543" target="_blank">10.3390/nu13124543</a></div>
+                    <div class="study-ref">[2] Chaput, J.-P., et al. (2024). "Device-Measured Weekend Catch-Up Sleep, Mortality, and Cardiovascular Disease Incidence in Adults." Sleep, 47(11), zsae135. doi:<a href="https://doi.org/10.1093/sleep/zsae135" target="_blank">10.1093/sleep/zsae135</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 8: Sleep supplements
+             ============================================ -->
+        <div class="faq-card" id="q8">
+            <div class="faq-header" onclick="toggleFaq('q8')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Do sleep supplements actually work? What does the evidence say?</h2>
+                    <div class="faq-meta">
+                        <span>5 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 5 studies</span>
+                    </div>
+                    <div class="faq-preview">Magnesium has stronger evidence than melatonin, ashwagandha shows promise for stress-related insomnia, and glycine works through a unique cooling mechanism. Here's what the science actually supports...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Behavioral interventions (consistent schedule, caffeine timing, CBT-I) outperform all supplements. Among supplements, <strong>magnesium</strong> has the strongest evidence — reducing sleep onset by ~17 minutes in older adults. <strong>Ashwagandha</strong> (≥600 mg/day) shows small but significant improvements, especially for stress-related sleep issues. <strong>Glycine</strong> (3 g) lowers core temperature to promote sleep onset. <strong>Melatonin</strong> has the most modest effect (~7 min faster onset) but is useful for circadian timing issues like jet lag.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    <strong>1. Magnesium — strongest supplement evidence.</strong> A systematic review and meta-analysis of older adults found that magnesium supplementation significantly improved sleep quality, reducing sleep onset latency by approximately 17 minutes [1]. A 2023 systematic review confirmed the association between magnesium status and sleep quality, noting that ~50% of adults in Western diets are magnesium-deficient — meaning supplementation may partly correct an underlying nutritional gap rather than acting as a sleep drug [2]. Typical effective dose: 200–400 mg magnesium glycinate or threonate before bed.
+                </p>
+
+                <!-- Study Citation: Mah & Pitre 2021 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge">Meta-Analysis</span>
+                        <span class="study-journal">published in BMC Complementary Medicine and Therapies</span>
+                    </div>
+                    <div class="study-title">Oral Magnesium Supplementation for Insomnia in Older Adults: A Systematic Review &amp; Meta-Analysis</div>
+                    <div class="study-meta">Mah &amp; Pitre, 2021 · 3 RCTs, n=151 · DOI: 10.1186/s12906-021-03297-z</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Magnesium supplementation significantly <strong>improved subjective sleep quality</strong> (PSQI scores) and <strong>reduced sleep onset latency</strong> in older adults compared to placebo. Effect sizes were larger than those reported for melatonin.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/33865376/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    <strong>2. Ashwagandha — promising for stress-related sleep issues.</strong> A meta-analysis of 5 RCTs (n=400) found ashwagandha extract produced a small but significant improvement in overall sleep quality (SMD −0.59) [3]. A 2024 update confirmed improvements in sleep onset latency, total sleep time, and PSQI scores [4]. Effects were strongest at ≥600 mg/day for ≥8 weeks and in those with diagnosed insomnia. The dual mechanism — cortisol reduction plus GABAergic activity — makes it particularly suitable when poor sleep is driven by stress or anxiety.
+                </p>
+
+                <p class="prose">
+                    <strong>3. Glycine — works through body temperature.</strong> Taking 3 g of glycine before bedtime activates NMDA receptors in the brain's circadian clock, triggering peripheral vasodilation that lowers core body temperature — mimicking the natural cooling signal for sleep onset. Multiple small RCTs found improved subjective sleep quality and next-day alertness [5]. A 2024 systematic review acknowledged promise but flagged high risk of bias due to small sample sizes.
+                </p>
+
+                <p class="prose">
+                    <strong>4. Melatonin — useful for timing, not power.</strong> Melatonin is not a sedative — it's a circadian signaling hormone. Meta-analyses show it reduces sleep onset by about 7 minutes and increases total sleep by about 8 minutes. Evidence suggests taking it earlier (up to 3 hours before bedtime) at doses of 1–5 mg is most effective. Its best use case is circadian realignment: jet lag, shift work, or delayed sleep phase disorder.
+                </p>
+
+                <div class="warning-box">
+                    <div class="warning-box-label">Important Context</div>
+                    <div class="warning-box-text">
+                        All sleep supplements have smaller effect sizes than behavioral interventions like consistent scheduling, caffeine timing, and CBT-I. Supplements work best as an adjunct to good sleep practices, not as a replacement for them. Consult a healthcare professional before starting any supplement regimen.
+                    </div>
+                </div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Mah, J. &amp; Pitre, T. (2021). "Oral Magnesium Supplementation for Insomnia in Older Adults: A Systematic Review &amp; Meta-Analysis." BMC Complementary Medicine and Therapies, 21, 125. doi:<a href="https://doi.org/10.1186/s12906-021-03297-z" target="_blank">10.1186/s12906-021-03297-z</a></div>
+                    <div class="study-ref">[2] Arab, A., et al. (2023). "The Role of Magnesium in Sleep Health: A Systematic Review of Available Literature." Biological Trace Element Research, 201(1), 121–128. doi:<a href="https://doi.org/10.1007/s12011-022-03162-1" target="_blank">10.1007/s12011-022-03162-1</a></div>
+                    <div class="study-ref">[3] Cheah, K.L., et al. (2021). "Effect of Ashwagandha (Withania somnifera) Extract on Sleep: A Systematic Review and Meta-Analysis." PLoS ONE, 16(9), e0257843. doi:<a href="https://doi.org/10.1371/journal.pone.0257843" target="_blank">10.1371/journal.pone.0257843</a></div>
+                    <div class="study-ref">[4] Fatima, K., et al. (2024). "Safety and Efficacy of Withania somnifera for Anxiety and Insomnia: Systematic Review and Meta-Analysis." Human Psychopharmacology, 39(6), e2911. doi:<a href="https://doi.org/10.1002/hup.2911" target="_blank">10.1002/hup.2911</a></div>
+                    <div class="study-ref">[5] Bannai, M. &amp; Kawai, N. (2012). "New Therapeutic Strategy for Amino Acid Medicine: Glycine Improves the Quality of Sleep." Journal of Pharmacological Sciences, 118(2), 145–148. doi:<a href="https://doi.org/10.1254/jphs.11R04FM" target="_blank">10.1254/jphs.11R04FM</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 9: Evidence-backed practices & routines
+             ============================================ -->
+        <div class="faq-card" id="q9">
+            <div class="faq-header" onclick="toggleFaq('q9')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">What are the most evidence-backed practices to improve my sleep?</h2>
+                    <div class="faq-meta">
+                        <span>5 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 5 studies</span>
+                    </div>
+                    <div class="faq-preview">A consistent schedule, strategic caffeine cutoff, morning light exposure, cool bedroom, a warm shower before bed, and CBT-I for chronic insomnia — ranked by evidence strength...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        The six highest-impact, evidence-backed practices are: <strong>(1) consistent sleep schedule</strong> (±30 min, including weekends), <strong>(2) caffeine cutoff ≥9 hours before bed</strong>, <strong>(3) morning sunlight within 30–60 min of waking</strong>, <strong>(4) cool bedroom (17–20°C) and darkness</strong>, <strong>(5) warm shower/bath 1–2 hours before bed</strong>, and <strong>(6) CBT-I</strong> for persistent insomnia. Every one of these outperforms supplements.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    <strong>1. Consistent sleep schedule.</strong> Based on the Windred et al. findings, regularity is the single most impactful sleep behavior for longevity. Set a fixed bedtime and wake time — including weekends — with no more than 30 minutes of variation. Your circadian clock needs consistent cues to function optimally.
+                </p>
+
+                <p class="prose">
+                    <strong>2. Caffeine timing.</strong> A meta-analysis of 24 studies found that caffeine reduces total sleep time by 45 minutes and deep sleep by 11 minutes. To avoid meaningful sleep disruption, coffee (about 100 mg caffeine) should be consumed at least 8.8 hours before bedtime — and stronger sources like pre-workout supplements at least 13 hours before [1].
+                </p>
+
+                <!-- Study Citation: Gardiner et al. 2023 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge">Meta-Analysis</span>
+                        <span class="study-journal">published in Sleep Medicine Reviews</span>
+                    </div>
+                    <div class="study-title">The Effect of Caffeine on Subsequent Sleep: A Systematic Review and Meta-Analysis</div>
+                    <div class="study-meta">Gardiner et al., 2023 · 24 studies · DOI: 10.1016/j.smrv.2023.101764</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Caffeine reduced total sleep time by <strong>45 minutes</strong> and sleep efficiency by <strong>7%</strong>. Deep sleep decreased by 11 minutes. Coffee should be consumed <strong>≥8.8 hours before bedtime</strong> to avoid significant sleep disruption.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/36870101/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    <strong>3. Morning sunlight exposure.</strong> Viewing bright natural light within 30–60 minutes of waking is one of the strongest circadian cues available. A 2023 systematic review and meta-analysis (22 studies, n=685) found that light therapy significantly improved sleep maintenance — reducing time awake during the night [2]. Even on cloudy days, outdoor light (~10,000 lux) vastly exceeds indoor lighting (~500 lux). Aim for 10–30 minutes of outdoor morning light — this anchors your circadian clock and promotes timely melatonin release ~14 hours later.
+                </p>
+
+                <p class="prose">
+                    <strong>4. Cool, dark bedroom.</strong> A longitudinal study using wearable sensors in older adults found that sleep efficiency was highest between 20–25°C, with a clinically meaningful 5–10% decline above 25°C [3]. Most sleep experts recommend 17–20°C. Darkness is equally critical — even dim light during sleep suppresses melatonin and disrupts circadian signaling.
+                </p>
+
+                <p class="prose">
+                    <strong>5. Warm shower or bath 1–2 hours before bed.</strong> A meta-analysis by Haghayegh et al. found that water-based passive body heating (40–42.5°C) for as little as 10 minutes, timed 1–2 hours before bed, <strong>shortened sleep onset latency by approximately 36%</strong> and improved subjective sleep quality [4]. The mechanism is paradoxical: warming the skin surface triggers vasodilation and subsequent core body temperature drop — the same physiological signal your body uses to initiate sleep.
+                </p>
+
+                <!-- Study Citation: Haghayegh et al. 2019 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge">Meta-Analysis</span>
+                        <span class="study-journal">published in Sleep Medicine Reviews</span>
+                    </div>
+                    <div class="study-title">Before-Bedtime Passive Body Heating by Warm Shower or Bath to Improve Sleep: A Systematic Review and Meta-Analysis</div>
+                    <div class="study-meta">Haghayegh et al., 2019 · 13 studies · DOI: 10.1016/j.smrv.2019.04.008</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Water-based body heating at <strong>40–42.5°C</strong> timed <strong>1–2 hours before bedtime</strong> significantly improved both sleep onset latency and subjective sleep quality. Optimal timing is ~90 minutes before planned sleep.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/31102877/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    <strong>6. CBT-I for chronic insomnia.</strong> If you've struggled with insomnia for more than 3 months, cognitive behavioral therapy for insomnia (CBT-I) is the recommended first-line treatment — ahead of medication. A meta-analysis found that CBT-I produces clinically significant improvements lasting up to 12 months, and unlike medication, the benefits persist after treatment ends [5]. Digital CBT-I programs are increasingly available and have also shown effectiveness.
+                </p>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Gardiner, C., et al. (2023). "The Effect of Caffeine on Subsequent Sleep: A Systematic Review and Meta-Analysis." Sleep Medicine Reviews, 69, 101764. doi:<a href="https://doi.org/10.1016/j.smrv.2023.101764" target="_blank">10.1016/j.smrv.2023.101764</a></div>
+                    <div class="study-ref">[2] Chambe, J., et al. (2023). "Light Therapy in Insomnia Disorder: A Systematic Review and Meta-Analysis." Journal of Sleep Research, 32(6), e13895. doi:<a href="https://doi.org/10.1111/jsr.13895" target="_blank">10.1111/jsr.13895</a></div>
+                    <div class="study-ref">[3] Baniassadi, A., et al. (2023). "Nighttime Ambient Temperature and Sleep in Community-Dwelling Older Adults." Science of the Total Environment, 899, 165623. doi:<a href="https://doi.org/10.1016/j.scitotenv.2023.165623" target="_blank">10.1016/j.scitotenv.2023.165623</a></div>
+                    <div class="study-ref">[4] Haghayegh, S., et al. (2019). "Before-Bedtime Passive Body Heating by Warm Shower or Bath to Improve Sleep: A Systematic Review and Meta-Analysis." Sleep Medicine Reviews, 46, 124–135. doi:<a href="https://doi.org/10.1016/j.smrv.2019.04.008" target="_blank">10.1016/j.smrv.2019.04.008</a></div>
+                    <div class="study-ref">[5] van der Zweerde, T., et al. (2019). "Cognitive Behavioral Therapy for Insomnia: A Meta-Analysis of Long-Term Effects in Controlled Studies." Sleep Medicine Reviews, 48, 101208. doi:<a href="https://doi.org/10.1016/j.smrv.2019.08.002" target="_blank">10.1016/j.smrv.2019.08.002</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 10: Personalized help
+             ============================================ -->
+        <div class="faq-card" id="q10">
+            <div class="faq-header" onclick="toggleFaq('q10')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Where can I get personalized help with this?</h2>
+                    <div class="faq-meta">
+                        <span>1 min read</span>
+                    </div>
+                    <div class="faq-preview">From coaching programs to AI-powered analysis of your scores, several options can help you create a personalized sleep improvement plan...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        This assessment identifies where you stand. For personalized implementation, consider the coaching program for expert guidance, or analyze your complete test results with AI to identify priority areas and create an action plan tailored to your scores.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    Sleep improvement is highly individual — what works depends on your specific patterns, schedule constraints, and underlying factors. A sleep specialist or coach can help identify your personal barriers and design a targeted plan. If you suspect a sleep disorder (persistent insomnia, excessive daytime sleepiness, snoring with pauses, or restless legs), consider discussing a formal sleep evaluation with your physician.
+                </p>
+
+                <p class="prose">
+                    For those with chronic insomnia specifically, CBT-I delivered by a trained therapist is the gold standard treatment. Many sleep clinics and online platforms now offer evidence-based CBT-I programs. Your assessment results provide a baseline to track improvement — revisit the sleep questions periodically to see how interventions are working.
+                </p>
+            </div>
+        </div>
+
+        <!-- Page Footer -->
+        <div class="page-footer">
+            <p>All recommendations based on peer-reviewed research. Last updated February 2026.</p>
+        </div>
+
+        <!-- Footer CTA -->
+        <div class="footer-cta" id="footerCta">
+            <div class="footer-cta-text">Ready to improve your sleep?</div>
+            <a href="index.html" class="footer-cta-button">
+                <i data-lucide="moon" style="width:16px;height:16px;"></i> View Your Sleep Score
+            </a>
+            <div class="footer-cta-meta">Track your progress over time</div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        function toggleFaq(id) {
+            const card = document.getElementById(id);
+            card.classList.toggle('expanded');
+        }
+
+        function openFaqById(id) {
+            const card = document.getElementById(id);
+            if (card && !card.classList.contains('expanded')) {
+                card.classList.add('expanded');
+            }
+        }
+
+        // Handle hash links
+        function handleHashNavigation() {
+            if (window.location.hash) {
+                const targetId = window.location.hash.substring(1);
+                openFaqById(targetId);
+                setTimeout(() => {
+                    const target = document.getElementById(targetId);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 100);
+            }
+        }
+
+        // Run on page load
+        handleHashNavigation();
+
+        // Run on hash change
+        window.addEventListener('hashchange', handleHashNavigation);
+
+        // User status check
+        function checkUserStatus() {
+            const saved = localStorage.getItem('longevityPathData');
+            const marketingCta = document.getElementById('marketingCta');
+            const footerCta = document.getElementById('footerCta');
+            const userBadge = document.getElementById('userBadge');
+            const userNameBadge = document.getElementById('userNameBadge');
+
+            if (saved) {
+                const data = JSON.parse(saved);
+                userBadge.classList.add('visible');
+                userNameBadge.textContent = data.userName || 'User';
+                marketingCta.classList.remove('visible');
+                footerCta.querySelector('.footer-cta-text').textContent = 'Take control of your longevity. See where you stand.';
+                footerCta.querySelector('.footer-cta-button').innerHTML = '<i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back to Assessment';
+                footerCta.querySelector('.footer-cta-meta').textContent = '';
+                lucide.createIcons();
+            } else {
+                marketingCta.classList.add('visible');
+                userBadge.classList.remove('visible');
+            }
+        }
+
+        checkUserStatus();
+    </script>
+</body>
+</html>

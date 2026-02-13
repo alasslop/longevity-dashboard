@@ -153,7 +153,7 @@
 
         .qa-card { background: var(--color-card); border-radius: 12px; padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
         .qa-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-        .qa-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--color-teal); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 600; color: white; }
+        .qa-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--color-border); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 600; color: var(--color-text-muted); }
         .qa-user { font-weight: 500; font-size: 0.85rem; }
         .qa-time { font-size: 0.75rem; color: var(--color-text-muted); }
         .qa-question { font-size: 0.9rem; line-height: 1.5; color: var(--color-text); margin-bottom: 12px; }
@@ -188,7 +188,7 @@
         .step-number { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: var(--color-orange); color: white; border-radius: 50%; font-size: 0.85rem; font-weight: 600; flex-shrink: 0; }
         .section-title-text { font-weight: 600; font-size: 1rem; color: var(--color-text); }
         .section-score { font-size: 0.8rem; color: var(--color-text-muted); margin-left: auto; }
-        .help-link { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; background: var(--color-teal-light); color: var(--color-teal); border-radius: 50%; font-size: 1rem; font-weight: 600; text-decoration: none; margin-left: 6px; }
+        .help-link { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; background: var(--color-teal); color: white; border-radius: 50%; font-size: 1rem; font-weight: 600; text-decoration: none; margin-left: 6px; }
 
         .question-item { padding: 16px; background: var(--color-card); border-radius: 12px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
         .question-label { font-size: 0.95rem; color: var(--color-text); margin-bottom: 12px; font-weight: 500; }
@@ -241,6 +241,34 @@
         .section-score-weighted .max { color: var(--color-text-muted); }
         .section-score-weighted.low .current { color: var(--color-red); }
         .section-score-weighted.not-started .current { color: var(--color-text-muted); }
+
+        /* Number Input */
+        .number-input-group { display: flex; align-items: center; gap: 12px; }
+        .number-input { flex: 1; padding: 12px 14px; border: 2px solid var(--color-border); border-radius: 10px; font-size: 1rem; font-weight: 600; font-family: var(--font-family); color: var(--color-text); background: white; transition: border-color 0.2s, box-shadow 0.2s; -moz-appearance: textfield; }
+        .number-input::-webkit-outer-spin-button, .number-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .number-input:focus { outline: none; border-color: var(--color-orange); box-shadow: 0 0 0 3px rgba(233,160,78,0.15); }
+        .number-input::placeholder { font-weight: 400; color: var(--color-text-muted); font-size: 0.9rem; }
+        .number-unit { font-size: 0.8rem; color: var(--color-text-muted); min-width: 60px; }
+        .norm-rating { padding: 12px 16px; border-radius: 10px; border-left: 4px solid var(--color-teal); background: var(--color-teal-light); margin-top: 12px; }
+        .norm-rating-label { font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 2px; }
+        .norm-rating-value { font-size: 1.1rem; font-weight: 700; color: var(--color-teal); }
+        .norm-rating.low { border-left-color: var(--color-red); background: var(--color-red-light); }
+        .norm-rating.low .norm-rating-value { color: var(--color-red); }
+        .norm-rating.medium { border-left-color: var(--color-orange); background: var(--color-orange-light); }
+        .norm-rating.medium .norm-rating-value { color: #B45309; }
+        .demographics-prompt { padding: 12px 16px; background: var(--color-orange-light); border-radius: 10px; border-left: 4px solid var(--color-orange); margin-top: 12px; font-size: 0.85rem; color: var(--color-text); display: flex; align-items: center; gap: 8px; }
+        .age-hidden { display: none; }
+        .cooper-calc { background: var(--color-card); border: 2px dashed var(--color-border); border-radius: 12px; padding: 16px; margin-top: 12px; }
+        .cooper-calc-title { font-size: 0.85rem; font-weight: 600; color: var(--color-text); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+        .cooper-calc-row { display: flex; align-items: center; gap: 10px; }
+        .cooper-calc-btn { padding: 10px 16px; background: var(--color-teal); color: white; border: none; border-radius: 8px; font-weight: 600; font-size: 0.85rem; cursor: pointer; white-space: nowrap; font-family: var(--font-family); }
+        .cooper-calc-btn:hover { background: #007A4D; }
+        .cooper-calc-result { margin-top: 10px; font-size: 0.9rem; color: var(--color-teal); font-weight: 600; display: none; }
+        .fitness-age { margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(0,0,0,0.06); font-size: 0.95rem; }
+        .fitness-age strong { font-size: 1.3rem; font-weight: 700; }
+        .fitness-age.positive { color: var(--color-teal); }
+        .fitness-age.negative { color: var(--color-red); }
+        .fitness-age.neutral { color: var(--color-text-muted); }
     </style>
 </head>
 <body>
@@ -363,6 +391,195 @@
 
     <script>
         // ========================================
+        // DEMOGRAPHICS HELPER
+        // ========================================
+        function getDemographics() {
+            const age = currentData.answers?.medical?.sec1?.MD1_age;
+            const sex = currentData.answers?.medical?.sec1?.MD1_sex;
+            return { age: age !== null && age !== undefined ? parseInt(age) : null, sex: sex || null };
+        }
+
+        function getAgeBracket(age, brackets) {
+            for (const bracket of brackets) {
+                if (bracket.endsWith('+')) {
+                    if (age >= parseInt(bracket)) return bracket;
+                } else {
+                    const [minStr, maxStr] = bracket.split('-');
+                    if (age >= parseInt(minStr) && age <= parseInt(maxStr)) return bracket;
+                }
+            }
+            // Fallback: use last bracket for very old ages
+            return brackets[brackets.length - 1];
+        }
+
+        function lookupNormScore(normTable, sex, age, value) {
+            if (!sex || age === null || value === null || value === undefined || isNaN(value)) {
+                return { score: 0, category: 'Incomplete', ratingClass: '' };
+            }
+            const genderTable = normTable[sex];
+            if (!genderTable) return { score: 0, category: 'Invalid', ratingClass: '' };
+            const brackets = Object.keys(genderTable);
+            const bracket = getAgeBracket(age, brackets);
+            if (!bracket || !genderTable[bracket]) return { score: 0, category: 'Outside range', ratingClass: '' };
+            const ranges = genderTable[bracket];
+
+            // Find which category the value falls into
+            let catIdx = -1;
+            for (let i = 0; i < ranges.length; i++) {
+                if (value >= ranges[i].min && value <= ranges[i].max) { catIdx = i; break; }
+            }
+            if (catIdx === -1) return { score: 0, category: 'Below minimum', ratingClass: 'low' };
+
+            const r = ranges[catIdx];
+            // Build boundary scores for interpolation
+            // Entry boundary = avg of this category's points and previous category's points
+            // Exit boundary = avg of this category's points and next category's points
+            const prevPts = catIdx > 0 ? ranges[catIdx - 1].points : 0;
+            const nextPts = catIdx < ranges.length - 1 ? ranges[catIdx + 1].points : r.points;
+            const entryScore = (prevPts + r.points) / 2;
+            const exitScore = (r.points + nextPts) / 2;
+
+            // Interpolate within the category range
+            let score;
+            if (r.max >= 999) {
+                // Top category: linear from entryScore toward points, cap at 10
+                const spread = 10; // points above threshold to reach max
+                score = Math.min(10, entryScore + (value - r.min) / spread * (r.points - entryScore));
+            } else {
+                const range = r.max - r.min;
+                const fraction = range > 0 ? (value - r.min) / range : 0.5;
+                score = entryScore + fraction * (exitScore - entryScore);
+            }
+
+            const cls = score <= 1.0 ? 'low' : score <= 5.0 ? 'medium' : '';
+            return { score: score, category: r.category, ratingClass: cls };
+        }
+
+        // ========================================
+        // FITNESS AGE CALCULATION
+        // ========================================
+        function calculateFitnessAge(normTable, sex, value) {
+            if (!sex || value === null || value === undefined || isNaN(value)) return null;
+            const genderTable = normTable[sex];
+            if (!genderTable) return null;
+            const pts = [];
+            for (const bracket of Object.keys(genderTable)) {
+                let ageMid;
+                if (bracket.endsWith('+')) { ageMid = parseInt(bracket) + 5; }
+                else { const p = bracket.split('-'); ageMid = (parseInt(p[0]) + parseInt(p[1])) / 2; }
+                const avg = genderTable[bracket].find(r => r.category === 'Fair' || r.category === 'Average');
+                if (!avg) continue;
+                pts.push({ age: ageMid, avg: (avg.min + avg.max) / 2 });
+            }
+            if (pts.length < 2) return null;
+            pts.sort((a, b) => a.age - b.age);
+            // Higher value → younger fitness age (averages decline with age)
+            if (value >= pts[0].avg) {
+                const s = (pts[1].age - pts[0].age) / (pts[0].avg - pts[1].avg);
+                return Math.max(18, Math.round(pts[0].age - (value - pts[0].avg) * s));
+            }
+            const last = pts[pts.length - 1], prev = pts[pts.length - 2];
+            if (value <= last.avg) {
+                const s = (last.age - prev.age) / (prev.avg - last.avg);
+                return Math.min(100, Math.round(last.age + (last.avg - value) * s));
+            }
+            for (let i = 0; i < pts.length - 1; i++) {
+                if (value <= pts[i].avg && value >= pts[i + 1].avg) {
+                    const ratio = (pts[i].avg - value) / (pts[i].avg - pts[i + 1].avg);
+                    return Math.round(pts[i].age + ratio * (pts[i + 1].age - pts[i].age));
+                }
+            }
+            return null;
+        }
+
+        function buildNormRatingHTML(q, table, demo, value) {
+            const result = lookupNormScore(table, demo.sex, demo.age, parseFloat(value));
+            let ageHTML = '';
+            if (q.fitnessAgeLabel && demo.age !== null) {
+                const fa = calculateFitnessAge(table, demo.sex, parseFloat(value));
+                if (fa !== null) {
+                    const diff = demo.age - fa;
+                    const label = q.fitnessAgeLabel;
+                    if (diff > 2) ageHTML = '<div class="fitness-age positive">' + label + ': <strong>' + fa + '</strong> (' + diff + ' years younger)</div>';
+                    else if (diff < -2) ageHTML = '<div class="fitness-age negative">' + label + ': <strong>' + fa + '</strong> (' + Math.abs(diff) + ' years older — trainable at any age)</div>';
+                    else ageHTML = '<div class="fitness-age neutral">' + label + ': <strong>' + fa + '</strong> (matches your age)</div>';
+                }
+            }
+            return '<div class="norm-rating ' + result.ratingClass + '">' +
+                '<div class="norm-rating-label">Your rating (' + demo.sex + ', age ' + demo.age + ')</div>' +
+                '<div class="norm-rating-value">' + result.category + ' — ' + Math.round(result.score * 10) + '%</div>' +
+                ageHTML + '</div>';
+        }
+
+        // ========================================
+        // COOPER INSTITUTE VO2MAX NORMS
+        // ========================================
+        const VO2MAX_NORMS = {
+            male: {
+                '20-29': [{min:0,max:38.2,points:0,category:'Very Poor'},{min:38.3,max:41.9,points:1,category:'Poor'},{min:42.0,max:45.5,points:5,category:'Fair'},{min:45.6,max:51.0,points:7,category:'Good'},{min:51.1,max:55.9,points:9,category:'Excellent'},{min:56.0,max:999,points:10,category:'Superior'}],
+                '30-39': [{min:0,max:34.4,points:0,category:'Very Poor'},{min:34.5,max:38.3,points:1,category:'Poor'},{min:38.4,max:42.3,points:5,category:'Fair'},{min:42.4,max:47.3,points:7,category:'Good'},{min:47.4,max:52.4,points:9,category:'Excellent'},{min:52.5,max:999,points:10,category:'Superior'}],
+                '40-49': [{min:0,max:30.7,points:0,category:'Very Poor'},{min:30.8,max:34.5,points:1,category:'Poor'},{min:34.6,max:38.3,points:5,category:'Fair'},{min:38.4,max:44.1,points:7,category:'Good'},{min:44.2,max:49.9,points:9,category:'Excellent'},{min:50.0,max:999,points:10,category:'Superior'}],
+                '50-59': [{min:0,max:27.0,points:0,category:'Very Poor'},{min:27.1,max:30.8,points:1,category:'Poor'},{min:30.9,max:35.1,points:5,category:'Fair'},{min:35.2,max:40.9,points:7,category:'Good'},{min:41.0,max:45.8,points:9,category:'Excellent'},{min:45.9,max:999,points:10,category:'Superior'}],
+                '60-69': [{min:0,max:23.3,points:0,category:'Very Poor'},{min:23.4,max:27.1,points:1,category:'Poor'},{min:27.2,max:31.4,points:5,category:'Fair'},{min:31.5,max:37.2,points:7,category:'Good'},{min:37.3,max:43.0,points:9,category:'Excellent'},{min:43.1,max:999,points:10,category:'Superior'}],
+                '70+': [{min:0,max:19.6,points:0,category:'Very Poor'},{min:19.7,max:23.3,points:1,category:'Poor'},{min:23.4,max:27.6,points:5,category:'Fair'},{min:27.7,max:33.4,points:7,category:'Good'},{min:33.5,max:39.2,points:9,category:'Excellent'},{min:39.3,max:999,points:10,category:'Superior'}]
+            },
+            female: {
+                '20-29': [{min:0,max:27.9,points:0,category:'Very Poor'},{min:28.0,max:31.3,points:1,category:'Poor'},{min:31.4,max:35.1,points:5,category:'Fair'},{min:35.2,max:40.9,points:7,category:'Good'},{min:41.0,max:45.8,points:9,category:'Excellent'},{min:45.9,max:999,points:10,category:'Superior'}],
+                '30-39': [{min:0,max:26.4,points:0,category:'Very Poor'},{min:26.5,max:29.8,points:1,category:'Poor'},{min:29.9,max:33.7,points:5,category:'Fair'},{min:33.8,max:39.4,points:7,category:'Good'},{min:39.5,max:44.2,points:9,category:'Excellent'},{min:44.3,max:999,points:10,category:'Superior'}],
+                '40-49': [{min:0,max:24.3,points:0,category:'Very Poor'},{min:24.4,max:27.6,points:1,category:'Poor'},{min:27.7,max:31.4,points:5,category:'Fair'},{min:31.5,max:37.2,points:7,category:'Good'},{min:37.3,max:42.3,points:9,category:'Excellent'},{min:42.4,max:999,points:10,category:'Superior'}],
+                '50-59': [{min:0,max:22.6,points:0,category:'Very Poor'},{min:22.7,max:25.9,points:1,category:'Poor'},{min:26.0,max:29.7,points:5,category:'Fair'},{min:29.8,max:35.6,points:7,category:'Good'},{min:35.7,max:40.9,points:9,category:'Excellent'},{min:41.0,max:999,points:10,category:'Superior'}],
+                '60-69': [{min:0,max:20.0,points:0,category:'Very Poor'},{min:20.1,max:23.4,points:1,category:'Poor'},{min:23.5,max:27.2,points:5,category:'Fair'},{min:27.3,max:33.0,points:7,category:'Good'},{min:33.1,max:37.9,points:9,category:'Excellent'},{min:38.0,max:999,points:10,category:'Superior'}],
+                '70+': [{min:0,max:17.4,points:0,category:'Very Poor'},{min:17.5,max:20.7,points:1,category:'Poor'},{min:20.8,max:24.4,points:5,category:'Fair'},{min:24.5,max:30.2,points:7,category:'Good'},{min:30.3,max:35.1,points:9,category:'Excellent'},{min:35.2,max:999,points:10,category:'Superior'}]
+            }
+        };
+
+        // ========================================
+        // CSEP PUSH-UP NORMS
+        // ========================================
+        const PUSHUP_NORMS = {
+            male: {
+                '20-29': [{min:0,max:16,points:0,category:'Poor'},{min:17,max:22,points:2,category:'Below Average'},{min:23,max:28,points:5,category:'Average'},{min:29,max:38,points:8,category:'Good'},{min:39,max:999,points:10,category:'Excellent'}],
+                '30-39': [{min:0,max:15,points:0,category:'Poor'},{min:16,max:21,points:2,category:'Below Average'},{min:22,max:28,points:5,category:'Average'},{min:29,max:35,points:8,category:'Good'},{min:36,max:999,points:10,category:'Excellent'}],
+                '40-49': [{min:0,max:11,points:0,category:'Poor'},{min:12,max:16,points:2,category:'Below Average'},{min:17,max:21,points:5,category:'Average'},{min:22,max:29,points:8,category:'Good'},{min:30,max:999,points:10,category:'Excellent'}],
+                '50-59': [{min:0,max:9,points:0,category:'Poor'},{min:10,max:12,points:2,category:'Below Average'},{min:13,max:16,points:5,category:'Average'},{min:17,max:24,points:8,category:'Good'},{min:25,max:999,points:10,category:'Excellent'}],
+                '60-69': [{min:0,max:6,points:0,category:'Poor'},{min:7,max:9,points:2,category:'Below Average'},{min:10,max:12,points:5,category:'Average'},{min:13,max:20,points:8,category:'Good'},{min:21,max:999,points:10,category:'Excellent'}],
+                '70+': [{min:0,max:4,points:0,category:'Poor'},{min:5,max:7,points:2,category:'Below Average'},{min:8,max:10,points:5,category:'Average'},{min:11,max:17,points:8,category:'Good'},{min:18,max:999,points:10,category:'Excellent'}]
+            },
+            female: {
+                '20-29': [{min:0,max:11,points:0,category:'Poor'},{min:12,max:17,points:2,category:'Below Average'},{min:18,max:24,points:5,category:'Average'},{min:25,max:34,points:8,category:'Good'},{min:35,max:999,points:10,category:'Excellent'}],
+                '30-39': [{min:0,max:9,points:0,category:'Poor'},{min:10,max:16,points:2,category:'Below Average'},{min:17,max:24,points:5,category:'Average'},{min:25,max:33,points:8,category:'Good'},{min:34,max:999,points:10,category:'Excellent'}],
+                '40-49': [{min:0,max:7,points:0,category:'Poor'},{min:8,max:13,points:2,category:'Below Average'},{min:14,max:20,points:5,category:'Average'},{min:21,max:28,points:8,category:'Good'},{min:29,max:999,points:10,category:'Excellent'}],
+                '50-59': [{min:0,max:5,points:0,category:'Poor'},{min:6,max:10,points:2,category:'Below Average'},{min:11,max:16,points:5,category:'Average'},{min:17,max:24,points:8,category:'Good'},{min:25,max:999,points:10,category:'Excellent'}],
+                '60-69': [{min:0,max:4,points:0,category:'Poor'},{min:5,max:9,points:2,category:'Below Average'},{min:10,max:15,points:5,category:'Average'},{min:16,max:22,points:8,category:'Good'},{min:23,max:999,points:10,category:'Excellent'}],
+                '70+': [{min:0,max:3,points:0,category:'Poor'},{min:4,max:8,points:2,category:'Below Average'},{min:9,max:14,points:5,category:'Average'},{min:15,max:20,points:8,category:'Good'},{min:21,max:999,points:10,category:'Excellent'}]
+            }
+        };
+
+        // ========================================
+        // CHAIR STAND NORMS (60+ only)
+        // ========================================
+        const CHAIRSTAND_NORMS = {
+            male: {
+                '60-64': [{min:0,max:11,points:0,category:'Below Average'},{min:12,max:13,points:2,category:'Average'},{min:14,max:16,points:5,category:'Above Average'},{min:17,max:19,points:8,category:'Good'},{min:20,max:999,points:10,category:'Very Good'}],
+                '65-69': [{min:0,max:10,points:0,category:'Below Average'},{min:11,max:12,points:2,category:'Average'},{min:13,max:15,points:5,category:'Above Average'},{min:16,max:18,points:8,category:'Good'},{min:19,max:999,points:10,category:'Very Good'}],
+                '70-74': [{min:0,max:9,points:0,category:'Below Average'},{min:10,max:11,points:2,category:'Average'},{min:12,max:14,points:5,category:'Above Average'},{min:15,max:17,points:8,category:'Good'},{min:18,max:999,points:10,category:'Very Good'}],
+                '75-79': [{min:0,max:8,points:0,category:'Below Average'},{min:9,max:10,points:2,category:'Average'},{min:11,max:13,points:5,category:'Above Average'},{min:14,max:16,points:8,category:'Good'},{min:17,max:999,points:10,category:'Very Good'}],
+                '80-84': [{min:0,max:7,points:0,category:'Below Average'},{min:8,max:9,points:2,category:'Average'},{min:10,max:12,points:5,category:'Above Average'},{min:13,max:15,points:8,category:'Good'},{min:16,max:999,points:10,category:'Very Good'}],
+                '85-89': [{min:0,max:6,points:0,category:'Below Average'},{min:7,max:8,points:2,category:'Average'},{min:9,max:11,points:5,category:'Above Average'},{min:12,max:14,points:8,category:'Good'},{min:15,max:999,points:10,category:'Very Good'}],
+                '90+': [{min:0,max:5,points:0,category:'Below Average'},{min:6,max:7,points:2,category:'Average'},{min:8,max:10,points:5,category:'Above Average'},{min:11,max:13,points:8,category:'Good'},{min:14,max:999,points:10,category:'Very Good'}]
+            },
+            female: {
+                '60-64': [{min:0,max:10,points:0,category:'Below Average'},{min:11,max:12,points:2,category:'Average'},{min:13,max:15,points:5,category:'Above Average'},{min:16,max:18,points:8,category:'Good'},{min:19,max:999,points:10,category:'Very Good'}],
+                '65-69': [{min:0,max:9,points:0,category:'Below Average'},{min:10,max:11,points:2,category:'Average'},{min:12,max:14,points:5,category:'Above Average'},{min:15,max:17,points:8,category:'Good'},{min:18,max:999,points:10,category:'Very Good'}],
+                '70-74': [{min:0,max:8,points:0,category:'Below Average'},{min:9,max:10,points:2,category:'Average'},{min:11,max:13,points:5,category:'Above Average'},{min:14,max:16,points:8,category:'Good'},{min:17,max:999,points:10,category:'Very Good'}],
+                '75-79': [{min:0,max:7,points:0,category:'Below Average'},{min:8,max:9,points:2,category:'Average'},{min:10,max:12,points:5,category:'Above Average'},{min:13,max:15,points:8,category:'Good'},{min:16,max:999,points:10,category:'Very Good'}],
+                '80-84': [{min:0,max:6,points:0,category:'Below Average'},{min:7,max:8,points:2,category:'Average'},{min:9,max:11,points:5,category:'Above Average'},{min:12,max:14,points:8,category:'Good'},{min:15,max:999,points:10,category:'Very Good'}],
+                '85-89': [{min:0,max:5,points:0,category:'Below Average'},{min:6,max:7,points:2,category:'Average'},{min:8,max:10,points:5,category:'Above Average'},{min:11,max:13,points:8,category:'Good'},{min:14,max:999,points:10,category:'Very Good'}],
+                '90+': [{min:0,max:4,points:0,category:'Below Average'},{min:5,max:6,points:2,category:'Average'},{min:7,max:9,points:5,category:'Above Average'},{min:10,max:12,points:8,category:'Good'},{min:13,max:999,points:10,category:'Very Good'}]
+            }
+        };
+
+        // ========================================
         // CATEGORY CONFIGURATION (6 Dimensions)
         // ========================================
         const CATEGORIES = {
@@ -372,6 +589,9 @@
                     sec1: {
                         title: "Health Checkups", weight: 0.5,
                         questions: [
+                            { id: "MD1_age", question: "What is your age?", hint: "Used for age-specific fitness norms across all sections", type: "number", min: 18, max: 120, step: 1, unit: "years" },
+                            { id: "MD1_sex", question: "What is your biological sex?", hint: "Used for sex-specific fitness norms (push-up standards, VO2max tables)", type: "radio",
+                              options: [{ value: "male", label: "Male" }, { value: "female", label: "Female" }] },
                             { id: "MD1_1", question: "When was your last comprehensive health checkup?", type: "radio",
                               options: [{ value: "10", label: "Within the last year", points: 10 }, { value: "7", label: "1-2 years ago", points: 7 }, { value: "4", label: "2-3 years ago", points: 4 }, { value: "0", label: "More than 3 years ago", points: 0 }] },
                             { id: "MD1_2", question: "Do you know your key health numbers? (Blood pressure, cholesterol, blood sugar)", type: "radio",
@@ -429,21 +649,23 @@
                 }
             },
             energy: {
-                name: 'Energy', icon: 'zap',
+                name: 'Energy & Performance', icon: 'zap',
                 sections: {
                     sec1: {
-                        title: "Daily Energy", weight: 0.5,
+                        title: "VO2max / Aerobic Capacity", weight: 0.5, helpLink: "vo2max-evidence.html",
+                        description: "Cardiorespiratory fitness is one of the strongest predictors of longevity. Enter your VO2max from a wearable, the Cooper Test, or a lab test.",
                         questions: [
-                            { id: "E1_1", question: "How would you rate your energy level throughout the day?", hint: "Rate from 1 (exhausted) to 10 (full of energy)", type: "slider", min: 1, max: 10 },
-                            { id: "E1_2", question: "How often do you feel exhausted?", type: "radio",
-                              options: [{ value: "10", label: "Rarely or never", points: 10 }, { value: "7", label: "Sometimes (1-2x per week)", points: 7 }, { value: "4", label: "Often (3-4x per week)", points: 4 }, { value: "0", label: "Daily", points: 0 }] }
+                            { id: "E1_vo2", question: "What is your VO2max?", hint: "Enter in ml/kg/min. Check your fitness watch, or use the Cooper Test calculator below.", type: "number", min: 5, max: 100, step: 0.1, unit: "ml/kg/min", normsTable: 'VO2MAX_NORMS', cooperCalc: true, fitnessAgeLabel: 'VO2max age' },
+                            { id: "E1_method", question: "How did you measure your VO2max?", hint: "Informational only — does not affect your score", type: "radio",
+                              options: [{ value: "wearable", label: "Wearable device (Apple Watch, Garmin, etc.)" }, { value: "cooper", label: "Cooper 12-minute run test" }, { value: "lab", label: "Laboratory test (metabolic cart)" }] }
                         ]
                     },
                     sec2: {
-                        title: "Physical Activity", weight: 0.5,
+                        title: "Muscle Strength", weight: 0.5, helpLink: "muscle-strength-evidence.html",
+                        description: "Muscle strength predicts functional independence and longevity. Complete one or both tests below.",
                         questions: [
-                            { id: "E2_1", question: "How many minutes of exercise per day on average?", type: "radio",
-                              options: [{ value: "10", label: "60+ minutes", points: 10 }, { value: "8", label: "45-60 minutes", points: 8 }, { value: "6", label: "30-45 minutes", points: 6 }, { value: "4", label: "15-30 minutes", points: 4 }, { value: "0", label: "Less than 15 minutes", points: 0 }] }
+                            { id: "E2_pushups", question: "How many consecutive push-ups can you complete?", hint: "Men: standard (from toes). Women: modified (from knees). Maintain proper form throughout.", type: "number", min: 0, max: 200, step: 1, unit: "reps", normsTable: 'PUSHUP_NORMS', fitnessAgeLabel: 'Strength age' },
+                            { id: "E2_chair", question: "How many chair stands can you do in 30 seconds?", hint: "Stand fully from a chair and sit back down. Count complete cycles. This test is for ages 60+.", type: "number", min: 0, max: 50, step: 1, unit: "reps", normsTable: 'CHAIRSTAND_NORMS', ageMin: 60, fitnessAgeLabel: 'Functional age' }
                         ]
                     }
                 }
@@ -452,18 +674,28 @@
                 name: 'Sleep', icon: 'moon',
                 sections: {
                     sec1: {
-                        title: "Sleep Quality", weight: 0.5,
+                        title: "Sleep Duration & Regularity", weight: 0.35, helpLink: "sleep-evidence.html",
                         questions: [
-                            { id: "SS1_1", question: "How many hours of sleep do you get per night?", type: "radio",
-                              options: [{ value: "10", label: "7-9 hours", points: 10 }, { value: "7", label: "6-7 hours", points: 7 }, { value: "4", label: "5-6 hours", points: 4 }, { value: "0", label: "Less than 5 hours", points: 0 }] },
-                            { id: "SS1_2", question: "How would you rate your sleep quality?", hint: "Rate from 1 (terrible) to 10 (excellent)", type: "slider", min: 1, max: 10 }
+                            { id: "SS1_1", question: "How many hours of sleep do you typically get per night?", hint: "Average over the past month", type: "radio",
+                              options: [{ value: "10", label: "7–8 hours", points: 10 }, { value: "7", label: "6–7 or 8–9 hours", points: 7 }, { value: "4", label: "5–6 or 9–10 hours", points: 4 }, { value: "0", label: "Less than 5 or more than 10 hours", points: 0 }] },
+                            { id: "SS1_2", question: "How consistent is your sleep schedule?", hint: "Same bedtime and wake time each day", type: "radio",
+                              options: [{ value: "10", label: "Very consistent (±30 min)", points: 10 }, { value: "7", label: "Fairly consistent (±1 hour)", points: 7 }, { value: "4", label: "Somewhat irregular (±2 hours)", points: 4 }, { value: "0", label: "Highly irregular (varies widely)", points: 0 }] }
                         ]
                     },
                     sec2: {
-                        title: "Stress Management", weight: 0.5,
+                        title: "Sleep Quality", weight: 0.35, helpLink: "sleep-evidence.html",
                         questions: [
-                            { id: "SS2_1", question: "How stressed do you feel on a typical day?", type: "radio",
-                              options: [{ value: "10", label: "Rarely stressed", points: 10 }, { value: "7", label: "Mildly stressed", points: 7 }, { value: "4", label: "Moderately stressed", points: 4 }, { value: "0", label: "Highly stressed", points: 0 }] }
+                            { id: "SS2_1", question: "How would you rate your overall sleep quality?", hint: "Over the past month — 1 (terrible) to 10 (excellent)", type: "slider", min: 1, max: 10 },
+                            { id: "SS2_2", question: "How often do you wake up feeling rested and refreshed?", type: "radio",
+                              options: [{ value: "10", label: "Every day or almost every day", points: 10 }, { value: "7", label: "Most days", points: 7 }, { value: "4", label: "Some days", points: 4 }, { value: "0", label: "Rarely or never", points: 0 }] },
+                            { id: "SS2_3", question: "How often do you have trouble falling or staying asleep?", type: "radio",
+                              options: [{ value: "10", label: "Rarely or never", points: 10 }, { value: "7", label: "Occasionally (1–2 nights/week)", points: 7 }, { value: "4", label: "Frequently (3–4 nights/week)", points: 4 }, { value: "0", label: "Almost every night", points: 0 }] }
+                        ]
+                    },
+                    sec3: {
+                        title: "Wearable Sleep Score", weight: 0.30, helpLink: "sleep-evidence.html#q5",
+                        questions: [
+                            { id: "SS3_1", question: "What is your average wearable sleep score?", hint: "30-day average from your wearable app (0–100). Leave blank if you don't use a sleep tracker.", type: "number", min: 0, max: 100, unit: "/ 100", inputMin: 0, inputMax: 100, step: 1 }
                         ]
                     }
                 }
@@ -472,16 +704,23 @@
                 name: 'Wellbeing', icon: 'smile',
                 sections: {
                     sec1: {
-                        title: "Life Satisfaction", weight: 0.5,
+                        title: "Life Satisfaction", weight: 0.35,
                         questions: [
                             { id: "W1_1", question: "How satisfied are you with your life overall?", hint: "Rate from 1 (not at all) to 10 (extremely satisfied)", type: "slider", min: 1, max: 10 }
                         ]
                     },
                     sec2: {
-                        title: "Social Connection", weight: 0.5,
+                        title: "Social Connection", weight: 0.35,
                         questions: [
                             { id: "W2_1", question: "Quality of your social relationships?", type: "radio",
                               options: [{ value: "10", label: "Excellent - strong support network", points: 10 }, { value: "7", label: "Good - regular meaningful connections", points: 7 }, { value: "4", label: "Fair - some connections but could be better", points: 4 }, { value: "0", label: "Poor - feeling isolated", points: 0 }] }
+                        ]
+                    },
+                    sec3: {
+                        title: "Stress Management", weight: 0.30,
+                        questions: [
+                            { id: "W3_1", question: "How stressed do you feel on a typical day?", type: "radio",
+                              options: [{ value: "10", label: "Rarely stressed", points: 10 }, { value: "7", label: "Mildly stressed", points: 7 }, { value: "4", label: "Moderately stressed", points: 4 }, { value: "0", label: "Highly stressed", points: 0 }] }
                         ]
                     }
                 }
@@ -529,6 +768,7 @@
                             if (q.type === 'slider') currentData.answers[catKey][secKey][q.id] = 1; // Start at minimum
                             else if (q.type === 'radio') currentData.answers[catKey][secKey][q.id] = null; // No selection
                             else if (q.type === 'checkbox') currentData.answers[catKey][secKey][q.id] = [];
+                            else if (q.type === 'number') currentData.answers[catKey][secKey][q.id] = null;
                         }
                     });
                 });
@@ -545,17 +785,44 @@
             const section = CATEGORIES[catKey].sections[secKey];
             const answers = currentData.answers[catKey]?.[secKey] || {};
             let totalScore = 0, maxScore = 0;
+            const demo = getDemographics();
 
             section.questions.forEach(q => {
                 const value = answers[q.id];
-                if (q.type === 'slider') { totalScore += (parseFloat(value) || q.min) - 1; maxScore += 9; }
-                else if (q.type === 'radio' && q.options[0].points !== undefined) {
-                    // null means unanswered = 0 points
+                if (q.type === 'slider') {
+                    totalScore += (parseFloat(value) || q.min) - 1;
+                    maxScore += 9;
+                } else if (q.type === 'radio' && q.options?.[0]?.points !== undefined) {
                     totalScore += value !== null ? (parseFloat(value) || 0) : 0;
                     maxScore += 10;
+                } else if (q.type === 'checkbox' && q.scoring === 'count') {
+                    const count = Array.isArray(value) ? value.length : 0;
+                    totalScore += (count / q.options.length) * 10;
+                    maxScore += 10;
+                } else if (q.type === 'checkbox' && q.scoring === 'principles') {
+                    const count = Array.isArray(value) ? value.length : 0;
+                    totalScore += count * 2;
+                    maxScore += 10;
+                } else if (q.type === 'number' && q.normsTable) {
+                    // Age-gated question: skip entirely if under minimum age
+                    if (q.ageMin && demo.age !== null && demo.age < q.ageMin) return;
+                    if (q.ageMin && demo.age === null) return; // Can't evaluate without age
+                    const table = q.normsTable === 'VO2MAX_NORMS' ? VO2MAX_NORMS : q.normsTable === 'PUSHUP_NORMS' ? PUSHUP_NORMS : q.normsTable === 'CHAIRSTAND_NORMS' ? CHAIRSTAND_NORMS : null;
+                    if (table && value !== null && value !== undefined && value !== '') {
+                        const result = lookupNormScore(table, demo.sex, demo.age, parseFloat(value));
+                        totalScore += result.score;
+                        maxScore += 10; // Only count answered tests toward max
+                    }
+                } else if (q.type === 'number' && q.inputMin !== undefined && q.inputMax !== undefined) {
+                    // Linear scoring for 0-100 inputs (e.g. wearable sleep score)
+                    if (value !== null && value !== undefined && value !== '') {
+                        const v = parseFloat(value);
+                        const score = ((v - q.inputMin) / (q.inputMax - q.inputMin)) * 10;
+                        totalScore += Math.max(0, Math.min(10, score));
+                        maxScore += 10; // Only count if answered
+                    }
                 }
-                else if (q.type === 'checkbox' && q.scoring === 'count') { const count = Array.isArray(value) ? value.length : 0; totalScore += (count / q.options.length) * 10; maxScore += 10; }
-                else if (q.type === 'checkbox' && q.scoring === 'principles') { const count = Array.isArray(value) ? value.length : 0; totalScore += count * 2; maxScore += 10; }
+                // radio without points (sex, method) and number without normsTable/inputRange (age) are skipped
             });
             return maxScore > 0 ? (totalScore / maxScore) * 10 : 0;
         }
@@ -565,10 +832,27 @@
             let weightedSum = 0, totalWeight = 0;
             Object.keys(category.sections).forEach(secKey => {
                 const section = category.sections[secKey];
-                weightedSum += calculateSectionScore(catKey, secKey) * section.weight;
-                totalWeight += section.weight;
+                const secScore = calculateSectionScore(catKey, secKey);
+                // Only count section if it has at least one answered question
+                if (sectionHasAnswers(catKey, secKey)) {
+                    weightedSum += secScore * section.weight;
+                    totalWeight += section.weight;
+                }
             });
             return totalWeight > 0 ? weightedSum / totalWeight : 0;
+        }
+
+        function sectionHasAnswers(catKey, secKey) {
+            const section = CATEGORIES[catKey].sections[secKey];
+            const answers = currentData.answers[catKey]?.[secKey] || {};
+            return section.questions.some(q => {
+                const v = answers[q.id];
+                if (q.type === 'number') return v !== null && v !== undefined && v !== '';
+                if (q.type === 'radio') return v !== null;
+                if (q.type === 'slider') return true; // sliders always have a value (min default)
+                if (q.type === 'checkbox') return Array.isArray(v) && v.length > 0;
+                return false;
+            });
         }
 
         function calculateAllScores() {
@@ -669,7 +953,7 @@
 
             content.innerHTML += `
                 <div class="category-score-header" style="text-align:center;padding:16px;margin-bottom:20px;background:var(--color-card);border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-                    <div style="font-size:2.5rem;font-weight:700;color:var(--color-text);">${score100}<span style="font-size:1rem;color:var(--color-text-muted);">/100</span></div>
+                    <div style="font-size:2.5rem;font-weight:700;color:var(--color-text);"><span id="catScoreValue">${score100}</span><span style="font-size:1rem;color:var(--color-text-muted);">/100</span></div>
                     <div style="font-size:0.9rem;color:var(--color-text-muted);">Total ${category.name} Score</div>
                     ${trend !== 0 ? `<div class="dimension-trend ${trendClass}" style="margin-top:8px;font-size:0.85rem;display:inline-flex;align-items:center;gap:4px;"><i data-lucide="${trendIcon}" style="width:16px;height:16px;"></i> ${trendText}</div>` : ''}
                 </div>
@@ -681,9 +965,9 @@
                 const ctaMessages = {
                     medical: { title: "Know your numbers", text: "Just 1 minute. Find out if your health checkups and screenings are on track for longevity." },
                     nutrition: { title: "How well does your diet support longevity?", text: "Just 2 minutes. Discover your nutrition strengths and find easy wins for a healthier life." },
-                    energy: { title: "Unlock your energy potential", text: "Just 1 minute. See how your daily habits impact your vitality and what you can improve." },
-                    sleep: { title: "Sleep is your superpower", text: "Just 1 minute. Assess your sleep quality and stress levels — key factors for longevity." },
-                    wellbeing: { title: "Measure what matters most", text: "Just 1 minute. Your life satisfaction and social connections play a huge role in healthspan." },
+                    energy: { title: "Measure your fitness for longevity", text: "Enter your VO2max and test your strength. These are among the most powerful predictors of how long and how well you'll live." },
+                    sleep: { title: "Sleep is your superpower", text: "Assess your sleep duration, regularity, and quality — the three pillars of restorative sleep. Optionally add your wearable sleep score." },
+                    wellbeing: { title: "Measure what matters most", text: "Just 1 minute. Your life satisfaction, social connections, and stress management play a huge role in healthspan." },
                     mindset: { title: "Your mindset shapes your health", text: "Just 1 minute. A growth mindset is linked to better health outcomes and longer life." }
                 };
                 const cta = ctaMessages[catKey] || { title: "Get started", text: "Answer a few questions to see your score." };
@@ -725,10 +1009,10 @@
                                     ${badge}
                                 </div>
                                 <div class="section-breakdown-bar">
-                                    <div class="section-breakdown-fill ${fillClass}" style="width: ${percentage}%"></div>
+                                    <div class="section-breakdown-fill ${fillClass}" id="secFill-${secKey}" style="width: ${percentage}%"></div>
                                 </div>
                             </div>
-                            <div class="section-breakdown-score">${weightedScore.toFixed(1)} / ${weightedMax.toFixed(1)}</div>
+                            <div class="section-breakdown-score" id="secBreakScore-${secKey}">${Math.round(percentage)}%</div>
                         </div>`;
                 });
                 breakdownHTML += `</div>`;
@@ -745,6 +1029,7 @@
                 const weightedMax = section.weight * 10;
                 const weightedScore = (sectionScore / 10) * weightedMax;
                 const isLow = sectionScore < 5;
+                const percentage = (sectionScore / 10) * 100;
                 stepNumber++;
 
                 const helpLink = section.helpLink ? `<a href="${section.helpLink}" class="help-link">?</a>` : '';
@@ -754,9 +1039,8 @@
                     <div class="section-header">
                         <span class="step-number">${stepNumber}</span>
                         <span class="section-title-text">${section.title}${helpLink}</span>
-                        <span class="section-score-weighted ${isNotStarted ? 'not-started' : (isLow ? 'low' : '')}">
-                            <span class="current">${weightedScore.toFixed(1)}</span>
-                            <span class="max">/ ${weightedMax.toFixed(1)}</span>
+                        <span class="section-score-weighted ${isNotStarted ? 'not-started' : (isLow ? 'low' : '')}" id="secScore-${secKey}">
+                            <span class="current">${Math.round(percentage)}%</span>
                         </span>
                     </div>`;
 
@@ -770,6 +1054,11 @@
                 }
 
                 section.questions.forEach(q => {
+                    // Hide age-gated questions completely if user is below minimum age (or age unknown)
+                    if (q.ageMin) {
+                        const d = getDemographics();
+                        if (d.age === null || d.age < q.ageMin) return;
+                    }
                     const value = answers[q.id];
                     const qHelpLink = q.helpLink ? `<a href="${q.helpLink}" class="help-link">?</a>` : '';
 
@@ -801,6 +1090,50 @@
                                 <input type="checkbox" ${isSelected ? 'checked' : ''}><label>${opt.label}</label>${evidence}</div>`;
                         });
                         html += `</div>`;
+                    } else if (q.type === 'number') {
+                        const currentValue = value !== null && value !== undefined ? value : '';
+                        const demo = getDemographics();
+
+                        html += '<div class="number-input-group">' +
+                            '<input type="number" class="number-input" min="' + q.min + '" max="' + q.max + '" step="' + q.step + '" value="' + currentValue + '"' +
+                            ' data-cat="' + catKey + '" data-sec="' + secKey + '" data-q="' + q.id + '"' +
+                            ' oninput="updateNumber(this)" placeholder="Enter value">' +
+                            '<span class="number-unit">' + (q.unit || '') + '</span></div>';
+
+                        // Cooper Test calculator
+                        if (q.cooperCalc) {
+                            html += '<div class="cooper-calc">' +
+                                '<div class="cooper-calc-title"><i data-lucide="calculator" style="width:16px;height:16px;"></i> Cooper 12-Min Run Calculator</div>' +
+                                '<div class="cooper-calc-row">' +
+                                '<input type="number" class="number-input" id="cooperDist" min="400" max="5000" step="1" placeholder="Distance in meters" style="flex:1;">' +
+                                '<button class="cooper-calc-btn" onclick="calcCooper()">Calculate</button></div>' +
+                                '<div class="cooper-calc-result" id="cooperResult"></div></div>';
+                        }
+
+                        // Linear score display for wearable-style inputs (0-100 → 0-100%)
+                        if (q.inputMin !== undefined && q.inputMax !== undefined && !q.normsTable) {
+                            html += '<div id="normRating-' + q.id + '">';
+                            if (currentValue !== '' && currentValue !== null) {
+                                const v = parseFloat(currentValue);
+                                const pct = Math.round(((v - q.inputMin) / (q.inputMax - q.inputMin)) * 100);
+                                html += '<div class="norm-rating"><span class="norm-category">Score: ' + Math.max(0, Math.min(100, pct)) + '%</span></div>';
+                            }
+                            html += '</div>';
+                        }
+
+                        // Norm rating container (updated in-place by updateNormDisplay)
+                        if (q.normsTable) {
+                            html += '<div id="normRating-' + q.id + '">';
+                            if (currentValue !== '' && demo.age !== null && demo.sex) {
+                                const table = q.normsTable === 'VO2MAX_NORMS' ? VO2MAX_NORMS : q.normsTable === 'PUSHUP_NORMS' ? PUSHUP_NORMS : q.normsTable === 'CHAIRSTAND_NORMS' ? CHAIRSTAND_NORMS : null;
+                                if (table) {
+                                    html += buildNormRatingHTML(q, table, demo, currentValue);
+                                }
+                            } else if (demo.age === null || !demo.sex) {
+                                html += '<div class="demographics-prompt"><i data-lucide="alert-circle" style="width:16px;height:16px;flex-shrink:0;"></i> Enter your age and sex in the Medical section to see your personalized rating.</div>';
+                            }
+                            html += '</div>';
+                        }
                     }
                     html += `</div>`;
                 });
@@ -843,12 +1176,112 @@
             icon.style.display = el.classList.contains('checked') ? 'block' : 'none';
         }
 
-        function updateScoresAndUI() {
+        function updateNumber(el) {
+            const { cat, sec, q } = el.dataset;
+            const val = el.value === '' ? null : parseFloat(el.value);
+            const prevScore100 = Math.round((currentData.scores[cat] || 0) * 10);
+            currentData.answers[cat][sec][q] = val;
+            updateScoresAndUI(true); // skip full detail re-render
+            const newScore100 = Math.round((currentData.scores[cat] || 0) * 10);
+            // Layout change (CTA↔breakdown): need full re-render with scroll restore
+            if ((prevScore100 === 0) !== (newScore100 === 0) && activeCategory) {
+                const dv = document.getElementById('detailView');
+                const st = dv.scrollTop;
+                renderCategoryContent(activeCategory);
+                requestAnimationFrame(() => { dv.scrollTop = st; });
+            } else {
+                updateDetailScoresInPlace(cat);
+                updateNormDisplay(cat, sec, q);
+            }
+        }
+
+        function calcCooper() {
+            const dist = parseFloat(document.getElementById('cooperDist').value);
+            if (!dist || dist < 400) { document.getElementById('cooperResult').style.display = 'block'; document.getElementById('cooperResult').textContent = 'Enter a valid distance (400-5000m)'; return; }
+            const vo2 = Math.round(((dist - 504.9) / 44.73) * 10) / 10;
+            document.getElementById('cooperResult').style.display = 'block';
+            document.getElementById('cooperResult').innerHTML = 'Estimated VO2max: <strong>' + vo2 + ' ml/kg/min</strong>';
+            // Auto-fill the VO2max input
+            const vo2Input = document.querySelector('[data-q="E1_vo2"]');
+            if (vo2Input) { vo2Input.value = vo2; updateNumber(vo2Input); }
+        }
+
+        // In-place score update (no DOM rebuild — keeps inputs, focus, scroll)
+        function updateDetailScoresInPlace(catKey) {
+            const category = CATEGORIES[catKey];
+            const score = currentData.scores[catKey] || 0;
+            const score100 = Math.round(score * 10);
+            const catEl = document.getElementById('catScoreValue');
+            if (catEl) catEl.textContent = score100;
+
+            Object.keys(category.sections).forEach(secKey => {
+                const section = category.sections[secKey];
+                const sectionScore = calculateSectionScore(catKey, secKey);
+                const weightedMax = section.weight * 10;
+                const weightedScore = (sectionScore / 10) * weightedMax;
+                const percentage = (sectionScore / 10) * 100;
+                const isLow = sectionScore < 5;
+                const isNotStarted = sectionScore === 0;
+                // Section header score
+                const secEl = document.getElementById('secScore-' + secKey);
+                if (secEl) {
+                    secEl.className = 'section-score-weighted ' + (isNotStarted ? 'not-started' : (isLow ? 'low' : ''));
+                    const cur = secEl.querySelector('.current');
+                    if (cur) cur.textContent = Math.round(percentage) + '%';
+                }
+                // Breakdown bar
+                const fillEl = document.getElementById('secFill-' + secKey);
+                if (fillEl) {
+                    fillEl.style.width = percentage + '%';
+                    fillEl.className = 'section-breakdown-fill ' + (isLow ? 'low' : (sectionScore < 7 ? 'medium' : 'high'));
+                }
+                // Breakdown score text
+                const bsEl = document.getElementById('secBreakScore-' + secKey);
+                if (bsEl) bsEl.textContent = Math.round(percentage) + '%';
+            });
+        }
+
+        // Update norm rating display for a specific number input (no re-render)
+        function updateNormDisplay(catKey, secKey, qId) {
+            const q = CATEGORIES[catKey].sections[secKey].questions.find(x => x.id === qId);
+            if (!q) return;
+            const container = document.getElementById('normRating-' + qId);
+            if (!container) return;
+            const value = currentData.answers[catKey]?.[secKey]?.[qId];
+
+            // Linear-scored inputs (e.g. wearable sleep score 0-100)
+            if (q.inputMin !== undefined && q.inputMax !== undefined && !q.normsTable) {
+                if (value !== null && value !== undefined && value !== '') {
+                    const v = parseFloat(value);
+                    const pct = Math.round(((v - q.inputMin) / (q.inputMax - q.inputMin)) * 100);
+                    container.innerHTML = '<div class="norm-rating"><span class="norm-category">Score: ' + Math.max(0, Math.min(100, pct)) + '%</span></div>';
+                } else {
+                    container.innerHTML = '';
+                }
+                return;
+            }
+
+            if (!q.normsTable) return;
+            const demo = getDemographics();
+            if (value !== null && value !== undefined && value !== '' && demo.age !== null && demo.sex) {
+                const table = q.normsTable === 'VO2MAX_NORMS' ? VO2MAX_NORMS : q.normsTable === 'PUSHUP_NORMS' ? PUSHUP_NORMS : q.normsTable === 'CHAIRSTAND_NORMS' ? CHAIRSTAND_NORMS : null;
+                if (table) {
+                    container.innerHTML = buildNormRatingHTML(q, table, demo, value);
+                }
+            } else if (demo.age === null || !demo.sex) {
+                container.innerHTML = '<div class="demographics-prompt"><i data-lucide="alert-circle" style="width:16px;height:16px;flex-shrink:0;"></i> Enter your age and sex in the Medical section to see your personalized rating.</div>';
+                lucide.createIcons();
+            } else {
+                container.innerHTML = '';
+            }
+        }
+
+        function updateScoresAndUI(skipDetailRerender) {
             calculateAllScores();
             saveData();
             renderDimensions();
             updateTotalScore();
-            if (activeCategory) renderCategoryContent(activeCategory);
+            if (activeCategory && !skipDetailRerender) renderCategoryContent(activeCategory);
         }
 
         // ========================================
