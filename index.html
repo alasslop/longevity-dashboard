@@ -190,11 +190,7 @@
         .section-score { font-size: 0.8rem; color: var(--color-text-muted); margin-left: auto; }
         .help-link { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; background: var(--color-teal); color: white; border-radius: 50%; font-size: 0.65rem; font-weight: 600; text-decoration: none; margin-left: 6px; }
 
-        .question-item { padding: 16px; background: var(--color-card); border-radius: 12px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border-left: 4px solid transparent; transition: border-color 0.3s ease; }
-        .question-item.score-red { border-left-color: #d32f2f; }
-        .question-item.score-amber { border-left-color: #f57c00; }
-        .question-item.score-yellow-green { border-left-color: #7cb342; }
-        .question-item.score-green { border-left-color: #43a047; }
+        .question-item { padding: 16px; background: var(--color-card); border-radius: 12px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
         .question-label { font-size: 0.95rem; color: var(--color-text); margin-bottom: 12px; font-weight: 500; }
         .question-hint { font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 12px; font-style: italic; }
 
@@ -226,11 +222,7 @@
         .section-breakdown-info { flex: 1; min-width: 0; }
         .section-breakdown-name { font-size: 0.9rem; font-weight: 500; color: var(--color-text); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
         .section-breakdown-bar { height: 6px; background: var(--color-border); border-radius: 3px; overflow: hidden; }
-        .section-breakdown-fill { height: 100%; border-radius: 3px; transition: width 0.3s ease; }
-        .section-breakdown-fill.score-red { background: #d32f2f; }
-        .section-breakdown-fill.score-amber { background: #f57c00; }
-        .section-breakdown-fill.score-yellow-green { background: #7cb342; }
-        .section-breakdown-fill.score-green { background: #43a047; }
+        .section-breakdown-fill { height: 100%; border-radius: 3px; transition: width 0.3s ease; background: var(--color-text-muted); }
         .section-breakdown-score { font-size: 0.85rem; font-weight: 600; color: var(--color-text); min-width: 60px; text-align: right; }
         .room-to-grow { font-size: 0.7rem; font-weight: 500; color: var(--color-red); background: var(--color-red-light); padding: 2px 8px; border-radius: 10px; }
         .not-started { font-size: 0.7rem; font-weight: 500; color: var(--color-text-muted); background: var(--color-border); padding: 2px 8px; border-radius: 10px; }
@@ -1100,7 +1092,6 @@
                     const weightedMax = section.weight * 10;
                     const weightedScore = (sectionScore / 10) * weightedMax;
                     const percentage = (sectionScore / 10) * 100;
-                    const fillClass = trafficClass(percentage);
                     secNumber++;
 
                     // Determine badge: "Room to grow" if low score
@@ -1115,7 +1106,7 @@
                                     ${badge}
                                 </div>
                                 <div class="section-breakdown-bar">
-                                    <div class="section-breakdown-fill ${fillClass}" id="secFill-${secKey}" style="width: ${percentage}%"></div>
+                                    <div class="section-breakdown-fill" id="secFill-${secKey}" style="width: ${percentage}%"></div>
                                 </div>
                             </div>
                             <div class="section-breakdown-score" id="secBreakScore-${secKey}">${Math.round(percentage)}%</div>
@@ -1218,10 +1209,7 @@
                     }
                     const value = answers[q.id];
                     const qHelpLink = q.helpLink ? `<a href="${q.helpLink}" class="help-link" onclick="saveScrollState(event)">?</a>` : '';
-                    const qPct = questionScorePct(q, value);
-                    const qColorClass = qPct !== null ? trafficClass(qPct) : '';
-
-                    html += `<div class="question-item ${qColorClass}" id="qItem-${q.id}"><div class="question-label">${q.question}${qHelpLink}</div>`;
+                    html += `<div class="question-item"><div class="question-label">${q.question}${qHelpLink}</div>`;
                     if (q.hint) html += `<div class="question-hint">${q.hint}</div>`;
 
                     if (q.type === 'slider') {
@@ -1463,21 +1451,10 @@
                 const fillEl = document.getElementById('secFill-' + secKey);
                 if (fillEl) {
                     fillEl.style.width = percentage + '%';
-                    fillEl.className = 'section-breakdown-fill ' + trafficClass(percentage);
                 }
                 // Breakdown score text
                 const bsEl = document.getElementById('secBreakScore-' + secKey);
                 if (bsEl) bsEl.textContent = Math.round(percentage) + '%';
-
-                // Update question card colors in this section
-                const answers = currentData.answers[catKey]?.[secKey] || {};
-                section.questions.forEach(q => {
-                    const qEl = document.getElementById('qItem-' + q.id);
-                    if (qEl) {
-                        const qPct = questionScorePct(q, answers[q.id]);
-                        qEl.className = 'question-item ' + (qPct !== null ? trafficClass(qPct) : '');
-                    }
-                });
             });
         }
 
