@@ -1225,6 +1225,35 @@ textarea:focus {
     transition: background 0.15s;
 }
 .footer-cta-button:hover { background: #D4902F; text-decoration: none; }
+
+/* Shared CTA button (used in FAQ coaching cards and index.html) */
+.cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    color: var(--color-orange);
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.cta-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    text-decoration: none;
+}
+.cta-button.teal {
+    background: var(--color-teal);
+    color: white;
+}
+.cta-button.teal:hover {
+    background: #007a4d;
+}
 .footer-cta-meta {
     font-size: 0.8rem;
     color: var(--color-text-muted);

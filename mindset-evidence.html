@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Mindset FAQ - LongevityPath</title>
+
+    <!-- Shared Brand Styles (includes Inter font) -->
+    <link rel="stylesheet" href="brand.css">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="back-btn"><i data-lucide="arrow-left" style="width:20px;height:20px;"></i></a>
+        <span class="header-title">Mindset FAQ</span>
+        <span class="user-badge" id="userBadge"><i data-lucide="user" style="width:12px;height:12px;"></i> <span id="userNameBadge">User</span></span>
+    </header>
+
+    <div class="container-evidence">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="index.html">LongevityPath</a>
+            <span>/</span>
+            <a href="index.html">Mindset</a>
+            <span>/</span>
+            Evidence &amp; FAQ
+        </div>
+
+        <!-- Marketing CTA -->
+        <div class="marketing-cta" id="marketingCta">
+            <div class="marketing-cta-title">What's Your Mindset Score?</div>
+            <div class="marketing-cta-text">Assess your change readiness, grit, growth mindset, and commitment to prevention — the psychological drivers of lasting health behavior change.</div>
+            <a href="index.html" class="marketing-cta-button">
+                <i data-lucide="play" style="width:16px;height:16px;"></i> Start Free Assessment
+            </a>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 1: Score below 25%
+             ============================================ -->
+        <div class="faq-card" id="q1">
+            <div class="faq-header" onclick="toggleFaq('q1')">
+                <div class="faq-header-content">
+                    <h1 class="faq-question-title">I scored below 25% on mindset — what health risks am I facing?</h1>
+                    <div class="faq-meta">
+                        <span>4 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 3 studies</span>
+                    </div>
+                    <div class="faq-preview">A low mindset score signals barriers to lasting health behavior change — and the research shows that psychological readiness is one of the strongest predictors of whether health interventions succeed...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        A low mindset score doesn't mean your health is doomed — it means your <strong>psychological infrastructure for change</strong> needs strengthening before other health improvements will stick. People who adopt at least four healthy lifestyle behaviors reduce all-cause mortality by <strong>66%</strong>, but sustaining those behaviors requires the readiness, grit, and growth orientation this section measures.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    The gap between knowing what's healthy and actually doing it consistently is largely a mindset gap. A landmark meta-analysis quantified the stakes: people who sustain a combination of healthy lifestyle behaviors — exercise, nutrition, sleep, not smoking — dramatically outlive those who don't:
+                </p>
+
+                <!-- Study Citation: Loef & Walach 2012 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge">Meta-Analysis</span>
+                        <span class="study-journal">published in Preventive Medicine</span>
+                    </div>
+                    <div class="study-title">The Combined Effects of Healthy Lifestyle Behaviors on All Cause Mortality: A Systematic Review and Meta-Analysis</div>
+                    <div class="study-meta">Loef &amp; Walach, 2012 · 15 studies, n=531,804 · DOI: 10.1016/j.ypmed.2012.06.017</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> A combination of at least four healthy lifestyle factors was associated with a <strong>66% reduction in all-cause mortality risk</strong> (95% CI: 58%–73%). The relative risks decreased proportionately with more healthy behaviors adopted.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/22735042/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    But sustaining those four behaviors is the challenge — and that's where mindset comes in. Research on the Transtheoretical Model of behavior change shows that a person's stage of readiness strongly predicts whether interventions succeed:
+                </p>
+
+                <!-- Study Citation: Krebs et al. 2018 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge">Meta-Analysis</span>
+                        <span class="study-journal">published in Journal of Clinical Psychology</span>
+                    </div>
+                    <div class="study-title">Stages of Change and Psychotherapy Outcomes: A Review and Meta-Analysis</div>
+                    <div class="study-meta">Krebs, Norcross, Nicholson &amp; Prochaska, 2018 · 39 studies, n=8,238 · DOI: 10.1002/jclp.22683</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Stage of change predicted therapy outcomes with a <strong>clinically significant effect size (d = 0.46)</strong>. The amount of progress people make during treatment tends to be a function of their pretreatment stage of readiness — not just willpower or access to information.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/30334248/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    Self-efficacy — the belief that you can actually achieve a health goal — is a core predictor of whether behavior change sticks. Bandura's social cognitive theory, supported by decades of research, shows that self-efficacy predicts initiation and maintenance of health behaviors across domains: exercise, nutrition, smoking cessation, and chronic disease management [1].
+                </p>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">The Good News</div>
+                    <div class="tip-box-text">
+                        Every component of your mindset score is modifiable. Change readiness can be built through small wins and structured reflection. Grit develops through deliberate practice. Growth mindset responds to brief interventions. A low score is not a personality verdict — it's a starting point that tells you exactly where to focus before investing in diet plans, gym memberships, or supplements that won't stick without the psychological foundation.
+                    </div>
+                </div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Bandura, A. (1977). "Self-Efficacy: Toward a Unifying Theory of Behavioral Change." Psychological Review, 84(2), 191–215. doi:<a href="https://doi.org/10.1037/0033-295X.84.2.191" target="_blank">10.1037/0033-295X.84.2.191</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 2: Score above 75%
+             ============================================ -->
+        <div class="faq-card" id="q2">
+            <div class="faq-header" onclick="toggleFaq('q2')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">I scored above 75% — what benefits am I getting from a strong mindset?</h2>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 2 studies</span>
+                    </div>
+                    <div class="faq-preview">A high mindset score means you have the psychological infrastructure that makes all other health behaviors sustainable — you're ready, resilient, and growth-oriented...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Your strong mindset score reflects the psychological drivers that make health behaviors <strong>sustainable over decades</strong>. Research shows that gritty individuals are more likely to maintain exercise routines and healthy eating, and a growth mindset predicts active health behaviors and higher subjective wellbeing in older adults.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    A high mindset score means you possess three critical attributes: you recognize what needs to change and believe you can change it (readiness), you persist through setbacks rather than quitting (grit), and you see health as something you can improve rather than something fixed (growth mindset). This psychological combination is what separates people who maintain healthy behaviors for years from those who cycle through short-lived attempts.
+                </p>
+
+                <!-- Study Citation: Frontiers systematic review 2025 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge review">Systematic Review</span>
+                        <span class="study-journal">published in Frontiers in Sports and Active Living</span>
+                    </div>
+                    <div class="study-title">The Relationship Between Grit, Resilience and Physical Activity: A Systematic Review</div>
+                    <div class="study-meta">2025 · 33 studies, n=37,370 · DOI: 10.3389/fspor.2025.1563382</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Across 33 studies, grit and resilience were <strong>consistently positively associated with physical activity outcomes</strong> — including adherence, intensity, and performance — regardless of age, sex, culture, or education level. The "invest and accrue" model shows how perseverance supports sustained health behavior engagement.
+                    </div>
+                    <a href="https://doi.org/10.3389/fspor.2025.1563382" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    A recent study specifically linking growth mindset to health behaviors in older adults found that growth mindset positively predicted both active health behaviors and subjective wellbeing — suggesting that your belief in your ability to improve translates directly into healthier actions [1].
+                </p>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Keep It Up</div>
+                    <div class="tip-box-text">
+                        Your mindset is an asset that compounds over time — every year of sustained health behavior adds to your longevity. The key risk for high scorers is complacency during life transitions (retirement, loss, career changes) when routines get disrupted. Proactively adapting your health routines during transitions protects the momentum you've built.
+                    </div>
+                </div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Xiao, X., et al. (2025). "Development and Validation of the Growth Mindset Scale in Older Adults." Journal of Happiness Studies. doi:<a href="https://doi.org/10.1007/s10902-025-00980-7" target="_blank">10.1007/s10902-025-00980-7</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 3: Can mindset affect physical health?
+             ============================================ -->
+        <div class="faq-card" id="q3">
+            <div class="faq-header" onclick="toggleFaq('q3')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Can mindset really affect physical health and longevity?</h2>
+                    <div class="faq-meta">
+                        <span>4 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 2 studies</span>
+                    </div>
+                    <div class="faq-preview">Yes — growth mindset predicts health behaviors in older adults, and the combined effect of sustained healthy behaviors reduces mortality by up to 66%...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Mindset doesn't affect longevity directly through some mysterious mechanism — it affects longevity <strong>through behavior</strong>. Growth mindset predicts active health behaviors, grit predicts exercise adherence, and self-efficacy predicts whether people stick with health changes. Since sustained healthy behaviors reduce mortality by up to <strong>66%</strong>, your mindset is effectively a longevity multiplier.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    The pathway from mindset to longevity runs through behavior. A growth mindset doesn't directly lower your blood pressure or strengthen your heart — but it determines whether you consistently do the things that do. Recent research quantified this connection in older adults specifically:
+                </p>
+
+                <!-- Study Citation: Xiao et al. 2025 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge validation">Validation Study</span>
+                        <span class="study-journal">published in Journal of Happiness Studies</span>
+                    </div>
+                    <div class="study-title">Development and Validation of the Growth Mindset Scale in Older Adults</div>
+                    <div class="study-meta">Xiao et al., 2025 · DOI: 10.1007/s10902-025-00980-7</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Growth mindset had a significant positive predictive effect on older adults' <strong>active health behaviors (&beta; = 0.256, p &lt; 0.01)</strong> and <strong>subjective wellbeing (&beta; = 0.306, p &lt; 0.05)</strong>. Health behaviors were measured across six domains: interpersonal relations, nutrition, health responsibility, physical activity, stress management, and spiritual growth.
+                    </div>
+                    <a href="https://doi.org/10.1007/s10902-025-00980-7" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    And a separate line of research shows that grit — the perseverance component of our assessment — predicts better health-related quality of life partly through lower perceived stress. People high in grit-perseverance experience less chronic stress, which is itself a direct pathway to better physical health [1].
+                </p>
+
+                <p class="prose">
+                    The critical insight: mindset is not a "soft" metric. It is the psychological infrastructure that determines whether the "hard" metrics — exercise, nutrition, sleep — actually get sustained long enough to matter. This is why we measure it alongside physical health behaviors.
+                </p>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Knauft, K.M., Holt, C.A. &amp; Kalia, V. (2026). "Perceived Stress Mediates Associations Between Grit and Health-Related Quality of Life." Psychological Reports. doi:<a href="https://doi.org/10.1177/00332941241248607" target="_blank">10.1177/00332941241248607</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 4: What is grit?
+             ============================================ -->
+        <div class="faq-card" id="q4">
+            <div class="faq-header" onclick="toggleFaq('q4')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">What is "grit" and why does it predict health outcomes?</h2>
+                    <div class="faq-meta">
+                        <span>4 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 2 studies</span>
+                    </div>
+                    <div class="faq-preview">Grit — perseverance and passion for long-term goals — predicts achievement beyond IQ and talent, and recent research links it to exercise adherence and health behavior maintenance...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Grit is perseverance and passion for long-term goals — the ability to stick with something for years, not just weeks. In health, grit predicts who maintains exercise routines, adheres to treatment plans, and sustains dietary changes. A systematic review of <strong>33 studies (n=37,370)</strong> found consistent positive associations between grit and physical activity outcomes regardless of age, sex, or culture.
+                    </div>
+                </div>
+
+                <!-- Study Citation: Duckworth et al. 2007 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge rct">6 Studies</span>
+                        <span class="study-journal">published in Journal of Personality and Social Psychology</span>
+                    </div>
+                    <div class="study-title">Grit: Perseverance and Passion for Long-Term Goals</div>
+                    <div class="study-meta">Duckworth et al., 2007 · 6 studies · DOI: 10.1037/0022-3514.92.6.1087</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Grit predicted success across diverse populations — Ivy League students, West Point cadets, National Spelling Bee competitors — <strong>beyond IQ and conscientiousness</strong>. The achievement of difficult goals requires not only talent but the sustained application of talent over time.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/17547490/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    Angela Duckworth's original work focused on academic and professional achievement, but subsequent research has extended the grit framework directly to health. In health contexts, grit has been associated with better metabolic control in diabetes, greater exercise adherence, healthier eating patterns, and improved health-related quality of life. The mechanism is straightforward: health goals are long-term goals that require sustained effort through inevitable setbacks.
+                </p>
+
+                <p class="prose">
+                    This is why our assessment asks two grit-related questions: how long you've maintained your health habits (consistency of interest) and what you do after a setback (perseverance of effort). Someone who has exercised regularly for two years and bounces back quickly after disruptions has a fundamentally different health trajectory than someone who restarts every January.
+                </p>
+
+                <div class="warning-box">
+                    <div class="warning-box-label">Important Nuance</div>
+                    <div class="warning-box-text">
+                        Grit is not about blind persistence. Duckworth distinguishes grit from stubbornly pursuing the wrong goal. In health, this means sticking with evidence-based behaviors (exercise, nutrition, sleep) while being flexible about methods — switching from running to swimming after an injury, for example, rather than quitting exercise entirely.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 5: Change readiness checkboxes
+             ============================================ -->
+        <div class="faq-card" id="q5">
+            <div class="faq-header" onclick="toggleFaq('q5')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">I only checked 1 or 2 boxes on change readiness — what does that tell me?</h2>
+                    <div class="faq-meta">
+                        <span>4 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 2 studies</span>
+                    </div>
+                    <div class="faq-preview">Each unchecked box points to a specific barrier — awareness, responsibility, or self-efficacy — and each has different solutions backed by behavior change research...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        The three checkboxes map to three components of change readiness from behavior change theory: <strong>(1) awareness</strong> that something needs to change, <strong>(2) personal responsibility</strong> for making the change, and <strong>(3) self-efficacy</strong> — belief that you can succeed. Each missing component has different, evidence-based solutions.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    This question is designed to give coaching-level insight. Rather than a single "how ready are you?" score, the three checkboxes identify <em>which specific component</em> of readiness is missing — because the intervention for each is different:
+                </p>
+
+                <p class="prose">
+                    <strong>Missing "Something has to change" (awareness):</strong> You may not yet see the urgency. This maps to the precontemplation stage in Prochaska's Transtheoretical Model. People in this stage benefit from information about risks and consequences — not action plans. Understanding what you're risking (see FAQ #1 above) can shift this component.
+                </p>
+
+                <p class="prose">
+                    <strong>Missing "I'm the one who must change it" (responsibility):</strong> You may recognize the problem but attribute control to external factors — genetics, circumstances, or others. This is where the research on locus of control becomes relevant. Shifting toward internal attribution — recognizing that your daily choices shape your health trajectory — is a prerequisite for sustained change.
+                </p>
+
+                <p class="prose">
+                    <strong>Missing "I believe I can do it" (self-efficacy):</strong> This is the most well-researched barrier. Bandura's work shows that self-efficacy is the strongest single predictor of whether someone initiates and maintains health behavior change [1]. Low self-efficacy responds well to <em>mastery experiences</em> — small, achievable wins that build confidence incrementally rather than attempting dramatic overhauls.
+                </p>
+
+                <!-- Study Citation: Krebs et al. 2018 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge">Meta-Analysis</span>
+                        <span class="study-journal">published in Journal of Clinical Psychology</span>
+                    </div>
+                    <div class="study-title">Stages of Change and Psychotherapy Outcomes: A Review and Meta-Analysis</div>
+                    <div class="study-meta">Krebs, Norcross, Nicholson &amp; Prochaska, 2018 · 39 studies, n=8,238 · DOI: 10.1002/jclp.22683</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Stage-matched interventions — where the approach matches the person's readiness level — produced <strong>significantly better outcomes (d = 0.46)</strong> than one-size-fits-all programs. This validates the approach of diagnosing <em>which</em> component of readiness is missing before prescribing an intervention.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/30334248/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">What To Do</div>
+                    <div class="tip-box-text">
+                        <strong>0 boxes checked:</strong> Start with education — explore the evidence pages in this assessment to understand what's at stake. Don't pressure yourself into action yet.<br><br>
+                        <strong>1 box (awareness only):</strong> You see the problem but don't feel ownership or confidence. Start with one tiny commitment you control entirely — a 10-minute walk, one extra serving of vegetables — to build both ownership and self-efficacy simultaneously.<br><br>
+                        <strong>2 boxes (missing self-efficacy):</strong> You're almost there. Focus exclusively on small wins — things so easy they feel almost trivial. Mastery experiences are the most powerful source of self-efficacy [1].
+                    </div>
+                </div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Bandura, A. (1977). "Self-Efficacy: Toward a Unifying Theory of Behavioral Change." Psychological Review, 84(2), 191–215. doi:<a href="https://doi.org/10.1037/0033-295X.84.2.191" target="_blank">10.1037/0033-295X.84.2.191</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 6: Is growth mindset developable?
+             ============================================ -->
+        <div class="faq-card" id="q6">
+            <div class="faq-header" onclick="toggleFaq('q6')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Is a growth mindset something I can develop, or is it fixed?</h2>
+                    <div class="faq-meta">
+                        <span>4 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 2 studies</span>
+                    </div>
+                    <div class="faq-preview">Yes, growth mindset can be shifted through brief interventions — but context matters. The evidence shows meaningful effects on mental health and moderate effects on behavior...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Yes — growth mindset is malleable. A meta-analysis of <strong>53 intervention studies</strong> found meaningful effects on mental health (d = 0.32) and moderate effects on academic outcomes (d = 0.14). The irony of a "fixed" growth mindset would contradict its own premise. However, the research is nuanced — effects are stronger when the environment supports growth.
+                    </div>
+                </div>
+
+                <!-- Study Citation: Burnette et al. 2023 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge">Meta-Analysis</span>
+                        <span class="study-journal">published in Psychological Bulletin</span>
+                    </div>
+                    <div class="study-title">A Systematic Review and Meta-Analysis of Growth Mindset Interventions: For Whom, How, and Why Might Such Interventions Work?</div>
+                    <div class="study-meta">Burnette et al., 2023 · 53 independent samples · DOI: 10.1037/bul0000368</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Growth mindset interventions produced effect sizes of <strong>d = 0.32 for mental health outcomes</strong> (95% CI: .10–.54) and <strong>d = 0.14 for academic achievement</strong> (95% CI: .06–.22). Effects were stronger in targeted subsamples and with high-fidelity implementation.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/36227318/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    The largest single trial — the National Study of Learning Mindsets — tested a brief online growth mindset intervention in a nationally representative sample of 12,490 ninth-graders. Lower-achieving students showed improved grades, and students overall were more likely to choose harder courses. Importantly, the intervention worked best when the school culture supported challenge-seeking [1].
+                </p>
+
+                <p class="prose">
+                    For health specifically, the implications are clear: believing you can improve your health through effort is not a fixed personality trait — it responds to evidence, experience, and deliberate reframing. The most practical approach is to seek out mastery experiences (small health wins that prove to you that effort works) and to surround yourself with people and environments that reinforce growth rather than fixed thinking about health.
+                </p>
+
+                <div class="warning-box">
+                    <div class="warning-box-label">Important Nuance</div>
+                    <div class="warning-box-text">
+                        The growth mindset literature has faced legitimate methodological criticism. A competing meta-analysis (Macnamara &amp; Burgoyne, 2023) found smaller effects and raised concerns about researcher allegiance. The field consensus is that growth mindset interventions work, but effects are modest and context-dependent — they're not a magic bullet. This is why our assessment measures mindset as one of several dimensions, not the only one.
+                    </div>
+                </div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Yeager, D.S., et al. (2019). "A National Experiment Reveals Where a Growth Mindset Improves Achievement." Nature, 573, 364–369. doi:<a href="https://doi.org/10.1038/s41586-019-1466-y" target="_blank">10.1038/s41586-019-1466-y</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 7: Prevention vs reaction
+             ============================================ -->
+        <div class="faq-card" id="q7">
+            <div class="faq-header" onclick="toggleFaq('q7')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Does investing time in prevention actually pay off compared to just treating problems?</h2>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 2 studies</span>
+                    </div>
+                    <div class="faq-preview">Overwhelmingly yes — combining even a few preventive health behaviors reduces all-cause mortality by up to 66%, and the effects are dose-dependent...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        The evidence is overwhelming: <strong>sustained preventive health behaviors reduce all-cause mortality by up to 66%</strong>. Even small additions — as little as 5 extra minutes of moderate activity per day — meaningfully reduce mortality risk. No reactive treatment can match the returns of consistent prevention.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    The Loef &amp; Walach meta-analysis (531,804 participants, 13-year mean follow-up) found a clear dose-response: each additional healthy lifestyle behavior adopted further reduced mortality risk, with four or more combined behaviors yielding a 66% reduction [1]. This is a larger risk reduction than most pharmaceutical interventions achieve.
+                </p>
+
+                <!-- Study Citation: Lancet 2026 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge">Meta-Analysis (IPD)</span>
+                        <span class="study-journal">published in The Lancet</span>
+                    </div>
+                    <div class="study-title">Deaths Potentially Averted by Small Changes in Physical Activity and Sedentary Time: An Individual Participant Data Meta-Analysis of Prospective Cohort Studies</div>
+                    <div class="study-meta">2026 · Individual participant data meta-analysis · DOI: 10.1016/S0140-6736(25)02219-6</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> A <strong>5-minute/day increase</strong> in moderate-to-vigorous physical activity in the least active participants might prevent <strong>6% of all deaths</strong>. A similar increase across most participants might prevent <strong>10% of all deaths</strong>. Even reducing sedentary time by 30 minutes daily could prevent 3–7% of deaths.
+                    </div>
+                    <a href="https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(25)02219-6/abstract" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    The practical implication is striking: the return on investment for preventive health behaviors is enormous and dose-dependent. You don't need to become an elite athlete — even modest, consistent investments compound into significant mortality reductions over decades. This is why our assessment asks about time invested in prevention and whether you prioritize preventing problems or treating them. A preventive orientation fundamentally changes your health trajectory.
+                </p>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Loef, M. &amp; Walach, H. (2012). "The Combined Effects of Healthy Lifestyle Behaviors on All Cause Mortality: A Systematic Review and Meta-Analysis." Preventive Medicine, 55(3), 163–170. doi:<a href="https://doi.org/10.1016/j.ypmed.2012.06.017" target="_blank">10.1016/j.ypmed.2012.06.017</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 8: How to improve mindset score
+             ============================================ -->
+        <div class="faq-card" id="q8">
+            <div class="faq-header" onclick="toggleFaq('q8')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">What are the most evidence-backed ways to improve my mindset score?</h2>
+                    <div class="faq-meta">
+                        <span>5 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 3 studies</span>
+                    </div>
+                    <div class="faq-preview">Targeted strategies for each subsection — from mastery experiences for self-efficacy to deliberate practice for grit — backed by intervention research...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Each mindset subsection responds to different interventions: <strong>change readiness</strong> improves through education and small wins, <strong>grit</strong> builds through deliberate practice and identity-based habits, <strong>growth mindset</strong> shifts through reframing setbacks as learning, and <strong>preventive priority</strong> grows as you experience the returns of consistent investment.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    <strong>1. Change Readiness — Build the three components:</strong> If you're missing awareness, explore the evidence pages in this assessment. If you're missing responsibility, start with one health behavior that is 100% within your control — even a 10-minute daily walk. If you're missing self-efficacy, focus on mastery experiences: set goals so small they're almost impossible to fail, then gradually increase. Bandura's research shows that mastery experiences are the most powerful source of self-efficacy [1].
+                </p>
+
+                <p class="prose">
+                    <strong>2. Grit — Extend your consistency:</strong> Grit develops through deliberate practice within a domain you find meaningful. For health, this means choosing activities you actually enjoy (not just what's "optimal"), setting process goals rather than outcome goals (e.g., "exercise 4 times this week" rather than "lose 5 kg"), and building identity-based habits ("I'm someone who exercises") rather than relying on motivation.
+                </p>
+
+                <p class="prose">
+                    <strong>3. Growth Mindset — Reframe setbacks:</strong> Growth mindset intervention research suggests that brief, targeted reframing can shift beliefs [2]. The practical version: when you fail at a health goal, ask "what can I learn from this?" rather than "I can't do this." Monitor your self-talk — fixed mindset language ("I'm not a healthy person") undermines behavior change more than the setback itself.
+                </p>
+
+                <p class="prose">
+                    <strong>4. Preventive Priority — Start small, track returns:</strong> Schedule one preventive health activity per week and protect that time as non-negotiable. Use this assessment periodically to track improvements — seeing measurable progress reinforces the value of prevention and shifts your orientation from reactive to proactive.
+                </p>
+
+                <!-- Study Citation: Burnette et al. 2023 for interventions -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge">Meta-Analysis</span>
+                        <span class="study-journal">published in Psychological Bulletin</span>
+                    </div>
+                    <div class="study-title">A Systematic Review and Meta-Analysis of Growth Mindset Interventions: For Whom, How, and Why Might Such Interventions Work?</div>
+                    <div class="study-meta">Burnette et al., 2023 · 53 independent samples · DOI: 10.1037/bul0000368</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Growth mindset interventions — often brief (under 1 hour) and deliverable online — produced meaningful improvements in mental health (d = 0.32) and were most effective when <strong>targeted to those expected to benefit most</strong> and delivered with high fidelity.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/36227318/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Priority Order</div>
+                    <div class="tip-box-text">
+                        Work on the subsections in order: <strong>Change Readiness → Growth Mindset → Grit → Prevention</strong>. There's no point building grit for health behaviors if you haven't yet decided change is needed. And there's no point investing in prevention if you don't believe your effort will make a difference. Build the foundation first.
+                    </div>
+                </div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Bandura, A. (1977). "Self-Efficacy: Toward a Unifying Theory of Behavioral Change." Psychological Review, 84(2), 191–215. doi:<a href="https://doi.org/10.1037/0033-295X.84.2.191" target="_blank">10.1037/0033-295X.84.2.191</a></div>
+                    <div class="study-ref">[2] Burnette, J.L., et al. (2023). "A Systematic Review and Meta-Analysis of Growth Mindset Interventions: For Whom, How, and Why Might Such Interventions Work?" Psychological Bulletin, 149(3-4), 174–205. doi:<a href="https://doi.org/10.1037/bul0000368" target="_blank">10.1037/bul0000368</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 9: Personalized help
+             ============================================ -->
+        <div class="faq-card" id="q9">
+            <div class="faq-header" onclick="toggleFaq('q9')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Where can I get personalized help with this?</h2>
+                    <div class="faq-meta">
+                        <span>1 min read</span>
+                    </div>
+                    <div class="faq-preview">From coaching programs to AI-powered analysis of your scores, several options can help you build the mindset foundation for lasting health change...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        This assessment identifies where you stand across all four mindset dimensions — change readiness, grit, growth mindset, and preventive health priority. For personalized implementation, consider the coaching program for expert guidance, or analyze your complete test results with AI to identify priority areas and create an action plan tailored to your scores.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    Mindset improvement is highly individual — the right approach depends on which specific components need attention, your life context, and your personal values. A health coach or psychologist trained in behavior change can help identify your specific barriers and design a targeted plan. If your Change Readiness score is particularly low, consider motivational interviewing-based approaches, which are specifically designed to build readiness without pressure.
+                </p>
+
+                <p class="prose">
+                    Your assessment results provide a baseline across all dimensions. Revisit the mindset questions periodically — every 4–8 weeks — to track how your psychological readiness is evolving. Even small shifts in mindset compound into meaningful behavior changes over time, which in turn compound into significant health and longevity benefits.
+                </p>
+            </div>
+        </div>
+
+        <!-- Page Footer -->
+        <div class="page-footer">
+            <p>All recommendations based on peer-reviewed research. Last updated February 2026.</p>
+        </div>
+
+        <!-- Footer CTA -->
+        <div class="footer-cta" id="footerCta">
+            <div class="footer-cta-text">Ready to strengthen your mindset?</div>
+            <a href="index.html" class="footer-cta-button">
+                <i data-lucide="brain" style="width:16px;height:16px;"></i> View Your Mindset Score
+            </a>
+            <div class="footer-cta-meta">Track your progress over time</div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        function toggleFaq(id) {
+            const card = document.getElementById(id);
+            card.classList.toggle('expanded');
+        }
+
+        function openFaqById(id) {
+            const card = document.getElementById(id);
+            if (card && !card.classList.contains('expanded')) {
+                card.classList.add('expanded');
+            }
+        }
+
+        // Handle hash links
+        function handleHashNavigation() {
+            if (window.location.hash) {
+                const targetId = window.location.hash.substring(1);
+                openFaqById(targetId);
+                setTimeout(() => {
+                    const target = document.getElementById(targetId);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 100);
+            }
+        }
+
+        // Run on page load
+        handleHashNavigation();
+
+        // Run on hash change
+        window.addEventListener('hashchange', handleHashNavigation);
+
+        // User status check
+        function checkUserStatus() {
+            const saved = localStorage.getItem('longevityPathData');
+            const marketingCta = document.getElementById('marketingCta');
+            const footerCta = document.getElementById('footerCta');
+            const userBadge = document.getElementById('userBadge');
+            const userNameBadge = document.getElementById('userNameBadge');
+
+            if (saved) {
+                const data = JSON.parse(saved);
+                userBadge.classList.add('visible');
+                userNameBadge.textContent = data.userName || 'User';
+                marketingCta.classList.remove('visible');
+                footerCta.querySelector('.footer-cta-text').textContent = 'Take control of your longevity. See where you stand.';
+                footerCta.querySelector('.footer-cta-button').innerHTML = '<i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back to Assessment';
+                footerCta.querySelector('.footer-cta-meta').textContent = '';
+                lucide.createIcons();
+            } else {
+                marketingCta.classList.add('visible');
+                userBadge.classList.remove('visible');
+            }
+        }
+
+        checkUserStatus();
+    </script>
+</body>
+</html>

@@ -190,7 +190,11 @@
         .section-score { font-size: 0.8rem; color: var(--color-text-muted); margin-left: auto; }
         .help-link { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; background: var(--color-teal); color: white; border-radius: 50%; font-size: 0.65rem; font-weight: 600; text-decoration: none; margin-left: 6px; }
 
-        .question-item { padding: 16px; background: var(--color-card); border-radius: 12px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .question-item { padding: 16px; background: var(--color-card); border-radius: 12px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border-left: 4px solid transparent; transition: border-color 0.3s ease; }
+        .question-item.score-red { border-left-color: #d32f2f; }
+        .question-item.score-amber { border-left-color: #f57c00; }
+        .question-item.score-yellow-green { border-left-color: #7cb342; }
+        .question-item.score-green { border-left-color: #43a047; }
         .question-label { font-size: 0.95rem; color: var(--color-text); margin-bottom: 12px; font-weight: 500; }
         .question-hint { font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 12px; font-style: italic; }
 
@@ -223,9 +227,10 @@
         .section-breakdown-name { font-size: 0.9rem; font-weight: 500; color: var(--color-text); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
         .section-breakdown-bar { height: 6px; background: var(--color-border); border-radius: 3px; overflow: hidden; }
         .section-breakdown-fill { height: 100%; border-radius: 3px; transition: width 0.3s ease; }
-        .section-breakdown-fill.high { background: var(--color-teal); }
-        .section-breakdown-fill.medium { background: var(--color-orange); }
-        .section-breakdown-fill.low { background: var(--color-red); }
+        .section-breakdown-fill.score-red { background: #d32f2f; }
+        .section-breakdown-fill.score-amber { background: #f57c00; }
+        .section-breakdown-fill.score-yellow-green { background: #7cb342; }
+        .section-breakdown-fill.score-green { background: #43a047; }
         .section-breakdown-score { font-size: 0.85rem; font-weight: 600; color: var(--color-text); min-width: 60px; text-align: right; }
         .room-to-grow { font-size: 0.7rem; font-weight: 500; color: var(--color-red); background: var(--color-red-light); padding: 2px 8px; border-radius: 10px; }
         .not-started { font-size: 0.7rem; font-weight: 500; color: var(--color-text-muted); background: var(--color-border); padding: 2px 8px; border-radius: 10px; }
@@ -239,7 +244,10 @@
         .section-score-weighted { font-size: 0.85rem; color: var(--color-text); font-weight: 600; margin-left: auto; display: flex; align-items: center; gap: 6px; }
         .section-score-weighted .current { color: var(--color-text); }
         .section-score-weighted .max { color: var(--color-text-muted); }
-        .section-score-weighted.low .current { color: var(--color-red); }
+        .section-score-weighted.score-red .current { color: #d32f2f; }
+        .section-score-weighted.score-amber .current { color: #f57c00; }
+        .section-score-weighted.score-yellow-green .current { color: #7cb342; }
+        .section-score-weighted.score-green .current { color: #43a047; }
         .section-score-weighted.not-started .current { color: var(--color-text-muted); }
 
         /* Number Input */
@@ -737,14 +745,43 @@
             },
             mindset: {
                 name: 'Mindset', icon: 'brain',
+                scoreInsights: {
+                    low: { title: "Your mindset score needs attention", text: "Sustained healthy behaviors reduce mortality by 66% — but sticking with them requires the readiness and grit this section measures. Tap to learn what your score means.", link: "mindset-evidence-v2.html#q1" },
+                    belowAvg: { title: "Your biggest opportunity: {section}", text: "You're building awareness — now focus on {section} to unlock the next level. Every improvement here makes your other health habits more sustainable.", link: "mindset-evidence-v2.html#q9" },
+                    aboveAvg: { title: "Good foundation — keep building", text: "You're above average. Strengthening {section} is your highest-leverage next step — small gains here compound across all your health behaviors.", link: "mindset-evidence-v2.html#q9" },
+                    high: { title: "Strong mindset — you have the foundation", text: "Your psychological readiness makes all other health habits sustainable. Tap to see the research behind your advantage.", link: "mindset-evidence-v2.html#q2" }
+                },
                 sections: {
                     sec1: {
-                        title: "Growth Mindset", weight: 1,
+                        title: "Change Readiness", weight: 0.25,
                         questions: [
-                            { id: "M1_1", question: "I believe I can improve my health through effort", type: "radio",
-                              options: [{ value: "10", label: "Strongly agree", points: 10 }, { value: "7", label: "Agree", points: 7 }, { value: "4", label: "Neutral", points: 4 }, { value: "0", label: "Disagree", points: 0 }] },
-                            { id: "M1_2", question: "I persist when facing difficult health challenges", type: "radio",
-                              options: [{ value: "10", label: "Always", points: 10 }, { value: "7", label: "Usually", points: 7 }, { value: "4", label: "Sometimes", points: 4 }, { value: "0", label: "Rarely", points: 0 }] }
+                            { id: "M1_1", question: "When you think about your long-term health, which of these describe where you are?", type: "checkbox", scoring: "count", helpLink: "mindset-evidence-v2.html#q3",
+                              options: [{ value: "change_needed", label: "Something has to change" }, { value: "my_responsibility", label: "I'm the one who must change it" }, { value: "can_do_it", label: "I believe I can do it" }] }
+                        ]
+                    },
+                    sec2: {
+                        title: "Grit", weight: 0.25,
+                        questions: [
+                            { id: "M2_1", question: "How long have you consistently maintained your current health habits?", type: "radio", helpLink: "mindset-evidence-v2.html#q4",
+                              options: [{ value: "10", label: "Over 2 years", points: 10 }, { value: "7", label: "6 months – 2 years", points: 7 }, { value: "3", label: "Less than 6 months", points: 3 }, { value: "0", label: "I haven't started yet", points: 0 }] },
+                            { id: "M2_2", question: "When you miss a workout or break a health routine, what do you typically do?", type: "radio", helpLink: "mindset-evidence-v2.html#q5",
+                              options: [{ value: "10", label: "Get back on track the next day", points: 10 }, { value: "7", label: "Resume within a few days", points: 7 }, { value: "3", label: "It takes weeks to restart", points: 3 }, { value: "0", label: "I usually give up", points: 0 }] }
+                        ]
+                    },
+                    sec3: {
+                        title: "Growth Mindset", weight: 0.25,
+                        questions: [
+                            { id: "M3_1", question: "When you struggle with a health goal, what do you believe?", type: "radio", helpLink: "mindset-evidence-v2.html#q6",
+                              options: [{ value: "10", label: "I can learn and improve with effort", points: 10 }, { value: "7", label: "I can improve, but it's hard to change habits", points: 7 }, { value: "3", label: "Some things improve, but my health is mostly genetic", points: 3 }, { value: "0", label: "My health is largely out of my control", points: 0 }] }
+                        ]
+                    },
+                    sec4: {
+                        title: "Preventive Health", weight: 0.25,
+                        questions: [
+                            { id: "M4_1", question: "How much time per week do you invest in activities specifically for long-term health?", hint: "e.g. exercise, meal prep, health education, meditation", type: "radio", helpLink: "mindset-evidence-v2.html#q7",
+                              options: [{ value: "10", label: "5+ hours per week", points: 10 }, { value: "7", label: "2–4 hours per week", points: 7 }, { value: "3", label: "Under 2 hours per week", points: 3 }, { value: "0", label: "Almost none", points: 0 }] },
+                            { id: "M4_2", question: "How do you prioritize preventive health compared to treating problems when they arise?", type: "radio", helpLink: "mindset-evidence-v2.html#q8",
+                              options: [{ value: "10", label: "Prevention is my main focus", points: 10 }, { value: "7", label: "I try to balance both", points: 7 }, { value: "3", label: "I mostly react when issues come up", points: 3 }, { value: "0", label: "I only deal with health when I have to", points: 0 }] }
                         ]
                     }
                 }
@@ -791,6 +828,35 @@
         // ========================================
         // SCORE CALCULATION
         // ========================================
+        // Traffic light class: maps a 0-100 percentage to a coach color class
+        function trafficClass(pct) {
+            if (pct < 0) return '';
+            if (pct <= 25) return 'score-red';
+            if (pct < 50) return 'score-amber';
+            if (pct < 75) return 'score-yellow-green';
+            return 'score-green';
+        }
+
+        // Per-question score as 0-100 percentage (returns null if unanswered)
+        function questionScorePct(q, value) {
+            if (value === null || value === undefined || value === '') return null;
+            if (q.type === 'slider') return ((parseFloat(value) - q.min) / (q.max - q.min)) * 100;
+            if (q.type === 'radio' && q.options?.[0]?.points !== undefined) return (parseFloat(value) / 10) * 100;
+            if (q.type === 'checkbox' && q.scoring === 'count') {
+                const count = Array.isArray(value) ? value.length : 0;
+                return (count / q.options.length) * 100;
+            }
+            if (q.type === 'checkbox' && q.scoring === 'principles') {
+                const count = Array.isArray(value) ? value.length : 0;
+                return (count * 2 / 10) * 100;
+            }
+            if (q.type === 'number' && q.inputMin !== undefined && q.inputMax !== undefined) {
+                const v = parseFloat(value);
+                return Math.max(0, Math.min(100, ((v - q.inputMin) / (q.inputMax - q.inputMin)) * 100));
+            }
+            return null;
+        }
+
         function calculateSectionScore(catKey, secKey) {
             const section = CATEGORIES[catKey].sections[secKey];
             const answers = currentData.answers[catKey]?.[secKey] || {};
@@ -1010,7 +1076,7 @@
                     energy: { title: "Measure your fitness for longevity", text: "Enter your VO2max and test your strength. These are among the most powerful predictors of how long and how well you'll live." },
                     sleep: { title: "Sleep is your superpower", text: "Assess your sleep duration, regularity, and quality — the three pillars of restorative sleep. Optionally add your wearable sleep score." },
                     wellbeing: { title: "Measure what matters most", text: "Based on Seligman's PERMA framework. Assess your positive emotions, engagement, relationships, meaning, accomplishment, and stress balance — all linked to longevity." },
-                    mindset: { title: "Your mindset shapes your health", text: "Just 1 minute. A growth mindset is linked to better health outcomes and longer life." }
+                    mindset: { title: "Your mindset shapes your health", text: "Just 1 minute. Assess your change readiness, grit, growth mindset, and commitment to prevention — the psychological drivers of lasting health behavior." }
                 };
                 const cta = ctaMessages[catKey] || { title: "Get started", text: "Answer a few questions to see your score." };
                 content.innerHTML += `
@@ -1034,13 +1100,11 @@
                     const weightedMax = section.weight * 10;
                     const weightedScore = (sectionScore / 10) * weightedMax;
                     const percentage = (sectionScore / 10) * 100;
-                    const isLow = sectionScore < 5;
-                    const isMedium = sectionScore >= 5 && sectionScore < 7;
-                    const fillClass = isLow ? 'low' : (isMedium ? 'medium' : 'high');
+                    const fillClass = trafficClass(percentage);
                     secNumber++;
 
                     // Determine badge: "Room to grow" if low score
-                    const badge = isLow ? '<span class="room-to-grow">Room to grow</span>' : '';
+                    const badge = percentage > 0 && percentage <= 25 ? '<span class="room-to-grow">Room to grow</span>' : '';
 
                     breakdownHTML += `
                         <div class="section-breakdown-item">
@@ -1059,6 +1123,57 @@
                 });
                 breakdownHTML += `</div>`;
                 content.innerHTML += breakdownHTML;
+
+                // Score-based insight card (shows after completing assessment)
+                if (category.scoreInsights) {
+                    const pct = score100;
+                    let insight = null;
+                    let insightStyle = {};
+
+                    // Find weakest subsection for dynamic middle-range messages
+                    let weakestSec = null, weakestScore = Infinity;
+                    Object.keys(category.sections).forEach(sk => {
+                        const ss = calculateSectionScore(catKey, sk);
+                        if (ss < weakestScore) { weakestScore = ss; weakestSec = { key: sk, title: category.sections[sk].title, score: ss }; }
+                    });
+
+                    // Traffic light colors: red (<25%), amber (25-49%), yellow-green (50-74%), green (75%+)
+                    const trafficColors = {
+                        red: { bg: '#fce4ec', border: '#e57373', dot: '#d32f2f' },
+                        amber: { bg: '#fff3e0', border: '#ffb74d', dot: '#f57c00' },
+                        yellowGreen: { bg: '#f1f8e9', border: '#aed581', dot: '#7cb342' },
+                        green: { bg: '#e8f5e9', border: '#81c784', dot: '#43a047' }
+                    };
+
+                    if (pct > 0 && pct <= 25 && category.scoreInsights.low) {
+                        insight = category.scoreInsights.low;
+                        insightStyle = trafficColors.red;
+                    } else if (pct > 25 && pct < 50 && category.scoreInsights.belowAvg) {
+                        const tpl = category.scoreInsights.belowAvg;
+                        insight = { title: tpl.title, text: tpl.text.replace('{section}', weakestSec ? weakestSec.title : 'one area'), link: tpl.link };
+                        insightStyle = trafficColors.amber;
+                    } else if (pct >= 50 && pct < 75 && category.scoreInsights.aboveAvg) {
+                        const tpl = category.scoreInsights.aboveAvg;
+                        insight = { title: tpl.title, text: tpl.text.replace('{section}', weakestSec ? weakestSec.title : 'one area'), link: tpl.link };
+                        insightStyle = trafficColors.yellowGreen;
+                    } else if (pct >= 75 && category.scoreInsights.high) {
+                        insight = category.scoreInsights.high;
+                        insightStyle = trafficColors.green;
+                    }
+
+                    if (insight) {
+                        content.innerHTML += `
+                            <a href="${insight.link}" class="score-insight-card" onclick="saveScrollState(event)" style="display:block;margin-bottom:20px;padding:14px 16px;background:${insightStyle.bg};border-radius:10px;border:1px solid ${insightStyle.border};text-decoration:none;color:var(--color-text);">
+                                <div style="font-weight:600;font-size:0.9rem;margin-bottom:6px;display:flex;align-items:center;gap:8px;">
+                                    <span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:${insightStyle.dot};flex-shrink:0;">
+                                        <i data-lucide="graduation-cap" style="width:16px;height:16px;color:white;"></i>
+                                    </span>
+                                    <span style="display:inline-flex;align-items:center;gap:6px;">${insight.title} <span style="width:8px;height:8px;border-radius:50%;background:${insightStyle.dot};flex-shrink:0;"></span></span>
+                                </div>
+                                <div style="font-size:0.82rem;color:var(--color-text-muted);margin-left:36px;">${insight.text}</div>
+                            </a>`;
+                    }
+                }
             }
 
             lucide.createIcons();
@@ -1070,18 +1185,18 @@
                 const sectionScore = calculateSectionScore(catKey, secKey);
                 const weightedMax = section.weight * 10;
                 const weightedScore = (sectionScore / 10) * weightedMax;
-                const isLow = sectionScore < 5;
                 const percentage = (sectionScore / 10) * 100;
                 stepNumber++;
 
                 const helpLink = section.helpLink ? `<a href="${section.helpLink}" class="help-link" onclick="saveScrollState(event)">?</a>` : '';
                 const isNotStarted = sectionScore === 0;
+                const secScoreClass = isNotStarted ? 'not-started' : trafficClass(percentage);
 
                 let html = `<div class="assessment-section">
                     <div class="section-header">
                         <span class="step-number">${stepNumber}</span>
                         <span class="section-title-text">${section.title}${helpLink}</span>
-                        <span class="section-score-weighted ${isNotStarted ? 'not-started' : (isLow ? 'low' : '')}" id="secScore-${secKey}">
+                        <span class="section-score-weighted ${secScoreClass}" id="secScore-${secKey}">
                             <span class="current">${Math.round(percentage)}%</span>
                         </span>
                     </div>`;
@@ -1103,8 +1218,10 @@
                     }
                     const value = answers[q.id];
                     const qHelpLink = q.helpLink ? `<a href="${q.helpLink}" class="help-link" onclick="saveScrollState(event)">?</a>` : '';
+                    const qPct = questionScorePct(q, value);
+                    const qColorClass = qPct !== null ? trafficClass(qPct) : '';
 
-                    html += `<div class="question-item"><div class="question-label">${q.question}${qHelpLink}</div>`;
+                    html += `<div class="question-item ${qColorClass}" id="qItem-${q.id}"><div class="question-label">${q.question}${qHelpLink}</div>`;
                     if (q.hint) html += `<div class="question-hint">${q.hint}</div>`;
 
                     if (q.type === 'slider') {
@@ -1190,11 +1307,74 @@
                 html += `</div>`;
                 content.innerHTML += html;
             });
+
+            // Bottom CTAs (show when user has answered at least one question)
+            const catScore = currentData.scores[catKey] || 0;
+            if (catScore > 0) {
+                const isBelow50 = Math.round(catScore * 10) < 50;
+                const upgradeTitle = isBelow50
+                    ? 'Start your health journey'
+                    : 'Take your health to the next level';
+                const upgradeText = isBelow50
+                    ? 'Get personalized coaching based on your scores. Your AI health coach identifies your barriers and builds a step-by-step plan to develop healthier habits.'
+                    : 'You\'re building strong habits. A personalized coaching plan helps you optimize further and stay consistent — even through life\'s disruptions.';
+
+                content.innerHTML += `
+                    <div style="margin-top:28px;display:flex;flex-direction:column;gap:12px;">
+                        <!-- Upgrade CTA -->
+                        <a href="#" style="display:block;padding:18px;background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);border-radius:14px;text-decoration:none;color:white;border:1px solid rgba(255,255,255,0.1);">
+                            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                                <span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--color-orange);flex-shrink:0;">
+                                    <i data-lucide="graduation-cap" style="width:16px;height:16px;color:white;"></i>
+                                </span>
+                                <span style="font-weight:700;font-size:0.95rem;">${upgradeTitle}</span>
+                            </div>
+                            <div style="font-size:0.82rem;color:rgba(255,255,255,0.7);margin-left:36px;margin-bottom:14px;">${upgradeText}</div>
+                            <div style="margin-left:36px;display:flex;flex-wrap:wrap;gap:8px;">
+                                <span style="display:inline-flex;align-items:center;gap:4px;padding:8px 14px;background:var(--color-orange);border-radius:8px;font-size:0.82rem;font-weight:600;color:white;">
+                                    <i data-lucide="smartphone" style="width:14px;height:14px;"></i> Download App
+                                </span>
+                                <span style="display:inline-flex;align-items:center;gap:4px;padding:8px 14px;background:rgba(255,255,255,0.12);border-radius:8px;font-size:0.82rem;color:rgba(255,255,255,0.85);border:1px solid rgba(255,255,255,0.2);">
+                                    from $9.99/month
+                                </span>
+                            </div>
+                        </a>
+
+                        <!-- Share CTA -->
+                        <a href="#" onclick="shareAssessment(event)" style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--color-card);border-radius:12px;text-decoration:none;color:var(--color-text);border:1px solid var(--color-border);">
+                            <span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--color-orange);flex-shrink:0;">
+                                <i data-lucide="share-2" style="width:18px;height:18px;color:white;"></i>
+                            </span>
+                            <div>
+                                <div style="font-weight:600;font-size:0.9rem;">Invite others to take the test</div>
+                                <div style="font-size:0.78rem;color:var(--color-text-muted);">Help someone you care about discover their health score</div>
+                            </div>
+                        </a>
+                    </div>`;
+
+                lucide.createIcons();
+            }
         }
 
         // ========================================
         // EVENT HANDLERS
         // ========================================
+        function shareAssessment(event) {
+            event.preventDefault();
+            const shareUrl = window.location.origin + window.location.pathname;
+            const shareText = 'Discover your longevity score — a free, science-backed health assessment covering nutrition, fitness, sleep, wellbeing, and mindset.';
+            if (navigator.share) {
+                navigator.share({ title: 'LongevityPath Assessment', text: shareText, url: shareUrl });
+            } else if (navigator.clipboard) {
+                navigator.clipboard.writeText(shareUrl).then(() => {
+                    const btn = event.currentTarget;
+                    const origText = btn.querySelector('div > div:first-child').textContent;
+                    btn.querySelector('div > div:first-child').textContent = 'Link copied!';
+                    setTimeout(() => { btn.querySelector('div > div:first-child').textContent = origText; }, 2000);
+                });
+            }
+        }
+
         function updateSlider(el) {
             const { cat, sec, q } = el.dataset;
             document.getElementById(`val-${cat}-${sec}-${q}`).textContent = el.value;
@@ -1270,12 +1450,12 @@
                 const weightedMax = section.weight * 10;
                 const weightedScore = (sectionScore / 10) * weightedMax;
                 const percentage = (sectionScore / 10) * 100;
-                const isLow = sectionScore < 5;
                 const isNotStarted = sectionScore === 0;
+                const secColor = isNotStarted ? 'not-started' : trafficClass(percentage);
                 // Section header score
                 const secEl = document.getElementById('secScore-' + secKey);
                 if (secEl) {
-                    secEl.className = 'section-score-weighted ' + (isNotStarted ? 'not-started' : (isLow ? 'low' : ''));
+                    secEl.className = 'section-score-weighted ' + secColor;
                     const cur = secEl.querySelector('.current');
                     if (cur) cur.textContent = Math.round(percentage) + '%';
                 }
@@ -1283,11 +1463,21 @@
                 const fillEl = document.getElementById('secFill-' + secKey);
                 if (fillEl) {
                     fillEl.style.width = percentage + '%';
-                    fillEl.className = 'section-breakdown-fill ' + (isLow ? 'low' : (sectionScore < 7 ? 'medium' : 'high'));
+                    fillEl.className = 'section-breakdown-fill ' + trafficClass(percentage);
                 }
                 // Breakdown score text
                 const bsEl = document.getElementById('secBreakScore-' + secKey);
                 if (bsEl) bsEl.textContent = Math.round(percentage) + '%';
+
+                // Update question card colors in this section
+                const answers = currentData.answers[catKey]?.[secKey] || {};
+                section.questions.forEach(q => {
+                    const qEl = document.getElementById('qItem-' + q.id);
+                    if (qEl) {
+                        const qPct = questionScorePct(q, answers[q.id]);
+                        qEl.className = 'question-item ' + (qPct !== null ? trafficClass(qPct) : '');
+                    }
+                });
             });
         }
 
