@@ -704,23 +704,34 @@
                 name: 'Wellbeing', icon: 'smile',
                 sections: {
                     sec1: {
-                        title: "Life Satisfaction", weight: 0.35,
+                        title: "Positive Emotions & Engagement", weight: 0.30,
                         questions: [
-                            { id: "W1_1", question: "How satisfied are you with your life overall?", hint: "Rate from 1 (not at all) to 10 (extremely satisfied)", type: "slider", min: 1, max: 10 }
+                            { id: "W1_1", question: "How often do you experience positive emotions such as joy, gratitude, or contentment?", type: "radio", helpLink: "wellbeing-evidence.html#q4",
+                              options: [{ value: "10", label: "Every day or almost", points: 10 }, { value: "7", label: "Most days", points: 7 }, { value: "4", label: "Some days", points: 4 }, { value: "0", label: "Rarely", points: 0 }] },
+                            { id: "W1_2", question: "How often do you get fully absorbed in activities you enjoy?", hint: "\"Flow\" — losing track of time while doing something engaging", type: "radio", helpLink: "wellbeing-evidence.html#q5",
+                              options: [{ value: "10", label: "Daily or almost daily", points: 10 }, { value: "7", label: "Several times a week", points: 7 }, { value: "4", label: "Occasionally", points: 4 }, { value: "0", label: "Rarely or never", points: 0 }] }
                         ]
                     },
                     sec2: {
-                        title: "Social Connection", weight: 0.35,
+                        title: "Relationships, Meaning & Accomplishment", weight: 0.35,
                         questions: [
-                            { id: "W2_1", question: "Quality of your social relationships?", type: "radio",
-                              options: [{ value: "10", label: "Excellent - strong support network", points: 10 }, { value: "7", label: "Good - regular meaningful connections", points: 7 }, { value: "4", label: "Fair - some connections but could be better", points: 4 }, { value: "0", label: "Poor - feeling isolated", points: 0 }] }
+                            { id: "W2_1", question: "How would you rate the quality of your close relationships?", type: "radio", helpLink: "wellbeing-evidence.html#q6",
+                              options: [{ value: "10", label: "Excellent — deep, supportive connections", points: 10 }, { value: "7", label: "Good — regular meaningful interactions", points: 7 }, { value: "4", label: "Fair — some connections but lacking depth", points: 4 }, { value: "0", label: "Poor — feeling isolated or unsupported", points: 0 }] },
+                            { id: "W2_2", question: "To what extent do you feel your life has a sense of purpose or meaning?", type: "radio", helpLink: "wellbeing-evidence.html#q7",
+                              options: [{ value: "10", label: "Strong and clear sense of purpose", points: 10 }, { value: "7", label: "Moderate — I have some direction", points: 7 }, { value: "4", label: "Somewhat unclear", points: 4 }, { value: "0", label: "Lacking direction or purpose", points: 0 }] },
+                            { id: "W2_3", question: "How often do you feel a sense of accomplishment or progress toward your goals?", type: "radio",
+                              options: [{ value: "10", label: "Regularly — meaningful progress", points: 10 }, { value: "7", label: "Often — steady but could be more", points: 7 }, { value: "4", label: "Sometimes", points: 4 }, { value: "0", label: "Rarely — I feel stuck", points: 0 }] }
                         ]
                     },
                     sec3: {
-                        title: "Stress Management", weight: 0.30,
+                        title: "Stress Balance", weight: 0.35,
                         questions: [
-                            { id: "W3_1", question: "How stressed do you feel on a typical day?", type: "radio",
-                              options: [{ value: "10", label: "Rarely stressed", points: 10 }, { value: "7", label: "Mildly stressed", points: 7 }, { value: "4", label: "Moderately stressed", points: 4 }, { value: "0", label: "Highly stressed", points: 0 }] }
+                            { id: "W3_1", question: "Which best describes the stress you typically experience?", hint: "Eustress (challenge stress) energizes you; distress drains you", type: "radio", helpLink: "wellbeing-evidence.html#q8",
+                              options: [{ value: "10", label: "Mostly challenge stress — stretched but energized", points: 10 }, { value: "7", label: "A healthy mix — some motivating, some draining", points: 7 }, { value: "3", label: "Mostly draining — feeling overwhelmed", points: 3 }, { value: "0", label: "Chronic overwhelm affecting health and sleep", points: 0 }] },
+                            { id: "W3_2", question: "How quickly do you recover after stressful periods?", type: "radio",
+                              options: [{ value: "10", label: "Within hours — effective coping strategies", points: 10 }, { value: "7", label: "Within a day or two", points: 7 }, { value: "4", label: "It takes weeks", points: 4 }, { value: "0", label: "I rarely feel fully recovered", points: 0 }] },
+                            { id: "W3_3", question: "Do you regularly practice any stress-management techniques?", hint: "e.g. meditation, breathwork, journaling, time in nature, therapy", type: "radio", helpLink: "wellbeing-evidence.html#q9",
+                              options: [{ value: "10", label: "Yes, daily practice", points: 10 }, { value: "7", label: "Yes, several times a week", points: 7 }, { value: "4", label: "Occasionally", points: 4 }, { value: "0", label: "No regular practice", points: 0 }] }
                         ]
                     }
                 }
@@ -967,7 +978,7 @@
                     nutrition: { title: "How well does your diet support longevity?", text: "Just 2 minutes. Discover your nutrition strengths and find easy wins for a healthier life." },
                     energy: { title: "Measure your fitness for longevity", text: "Enter your VO2max and test your strength. These are among the most powerful predictors of how long and how well you'll live." },
                     sleep: { title: "Sleep is your superpower", text: "Assess your sleep duration, regularity, and quality — the three pillars of restorative sleep. Optionally add your wearable sleep score." },
-                    wellbeing: { title: "Measure what matters most", text: "Just 1 minute. Your life satisfaction, social connections, and stress management play a huge role in healthspan." },
+                    wellbeing: { title: "Measure what matters most", text: "Based on Seligman's PERMA framework. Assess your positive emotions, engagement, relationships, meaning, accomplishment, and stress balance — all linked to longevity." },
                     mindset: { title: "Your mindset shapes your health", text: "Just 1 minute. A growth mindset is linked to better health outcomes and longer life." }
                 };
                 const cta = ctaMessages[catKey] || { title: "Get started", text: "Answer a few questions to see your score." };

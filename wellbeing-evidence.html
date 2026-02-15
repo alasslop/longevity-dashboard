@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Wellbeing FAQ - LongevityPath</title>
+
+    <!-- Shared Brand Styles (includes Inter font) -->
+    <link rel="stylesheet" href="brand.css">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="back-btn"><i data-lucide="arrow-left" style="width:20px;height:20px;"></i></a>
+        <span class="header-title">Wellbeing FAQ</span>
+        <span class="user-badge" id="userBadge"><i data-lucide="user" style="width:12px;height:12px;"></i> <span id="userNameBadge">User</span></span>
+    </header>
+
+    <div class="container-evidence">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="index.html">LongevityPath</a>
+            <span>/</span>
+            <a href="index.html">Wellbeing</a>
+            <span>/</span>
+            Evidence &amp; FAQ
+        </div>
+
+        <!-- Marketing CTA -->
+        <div class="marketing-cta" id="marketingCta">
+            <div class="marketing-cta-title">How's Your Wellbeing?</div>
+            <div class="marketing-cta-text">Based on Seligman's PERMA framework, our assessment evaluates your positive emotions, engagement, relationships, meaning, accomplishment, and stress balance — all linked to longevity.</div>
+            <a href="index.html" class="marketing-cta-button">
+                <i data-lucide="play" style="width:16px;height:16px;"></i> Start Free Assessment
+            </a>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 1: Score below 25%
+             ============================================ -->
+        <div class="faq-card" id="q1">
+            <div class="faq-header" onclick="toggleFaq('q1')">
+                <div class="faq-header-content">
+                    <h1 class="faq-question-title">I scored below 25% on wellbeing — what health risks am I facing?</h1>
+                    <div class="faq-meta">
+                        <span>4 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 3 studies</span>
+                    </div>
+                    <div class="faq-preview">Low psychological wellbeing is associated with 18% higher mortality, increased inflammation, and greater cardiovascular risk — but wellbeing is highly modifiable...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Low positive wellbeing is associated with an <strong>18% increase in all-cause mortality</strong>, while social isolation carries a <strong>29% increased mortality risk</strong> — comparable to smoking 15 cigarettes per day. The encouraging news: wellbeing responds well to targeted interventions, often within weeks.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    Psychological wellbeing is not merely the absence of depression — it is an independent predictor of physical health outcomes. A landmark meta-analysis quantified the mortality impact of low positive wellbeing:
+                </p>
+
+                <!-- Study Citation: Chida & Steptoe 2008 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge">Meta-Analysis</span>
+                        <span class="study-journal">published in Psychosomatic Medicine</span>
+                    </div>
+                    <div class="study-title">Positive Psychological Well-Being and Mortality: A Quantitative Review of Prospective Observational Studies</div>
+                    <div class="study-meta">Chida &amp; Steptoe, 2008 · 70 studies · DOI: 10.1097/PSY.0b013e31818105ba</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Positive psychological wellbeing was associated with <strong>reduced mortality in healthy populations (HR 0.82)</strong> — an 18% lower risk of death. The association held for cardiovascular mortality specifically and remained significant after controlling for negative affect and depression.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/18725425/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    Social isolation — a key component of low wellbeing — carries mortality risks comparable to established risk factors like obesity and physical inactivity:
+                </p>
+
+                <!-- Study Citation: Holt-Lunstad et al. 2015 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge">Meta-Analysis</span>
+                        <span class="study-journal">published in Perspectives on Psychological Science</span>
+                    </div>
+                    <div class="study-title">Loneliness and Social Isolation as Risk Factors for Mortality: A Meta-Analytic Review</div>
+                    <div class="study-meta">Holt-Lunstad et al., 2015 · 70 studies, n=3,407,134 · DOI: 10.1177/1745691614568352</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Social isolation increased mortality risk by <strong>29% (OR 1.29)</strong>, loneliness by <strong>26%</strong>, and living alone by <strong>32%</strong>. These effect sizes are comparable to well-established risk factors including obesity and physical inactivity.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/25910392/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    Lacking a sense of purpose — another dimension measured in our assessment — independently predicts mortality. A meta-analysis of 10 prospective studies (n=136,265) found that a high sense of purpose was associated with significantly reduced all-cause mortality and cardiovascular events [1].
+                </p>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">The Good News</div>
+                    <div class="tip-box-text">
+                        Unlike many health risk factors, wellbeing is highly modifiable — and you don't need a life overhaul to start. Gratitude practices, social connection, purposeful activity, and stress management techniques can yield measurable improvements within weeks. Even small shifts — one meaningful conversation per day, or listing five things you're grateful for each week — compound into meaningful health benefits over time. You're not stuck with your current score.
+                    </div>
+                </div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Cohen, R., et al. (2016). "Purpose in Life and Its Relationship to All-Cause Mortality and Cardiovascular Events: A Meta-Analysis." Psychosomatic Medicine, 78(2), 122–133. doi:<a href="https://doi.org/10.1097/PSY.0000000000000274" target="_blank">10.1097/PSY.0000000000000274</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 2: Score above 75%
+             ============================================ -->
+        <div class="faq-card" id="q2">
+            <div class="faq-header" onclick="toggleFaq('q2')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">I scored above 75% — what benefits am I getting from strong wellbeing?</h2>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 2 studies</span>
+                    </div>
+                    <div class="faq-preview">Strong wellbeing protects your heart, strengthens your immune system, and is associated with 18% lower mortality risk across decades of follow-up...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        High positive wellbeing is associated with <strong>18% lower all-cause mortality</strong>, stronger immune function, better cardiovascular health, and preserved cognitive performance. You're investing in one of the most powerful — and often overlooked — longevity habits available.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    The Chida &amp; Steptoe meta-analysis found that positive psychological wellbeing predicted reduced mortality independently of negative affect — meaning it's not simply the absence of depression that protects you, but the active presence of positive emotions, engagement, and purpose [1]. The benefits extend to cardiovascular mortality specifically, where the protective effect was even stronger.
+                </p>
+
+                <p class="prose">
+                    Strong social connections — reflected in your Relationships score — provide both psychological and biological protection. People with robust social networks show lower levels of inflammatory markers (C-reactive protein, interleukin-6), better immune function, and more effective stress recovery. The Holt-Lunstad findings show that the magnitude of this effect rivals established medical risk factors [2].
+                </p>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Keep It Up</div>
+                    <div class="tip-box-text">
+                        Your strong wellbeing score reflects habits that compound over decades — this is one of the most powerful and often overlooked investments in your longevity. The key now is maintaining these patterns during life transitions — career changes, relocation, retirement — when social connections and sense of purpose can be disrupted. Proactively investing in relationships and meaningful activities during transitions protects your long-term health.
+                    </div>
+                </div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Chida, Y. &amp; Steptoe, A. (2008). "Positive Psychological Well-Being and Mortality: A Quantitative Review of Prospective Observational Studies." Psychosomatic Medicine, 70(7), 741–756. doi:<a href="https://doi.org/10.1097/PSY.0b013e31818105ba" target="_blank">10.1097/PSY.0b013e31818105ba</a></div>
+                    <div class="study-ref">[2] Holt-Lunstad, J., et al. (2015). "Loneliness and Social Isolation as Risk Factors for Mortality: A Meta-Analytic Review." Perspectives on Psychological Science, 10(2), 227–237. doi:<a href="https://doi.org/10.1177/1745691614568352" target="_blank">10.1177/1745691614568352</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 3: Why PERMA framework
+             ============================================ -->
+        <div class="faq-card" id="q3">
+            <div class="faq-header" onclick="toggleFaq('q3')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Why does this assessment use the PERMA framework?</h2>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 1 study</span>
+                    </div>
+                    <div class="faq-preview">PERMA — Positive emotions, Engagement, Relationships, Meaning, and Accomplishment — is a validated multidimensional model of flourishing developed by Martin Seligman...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        PERMA captures five distinct dimensions of flourishing that a single "life satisfaction" question cannot. The <strong>PERMA Profiler</strong> — validated across 31,966 participants — shows that each dimension contributes independently to wellbeing, giving you a more actionable picture of where to improve.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    Martin Seligman, the founder of positive psychology, proposed in 2011 that wellbeing is not a single feeling but a combination of five measurable pillars: <strong>Positive emotions</strong> (P) — joy, gratitude, contentment; <strong>Engagement</strong> (E) — flow states and absorption in activities; <strong>Relationships</strong> (R) — social connection and support; <strong>Meaning</strong> (M) — sense of purpose; and <strong>Accomplishment</strong> (A) — progress and mastery. Each pillar captures something a single "rate your happiness" question cannot.
+                </p>
+
+                <!-- Study Citation: Butler & Kern 2016 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge validation">Validation Study</span>
+                        <span class="study-journal">published in International Journal of Wellbeing</span>
+                    </div>
+                    <div class="study-title">The PERMA-Profiler: A Brief Multidimensional Measure of Flourishing</div>
+                    <div class="study-meta">Butler &amp; Kern, 2016 · 11 studies, n=31,966 · DOI: 10.5502/ijw.v6i3.526</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> The PERMA Profiler demonstrated <strong>acceptable model fit, strong internal consistency (Cronbach's &alpha; — a reliability measure — &gt; .70 for all dimensions)</strong>, and convergent validity with established measures of subjective wellbeing and life satisfaction. Each dimension contributed independently to overall flourishing.
+                    </div>
+                    <a href="https://www.internationaljournalofwellbeing.org/index.php/ijow/article/view/526" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    The advantage of a multidimensional approach is diagnostic value: someone who scores high on Positive Emotions but low on Relationships has a very different improvement path than someone low on Meaning but high on Engagement. Our assessment maps your strengths and gaps across all five PERMA dimensions plus stress balance, giving you targeted areas for improvement rather than a single number.
+                </p>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 4: Positive emotions and health
+             ============================================ -->
+        <div class="faq-card" id="q4">
+            <div class="faq-header" onclick="toggleFaq('q4')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Can positive emotions actually affect physical health and longevity?</h2>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 2 studies</span>
+                    </div>
+                    <div class="faq-preview">Yes — positive affect predicts lower mortality independently of negative emotions, through measurable biological pathways including reduced inflammation and cortisol...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Yes. A meta-analysis of 70 prospective studies found that positive psychological wellbeing predicts <strong>18% lower mortality (HR 0.82)</strong> — and this effect is independent of depression or negative emotions. The biological pathways include lower cortisol, reduced inflammatory markers, and better cardiovascular function.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    The critical insight from the Chida &amp; Steptoe meta-analysis is that positive and negative affect are not simply opposites on the same scale — they operate through partly independent biological pathways. Reducing depression is important, but actively cultivating positive emotions provides additional, independent health protection [1].
+                </p>
+
+                <p class="prose">
+                    The biological mechanisms are increasingly well understood. Positive emotional states are associated with lower cortisol output, reduced systemic inflammation (lower C-reactive protein and interleukin-6), improved heart rate variability, and better immune function including enhanced natural killer cell activity. These are not transient effects — habitual positive affect shapes the baseline inflammatory and neuroendocrine profile over years.
+                </p>
+
+                <p class="prose">
+                    This is why our assessment includes a specific question about the frequency of positive emotions. It's not asking whether you're "happy enough" — it's measuring a biologically relevant health behavior. People who regularly experience gratitude, joy, and contentment are investing in their longevity through measurable physiological pathways.
+                </p>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Chida, Y. &amp; Steptoe, A. (2008). "Positive Psychological Well-Being and Mortality: A Quantitative Review of Prospective Observational Studies." Psychosomatic Medicine, 70(7), 741–756. doi:<a href="https://doi.org/10.1097/PSY.0b013e31818105ba" target="_blank">10.1097/PSY.0b013e31818105ba</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 5: Flow and health
+             ============================================ -->
+        <div class="faq-card" id="q5">
+            <div class="faq-header" onclick="toggleFaq('q5')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">What is "flow" and why does it matter for health?</h2>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 1 study</span>
+                    </div>
+                    <div class="faq-preview">Flow — the state of complete absorption in a challenging activity — buffers against stress and is consistently linked to higher life satisfaction and performance...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Flow is the psychological state of being fully immersed in an activity — losing track of time while feeling both challenged and capable. First described by Mihaly Csikszentmihalyi, flow experiences are consistently associated with <strong>higher wellbeing, better performance, and effective stress buffering</strong> across work, sport, and daily life.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    Flow occurs when the challenge of an activity closely matches your skill level — too easy produces boredom, too hard produces anxiety, but the sweet spot produces a state of effortless focus. During flow, people report reduced self-consciousness, distorted time perception, and intrinsic reward from the activity itself.
+                </p>
+
+                <!-- Study Citation: Peifer et al. 2022 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge review">Scoping Review</span>
+                        <span class="study-journal">published in Frontiers in Psychology</span>
+                    </div>
+                    <div class="study-title">A Scoping Review of Flow Research</div>
+                    <div class="study-meta">Peifer et al., 2022 · 252 studies reviewed · DOI: 10.3389/fpsyg.2022.815665</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Across 252 studies, flow experiences consistently contributed to <strong>personal wellbeing and full functioning in everyday life</strong>. Flow was associated with higher performance, greater life satisfaction, and effective stress buffering across domains including work, education, sports, and creative activities.
+                    </div>
+                    <a href="https://doi.org/10.3389/fpsyg.2022.815665" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    The health relevance of flow extends beyond subjective wellbeing. Flow states are associated with reduced cortisol levels during the activity, suggesting a direct stress-buffering mechanism. People who regularly experience flow in their daily lives — whether through work, hobbies, music, sport, or creative pursuits — appear to build a form of psychological resilience that protects against chronic stress accumulation.
+                </p>
+
+                <p class="prose">
+                    This is why our assessment asks specifically about flow frequency. It's a practical indicator of engagement — one of the five PERMA pillars — and reflects whether your daily activities provide the right balance of challenge and skill to generate this protective state. If you're not experiencing flow regularly, it may be worth exploring new hobbies, projects, or ways of working that stretch your abilities just enough.
+                </p>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 6: Social isolation
+             ============================================ -->
+        <div class="faq-card" id="q6">
+            <div class="faq-header" onclick="toggleFaq('q6')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">How does social isolation compare to other health risks?</h2>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 1 study</span>
+                    </div>
+                    <div class="faq-preview">Social isolation carries mortality risk comparable to smoking 15 cigarettes per day, exceeding the risk of obesity and physical inactivity...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        A meta-analysis of over 3.4 million participants found that social isolation increases mortality risk by <strong>29%</strong>, loneliness by <strong>26%</strong>, and living alone by <strong>32%</strong>. These effect sizes are comparable to well-established risk factors — the researchers noted the mortality impact rivals smoking up to 15 cigarettes daily.
+                    </div>
+                </div>
+
+                <!-- Study Citation: Holt-Lunstad et al. 2015 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge">Meta-Analysis</span>
+                        <span class="study-journal">published in Perspectives on Psychological Science</span>
+                    </div>
+                    <div class="study-title">Loneliness and Social Isolation as Risk Factors for Mortality: A Meta-Analytic Review</div>
+                    <div class="study-meta">Holt-Lunstad et al., 2015 · 70 studies, n=3,407,134 · DOI: 10.1177/1745691614568352</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> The effect was consistent across gender, length of follow-up, and world region. Notably, <strong>social deficits were more predictive of death in younger samples</strong> (average age &lt;65) than in older adults, challenging the assumption that social isolation is primarily an elderly health concern.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/25910392/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    The biological mechanisms linking social isolation to mortality include chronic activation of the hypothalamic-pituitary-adrenal (HPA) axis, elevated inflammatory markers, impaired immune surveillance, disrupted sleep, and increased cardiovascular reactivity. Loneliness — the subjective feeling of isolation — triggers a threat-vigilance state that keeps the body in a low-grade stress response, even during sleep.
+                </p>
+
+                <p class="prose">
+                    Importantly, the research distinguishes between objective isolation (few social contacts) and subjective loneliness (feeling disconnected despite contacts). Both carry independent health risks. This is why our assessment asks about relationship quality rather than simply the number of social contacts — a few deep, supportive connections are more protective than many superficial ones.
+                </p>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 7: Purpose and lifespan
+             ============================================ -->
+        <div class="faq-card" id="q7">
+            <div class="faq-header" onclick="toggleFaq('q7')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Does having a sense of purpose really extend lifespan?</h2>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 2 studies</span>
+                    </div>
+                    <div class="faq-preview">Yes — across multiple large prospective studies totaling over 136,000 participants, having a strong sense of purpose consistently predicts lower mortality...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Yes. A meta-analysis of 136,265 participants found that <strong>high purpose in life was associated with significantly reduced all-cause mortality and cardiovascular events</strong>. A separate prospective study of nearly 7,000 adults found that those with the lowest sense of purpose had <strong>more than twice the mortality risk</strong> of those with the highest.
+                    </div>
+                </div>
+
+                <!-- Study Citation: Cohen et al. 2016 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge">Meta-Analysis</span>
+                        <span class="study-journal">published in Psychosomatic Medicine</span>
+                    </div>
+                    <div class="study-title">Purpose in Life and Its Relationship to All-Cause Mortality and Cardiovascular Events: A Meta-Analysis</div>
+                    <div class="study-meta">Cohen et al., 2016 · 10 studies, n=136,265 · DOI: 10.1097/PSY.0000000000000274</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> High sense of purpose was associated with <strong>significantly reduced risk of all-cause mortality and cardiovascular events</strong>. The authors concluded that purpose in life is a modifiable risk factor, and interventions to improve life purpose should be evaluated for health outcomes.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/26630073/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <!-- Study Citation: Alimujiang et al. 2019 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge cohort">Prospective Cohort</span>
+                        <span class="study-journal">published in JAMA Network Open</span>
+                    </div>
+                    <div class="study-title">Association Between Life Purpose and Mortality Among US Adults Older Than 50 Years</div>
+                    <div class="study-meta">Alimujiang et al., 2019 · n=6,985 · DOI: 10.1001/jamanetworkopen.2019.4270</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> After adjusting for demographics, lifestyle, and health conditions, adults with the <strong>lowest sense of purpose had more than double the mortality risk</strong> compared to those with the highest. The association held across multiple causes of death, including cardiovascular and circulatory conditions.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/31125099/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    Purpose doesn't require a grand mission — it can come from meaningful work, caregiving, community involvement, creative pursuits, mentoring, or spiritual practice. What matters is the subjective sense that your life has direction and that your activities matter beyond yourself. This is why our assessment includes a specific question about sense of purpose — it is one of the strongest psychosocial predictors of longevity.
+                </p>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 8: Eustress vs distress
+             ============================================ -->
+        <div class="faq-card" id="q8">
+            <div class="faq-header" onclick="toggleFaq('q8')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Is all stress bad? What's the difference between eustress and distress?</h2>
+                    <div class="faq-meta">
+                        <span>4 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 1 study</span>
+                    </div>
+                    <div class="faq-preview">Not all stress is harmful — challenge stress (eustress) can be motivating and health-promoting. What matters most may be how you perceive your stress...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Hans Selye, who coined the term "stress," distinguished between <strong>eustress</strong> (positive challenge stress that motivates and energizes) and <strong>distress</strong> (negative, overwhelming stress that drains and harms). A landmark study found that people who experienced high stress <strong>but did not believe it was harmful</strong> had among the lowest mortality rates — even lower than people who reported relatively little stress.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    The distinction between eustress and distress is not just semantic — it reflects fundamentally different physiological responses. Eustress (from the Greek "eu" meaning good) occurs when you face a challenge you believe you can meet, triggering a short-term cortisol and adrenaline response that enhances focus and performance, followed by recovery. Distress occurs when demands exceed perceived coping resources, triggering a sustained response without adequate recovery — leading to chronic cortisol elevation, systemic inflammation, and allostatic load (the cumulative physiological wear-and-tear from chronic stress).
+                </p>
+
+                <!-- Study Citation: Keller et al. 2012 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge cohort">Prospective Cohort</span>
+                        <span class="study-journal">published in Health Psychology</span>
+                    </div>
+                    <div class="study-title">Does the Perception That Stress Affects Health Matter? The Association with Health and Mortality</div>
+                    <div class="study-meta">Keller et al., 2012 · n=28,753, 8.5-year follow-up · DOI: 10.1037/a0026743</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> High stress combined with the perception that stress is harmful was associated with a <strong>43% increased risk of premature death</strong>. However, people who reported high stress but did <strong>not believe it affected their health</strong> had among the lowest mortality — even lower than those reporting little stress. The perception of stress mattered as much as the stress itself.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/22201278/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    This is why our assessment asks about the <em>type</em> of stress you experience rather than simply "how much" — someone who faces daily challenges at work but feels energized and capable (eustress) is in a fundamentally different health position than someone chronically overwhelmed and helpless (distress), even if both report "high stress." The goal is not to eliminate stress entirely, but to shift the balance toward challenge-type stress while building recovery capacity.
+                </p>
+
+                <div class="warning-box">
+                    <div class="warning-box-label">Important Nuance</div>
+                    <div class="warning-box-text">
+                        The Keller et al. finding does not mean you should simply ignore real stress. Chronic distress with inadequate recovery causes measurable biological harm regardless of perception. The finding suggests that reframing manageable challenges as opportunities — rather than threats — can shift both the psychological and physiological response toward a healthier pattern.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 9: Meditation and mindfulness
+             ============================================ -->
+        <div class="faq-card" id="q9">
+            <div class="faq-header" onclick="toggleFaq('q9')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Do meditation and mindfulness actually work for health?</h2>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 1 study</span>
+                    </div>
+                    <div class="faq-preview">A rigorous JAMA meta-analysis found small to moderate benefits for anxiety and depression — comparable to antidepressants — but the evidence for other outcomes is weaker...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        The most rigorous meta-analysis (JAMA, 47 trials) found mindfulness meditation produces <strong>moderate improvements in anxiety (effect size 0.38) and depression (0.30)</strong> — comparable to antidepressant medications. However, evidence for other outcomes like stress reduction and overall wellbeing is weaker. Meditation works, but expectations should be realistic.
+                    </div>
+                </div>
+
+                <!-- Study Citation: Goyal et al. 2014 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge">Meta-Analysis</span>
+                        <span class="study-journal">published in JAMA Internal Medicine</span>
+                    </div>
+                    <div class="study-title">Meditation Programs for Psychological Stress and Well-being: A Systematic Review and Meta-Analysis</div>
+                    <div class="study-meta">Goyal et al., 2014 · 47 trials, n=3,515 · DOI: 10.1001/jamainternmed.2013.13018</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Mindfulness meditation showed moderate evidence for <strong>improved anxiety (ES 0.38)</strong> and <strong>depression (ES 0.30)</strong> at 8 weeks, with effects persisting at 3–6 months. These effect sizes are comparable to those found for antidepressant medications. However, <strong>no evidence</strong> that meditation was superior to exercise, CBT, or other active treatments.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/24395196/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    The practical implication: meditation is a legitimate, evidence-based tool for managing anxiety and depressive symptoms — not a cure-all. It works about as well as medication for mild to moderate symptoms, with no side effects, but for stress management specifically, the evidence is more modest — consistent scheduling, physical exercise, and social connection may be equally or more effective.
+                </p>
+
+                <p class="prose">
+                    This is why our assessment asks about any regular stress-management practice — not meditation specifically. What matters for health is having a consistent recovery practice you actually do: meditation, breathwork, journaling, time in nature, and therapy all have supporting evidence, and the best practice is the one you'll sustain.
+                </p>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 10: Evidence-backed improvements
+             ============================================ -->
+        <div class="faq-card" id="q10">
+            <div class="faq-header" onclick="toggleFaq('q10')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">What are the most evidence-backed ways to improve my wellbeing?</h2>
+                    <div class="faq-meta">
+                        <span>5 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 3 studies</span>
+                    </div>
+                    <div class="faq-preview">Gratitude practices, nature exposure, social investment, purposeful activity, and mindfulness — ranked by evidence strength and practical impact...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        The five highest-impact, evidence-backed practices are: <strong>(1) gratitude journaling</strong> (weekly list of things you're grateful for), <strong>(2) nature exposure (&ge;120 min/week)</strong>, <strong>(3) investing in relationships</strong> (one meaningful interaction daily), <strong>(4) purposeful activity</strong> (volunteering, mentoring, creative work), and <strong>(5) mindfulness or stress-management practice</strong>. Each targets a specific PERMA dimension.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    <strong>1. Gratitude practice (targets P — Positive Emotions).</strong> The original randomized trial by Emmons &amp; McCullough found that participants who kept weekly gratitude journals exercised more, reported fewer physical symptoms, and felt better about their lives compared to those tracking hassles or neutral events [1]. The intervention is remarkably simple — listing 5 things you're grateful for once per week — and shows consistent effects across populations.
+                </p>
+
+                <!-- Study Citation: Emmons & McCullough 2003 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge rct">Randomized Trial</span>
+                        <span class="study-journal">published in Journal of Personality and Social Psychology</span>
+                    </div>
+                    <div class="study-title">Counting Blessings Versus Burdens: An Experimental Investigation of Gratitude and Subjective Well-Being in Daily Life</div>
+                    <div class="study-meta">Emmons &amp; McCullough, 2003 · 3 studies · DOI: 10.1037//0022-3514.84.2.377</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Participants in the gratitude condition exhibited <strong>heightened wellbeing, more exercise, and fewer physical symptoms</strong> compared to those who recorded hassles or neutral events. The effect on positive affect was the most robust finding across all three studies.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/12585811/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    <strong>2. Nature exposure (targets P + stress recovery).</strong> A large population study (n=19,806) found that spending at least 120 minutes per week in natural settings was associated with significantly better self-reported health and wellbeing compared to no nature contact [2]. Benefits peaked at 200–300 minutes per week, and it didn't matter whether the time was accumulated in one long visit or several short ones.
+                </p>
+
+                <!-- Study Citation: White et al. 2019 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge cohort">Cross-Sectional</span>
+                        <span class="study-journal">published in Scientific Reports</span>
+                    </div>
+                    <div class="study-title">Spending at Least 120 Minutes a Week in Nature Is Associated with Good Health and Wellbeing</div>
+                    <div class="study-meta">White et al., 2019 · n=19,806 · DOI: 10.1038/s41598-019-44097-3</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Compared to no nature contact, <strong>&ge;120 min/week</strong> was associated with significantly higher odds of good health (OR 1.59) and high wellbeing (OR 1.23). The pattern was consistent across older adults and those with long-term health conditions.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/31197192/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    <strong>3. Social investment (targets R — Relationships).</strong> Given the Holt-Lunstad finding that social isolation carries mortality risk comparable to smoking, actively investing in relationships is one of the highest-return health behaviors. This doesn't require dramatic changes — one meaningful conversation per day, joining a group activity, or reconnecting with an old friend each week can meaningfully shift your social connection score.
+                </p>
+
+                <p class="prose">
+                    <strong>4. Purposeful activity (targets M — Meaning + A — Accomplishment).</strong> Given the Cohen et al. meta-analysis linking purpose to reduced mortality, activities that provide meaning and progress are directly health-protective. Volunteering, mentoring, creative projects, learning new skills, or contributing to a cause you care about all build these dimensions. Start with one purposeful commitment per week and build from there.
+                </p>
+
+                <p class="prose">
+                    <strong>5. Mindfulness or stress-management practice (targets Stress Balance).</strong> Per the Goyal et al. meta-analysis, mindfulness meditation produces moderate improvements in anxiety and depression [3]. But what matters most is consistency — any regular recovery practice (meditation, breathwork, journaling, yoga, therapy) done 3+ times per week builds the stress-recovery capacity that protects long-term health.
+                </p>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Emmons, R.A. &amp; McCullough, M.E. (2003). "Counting Blessings Versus Burdens: An Experimental Investigation of Gratitude and Subjective Well-Being in Daily Life." Journal of Personality and Social Psychology, 84(2), 377–389. doi:<a href="https://doi.org/10.1037//0022-3514.84.2.377" target="_blank">10.1037//0022-3514.84.2.377</a></div>
+                    <div class="study-ref">[2] White, M.P., et al. (2019). "Spending at Least 120 Minutes a Week in Nature Is Associated with Good Health and Wellbeing." Scientific Reports, 9(1), 7730. doi:<a href="https://doi.org/10.1038/s41598-019-44097-3" target="_blank">10.1038/s41598-019-44097-3</a></div>
+                    <div class="study-ref">[3] Goyal, M., et al. (2014). "Meditation Programs for Psychological Stress and Well-being: A Systematic Review and Meta-Analysis." JAMA Internal Medicine, 174(3), 357–368. doi:<a href="https://doi.org/10.1001/jamainternmed.2013.13018" target="_blank">10.1001/jamainternmed.2013.13018</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 11: Personalized help
+             ============================================ -->
+        <div class="faq-card" id="q11">
+            <div class="faq-header" onclick="toggleFaq('q11')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Where can I get personalized help with this?</h2>
+                    <div class="faq-meta">
+                        <span>1 min read</span>
+                    </div>
+                    <div class="faq-preview">From coaching programs to AI-powered analysis of your scores, several options can help you create a personalized wellbeing improvement plan...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        This assessment identifies where you stand across all PERMA dimensions and stress balance. For personalized implementation, consider the coaching program for expert guidance, or analyze your complete test results with AI to identify priority areas and create an action plan tailored to your scores.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    Wellbeing improvement is highly individual — the right approach depends on which PERMA dimensions need attention, your life context, and your personal values. A wellbeing coach or therapist can help identify your specific barriers and design a targeted plan. If your Stress Balance score is particularly low, consider working with a psychologist trained in stress management or cognitive behavioral approaches.
+                </p>
+
+                <p class="prose">
+                    Your assessment results provide a baseline across all dimensions. Revisit the wellbeing questions periodically — every 4–8 weeks — to track how interventions are working. Even small consistent improvements across multiple PERMA dimensions compound into meaningful health and longevity benefits over time.
+                </p>
+            </div>
+        </div>
+
+        <!-- Page Footer -->
+        <div class="page-footer">
+            <p>All recommendations based on peer-reviewed research. Last updated February 2026.</p>
+        </div>
+
+        <!-- Footer CTA -->
+        <div class="footer-cta" id="footerCta">
+            <div class="footer-cta-text">Ready to improve your wellbeing?</div>
+            <a href="index.html" class="footer-cta-button">
+                <i data-lucide="smile" style="width:16px;height:16px;"></i> View Your Wellbeing Score
+            </a>
+            <div class="footer-cta-meta">Track your progress over time</div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        function toggleFaq(id) {
+            const card = document.getElementById(id);
+            card.classList.toggle('expanded');
+        }
+
+        function openFaqById(id) {
+            const card = document.getElementById(id);
+            if (card && !card.classList.contains('expanded')) {
+                card.classList.add('expanded');
+            }
+        }
+
+        // Handle hash links
+        function handleHashNavigation() {
+            if (window.location.hash) {
+                const targetId = window.location.hash.substring(1);
+                openFaqById(targetId);
+                setTimeout(() => {
+                    const target = document.getElementById(targetId);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 100);
+            }
+        }
+
+        // Run on page load
+        handleHashNavigation();
+
+        // Run on hash change
+        window.addEventListener('hashchange', handleHashNavigation);
+
+        // User status check
+        function checkUserStatus() {
+            const saved = localStorage.getItem('longevityPathData');
+            const marketingCta = document.getElementById('marketingCta');
+            const footerCta = document.getElementById('footerCta');
+            const userBadge = document.getElementById('userBadge');
+            const userNameBadge = document.getElementById('userNameBadge');
+
+            if (saved) {
+                const data = JSON.parse(saved);
+                userBadge.classList.add('visible');
+                userNameBadge.textContent = data.userName || 'User';
+                marketingCta.classList.remove('visible');
+                footerCta.querySelector('.footer-cta-text').textContent = 'Take control of your longevity. See where you stand.';
+                footerCta.querySelector('.footer-cta-button').innerHTML = '<i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back to Assessment';
+                footerCta.querySelector('.footer-cta-meta').textContent = '';
+                lucide.createIcons();
+            } else {
+                marketingCta.classList.add('visible');
+                userBadge.classList.remove('visible');
+            }
+        }
+
+        checkUserStatus();
+    </script>
+</body>
+</html>

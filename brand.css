@@ -344,15 +344,15 @@ strong, b {
     flex-shrink: 0;
 }
 
-/* Info Icon - Teal for information */
+/* Info Icon - Dark green for information */
 .info-icon, .help-link {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 20px;
     height: 20px;
-    background: var(--color-teal-light);
-    color: var(--color-teal);
+    background: var(--color-teal);
+    color: white;
     border-radius: var(--radius-full);
     font-size: 0.7rem;
     font-weight: 600;
@@ -362,8 +362,7 @@ strong, b {
 }
 
 .info-icon:hover, .help-link:hover {
-    background: var(--color-teal);
-    color: white;
+    opacity: 0.85;
     text-decoration: none;
 }
 
@@ -697,7 +696,7 @@ textarea:focus {
     width: 32px;
     height: 32px;
     background: var(--color-teal);
-    border-radius: 50%;
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -772,6 +771,7 @@ textarea:focus {
 .study-badge.rct { background: var(--color-teal); }
 .study-badge.cohort { background: var(--color-teal); }
 .study-badge.review { background: var(--color-teal); }
+.study-badge.validation { background: var(--color-teal); }
 
 .study-journal {
     font-size: 0.8rem;
@@ -819,6 +819,35 @@ textarea:focus {
     text-decoration: none;
 }
 .study-link:hover { text-decoration: underline; }
+
+/* In-card references (used inside FAQ cards) */
+.study-refs {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-border-light);
+}
+.study-refs-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    color: var(--color-text-muted);
+    margin-bottom: 8px;
+}
+.study-ref {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin-bottom: 6px;
+    padding-left: 20px;
+    text-indent: -20px;
+    line-height: 1.5;
+}
+.study-ref a {
+    color: var(--color-teal);
+    text-decoration: none;
+    font-weight: 500;
+}
+.study-ref a:hover { text-decoration: underline; }
 
 /* ===========================================
    INFO BOXES & CALLOUTS
@@ -896,11 +925,17 @@ textarea:focus {
     padding: 14px 16px;
     margin: 16px 0;
 }
-.warning-box-title {
+.warning-box-title,
+.warning-box-label {
     font-weight: 600;
     font-size: 0.85rem;
     color: var(--color-text);
     margin-bottom: 6px;
+}
+.warning-box-text {
+    font-size: 0.85rem;
+    color: var(--color-text);
+    line-height: 1.6;
 }
 .warning-box p, .warning-box ul {
     font-size: 0.85rem;
