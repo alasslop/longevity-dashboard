@@ -611,19 +611,19 @@
                 name: 'Nutrition', icon: 'apple',
                 sections: {
                     sec1: {
-                        title: "Diet Adherence", weight: 0.25,
+                        title: "Diet Adherence", weight: 0.25, helpLink: "nutrition-evidence.html",
                         questions: [
-                            { id: "N1_1", question: "How much do you enjoy your food?", hint: "Rate from 1 (not at all) to 10 (always a delight)", type: "slider", min: 1, max: 10 },
-                            { id: "N1_2", question: "In which situations does your diet work well?", type: "checkbox", scoring: "count",
+                            { id: "N1_1", question: "How much do you enjoy your food?", hint: "Rate from 1 (not at all) to 10 (always a delight)", type: "slider", min: 1, max: 10, helpLink: "nutrition-evidence.html#q8" },
+                            { id: "N1_2", question: "In which situations does your diet work well?", type: "checkbox", scoring: "count", helpLink: "nutrition-evidence.html#q9",
                               options: [{ value: "restaurant", label: "Restaurant" }, { value: "travel", label: "Travel" }, { value: "family", label: "Family and friends" }, { value: "stress", label: "Stressful situations" }] },
-                            { id: "N1_3", question: "How satisfied do you feel after eating?", type: "radio",
+                            { id: "N1_3", question: "How satisfied do you feel after eating?", type: "radio", helpLink: "nutrition-evidence.html#q10",
                               options: [{ value: "10", label: "Always full, no cravings", points: 10 }, { value: "5", label: "Mostly full, rarely hungry", points: 5 }, { value: "2", label: "Regularly hungry", points: 2 }, { value: "0", label: "Constantly hungry", points: 0 }] }
                         ]
                     },
                     sec2: {
-                        title: "Progress", weight: 0.25,
+                        title: "Progress", weight: 0.25, helpLink: "nutrition-evidence.html",
                         questions: [
-                            { id: "N2_1", question: "How is your progress towards your goals?", type: "radio",
+                            { id: "N2_1", question: "How is your progress towards your goals?", type: "radio", helpLink: "nutrition-evidence.html#q11",
                               options: [{ value: "10", label: "Every week is a win", points: 10 }, { value: "8", label: "Most weeks successful", points: 8 }, { value: "5", label: "Slow but visible progress", points: 5 }, { value: "2", label: "Stagnation", points: 2 }, { value: "0", label: "Getting worse", points: 0 }] }
                         ]
                     },
@@ -631,7 +631,7 @@
                         title: "Protein", weight: 0.25, helpLink: "protein-evidence.html",
                         footerLink: { text: "→ Open Nutrition Calculator", url: "nutrition-calculator.html", description: "Use nutrition calculator to calculate optimal protein intake according to your goals." },
                         questions: [
-                            { id: "N3_1", question: "What is your daily protein intake per kg of body weight?", type: "radio",
+                            { id: "N3_1", question: "What is your daily protein intake per kg of body weight?", type: "radio", helpLink: "protein-evidence.html#q1",
                               options: [{ value: "10", label: "1.6–2.0 g/kg", points: 10 }, { value: "6", label: "1.2–1.5 g/kg", points: 6 }, { value: "2", label: "0.8–1.1 g/kg (RDA)", points: 2 }, { value: "0", label: "Below 0.8 g/kg", points: 0 }] },
                             { id: "N3_2", question: "How many meals per day contain the age-related minimum protein per portion?", type: "radio", helpLink: "protein-evidence.html#q4",
                               options: [{ value: "10", label: "4 or more meals/snacks", points: 10 }, { value: "6", label: "3 meals", points: 6 }, { value: "2", label: "2 meals", points: 2 }, { value: "0", label: "1 or fewer", points: 0 }] }
@@ -641,7 +641,7 @@
                         title: "Nutrition Principles", weight: 0.25, helpLink: "nutrition-evidence.html",
                         description: "Check habits you follow 7+ out of 10 days.",
                         questions: [
-                            { id: "N4_principles", question: "Which nutrition principles do you follow?", type: "checkbox", scoring: "principles",
+                            { id: "N4_principles", question: "Which nutrition principles do you follow?", type: "checkbox", scoring: "principles", helpLink: "nutrition-evidence.html#q6",
                               options: [{ value: "vegetables", label: "3+ servings vegetables daily", evidence: "13% lower mortality" }, { value: "whole_foods", label: "Home-cooked whole foods", evidence: "15% lower mortality" }, { value: "healthy_fats", label: "Healthy fats (olive oil, nuts)", evidence: "30% less CVD" }, { value: "avoid_harmful", label: "Avoid trans fats & processed meat", evidence: "34% reduction" }, { value: "alcohol", label: "Moderate alcohol (max 7/week)", evidence: "Linear dose-response" }] }
                         ]
                     }
@@ -654,8 +654,8 @@
                         title: "VO2max / Aerobic Capacity", weight: 0.5, helpLink: "vo2max-evidence.html",
                         description: "Cardiorespiratory fitness is one of the strongest predictors of longevity. Enter your VO2max from a wearable, the Cooper Test, or a lab test.",
                         questions: [
-                            { id: "E1_vo2", question: "What is your VO2max?", hint: "Enter in ml/kg/min. Check your fitness watch, or use the Cooper Test calculator below.", type: "number", min: 5, max: 100, step: 0.1, unit: "ml/kg/min", normsTable: 'VO2MAX_NORMS', cooperCalc: true, fitnessAgeLabel: 'VO2max age' },
-                            { id: "E1_method", question: "How did you measure your VO2max?", hint: "Informational only — does not affect your score", type: "radio",
+                            { id: "E1_vo2", question: "What is your VO2max?", hint: "Enter in ml/kg/min. Check your fitness watch, or use the Cooper Test calculator below.", type: "number", min: 5, max: 100, step: 0.1, unit: "ml/kg/min", normsTable: 'VO2MAX_NORMS', cooperCalc: true, fitnessAgeLabel: 'VO2max age', helpLink: "vo2max-evidence.html#q3" },
+                            { id: "E1_method", question: "How did you measure your VO2max?", hint: "Informational only — does not affect your score", type: "radio", helpLink: "vo2max-evidence.html#q6",
                               options: [{ value: "wearable", label: "Wearable device (Apple Watch, Garmin, etc.)" }, { value: "cooper", label: "Cooper 12-minute run test" }, { value: "lab", label: "Laboratory test (metabolic cart)" }] }
                         ]
                     },
@@ -663,8 +663,8 @@
                         title: "Muscle Strength", weight: 0.5, helpLink: "muscle-strength-evidence.html",
                         description: "Muscle strength predicts functional independence and longevity. Complete one or both tests below.",
                         questions: [
-                            { id: "E2_pushups", question: "How many consecutive push-ups can you complete?", hint: "Men: standard (from toes). Women: modified (from knees). Maintain proper form throughout.", type: "number", min: 0, max: 200, step: 1, unit: "reps", normsTable: 'PUSHUP_NORMS', fitnessAgeLabel: 'Strength age' },
-                            { id: "E2_chair", question: "How many chair stands can you do in 30 seconds?", hint: "Stand fully from a chair and sit back down. Count complete cycles. This test is for ages 60+.", type: "number", min: 0, max: 50, step: 1, unit: "reps", normsTable: 'CHAIRSTAND_NORMS', ageMin: 60, fitnessAgeLabel: 'Functional age' }
+                            { id: "E2_pushups", question: "How many consecutive push-ups can you complete?", hint: "Men: standard (from toes). Women: modified (from knees). Maintain proper form throughout.", type: "number", min: 0, max: 200, step: 1, unit: "reps", normsTable: 'PUSHUP_NORMS', fitnessAgeLabel: 'Strength age', helpLink: "muscle-strength-evidence.html#q3" },
+                            { id: "E2_chair", question: "How many chair stands can you do in 30 seconds?", hint: "Stand fully from a chair and sit back down. Count complete cycles. This test is for ages 60+.", type: "number", min: 0, max: 50, step: 1, unit: "reps", normsTable: 'CHAIRSTAND_NORMS', ageMin: 60, fitnessAgeLabel: 'Functional age', helpLink: "muscle-strength-evidence.html#q4" }
                         ]
                     }
                 }
@@ -675,26 +675,26 @@
                     sec1: {
                         title: "Sleep Duration & Regularity", weight: 0.35, helpLink: "sleep-evidence.html",
                         questions: [
-                            { id: "SS1_1", question: "How many hours of sleep do you typically get per night?", hint: "Average over the past month", type: "radio",
+                            { id: "SS1_1", question: "How many hours of sleep do you typically get per night?", hint: "Average over the past month", type: "radio", helpLink: "sleep-evidence.html#q4",
                               options: [{ value: "10", label: "7–8 hours", points: 10 }, { value: "7", label: "6–7 or 8–9 hours", points: 7 }, { value: "4", label: "5–6 or 9–10 hours", points: 4 }, { value: "0", label: "Less than 5 or more than 10 hours", points: 0 }] },
-                            { id: "SS1_2", question: "How consistent is your sleep schedule?", hint: "Same bedtime and wake time each day", type: "radio",
+                            { id: "SS1_2", question: "How consistent is your sleep schedule?", hint: "Same bedtime and wake time each day", type: "radio", helpLink: "sleep-evidence.html#q3",
                               options: [{ value: "10", label: "Very consistent (±30 min)", points: 10 }, { value: "7", label: "Fairly consistent (±1 hour)", points: 7 }, { value: "4", label: "Somewhat irregular (±2 hours)", points: 4 }, { value: "0", label: "Highly irregular (varies widely)", points: 0 }] }
                         ]
                     },
                     sec2: {
                         title: "Sleep Quality", weight: 0.35, helpLink: "sleep-evidence.html",
                         questions: [
-                            { id: "SS2_1", question: "How would you rate your overall sleep quality?", hint: "Over the past month — 1 (terrible) to 10 (excellent)", type: "slider", min: 1, max: 10 },
-                            { id: "SS2_2", question: "How often do you wake up feeling rested and refreshed?", type: "radio",
+                            { id: "SS2_1", question: "How would you rate your overall sleep quality?", hint: "Over the past month — 1 (terrible) to 10 (excellent)", type: "slider", min: 1, max: 10, helpLink: "sleep-evidence.html#q5" },
+                            { id: "SS2_2", question: "How often do you wake up feeling rested and refreshed?", type: "radio", helpLink: "sleep-evidence.html#q6",
                               options: [{ value: "10", label: "Every day or almost every day", points: 10 }, { value: "7", label: "Most days", points: 7 }, { value: "4", label: "Some days", points: 4 }, { value: "0", label: "Rarely or never", points: 0 }] },
-                            { id: "SS2_3", question: "How often do you have trouble falling or staying asleep?", type: "radio",
+                            { id: "SS2_3", question: "How often do you have trouble falling or staying asleep?", type: "radio", helpLink: "sleep-evidence.html#q7",
                               options: [{ value: "10", label: "Rarely or never", points: 10 }, { value: "7", label: "Occasionally (1–2 nights/week)", points: 7 }, { value: "4", label: "Frequently (3–4 nights/week)", points: 4 }, { value: "0", label: "Almost every night", points: 0 }] }
                         ]
                     },
                     sec3: {
-                        title: "Wearable Sleep Score", weight: 0.30, helpLink: "sleep-evidence.html#q5",
+                        title: "Wearable Sleep Score", weight: 0.30, helpLink: "sleep-evidence.html",
                         questions: [
-                            { id: "SS3_1", question: "What is your average wearable sleep score?", hint: "30-day average from your wearable app (0–100). Leave blank if you don't use a sleep tracker.", type: "number", min: 0, max: 100, unit: "/ 100", inputMin: 0, inputMax: 100, step: 1 }
+                            { id: "SS3_1", question: "What is your average wearable sleep score?", hint: "30-day average from your wearable app (0–100). Leave blank if you don't use a sleep tracker.", type: "number", min: 0, max: 100, unit: "/ 100", inputMin: 0, inputMax: 100, step: 1, helpLink: "sleep-evidence.html#q8" }
                         ]
                     }
                 }
@@ -718,18 +718,18 @@
                               options: [{ value: "10", label: "Excellent — deep, supportive connections", points: 10 }, { value: "7", label: "Good — regular meaningful interactions", points: 7 }, { value: "4", label: "Fair — some connections but lacking depth", points: 4 }, { value: "0", label: "Poor — feeling isolated or unsupported", points: 0 }] },
                             { id: "W2_2", question: "To what extent do you feel your life has a sense of purpose or meaning?", type: "radio", helpLink: "wellbeing-evidence.html#q7",
                               options: [{ value: "10", label: "Strong and clear sense of purpose", points: 10 }, { value: "7", label: "Moderate — I have some direction", points: 7 }, { value: "4", label: "Somewhat unclear", points: 4 }, { value: "0", label: "Lacking direction or purpose", points: 0 }] },
-                            { id: "W2_3", question: "How often do you feel a sense of accomplishment or progress toward your goals?", type: "radio",
+                            { id: "W2_3", question: "How often do you feel a sense of accomplishment or progress toward your goals?", type: "radio", helpLink: "wellbeing-evidence.html#q8",
                               options: [{ value: "10", label: "Regularly — meaningful progress", points: 10 }, { value: "7", label: "Often — steady but could be more", points: 7 }, { value: "4", label: "Sometimes", points: 4 }, { value: "0", label: "Rarely — I feel stuck", points: 0 }] }
                         ]
                     },
                     sec3: {
                         title: "Stress Balance", weight: 0.35,
                         questions: [
-                            { id: "W3_1", question: "Which best describes the stress you typically experience?", hint: "Eustress (challenge stress) energizes you; distress drains you", type: "radio", helpLink: "wellbeing-evidence.html#q8",
+                            { id: "W3_1", question: "Which best describes the stress you typically experience?", hint: "Eustress (challenge stress) energizes you; distress drains you", type: "radio", helpLink: "wellbeing-evidence.html#q9",
                               options: [{ value: "10", label: "Mostly challenge stress — stretched but energized", points: 10 }, { value: "7", label: "A healthy mix — some motivating, some draining", points: 7 }, { value: "3", label: "Mostly draining — feeling overwhelmed", points: 3 }, { value: "0", label: "Chronic overwhelm affecting health and sleep", points: 0 }] },
-                            { id: "W3_2", question: "How quickly do you recover after stressful periods?", type: "radio",
+                            { id: "W3_2", question: "How quickly do you recover after stressful periods?", type: "radio", helpLink: "wellbeing-evidence.html#q10",
                               options: [{ value: "10", label: "Within hours — effective coping strategies", points: 10 }, { value: "7", label: "Within a day or two", points: 7 }, { value: "4", label: "It takes weeks", points: 4 }, { value: "0", label: "I rarely feel fully recovered", points: 0 }] },
-                            { id: "W3_3", question: "Do you regularly practice any stress-management techniques?", hint: "e.g. meditation, breathwork, journaling, time in nature, therapy", type: "radio", helpLink: "wellbeing-evidence.html#q9",
+                            { id: "W3_3", question: "Do you regularly practice any stress-management techniques?", hint: "e.g. meditation, breathwork, journaling, time in nature, therapy", type: "radio", helpLink: "wellbeing-evidence.html#q11",
                               options: [{ value: "10", label: "Yes, daily practice", points: 10 }, { value: "7", label: "Yes, several times a week", points: 7 }, { value: "4", label: "Occasionally", points: 4 }, { value: "0", label: "No regular practice", points: 0 }] }
                         ]
                     }
@@ -1051,9 +1051,23 @@
             const trendIcon = trend > 0 ? 'trending-up' : trend < 0 ? 'trending-down' : '';
             const trendText = trend !== 0 ? (trend > 0 ? `+${trend}` : `${trend}`) : '';
 
+            // Traffic light ring color based on score
+            const ringColor = score100 <= 0 ? 'var(--color-border)' : score100 <= 25 ? '#d32f2f' : score100 < 50 ? '#f57c00' : score100 < 75 ? '#7cb342' : '#43a047';
+            const catCircumference = 2 * Math.PI * 54;
+            const catDashoffset = catCircumference - (score100 / 100) * catCircumference;
+
             content.innerHTML += `
-                <div class="category-score-header" style="text-align:center;padding:16px;margin-bottom:20px;background:var(--color-card);border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-                    <div style="font-size:2.5rem;font-weight:700;color:var(--color-text);"><span id="catScoreValue">${score100}</span><span style="font-size:1rem;color:var(--color-text-muted);">/100</span></div>
+                <div class="category-score-header" style="text-align:center;padding:20px 16px;margin-bottom:20px;background:var(--color-card);border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                    <div style="position:relative;width:120px;height:120px;margin:0 auto 12px;">
+                        <svg width="120" height="120" viewBox="0 0 120 120" style="transform:rotate(-90deg);">
+                            <circle cx="60" cy="60" r="54" fill="none" stroke="var(--color-border)" stroke-width="8"/>
+                            <circle id="catScoreRing" cx="60" cy="60" r="54" fill="none" stroke="${ringColor}" stroke-width="8" stroke-linecap="round" stroke-dasharray="${catCircumference}" stroke-dashoffset="${catDashoffset}" style="transition:stroke-dashoffset 1s ease-out,stroke 0.5s ease;"/>
+                        </svg>
+                        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;">
+                            <div style="font-size:1.8rem;font-weight:700;color:var(--color-text);line-height:1;"><span id="catScoreValue">${score100}</span></div>
+                            <div style="font-size:0.7rem;color:var(--color-text-muted);">/100</div>
+                        </div>
+                    </div>
                     <div style="font-size:0.9rem;color:var(--color-text-muted);">Total ${category.name} Score</div>
                     ${trend !== 0 ? `<div class="dimension-trend ${trendClass}" style="margin-top:8px;font-size:0.85rem;display:inline-flex;align-items:center;gap:4px;"><i data-lucide="${trendIcon}" style="width:16px;height:16px;"></i> ${trendText}</div>` : ''}
                 </div>
@@ -1075,8 +1089,8 @@
                     <div class="detail-cta">
                         <div class="detail-cta-title"><i data-lucide="lightbulb" style="width:18px;height:18px;"></i> ${cta.title}</div>
                         <div class="detail-cta-text">${cta.text}</div>
-                        <div class="detail-cta-hint" style="margin-top:12px;font-size:0.8rem;color:var(--color-text-muted);display:flex;align-items:center;gap:6px;">
-                            <span class="help-link" style="position:static;margin:0;">?</span> Curious about the science? Tap the green <strong>?</strong> for research-backed insights.
+                        <div style="margin-top:12px;font-size:0.8rem;color:var(--color-text-muted);line-height:1.5;">
+                            Curious about the science? Tap the <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;background:var(--color-teal);color:white;border-radius:50%;font-size:0.55rem;font-weight:700;vertical-align:middle;">?</span> icons for research-backed insights.
                         </div>
                     </div>
                 `;
@@ -1431,6 +1445,14 @@
             const score100 = Math.round(score * 10);
             const catEl = document.getElementById('catScoreValue');
             if (catEl) catEl.textContent = score100;
+
+            // Update category ring
+            const catRing = document.getElementById('catScoreRing');
+            if (catRing) {
+                const circ = 2 * Math.PI * 54;
+                catRing.style.strokeDashoffset = circ - (score100 / 100) * circ;
+                catRing.style.stroke = score100 <= 0 ? 'var(--color-border)' : score100 <= 25 ? '#d32f2f' : score100 < 50 ? '#f57c00' : score100 < 75 ? '#7cb342' : '#43a047';
+            }
 
             Object.keys(category.sections).forEach(secKey => {
                 const section = category.sections[secKey];

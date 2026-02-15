@@ -3,417 +3,1131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Nutrition Science - LongevityPath</title>
+    <title>Nutrition Principles FAQ - LongevityPath</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Shared Brand Styles (includes Inter font) -->
+    <link rel="stylesheet" href="brand.css">
+
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-
-    <style>
-        :root {
-            --color-orange: #E9A04E;
-            --color-orange-light: #FDF6EC;
-            --color-teal: #00905A;
-            --color-teal-light: #E8F5F0;
-            --color-red: #EF4444;
-            --color-red-light: #FEE2E2;
-            --color-bg: #FAF9F6;
-            --color-card: #FFFFFF;
-            --color-text: #1F2937;
-            --color-text-muted: #6B7280;
-            --color-border: #E5E7EB;
-            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: var(--font-family);
-            background: var(--color-bg);
-            color: var(--color-text);
-            min-height: 100vh;
-            line-height: 1.6;
-        }
-
-        /* Header */
-        .header {
-            position: sticky;
-            top: 0;
-            background: var(--color-card);
-            padding: 16px 20px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            z-index: 100;
-        }
-
-        .back-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--color-bg);
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: var(--color-text);
-            text-decoration: none;
-        }
-
-        .header-title { font-weight: 600; font-size: 1.1rem; }
-
-        .container { max-width: 600px; margin: 0 auto; padding: 20px 16px 40px; }
-
-        .page-title { font-size: 1.5rem; font-weight: 700; color: var(--color-text); margin-bottom: 8px; }
-        .page-subtitle { font-size: 0.95rem; color: var(--color-text-muted); margin-bottom: 24px; }
-
-        /* CTA for unknown users */
-        .marketing-cta {
-            background: linear-gradient(135deg, var(--color-orange) 0%, #D4902F 100%);
-            border-radius: 16px; padding: 24px; margin-bottom: 24px; color: white; text-align: center; display: none;
-        }
-        .marketing-cta.visible { display: block; }
-        .marketing-cta-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
-        .marketing-cta-text { font-size: 0.9rem; opacity: 0.95; margin-bottom: 16px; }
-        .marketing-cta-button {
-            display: inline-flex; align-items: center; gap: 8px; background: white; color: var(--color-orange);
-            padding: 12px 24px; border-radius: 10px; font-weight: 600; font-size: 0.9rem; text-decoration: none;
-        }
-
-        /* Quick Answer Box */
-        .quick-answer {
-            background: var(--color-teal-light); border-radius: 12px; padding: 20px;
-            margin-bottom: 24px; border-left: 4px solid var(--color-teal);
-        }
-        .quick-answer-label {
-            display: inline-flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 600;
-            text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-teal); margin-bottom: 8px;
-        }
-        .quick-answer-text { font-size: 1rem; font-weight: 500; color: var(--color-text); }
-
-        /* Principle Card */
-        .principle-card {
-            background: var(--color-card); border-radius: 12px; padding: 20px;
-            margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-        .principle-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
-        .principle-number {
-            width: 32px; height: 32px; background: var(--color-teal); color: white; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.9rem; flex-shrink: 0;
-        }
-        .principle-title { font-size: 1rem; font-weight: 600; color: var(--color-text); flex: 1; min-width: 200px; }
-        .evidence-badge {
-            font-size: 0.7rem; font-weight: 500; color: var(--color-teal); background: var(--color-teal-light);
-            padding: 4px 10px; border-radius: 20px;
-        }
-
-        /* Study Card */
-        .study {
-            background: var(--color-bg); border-radius: 8px; padding: 14px; margin-bottom: 12px;
-        }
-        .study:last-of-type { margin-bottom: 0; }
-        .study-title { font-weight: 600; font-size: 0.9rem; color: var(--color-text); margin-bottom: 4px; }
-        .study-meta { font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 8px; }
-        .study-finding { font-size: 0.85rem; color: var(--color-text); line-height: 1.5; }
-        .study-finding strong { color: var(--color-teal); }
-        .study-link {
-            display: inline-flex; align-items: center; gap: 4px; margin-top: 8px;
-            color: var(--color-teal); font-size: 0.8rem; font-weight: 500; text-decoration: none;
-        }
-        .study-link:hover { text-decoration: underline; }
-
-        /* Vegetable Tables */
-        .veg-section { margin-top: 20px; }
-        .veg-title {
-            font-size: 0.9rem; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
-        }
-        .veg-title.good { color: var(--color-teal); }
-        .veg-title.bad { color: var(--color-red); }
-        .veg-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
-        .veg-table th {
-            background: var(--color-teal); color: white; padding: 10px 12px; text-align: left; font-weight: 600;
-        }
-        .veg-table th:first-child { border-radius: 8px 0 0 0; }
-        .veg-table th:last-child { border-radius: 0 8px 0 0; }
-        .veg-table.starchy th { background: var(--color-red); }
-        .veg-table td { padding: 8px 12px; border-bottom: 1px solid var(--color-border); }
-        .veg-table tr:last-child td { border-bottom: none; }
-        .veg-table tr:hover { background: var(--color-bg); }
-        .veg-note { font-size: 0.8rem; color: var(--color-text-muted); margin-top: 12px; padding: 12px; background: var(--color-bg); border-radius: 8px; }
-
-        /* Footer CTA */
-        .footer-cta {
-            background: var(--color-orange-light); border-radius: 12px; padding: 20px;
-            margin-top: 24px; text-align: center; border: 2px solid var(--color-orange);
-        }
-        .footer-cta-text { font-size: 0.95rem; color: var(--color-text); margin-bottom: 12px; }
-        .footer-cta-button {
-            display: inline-flex; align-items: center; gap: 8px; background: var(--color-orange); color: white;
-            padding: 12px 24px; border-radius: 10px; font-weight: 600; font-size: 0.9rem; text-decoration: none;
-        }
-
-        /* User badge */
-        .user-badge {
-            display: none; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--color-teal);
-            background: var(--color-teal-light); padding: 4px 10px; border-radius: 20px; margin-left: auto;
-        }
-        .user-badge.visible { display: inline-flex; }
-
-        /* Collapsible */
-        .collapsible-header { cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-        .collapsible-content { display: none; margin-top: 16px; }
-        .collapsible-content.open { display: block; }
-        .toggle-icon { transition: transform 0.2s; color: var(--color-text-muted); }
-        .toggle-icon.open { transform: rotate(180deg); }
-    </style>
 </head>
 <body>
     <header class="header">
         <a href="index.html" class="back-btn"><i data-lucide="arrow-left" style="width:20px;height:20px;"></i></a>
-        <span class="header-title">Nutrition Science</span>
+        <span class="header-title">Nutrition Principles FAQ</span>
         <span class="user-badge" id="userBadge"><i data-lucide="user" style="width:12px;height:12px;"></i> <span id="userNameBadge">User</span></span>
     </header>
 
-    <div class="container">
-        <!-- Marketing CTA for unknown users -->
+    <div class="container-evidence">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="index.html">LongevityPath</a>
+            <span>/</span>
+            <a href="index.html">Nutrition</a>
+            <span>/</span>
+            Nutrition Principles
+        </div>
+
+        <!-- Marketing CTA -->
         <div class="marketing-cta" id="marketingCta">
             <div class="marketing-cta-title">Discover Your Nutrition Score</div>
-            <div class="marketing-cta-text">Take our free 2-minute assessment and get personalized recommendations.</div>
+            <div class="marketing-cta-text">Take our free 2-minute assessment and get personalized nutrition recommendations.</div>
             <a href="index.html" class="marketing-cta-button">
                 <i data-lucide="play" style="width:16px;height:16px;"></i> Start Free Assessment
             </a>
         </div>
 
-        <h1 class="page-title">Nutrition & Longevity</h1>
-        <p class="page-subtitle">Science-backed principles for a longer, healthier life</p>
-
-        <!-- Quick Answer -->
-        <div class="quick-answer">
-            <div class="quick-answer-label"><i data-lucide="zap" style="width:14px;height:14px;"></i> Quick Answer</div>
-            <div class="quick-answer-text">
-                Eat mostly minimally processed plants: 3+ servings of vegetables daily, healthy fats, and limit ultra-processed foods. This approach is backed by 500+ experts from the True Health Initiative.
-            </div>
-        </div>
-
-        <!-- Principle 1: Vegetables -->
-        <div class="principle-card">
-            <div class="principle-header">
-                <div class="principle-number">1</div>
-                <div class="principle-title">Eat at least 3 servings of vegetables daily</div>
-                <span class="evidence-badge">13% lower mortality</span>
-            </div>
-
-            <div class="study">
-                <div class="study-title">Wang et al. 2021 - Circulation</div>
-                <div class="study-meta">108,735 participants | 30-year follow-up | 33,898 deaths</div>
-                <div class="study-finding">
-                    <strong>Key finding:</strong> 5 servings/day vs 2 servings/day = 13% lower all-cause mortality. Leafy greens and cruciferous vegetables showed strongest benefits. Starchy vegetables showed NO mortality benefit.
+        <!-- ============================================
+             FAQ CARD 1: Vegetables & longevity
+             ============================================ -->
+        <div class="faq-card" id="q1">
+            <div class="faq-header" onclick="toggleFaq('q1')">
+                <div class="faq-header-content">
+                    <h1 class="faq-question-title">Why do vegetables matter so much for longevity?</h1>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 2 studies</span>
+                    </div>
+                    <div class="faq-preview">Eating 5 servings of fruits and vegetables daily is associated with 13% lower all-cause mortality compared to 2 servings...</div>
                 </div>
-                <a href="https://pubmed.ncbi.nlm.nih.gov/33641343/" target="_blank" class="study-link">
-                    View on PubMed <i data-lucide="external-link" style="width:12px;height:12px;"></i>
-                </a>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
             </div>
-
-            <div class="study">
-                <div class="study-title">Aune et al. 2017 - Meta-Analysis</div>
-                <div class="study-meta">95 prospective studies | ~2 million participants</div>
-                <div class="study-finding">
-                    <strong>Key finding:</strong> Per 200g vegetables/day: 10-15% mortality reduction. Vegetables showed STRONGER associations with reduced cancer and CVD mortality than fruits.
-                </div>
-                <a href="https://pubmed.ncbi.nlm.nih.gov/28338764/" target="_blank" class="study-link">
-                    View on PubMed <i data-lucide="external-link" style="width:12px;height:12px;"></i>
-                </a>
-            </div>
-
-            <!-- Vegetable Tables - Collapsible -->
-            <div class="veg-section">
-                <div class="collapsible-header" onclick="toggleCollapsible(this)">
-                    <span style="font-weight:600;font-size:0.9rem;">Which vegetables count?</span>
-                    <i data-lucide="chevron-down" class="toggle-icon" style="width:20px;height:20px;"></i>
-                </div>
-                <div class="collapsible-content">
-                    <div class="veg-title good"><i data-lucide="check-circle" style="width:16px;height:16px;"></i> Non-Starchy Vegetables (Proven Mortality Benefit)</div>
-                    <table class="veg-table">
-                        <thead><tr><th>Vegetable</th><th>Calories/100g</th><th>Category</th></tr></thead>
-                        <tbody>
-                            <tr><td>Spinach</td><td>23 kcal</td><td>Leafy green</td></tr>
-                            <tr><td>Kale</td><td>35 kcal</td><td>Leafy green</td></tr>
-                            <tr><td>Arugula</td><td>25 kcal</td><td>Leafy green</td></tr>
-                            <tr><td>Lettuce (romaine)</td><td>17 kcal</td><td>Leafy green</td></tr>
-                            <tr><td>Broccoli</td><td>34 kcal</td><td>Cruciferous</td></tr>
-                            <tr><td>Cauliflower</td><td>25 kcal</td><td>Cruciferous</td></tr>
-                            <tr><td>Brussels sprouts</td><td>43 kcal</td><td>Cruciferous</td></tr>
-                            <tr><td>Cabbage</td><td>25 kcal</td><td>Cruciferous</td></tr>
-                            <tr><td>Bell peppers</td><td>31 kcal</td><td>Colorful</td></tr>
-                            <tr><td>Tomatoes</td><td>18 kcal</td><td>Colorful</td></tr>
-                            <tr><td>Carrots</td><td>41 kcal</td><td>Colorful</td></tr>
-                            <tr><td>Zucchini</td><td>17 kcal</td><td>Colorful</td></tr>
-                            <tr><td>Cucumber</td><td>16 kcal</td><td>Colorful</td></tr>
-                            <tr><td>Asparagus</td><td>20 kcal</td><td>Other</td></tr>
-                            <tr><td>Green beans</td><td>31 kcal</td><td>Other</td></tr>
-                            <tr><td>Mushrooms</td><td>22 kcal</td><td>Other</td></tr>
-                        </tbody>
-                    </table>
-
-                    <div class="veg-title bad" style="margin-top:20px;"><i data-lucide="x-circle" style="width:16px;height:16px;"></i> Starchy Vegetables (No Mortality Benefit)</div>
-                    <table class="veg-table starchy">
-                        <thead><tr><th>Vegetable</th><th>Calories/100g</th><th>Note</th></tr></thead>
-                        <tbody>
-                            <tr><td>Potato (white)</td><td>77 kcal</td><td>High glycemic index</td></tr>
-                            <tr><td>Sweet potato</td><td>86 kcal</td><td>High carbohydrate</td></tr>
-                            <tr><td>Corn</td><td>96 kcal</td><td>High glycemic index</td></tr>
-                            <tr><td>Peas</td><td>81 kcal</td><td>High carbohydrate</td></tr>
-                            <tr><td>Parsnips</td><td>75 kcal</td><td>High glycemic index</td></tr>
-                            <tr><td>Butternut squash</td><td>45 kcal</td><td>Moderate starch</td></tr>
-                        </tbody>
-                    </table>
-
-                    <div class="veg-note">
-                        <strong>Why the difference?</strong> Non-starchy vegetables average ~25 kcal/100g vs ~77 kcal/100g for starchy. Starchy vegetables cause blood sugar spikes similar to refined grains.
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Eating <strong>5 servings of fruits and vegetables daily</strong> is associated with 13% lower all-cause mortality compared to 2 servings. Leafy greens and cruciferous vegetables show the strongest benefits, while starchy vegetables show no mortality benefit.
                     </div>
                 </div>
+
+                <p class="prose">
+                    Vegetables are among the most consistently protective foods in nutrition research. Two landmark studies illustrate why the LongevityPath assessment includes vegetable intake as a core nutrition principle [1][2].
+                </p>
+
+                <!-- Study Citation: Wang et al. 2021 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge cohort">Cohort Study</span>
+                        <span class="study-journal">published in Circulation</span>
+                    </div>
+                    <div class="study-title">Fruit and Vegetable Intake and Mortality: Results From 2 Prospective Cohort Studies</div>
+                    <div class="study-meta">Wang et al., 2021 · n=108,735 · 30-year follow-up · DOI: 10.1161/CIRCULATIONAHA.120.048996</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> 5 servings per day vs. 2 servings = <strong>13% lower all-cause mortality</strong>. Leafy greens and cruciferous vegetables showed the strongest benefits. Starchy vegetables (potatoes, corn, peas) showed no mortality benefit.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/33641343/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <!-- Expert Citation: Dr. Walter Willett -->
+                <div class="expert-citation">
+                    <div class="expert-header">
+                        <div class="expert-avatar">WW</div>
+                        <div>
+                            <span class="expert-name">Dr. Walter Willett</span>
+                            <span class="expert-affiliation">Harvard T.H. Chan School of Public Health</span>
+                        </div>
+                    </div>
+                    <div class="expert-quote">
+                        The evidence is clear that a dietary pattern rich in fruits and vegetables, whole grains, healthy fats, and healthy protein sources is protective against major chronic diseases and premature death."
+                    </div>
+                    <div style="font-size: 0.75rem; color: var(--color-text-muted); margin-top: 6px; padding-left: 42px;">
+                        — Willett et al., <em>The Lancet</em>, 2019
+                    </div>
+                </div>
+
+                <p class="prose">
+                    The dose-response relationship was confirmed in one of the largest meta-analyses ever conducted on vegetable consumption [2]:
+                </p>
+
+                <!-- Study Citation: Aune et al. 2017 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge">Meta-Analysis</span>
+                        <span class="study-journal">published in International Journal of Epidemiology</span>
+                    </div>
+                    <div class="study-title">Fruit and Vegetable Intake and the Risk of Cardiovascular Disease, Total Cancer, and All-Cause Mortality</div>
+                    <div class="study-meta">Aune et al., 2017 · 95 prospective studies · ~2 million participants · DOI: 10.1093/ije/dyw319</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Per 200 g vegetables per day: <strong>10-15% mortality reduction</strong>. Vegetables showed stronger associations with reduced cancer and cardiovascular mortality than fruits.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/28338764/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    Not all vegetables are equal for longevity. The research distinguishes clearly between non-starchy and starchy vegetables [1]:
+                </p>
+
+                <table class="data-table">
+                    <thead><tr><th>Category</th><th>Examples</th><th>Mortality Benefit</th></tr></thead>
+                    <tbody>
+                        <tr><td>Leafy greens</td><td>Spinach, kale, arugula, lettuce</td><td>Strongest</td></tr>
+                        <tr><td>Cruciferous</td><td>Broccoli, cauliflower, Brussels sprouts, cabbage</td><td>Strong</td></tr>
+                        <tr><td>Colorful non-starchy</td><td>Bell peppers, tomatoes, carrots, zucchini</td><td>Moderate</td></tr>
+                        <tr class="highlight"><td>Starchy vegetables</td><td>Potato, corn, peas, parsnips</td><td>None</td></tr>
+                    </tbody>
+                </table>
+
+                <div id="vegetableCoachingHint"></div>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Practical Tip</div>
+                    <div class="tip-box-text">
+                        Start by adding one extra serving of leafy greens or cruciferous vegetables per day. A handful of spinach in a smoothie, a side of broccoli at dinner, or a mixed salad at lunch all count.
+                    </div>
+                </div>
+
+                <!-- References -->
+                                <div class="references-section">
+                    <h2>References</h2>
+                    <div class="reference">[1] Wang, D.D., Li, Y., Bhupathiraju, S.N., et al. (2021). "Fruit and Vegetable Intake and Mortality." <em>Circulation</em>, 143(17), 1642-1654. doi:<a href="https://doi.org/10.1161/CIRCULATIONAHA.120.048996" target="_blank">10.1161/CIRCULATIONAHA.120.048996</a></div>
+                    <div class="reference">[2] Aune, D., Giovannucci, E., Boffetta, P., et al. (2017). "Fruit and vegetable intake and the risk of cardiovascular disease, total cancer and all-cause mortality." <em>International Journal of Epidemiology</em>, 46(3), 1029-1056. doi:<a href="https://doi.org/10.1093/ije/dyw319" target="_blank">10.1093/ije/dyw319</a></div>
+                </div>
             </div>
         </div>
 
-        <!-- Principle 2: Whole Foods -->
-        <div class="principle-card">
-            <div class="principle-header">
-                <div class="principle-number">2</div>
-                <div class="principle-title">Home-cooked meals from whole ingredients</div>
-                <span class="evidence-badge">15% lower mortality</span>
-            </div>
-
-            <div class="study">
-                <div class="study-title">BMJ Umbrella Review 2024</div>
-                <div class="study-meta">45 pooled analyses | 9.9 million participants</div>
-                <div class="study-finding">
-                    <strong>Key finding:</strong> Higher ultra-processed food intake associated with 32 adverse health outcomes including +15% all-cause mortality, +50% CVD mortality, increased cancer and diabetes.
+        <!-- ============================================
+             FAQ CARD 2: Ultra-processed foods
+             ============================================ -->
+        <div class="faq-card" id="q2">
+            <div class="faq-header" onclick="toggleFaq('q2')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">How do ultra-processed foods affect health and longevity?</h2>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 2 studies</span>
+                    </div>
+                    <div class="faq-preview">Ultra-processed food intake is associated with 32 adverse health outcomes including 15% higher all-cause mortality...</div>
                 </div>
-                <a href="https://pubmed.ncbi.nlm.nih.gov/38418082/" target="_blank" class="study-link">
-                    View on PubMed <i data-lucide="external-link" style="width:12px;height:12px;"></i>
-                </a>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
             </div>
-
-            <div class="study">
-                <div class="study-title">Hall NIH RCT 2019 - Cell Metabolism</div>
-                <div class="study-meta">Randomized controlled trial | Inpatient metabolic ward</div>
-                <div class="study-finding">
-                    <strong>Key finding:</strong> UPF diet caused +508 kcal/day consumed vs whole foods diet. UPF causes passive overeating through faster eating and bypassed satiety signals.
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Ultra-processed food (UPF) intake is associated with <strong>32 adverse health outcomes</strong> including 15% higher all-cause mortality. A controlled trial showed UPF diets cause passive overeating of ~500 extra calories per day.
+                    </div>
                 </div>
-                <a href="https://pubmed.ncbi.nlm.nih.gov/31105044/" target="_blank" class="study-link">
-                    View on PubMed <i data-lucide="external-link" style="width:12px;height:12px;"></i>
-                </a>
+
+                <p class="prose">
+                    The evidence against ultra-processed foods has grown dramatically in recent years. The most comprehensive analysis to date—an umbrella review combining 45 pooled analyses—paints a clear picture [1]:
+                </p>
+
+                <!-- Study Citation: BMJ Umbrella Review 2024 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge review">Umbrella Review</span>
+                        <span class="study-journal">published in BMJ</span>
+                    </div>
+                    <div class="study-title">Ultra-Processed Food Exposure and Adverse Health Outcomes</div>
+                    <div class="study-meta">Lane et al., 2024 · 45 pooled analyses · 9.9 million participants · DOI: 10.1136/bmj-2023-077310</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Higher UPF intake associated with <strong>+15% all-cause mortality</strong>, +50% cardiovascular disease mortality, and increased risk of cancer, type 2 diabetes, and depression.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/38418082/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <!-- Expert Citation: Dr. Carlos Monteiro -->
+                <div class="expert-citation">
+                    <div class="expert-header">
+                        <div class="expert-avatar">CM</div>
+                        <div>
+                            <span class="expert-name">Dr. Carlos Monteiro</span>
+                            <span class="expert-affiliation">University of São Paulo, Creator of NOVA Classification</span>
+                        </div>
+                    </div>
+                    <div class="expert-quote">
+                        Ultra-processed foods are not modified foods but formulations of industrial substances and additives. Their displacement of minimally processed foods and freshly prepared meals is the main dietary cause of the current pandemic of obesity and related diseases."
+                    </div>
+                </div>
+
+                <p class="prose">
+                    The most compelling evidence comes from the only randomized controlled trial on this topic [2]. By controlling every variable in a metabolic ward, researchers could isolate the effect of ultra-processing itself:
+                </p>
+
+                <!-- Study Citation: Hall NIH RCT 2019 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge rct">RCT</span>
+                        <span class="study-journal">published in Cell Metabolism</span>
+                    </div>
+                    <div class="study-title">Ultra-Processed Diets Cause Excess Calorie Intake and Weight Gain</div>
+                    <div class="study-meta">Hall et al., 2019 · Inpatient metabolic ward · DOI: 10.1016/j.cmet.2019.05.008</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Ultra-processed diet caused <strong>+508 kcal/day consumed</strong> compared to whole foods diet. UPF caused passive overeating through faster eating speed and bypassed satiety signals.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/31105044/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <div id="wholeFoodCoachingHint"></div>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Practical Tip</div>
+                    <div class="tip-box-text">
+                        You don't need to eliminate all processed foods overnight. Start by replacing one ultra-processed item per day with a whole food alternative: swap breakfast cereal for oatmeal, packaged snacks for nuts and fruit, or ready meals for simple home-cooked dishes.
+                    </div>
+                </div>
+
+                <!-- References -->
+                                <div class="references-section">
+                    <h2>References</h2>
+                    <div class="reference">[1] Lane, M.M., Gamage, E., Du, S., et al. (2024). "Ultra-processed food exposure and adverse health outcomes." <em>BMJ</em>, 384, e077310. doi:<a href="https://doi.org/10.1136/bmj-2023-077310" target="_blank">10.1136/bmj-2023-077310</a></div>
+                    <div class="reference">[2] Hall, K.D., Ayuketah, A., Brychta, R., et al. (2019). "Ultra-Processed Diets Cause Excess Calorie Intake and Weight Gain." <em>Cell Metabolism</em>, 30(1), 67-77.e3. doi:<a href="https://doi.org/10.1016/j.cmet.2019.05.008" target="_blank">10.1016/j.cmet.2019.05.008</a></div>
+                </div>
             </div>
         </div>
 
-        <!-- Principle 3: Healthy Fats -->
-        <div class="principle-card">
-            <div class="principle-header">
-                <div class="principle-number">3</div>
-                <div class="principle-title">Include healthy fats regularly</div>
-                <span class="evidence-badge">30% less CVD</span>
-            </div>
-
-            <div class="study">
-                <div class="study-title">PREDIMED Trial 2018 - NEJM</div>
-                <div class="study-meta">7,447 participants | Randomized controlled trial | 4.8 years</div>
-                <div class="study-finding">
-                    <strong>Key finding:</strong> Mediterranean diet with extra virgin olive oil (50g/day) or nuts (30g/day) = 30% reduction in major cardiovascular events vs low-fat control diet.
+        <!-- ============================================
+             FAQ CARD 3: Healthy fats
+             ============================================ -->
+        <div class="faq-card" id="q3">
+            <div class="faq-header" onclick="toggleFaq('q3')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">What role do healthy fats play in longevity?</h2>
+                    <div class="faq-meta">
+                        <span>2 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 1 study</span>
+                    </div>
+                    <div class="faq-preview">A Mediterranean diet enriched with olive oil or nuts reduced major cardiovascular events by 30% in a landmark RCT...</div>
                 </div>
-                <a href="https://pubmed.ncbi.nlm.nih.gov/29897866/" target="_blank" class="study-link">
-                    View on PubMed <i data-lucide="external-link" style="width:12px;height:12px;"></i>
-                </a>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        A Mediterranean diet enriched with <strong>extra virgin olive oil (50 g/day) or nuts (30 g/day)</strong> reduced major cardiovascular events by 30% in the landmark PREDIMED trial—one of the largest nutrition RCTs ever conducted.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    The PREDIMED trial is considered one of the most important nutrition studies of the past two decades [1]. It was one of the first large-scale randomized trials to demonstrate that adding specific healthy fats to the diet, rather than just reducing unhealthy ones, produces measurable cardiovascular benefits:
+                </p>
+
+                <!-- Study Citation: PREDIMED 2018 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge rct">RCT</span>
+                        <span class="study-journal">published in New England Journal of Medicine</span>
+                    </div>
+                    <div class="study-title">Primary Prevention of Cardiovascular Disease with a Mediterranean Diet Supplemented with Extra-Virgin Olive Oil or Nuts</div>
+                    <div class="study-meta">Estruch et al., 2018 · n=7,447 · 4.8 years · DOI: 10.1056/NEJMoa1800389</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Mediterranean diet with extra virgin olive oil or nuts = <strong>30% reduction in major cardiovascular events</strong> compared to a low-fat control diet.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/29897866/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <table class="data-table">
+                    <thead><tr><th>Healthy Fat Source</th><th>Daily Target</th><th>Key Benefit</th></tr></thead>
+                    <tbody>
+                        <tr><td>Extra virgin olive oil</td><td>~50 g (3-4 tbsp)</td><td>30% CVD reduction</td></tr>
+                        <tr><td>Mixed nuts</td><td>~30 g (1 handful)</td><td>28% CVD reduction</td></tr>
+                        <tr><td>Fatty fish (salmon, sardines)</td><td>2-3 servings/week</td><td>Omega-3, inflammation</td></tr>
+                        <tr><td>Avocado</td><td>Regularly</td><td>Fiber + monounsaturated fat</td></tr>
+                    </tbody>
+                </table>
+
+                <div id="fatCoachingHint"></div>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Practical Tip</div>
+                    <div class="tip-box-text">
+                        Use extra virgin olive oil as your primary cooking and dressing oil. Keep a jar of mixed nuts at your desk for snacking. These two habits alone replicate the PREDIMED intervention.
+                    </div>
+                </div>
+
+                <!-- References -->
+                                <div class="references-section">
+                    <h2>References</h2>
+                    <div class="reference">[1] Estruch, R., Ros, E., Salas-Salvadó, J., et al. (2018). "Primary Prevention of Cardiovascular Disease with a Mediterranean Diet Supplemented with Extra-Virgin Olive Oil or Nuts." <em>New England Journal of Medicine</em>, 378(25), e34. doi:<a href="https://doi.org/10.1056/NEJMoa1800389" target="_blank">10.1056/NEJMoa1800389</a></div>
+                </div>
             </div>
         </div>
 
-        <!-- Principle 4: Avoid Trans Fats -->
-        <div class="principle-card">
-            <div class="principle-header">
-                <div class="principle-number">4</div>
-                <div class="principle-title">Avoid trans fats and limit processed meats</div>
-                <span class="evidence-badge">34% mortality reduction</span>
-            </div>
-
-            <div class="study">
-                <div class="study-title">de Souza et al. 2015 - BMJ Meta-Analysis</div>
-                <div class="study-meta">Systematic review of observational studies</div>
-                <div class="study-finding">
-                    <strong>Key finding:</strong> Trans fat intake associated with +34% all-cause mortality, +28% CHD mortality per 2% of energy from trans fats. Trans fats show STRONGEST evidence for harm.
+        <!-- ============================================
+             FAQ CARD 4: Trans fats & processed meats
+             ============================================ -->
+        <div class="faq-card" id="q4">
+            <div class="faq-header" onclick="toggleFaq('q4')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Why should I avoid trans fats and processed meats?</h2>
+                    <div class="faq-meta">
+                        <span>2 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 2 studies</span>
+                    </div>
+                    <div class="faq-preview">Trans fat intake is associated with 34% higher all-cause mortality. Industrial trans fats show the strongest evidence for harm of any dietary fat...</div>
                 </div>
-                <a href="https://pubmed.ncbi.nlm.nih.gov/26268692/" target="_blank" class="study-link">
-                    View on PubMed <i data-lucide="external-link" style="width:12px;height:12px;"></i>
-                </a>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
             </div>
-
-            <div class="study">
-                <div class="study-title">AHA Presidential Advisory 2017</div>
-                <div class="study-meta">American Heart Association scientific statement</div>
-                <div class="study-finding">
-                    <strong>Key finding:</strong> Industrial trans fats consistently associated with CHD death. Recommendation: Eliminate partially hydrogenated oils from diet completely.
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Trans fat intake is associated with <strong>34% higher all-cause mortality</strong> and 28% higher coronary heart disease mortality. Industrial trans fats show the strongest evidence for harm of any dietary fat type.
+                    </div>
                 </div>
-                <a href="https://www.ahajournals.org/doi/10.1161/cir.0000000000000510" target="_blank" class="study-link">
-                    View on AHA <i data-lucide="external-link" style="width:12px;height:12px;"></i>
-                </a>
+
+                <p class="prose">
+                    Among all dietary risk factors, trans fats stand out for the consistency and strength of their association with mortality [1]. A comprehensive meta-analysis quantified the risk:
+                </p>
+
+                <!-- Study Citation: de Souza 2015 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge">Meta-Analysis</span>
+                        <span class="study-journal">published in BMJ</span>
+                    </div>
+                    <div class="study-title">Intake of Saturated and Trans Unsaturated Fatty Acids and Risk of All-Cause Mortality, Cardiovascular Disease, and Type 2 Diabetes</div>
+                    <div class="study-meta">de Souza et al., 2015 · Systematic review · DOI: 10.1136/bmj.h3978</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Trans fat intake associated with <strong>+34% all-cause mortality</strong> and +28% coronary heart disease mortality per 2% of energy from trans fats. Industrial trans fats showed the strongest evidence for harm.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/26268692/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    The American Heart Association issued a scientific statement reinforcing the need to eliminate industrial trans fats entirely [2]:
+                </p>
+
+                <!-- Study Citation: AHA 2017 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge review">Scientific Statement</span>
+                        <span class="study-journal">published in Circulation</span>
+                    </div>
+                    <div class="study-title">Dietary Fats and Cardiovascular Disease: A Presidential Advisory</div>
+                    <div class="study-meta">Sacks et al., 2017 · American Heart Association · DOI: 10.1161/CIR.0000000000000510</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Industrial trans fats consistently associated with coronary heart disease death. Recommendation: <strong>eliminate partially hydrogenated oils</strong> from the diet completely.
+                    </div>
+                    <a href="https://doi.org/10.1161/CIR.0000000000000510" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <div id="transFatCoachingHint"></div>
+
+                <div class="warning-box">
+                    <div class="warning-box-title">Watch Out For Hidden Trans Fats</div>
+                    <p>Even in countries where industrial trans fats are banned, they can still appear in imported products, some margarines, and deep-fried foods. Check labels for "partially hydrogenated" oils—these are trans fats regardless of what the front label says.</p>
+                </div>
+
+                <!-- References -->
+                                <div class="references-section">
+                    <h2>References</h2>
+                    <div class="reference">[1] de Souza, R.J., Mente, A., Maroleanu, A., et al. (2015). "Intake of saturated and trans unsaturated fatty acids and risk of all cause mortality, cardiovascular disease, and type 2 diabetes." <em>BMJ</em>, 351, h3978. doi:<a href="https://doi.org/10.1136/bmj.h3978" target="_blank">10.1136/bmj.h3978</a></div>
+                    <div class="reference">[2] Sacks, F.M., Lichtenstein, A.H., Wu, J.H.Y., et al. (2017). "Dietary Fats and Cardiovascular Disease: A Presidential Advisory." <em>Circulation</em>, 136(3), e1-e23. doi:<a href="https://doi.org/10.1161/CIR.0000000000000510" target="_blank">10.1161/CIR.0000000000000510</a></div>
+                </div>
             </div>
         </div>
 
-        <!-- Principle 5: Alcohol -->
-        <div class="principle-card">
-            <div class="principle-header">
-                <div class="principle-number">5</div>
-                <div class="principle-title">Moderate alcohol or none at all</div>
-                <span class="evidence-badge">Linear dose-response</span>
-            </div>
-
-            <div class="study">
-                <div class="study-title">GBD 2016 - Lancet Global Study</div>
-                <div class="study-meta">195 countries | 28 million people | 694 data sources</div>
-                <div class="study-finding">
-                    <strong>Key finding:</strong> Zero alcohol = lowest risk for all-cause mortality. NO safe level of alcohol identified. Previous "J-curve" was methodological artifact.
+        <!-- ============================================
+             FAQ CARD 5: Alcohol & longevity
+             ============================================ -->
+        <div class="faq-card" id="q5">
+            <div class="faq-header" onclick="toggleFaq('q5')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">How does alcohol affect longevity?</h2>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 2 studies</span>
+                    </div>
+                    <div class="faq-preview">The safest level of alcohol consumption for overall health is zero. Previous claims of a protective "J-curve" were a methodological artifact...</div>
                 </div>
-                <a href="https://pubmed.ncbi.nlm.nih.gov/30146330/" target="_blank" class="study-link">
-                    View on PubMed <i data-lucide="external-link" style="width:12px;height:12px;"></i>
-                </a>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
             </div>
-
-            <div class="study">
-                <div class="study-title">Wood et al. 2018 - Lancet</div>
-                <div class="study-meta">83 prospective studies | 599,912 current drinkers</div>
-                <div class="study-finding">
-                    <strong>Key finding:</strong> >7 drinks/week: mortality increases. 14 drinks/week: -1 to -2 years life expectancy. 25 drinks/week: -4 to -5 years life expectancy.
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        The safest level of alcohol for overall health is <strong>zero</strong>. The previous "J-curve" (suggesting moderate drinking is protective) was a methodological artifact. Above 7 drinks per week, mortality risk increases progressively.
+                    </div>
                 </div>
-                <a href="https://pubmed.ncbi.nlm.nih.gov/29676281/" target="_blank" class="study-link">
-                    View on PubMed <i data-lucide="external-link" style="width:12px;height:12px;"></i>
-                </a>
+
+                <p class="prose">
+                    For decades, moderate alcohol consumption was believed to be heart-protective. The largest global analysis ever conducted on alcohol use challenged this belief [1]:
+                </p>
+
+                <!-- Study Citation: GBD 2016 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge cohort">Global Analysis</span>
+                        <span class="study-journal">published in The Lancet</span>
+                    </div>
+                    <div class="study-title">Alcohol Use and Burden for 195 Countries and Territories, 1990-2016</div>
+                    <div class="study-meta">GBD 2016 Alcohol Collaborators, 2018 · 195 countries · 28 million people · DOI: 10.1016/S0140-6736(18)31310-2</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Zero alcohol = lowest risk for all-cause mortality. <strong>No safe level of alcohol</strong> was identified when considering all health outcomes. Previous "J-curve" findings were a methodological artifact.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/30146330/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    The dose-response relationship between alcohol and mortality was quantified in detail by a large pooled analysis of current drinkers [2]:
+                </p>
+
+                <!-- Study Citation: Wood 2018 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge">Meta-Analysis</span>
+                        <span class="study-journal">published in The Lancet</span>
+                    </div>
+                    <div class="study-title">Risk Thresholds for Alcohol Consumption</div>
+                    <div class="study-meta">Wood et al., 2018 · 83 prospective studies · n=599,912 · DOI: 10.1016/S0140-6736(18)30134-X</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Above 7 drinks per week, mortality increases. <strong>14 drinks/week: -1 to -2 years life expectancy</strong>. 25 drinks/week: -4 to -5 years life expectancy. The risk is linear and dose-dependent.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/29676281/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <table class="data-table">
+                    <thead><tr><th>Weekly Intake</th><th>Life Expectancy Impact</th></tr></thead>
+                    <tbody>
+                        <tr><td>0 drinks</td><td>Lowest overall risk</td></tr>
+                        <tr><td>1-7 drinks</td><td>Minimal increase</td></tr>
+                        <tr class="highlight"><td>14 drinks</td><td>-1 to -2 years</td></tr>
+                        <tr class="highlight"><td>25+ drinks</td><td>-4 to -5 years</td></tr>
+                    </tbody>
+                </table>
+
+                <div id="alcoholCoachingHint"></div>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Practical Tip</div>
+                    <div class="tip-box-text">
+                        If you currently drink, the most impactful change is reducing to 7 or fewer drinks per week. You don't need to quit entirely for significant health benefits—just keeping consumption moderate makes a large difference. If you don't drink, the evidence doesn't support starting for health reasons.
+                    </div>
+                </div>
+
+                <!-- References -->
+                                <div class="references-section">
+                    <h2>References</h2>
+                    <div class="reference">[1] GBD 2016 Alcohol Collaborators. (2018). "Alcohol use and burden for 195 countries and territories, 1990-2016." <em>The Lancet</em>, 392(10152), 1015-1035. doi:<a href="https://doi.org/10.1016/S0140-6736(18)31310-2" target="_blank">10.1016/S0140-6736(18)31310-2</a></div>
+                    <div class="reference">[2] Wood, A.M., Kaptoge, S., Butterworth, A.S., et al. (2018). "Risk thresholds for alcohol consumption." <em>The Lancet</em>, 391(10129), 1513-1523. doi:<a href="https://doi.org/10.1016/S0140-6736(18)30134-X" target="_blank">10.1016/S0140-6736(18)30134-X</a></div>
+                </div>
             </div>
         </div>
 
-        <p style="text-align:center;color:var(--color-text-muted);font-size:0.8rem;margin-top:24px;">
-            All studies are peer-reviewed and published in high-impact medical journals.
+        <!-- ============================================
+             FAQ CARD 6: What does my score mean?
+             ============================================ -->
+        <div class="faq-card" id="q6">
+            <div class="faq-header" onclick="toggleFaq('q6')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">What does my nutrition principles score mean?</h2>
+                    <div class="faq-meta">
+                        <span>2 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Score interpretation</span>
+                    </div>
+                    <div class="faq-preview">Your score reflects how many of the five evidence-based nutrition principles you consistently follow. Each principle carries independent mortality benefits...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Your score reflects how many of the <strong>five evidence-based nutrition principles</strong> you consistently follow. Each principle carries independent mortality benefits, so even adopting one or two can make a meaningful difference.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    The five nutrition principles in the LongevityPath assessment were selected because each has strong, independent evidence linking it to reduced mortality or disease risk. They are not redundant—following all five provides cumulative protection [1][2].
+                </p>
+
+                <table class="data-table">
+                    <thead><tr><th>Principles Followed</th><th>What It Means</th></tr></thead>
+                    <tbody>
+                        <tr class="highlight"><td>0-1 of 5</td><td>Significant room for improvement. Even adding one principle can reduce mortality risk by 10-15%.</td></tr>
+                        <tr><td>2-3 of 5</td><td>A solid foundation. Consider which missing principles would be easiest to adopt.</td></tr>
+                        <tr><td>4-5 of 5</td><td>Excellent adherence. Your dietary pattern closely aligns with longevity research. Focus on consistency.</td></tr>
+                    </tbody>
+                </table>
+
+                <div id="scoreCoachingHint"></div>
+
+                <p class="prose">
+                    An important nuance: these principles describe patterns, not perfection [1]. The assessment asks which habits you follow 7 or more out of 10 days. Occasional deviations are normal and do not negate the long-term benefits of consistent adherence.
+                </p>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Key Insight</div>
+                    <div class="tip-box-text">
+                        Research consistently shows that dietary patterns matter more than individual foods or nutrients [1][2]. Following several principles moderately well outperforms perfecting just one.
+                    </div>
+                </div>
+
+                <div class="references-section">
+                    <h2>References</h2>
+                    <div class="reference">[1] Wang, D.D., Li, Y., Bhupathiraju, S.N., et al. (2021). "Fruit and Vegetable Intake and Mortality." <em>Circulation</em>, 143(17), 1642-1654. doi:<a href="https://doi.org/10.1161/CIRCULATIONAHA.120.048996" target="_blank">10.1161/CIRCULATIONAHA.120.048996</a></div>
+                    <div class="reference">[2] de Souza, R.J., Mente, A., Maroleanu, A., et al. (2015). "Intake of saturated and trans unsaturated fatty acids and risk of all cause mortality." <em>BMJ</em>, 351, h3978. doi:<a href="https://doi.org/10.1136/bmj.h3978" target="_blank">10.1136/bmj.h3978</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 7: How to improve
+             ============================================ -->
+        <div class="faq-card" id="q7">
+            <div class="faq-header" onclick="toggleFaq('q7')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">How can I start improving my nutrition for longevity?</h2>
+                    <div class="faq-meta">
+                        <span>2 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Taking action</span>
+                    </div>
+                    <div class="faq-preview">Start with the principle that feels most achievable and build from there. Small, consistent changes compound over time...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        <strong>Start with the principle that feels most achievable</strong> and build from there. Small, consistent changes compound over time—you don't need to overhaul your diet all at once.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    Based on impact-to-effort ratio from the underlying research [1][2], here is a suggested order for adopting the five nutrition principles:
+                </p>
+
+                <table class="data-table">
+                    <thead><tr><th>Priority</th><th>Principle</th><th>Easiest First Step</th></tr></thead>
+                    <tbody>
+                        <tr><td>1</td><td>Healthy fats</td><td>Switch to olive oil for cooking and dressing</td></tr>
+                        <tr><td>2</td><td>Avoid trans fats</td><td>Check labels; avoid "partially hydrogenated" oils</td></tr>
+                        <tr><td>3</td><td>3+ vegetables daily</td><td>Add one extra serving of leafy greens per day</td></tr>
+                        <tr><td>4</td><td>Home-cooked whole foods</td><td>Cook one extra meal at home per week</td></tr>
+                        <tr><td>5</td><td>Moderate alcohol</td><td>Set a weekly limit and track drinks</td></tr>
+                    </tbody>
+                </table>
+
+                <div id="improvementCoachingHint"></div>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Getting Personalized Help</div>
+                    <div class="tip-box-text">
+                        This assessment identifies where you stand. For personalized implementation, consider the coaching program for expert guidance, or analyze your complete test results with AI to identify priority areas and create an action plan tailored to your scores.
+                    </div>
+                </div>
+
+                <div class="references-section">
+                    <h2>References</h2>
+                    <div class="reference">[1] Estruch, R., Ros, E., Salas-Salvadó, J., et al. (2018). "Primary Prevention of Cardiovascular Disease with a Mediterranean Diet." <em>New England Journal of Medicine</em>, 378(25), e34. doi:<a href="https://doi.org/10.1056/NEJMoa1800389" target="_blank">10.1056/NEJMoa1800389</a></div>
+                    <div class="reference">[2] Aune, D., Giovannucci, E., Boffetta, P., et al. (2017). "Fruit and vegetable intake and the risk of cardiovascular disease, total cancer and all-cause mortality." <em>International Journal of Epidemiology</em>, 46(3), 1029-1056. doi:<a href="https://doi.org/10.1093/ije/dyw319" target="_blank">10.1093/ije/dyw319</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 8: Food enjoyment & adherence (N1_1)
+             ============================================ -->
+        <div class="faq-card" id="q8">
+            <div class="faq-header" onclick="toggleFaq('q8')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Why does food enjoyment matter for long-term diet adherence?</h2>
+                    <div class="faq-meta">
+                        <span>2 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 2 studies</span>
+                    </div>
+                    <div class="faq-preview">Higher diet quality is consistently associated with better health-related quality of life. People who enjoy their healthy eating pattern are far more likely to sustain it...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        <strong>Higher diet quality is consistently associated with better health-related quality of life.</strong> People who enjoy their healthy eating pattern are far more likely to sustain it long-term. Diets perceived as restrictive or unenjoyable have much higher dropout rates.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    The link between diet quality and quality of life runs in both directions—eating well improves how you feel, and feeling good about what you eat makes healthy patterns easier to maintain [1]. A systematic review examined this relationship across multiple populations:
+                </p>
+
+                <!-- Study Citation: Govindaraju et al. 2018 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge review">Systematic Review</span>
+                        <span class="study-journal">published in European Journal of Nutrition</span>
+                    </div>
+                    <div class="study-title">Dietary Patterns and Successful Ageing: A Systematic Review</div>
+                    <div class="study-meta">Govindaraju et al., 2018 · 8 studies on diet patterns and quality of life · DOI: 10.1007/s00394-015-1123-7</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> The majority of studies reported a <strong>positive relationship between healthy diet quality and better quality-of-life outcomes</strong> in older adults, including physical functioning, mental health, and vitality.
+                    </div>
+                    <a href="https://doi.org/10.1007/s00394-015-1123-7" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    A qualitative study on successful long-term diet change found that enjoyment was a distinguishing factor between those who sustained healthy changes and those who reverted [2]:
+                </p>
+
+                <!-- Study Citation: Metzgar et al. 2022 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge cohort">Qualitative Study</span>
+                        <span class="study-journal">published in Nutrients (PMC)</span>
+                    </div>
+                    <div class="study-title">Healthy Eating as a New Way of Life: A Qualitative Study of Successful Long-Term Diet Change</div>
+                    <div class="study-meta">Metzgar et al., 2022 · DOI: 10.3390/nu14040816</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Successful long-term diet changers were characterized by <strong>intrinsic motivation and enjoyment</strong> of their eating pattern. Those who failed often viewed healthy eating as unenjoyable and a threat to quality of life.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/35215484/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <div id="enjoymentCoachingHint"></div>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Practical Tip</div>
+                    <div class="tip-box-text">
+                        If you don't enjoy your current healthy eating approach, that's a signal to adjust it—not to abandon healthy eating entirely. Experiment with different cuisines, cooking styles, and recipes until you find healthy foods you genuinely look forward to.
+                    </div>
+                </div>
+
+                <!-- References -->
+                                <div class="references-section">
+                    <h2>References</h2>
+                    <div class="reference">[1] Govindaraju, T., Sahle, B.W., McCaffrey, T.A., et al. (2018). "Dietary Patterns and Quality of Life in Older Adults: A Systematic Review." <em>European Journal of Nutrition</em>, 57(4), 1327-1346. doi:<a href="https://doi.org/10.1007/s00394-015-1123-7" target="_blank">10.1007/s00394-015-1123-7</a></div>
+                    <div class="reference">[2] Metzgar, C.J., Preston, A.G., Miller, D.L., et al. (2022). "Healthy Eating as a New Way of Life: A Qualitative Study of Successful Long-Term Diet Change." <em>Nutrients</em>, 14(4), 816. doi:<a href="https://doi.org/10.3390/nu14040816" target="_blank">10.3390/nu14040816</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 9: Diet flexibility & situations (N1_2)
+             ============================================ -->
+        <div class="faq-card" id="q9">
+            <div class="faq-header" onclick="toggleFaq('q9')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Why does diet flexibility across different situations matter?</h2>
+                    <div class="faq-meta">
+                        <span>2 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 2 studies</span>
+                    </div>
+                    <div class="faq-preview">Flexible dietary control is associated with lower BMI and less binge eating, while rigid "all-or-nothing" dieting predicts weight regain and disordered eating...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        <strong>Flexible dietary control is associated with lower BMI and less binge eating</strong>, while rigid "all-or-nothing" dieting predicts weight regain and disordered eating. A healthy diet that works across multiple life situations—at home, at work, while traveling, and at social events—is far more sustainable.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    Research on dietary restraint styles reveals a clear pattern: how you approach your diet matters as much as what you eat [1][2]. The distinction between flexible and rigid dietary control has important implications for long-term success:
+                </p>
+
+                <!-- Study Citation: Westenhoefer 1999 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge cohort">Observational Study</span>
+                        <span class="study-journal">published in Appetite</span>
+                    </div>
+                    <div class="study-title">Flexible vs. Rigid Dieting Strategies: Relationship with Adverse Behavioral Outcomes</div>
+                    <div class="study-meta">Westenhoefer et al., 1999 · n=74 (weight management program) · DOI: 10.1006/appe.1998.0204</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Flexible control was associated with <strong>absence of overeating, lower BMI, and lower negative mood</strong> (canonical correlation r=0.65). Rigid control was positively related to disinhibited eating and higher BMI.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/10336790/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <!-- Study Citation: Stewart et al. 2002 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge cohort">Observational Study</span>
+                        <span class="study-journal">published in Appetite</span>
+                    </div>
+                    <div class="study-title">Rigid vs. Flexible Dieting: Association with Eating Disorder Symptoms in Nonobese Women</div>
+                    <div class="study-meta">Stewart et al., 2002 · n=63 · DOI: 10.1006/appe.2001.0445</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Rigid dietary control was significantly associated with <strong>higher eating disorder symptoms, mood disturbances, and body dissatisfaction</strong>. Flexible control showed no such associations.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/11883916/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <div id="flexibilityCoachingHint"></div>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Practical Tip</div>
+                    <div class="tip-box-text">
+                        Build "healthy defaults" for each situation you face regularly: a go-to restaurant order, a travel snack bag, a party eating strategy. The goal isn't perfection in every situation—it's having a workable plan that keeps you roughly on track without stress.
+                    </div>
+                </div>
+
+                <!-- References -->
+                                <div class="references-section">
+                    <h2>References</h2>
+                    <div class="reference">[1] Westenhoefer, J., Stunkard, A.J., Pudel, V. (1999). "Flexible and rigid control of eating behavior." <em>Appetite</em>, 33(1), 37-45. doi:<a href="https://doi.org/10.1006/appe.1998.0204" target="_blank">10.1006/appe.1998.0204</a></div>
+                    <div class="reference">[2] Stewart, T.M., Williamson, D.A., White, M.A. (2002). "Rigid vs. flexible dieting: association with eating disorder symptoms in nonobese women." <em>Appetite</em>, 38(1), 39-44. doi:<a href="https://doi.org/10.1006/appe.2001.0445" target="_blank">10.1006/appe.2001.0445</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 10: Post-meal satisfaction (N1_3)
+             ============================================ -->
+        <div class="faq-card" id="q10">
+            <div class="faq-header" onclick="toggleFaq('q10')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">How does post-meal satisfaction relate to diet quality and health?</h2>
+                    <div class="faq-meta">
+                        <span>2 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 2 studies</span>
+                    </div>
+                    <div class="faq-preview">Higher satiety from meals predicts lower energy intake and better weight management outcomes. Whole foods rich in protein and fiber promote greater satisfaction per calorie...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        <strong>Higher satiety from meals predicts lower energy intake and better weight management outcomes.</strong> Whole foods rich in protein, fiber, and water promote greater satisfaction per calorie, reducing the urge to snack and overeat.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    Post-meal satisfaction is a practical indicator of diet quality [1]. Meals that leave you feeling genuinely satisfied—not just full—tend to be nutritionally superior, and this satisfaction has measurable effects on subsequent eating behavior [2]:
+                </p>
+
+                <!-- Study Citation: Benelam 2009 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge review">Review</span>
+                        <span class="study-journal">published in Nutrition Research Reviews</span>
+                    </div>
+                    <div class="study-title">Potential Benefits of Satiety to the Consumer: Scientific Considerations</div>
+                    <div class="study-meta">Benelam, 2009 · DOI: 10.1017/S0954422409990012</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Enhanced satiety can reduce opportunistic eating, improve hunger management, and <strong>support compliance with goal-directed behaviors</strong>. Higher appetite ratings are associated with lower weight loss in dieters. Initial satiety changes predict subsequent energy intake and weight outcomes.
+                    </div>
+                    <a href="https://doi.org/10.1017/S0954422409990012" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <!-- Study Citation: Forde et al. 2020 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge">Meta-Analysis</span>
+                        <span class="study-journal">published in Scientific Reports</span>
+                    </div>
+                    <div class="study-title">Food Texture Influences on Satiety: Systematic Review and Meta-Analysis</div>
+                    <div class="study-meta">Forde et al., 2020 · Systematic review + meta-analysis · DOI: 10.1038/s41598-020-69504-y</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Whole, minimally processed foods with intact texture <strong>promote significantly greater satiety</strong> compared to ultra-processed equivalents, even at the same calorie content. Texture and food structure drive eating speed and satiety signaling.
+                    </div>
+                    <a href="https://doi.org/10.1038/s41598-020-69504-y" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <div id="satietyCoachingHint"></div>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Practical Tip</div>
+                    <div class="tip-box-text">
+                        If you frequently feel unsatisfied after meals, prioritize adding protein, fiber, and volume (vegetables, salads). Eating slowly and choosing whole foods with more texture also enhances satiety per calorie consumed.
+                    </div>
+                </div>
+
+                <!-- References -->
+                                <div class="references-section">
+                    <h2>References</h2>
+                    <div class="reference">[1] Benelam, B. (2009). "Satiation, satiety and their effects on eating behaviour." <em>Nutrition Research Reviews</em>, 22(2), 153-174. doi:<a href="https://doi.org/10.1017/S0954422409990012" target="_blank">10.1017/S0954422409990012</a></div>
+                    <div class="reference">[2] Forde, C.G., Bolhuis, D., et al. (2020). "Food Texture Influences on Satiety: Systematic Review and Meta-Analysis." <em>Scientific Reports</em>, 10, 12929. doi:<a href="https://doi.org/10.1038/s41598-020-69504-y" target="_blank">10.1038/s41598-020-69504-y</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 11: Progress tracking (N2_1)
+             ============================================ -->
+        <div class="faq-card" id="q11">
+            <div class="faq-header" onclick="toggleFaq('q11')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Why does tracking progress towards nutrition goals matter?</h2>
+                    <div class="faq-meta">
+                        <span>2 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 2 studies</span>
+                    </div>
+                    <div class="faq-preview">Self-monitoring is the most consistently effective behavior change strategy for weight and diet management, associated with significantly greater weight loss across 15 studies...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        <strong>Self-monitoring is the most consistently effective behavior change strategy</strong> for diet and weight management. Digital tracking tools are associated with an additional 2.9 kg weight loss compared to no self-monitoring. Awareness of progress drives better food choices.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    Knowing where you stand matters. A landmark systematic review established self-monitoring as the cornerstone of successful behavior change in nutrition [1]:
+                </p>
+
+                <!-- Study Citation: Burke et al. 2011 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge review">Systematic Review</span>
+                        <span class="study-journal">published in Journal of the American Dietetic Association</span>
+                    </div>
+                    <div class="study-title">Self-Monitoring in Weight Loss: A Systematic Review of the Literature</div>
+                    <div class="study-meta">Burke et al., 2011 · 22 studies reviewed · DOI: 10.1016/j.jada.2010.10.008</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> All 15 studies examining dietary self-monitoring found <strong>significant associations with weight loss</strong>. More consistent monitoring was associated with greater weight loss. Self-monitoring works through self-regulation theory: awareness → evaluation → reinforcement.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/21185970/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    Digital tools have made self-monitoring more accessible and effective [2]. A meta-analysis quantified the benefit:
+                </p>
+
+                <!-- Study Citation: Berry et al. 2021 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge">Meta-Analysis</span>
+                        <span class="study-journal">published in Obesity Reviews</span>
+                    </div>
+                    <div class="study-title">Digital Self-Monitoring of Diet and Physical Activity for Weight Loss</div>
+                    <div class="study-meta">Berry et al., 2021 · 12 RCTs · DOI: 10.1111/obr.13306</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Digital self-monitoring of diet and physical activity was associated with a <strong>mean weight loss of 2.87 kg more</strong> than control groups (95% CI: 1.96-3.78, p &lt; 0.001).
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/34192411/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <div id="progressCoachingHint"></div>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Practical Tip</div>
+                    <div class="tip-box-text">
+                        You don't need to track every calorie forever. Even brief periods of tracking—just 3-7 days—can reveal patterns you weren't aware of. The LongevityPath assessment itself serves as a progress check-in. Retaking it periodically helps you see how your habits evolve.
+                    </div>
+                </div>
+
+                <!-- References -->
+                                <div class="references-section">
+                    <h2>References</h2>
+                    <div class="reference">[1] Burke, L.E., Wang, J., Sevick, M.A. (2011). "Self-Monitoring in Weight Loss: A Systematic Review of the Literature." <em>Journal of the American Dietetic Association</em>, 111(1), 92-102. doi:<a href="https://doi.org/10.1016/j.jada.2010.10.008" target="_blank">10.1016/j.jada.2010.10.008</a></div>
+                    <div class="reference">[2] Berry, R., Kassavou, A., Sutton, S. (2021). "Does self-monitoring diet and physical activity behaviors using digital technology support adults with obesity or overweight to lose weight?" Obesity Reviews, 22(10), e13306. doi:<a href="https://doi.org/10.1111/obr.13306" target="_blank">10.1111/obr.13306</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Footer -->
+        <p class="page-footer">
+            All studies are peer-reviewed and published in high-impact medical journals.<br>
+            Last updated: February 2026
         </p>
 
         <!-- Footer CTA -->
         <div class="footer-cta" id="footerCta">
-            <div class="footer-cta-text">Ready to see how your nutrition supports longevity?</div>
+            <div class="footer-cta-text">Want to know your personal nutrition score?</div>
             <a href="index.html" class="footer-cta-button">
-                <i data-lucide="clipboard-check" style="width:16px;height:16px;"></i> Take the Assessment
+                <i data-lucide="clipboard-check" style="width:16px;height:16px;"></i> Take Free Assessment
             </a>
+            <div class="footer-cta-meta">5 minutes · No signup required</div>
         </div>
     </div>
 
     <script>
         lucide.createIcons();
 
-        function toggleCollapsible(header) {
-            const content = header.nextElementSibling;
-            const icon = header.querySelector('.toggle-icon');
-            content.classList.toggle('open');
-            icon.classList.toggle('open');
+        function toggleFaq(id) {
+            const card = document.getElementById(id);
+            card.classList.toggle('expanded');
         }
 
+        function openFaqById(id) {
+            const card = document.getElementById(id);
+            if (card && !card.classList.contains('expanded')) {
+                card.classList.add('expanded');
+            }
+        }
+
+        // Handle hash links
+        function handleHashNavigation() {
+            if (window.location.hash) {
+                const targetId = window.location.hash.substring(1);
+                openFaqById(targetId);
+                setTimeout(() => {
+                    const target = document.getElementById(targetId);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 100);
+            }
+        }
+
+        handleHashNavigation();
+        window.addEventListener('hashchange', handleHashNavigation);
+
+        // ============================================
+        // Coaching Hints — score-aware tips
+        // ============================================
+        function loadCoachingHints() {
+            const saved = localStorage.getItem('longevityPathData');
+            if (!saved) return;
+            const data = JSON.parse(saved);
+            if (!data.answers || !data.answers.nutrition) return;
+            const nutrition = data.answers.nutrition;
+            const sec1 = nutrition.sec1 || {};
+            const sec2 = nutrition.sec2 || {};
+            const sec4 = nutrition.sec4 || {};
+
+            // Check overall nutrition category score
+            const catScores = data.categoryScores || {};
+            const nutritionPct = catScores.nutrition ? (catScores.nutrition / 100 * 100) : null;
+
+            // Check which specific principles are followed
+            const principlesRaw = sec4.N4_principles || '';
+            const principlesArr = typeof principlesRaw === 'string' ? principlesRaw.split(',').filter(Boolean) : (Array.isArray(principlesRaw) ? principlesRaw : []);
+            const principleCount = principlesArr.length;
+            const lowPrinciples = principleCount < 3;
+
+            // Check diet adherence scores (sec1)
+            const enjoymentRaw = parseFloat(sec1.N1_1);
+            const satisfactionRaw = parseFloat(sec1.N1_3);
+            const enjoymentLow = !isNaN(enjoymentRaw) && enjoymentRaw <= 5;
+            const satisfactionLow = !isNaN(satisfactionRaw) && satisfactionRaw <= 5;
+
+            // Check progress score (sec2)
+            const progressRaw = parseFloat(sec2.N2_1);
+            const progressLow = !isNaN(progressRaw) && progressRaw <= 5;
+
+            const coachHtml = (msg) => `
+                <div class="tip-box" style="border-left-color: #f57c00; background: #fff8e1;">
+                    <div class="tip-box-label" style="color: #f57c00;">🎯 Based on Your Score</div>
+                    <div class="tip-box-text">${msg} <a href="#q7" onclick="event.preventDefault(); openFaqById('q7'); document.getElementById('q7').scrollIntoView({behavior:'smooth',block:'start'});">See how to start improving →</a></div>
+                </div>`;
+
+            // Nutrition principles coaching hints (q1-q7)
+            if (lowPrinciples || (nutritionPct !== null && nutritionPct < 50)) {
+                const el1 = document.getElementById('vegetableCoachingHint');
+                if (el1 && !principlesArr.includes('vegetables')) el1.innerHTML = coachHtml('You\'re not yet consistently eating 3+ servings of vegetables daily. Adding just one extra serving of leafy greens per day is one of the highest-impact changes you can make—associated with up to 13% lower mortality.');
+
+                const el2 = document.getElementById('wholeFoodCoachingHint');
+                if (el2 && !principlesArr.includes('whole_foods')) el2.innerHTML = coachHtml('Cooking more meals from whole ingredients could significantly improve your nutrition score. Even replacing one ultra-processed meal per day with home-cooked food reduces your UPF exposure meaningfully.');
+
+                const el3 = document.getElementById('fatCoachingHint');
+                if (el3 && !principlesArr.includes('healthy_fats')) el3.innerHTML = coachHtml('Including healthy fats like olive oil and nuts in your daily diet could reduce your cardiovascular risk by up to 30%. This is one of the easiest principles to adopt—start with olive oil as your default cooking oil.');
+
+                const el4 = document.getElementById('transFatCoachingHint');
+                if (el4 && !principlesArr.includes('avoid_harmful')) el4.innerHTML = coachHtml('Avoiding trans fats and processed meats is associated with a 34% mortality reduction. Start by checking labels on packaged foods for "partially hydrogenated" oils.');
+
+                const el5 = document.getElementById('alcoholCoachingHint');
+                if (el5 && !principlesArr.includes('alcohol')) el5.innerHTML = coachHtml('Moderating alcohol intake is one of the most impactful changes for longevity. Above 7 drinks per week, each additional drink measurably reduces life expectancy.');
+
+                const el6 = document.getElementById('scoreCoachingHint');
+                if (el6) el6.innerHTML = coachHtml('Your nutrition principles score suggests significant room for improvement. The good news: each additional principle you adopt provides independent health benefits. Start with whichever feels most achievable.');
+
+                const el7 = document.getElementById('improvementCoachingHint');
+                if (el7) el7.innerHTML = coachHtml('Based on your current score, a personalized coaching program could help you systematically adopt new nutrition habits. Small changes, consistently applied, produce lasting results.');
+            }
+
+            // Diet adherence coaching hints (q8-q10)
+            if (enjoymentLow || (nutritionPct !== null && nutritionPct < 50)) {
+                const elEnjoy = document.getElementById('enjoymentCoachingHint');
+                if (elEnjoy) elEnjoy.innerHTML = coachHtml('Your food enjoyment score is on the lower side. Research shows that enjoyment is a key predictor of long-term diet success. Explore different healthy cuisines and cooking methods to find foods you genuinely look forward to eating.');
+            }
+
+            if (nutritionPct !== null && nutritionPct < 50) {
+                const elFlex = document.getElementById('flexibilityCoachingHint');
+                if (elFlex) elFlex.innerHTML = coachHtml('Building flexible eating strategies for different situations—work, travel, social events—can make your healthy habits more sustainable. Rigid "all-or-nothing" approaches are associated with higher dropout rates.');
+            }
+
+            if (satisfactionLow || (nutritionPct !== null && nutritionPct < 50)) {
+                const elSatiety = document.getElementById('satietyCoachingHint');
+                if (elSatiety) elSatiety.innerHTML = coachHtml('Low post-meal satisfaction often signals that meals lack protein, fiber, or volume. Adding more vegetables, legumes, or lean protein to your meals can improve satisfaction without increasing calories.');
+            }
+
+            // Progress tracking coaching hint (q11)
+            if (progressLow || (nutritionPct !== null && nutritionPct < 50)) {
+                const elProgress = document.getElementById('progressCoachingHint');
+                if (elProgress) elProgress.innerHTML = coachHtml('Tracking progress—even briefly—is the single most effective behavior change strategy for nutrition. Consider using a simple food diary or the LongevityPath assessment to check in periodically.');
+            }
+        }
+
+        loadCoachingHints();
+
+        // ============================================
+        // FAQ Rating System
+        // ============================================
+        const RATING_KEY = 'longevityFaqRatingsNutrition';
+
+        function getRatings() {
+            try { return JSON.parse(localStorage.getItem(RATING_KEY)) || {}; }
+            catch { return {}; }
+        }
+
+        function saveRating(cardId, rating) {
+            const ratings = getRatings();
+            ratings[cardId] = { rating, timestamp: Date.now() };
+            localStorage.setItem(RATING_KEY, JSON.stringify(ratings));
+            renderRatingWidget(cardId);
+            renderRatingsDashboard();
+        }
+
+        function renderRatingWidget(cardId) {
+            const container = document.getElementById('rating-' + cardId);
+            if (!container) return;
+            const ratings = getRatings();
+            const current = ratings[cardId];
+
+            if (current) {
+                container.innerHTML = `<div class="faq-rating-thanks" style="font-size:0.85rem;color:#666;padding:8px 0;">
+                    ${current.rating === 'up' ? '👍' : '👎'} Thanks for your feedback!</div>`;
+            } else {
+                container.innerHTML = `<div class="faq-rating" style="display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid #eee;margin-top:12px;">
+                    <span style="font-size:0.85rem;color:#666;">Was this helpful?</span>
+                    <button onclick="saveRating('${cardId}','up')" style="background:none;border:1px solid #ddd;border-radius:6px;padding:4px 12px;cursor:pointer;font-size:0.9rem;" onmouseover="this.style.background='#e8f5e9'" onmouseout="this.style.background='none'">👍</button>
+                    <button onclick="saveRating('${cardId}','down')" style="background:none;border:1px solid #ddd;border-radius:6px;padding:4px 12px;cursor:pointer;font-size:0.9rem;" onmouseover="this.style.background='#ffebee'" onmouseout="this.style.background='none'">👎</button>
+                </div>`;
+            }
+        }
+
+        function initRatingWidgets() {
+            const cards = document.querySelectorAll('.faq-card');
+            cards.forEach(card => {
+                const content = card.querySelector('.faq-content');
+                if (!content) return;
+                const widgetId = 'rating-' + card.id;
+                if (document.getElementById(widgetId)) return;
+                const div = document.createElement('div');
+                div.id = widgetId;
+                content.appendChild(div);
+                renderRatingWidget(card.id);
+            });
+        }
+
+        initRatingWidgets();
+
+        // ============================================
+        // Ratings Dashboard
+        // ============================================
+        function renderRatingsDashboard() {
+            const ratings = getRatings();
+            const keys = Object.keys(ratings);
+            if (keys.length === 0) {
+                const existing = document.getElementById('ratingsDashboard');
+                if (existing) existing.remove();
+                return;
+            }
+
+            let dashboard = document.getElementById('ratingsDashboard');
+            if (!dashboard) {
+                dashboard = document.createElement('div');
+                dashboard.id = 'ratingsDashboard';
+                const footer = document.querySelector('.page-footer');
+                if (footer) footer.parentNode.insertBefore(dashboard, footer);
+            }
+
+            const ups = keys.filter(k => ratings[k].rating === 'up').length;
+            const downs = keys.filter(k => ratings[k].rating === 'down').length;
+            const total = keys.length;
+
+            dashboard.innerHTML = `
+                <div style="margin:24px 0;border:1px solid #e0e0e0;border-radius:12px;overflow:hidden;">
+                    <div onclick="this.parentElement.classList.toggle('dashboard-open')" style="display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:#f8f9fa;cursor:pointer;user-select:none;">
+                        <span style="font-weight:600;font-size:0.95rem;color:#333;">📊 Your FAQ Feedback (${total} rated)</span>
+                        <span style="font-size:0.85rem;color:#666;">👍 ${ups} · 👎 ${downs} · tap to ${dashboard.classList.contains('dashboard-open') ? 'collapse' : 'expand'}</span>
+                    </div>
+                    <div class="dashboard-body" style="display:none;padding:14px 18px;">
+                        ${keys.map(k => {
+                            const card = document.getElementById(k);
+                            const title = card ? card.querySelector('.faq-question-title')?.textContent?.substring(0, 60) + '...' : k;
+                            return `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f0f0f0;font-size:0.85rem;">
+                                <span style="color:#333;">${title}</span>
+                                <span>${ratings[k].rating === 'up' ? '👍' : '👎'}</span>
+                            </div>`;
+                        }).join('')}
+                    </div>
+                </div>
+                <style>
+                    .dashboard-open .dashboard-body { display: block !important; }
+                </style>`;
+        }
+
+        renderRatingsDashboard();
+
+        // ============================================
+        // User status check
+        // ============================================
         function checkUserStatus() {
             const saved = localStorage.getItem('longevityPathData');
             const marketingCta = document.getElementById('marketingCta');
@@ -428,6 +1142,7 @@
                 marketingCta.classList.remove('visible');
                 footerCta.querySelector('.footer-cta-text').textContent = 'Apply these insights to your nutrition assessment';
                 footerCta.querySelector('.footer-cta-button').innerHTML = '<i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back to Assessment';
+                footerCta.querySelector('.footer-cta-meta').textContent = '';
                 lucide.createIcons();
             } else {
                 marketingCta.classList.add('visible');
