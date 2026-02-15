@@ -188,7 +188,7 @@
         .step-number { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: var(--color-orange); color: white; border-radius: 50%; font-size: 0.85rem; font-weight: 600; flex-shrink: 0; }
         .section-title-text { font-weight: 600; font-size: 1rem; color: var(--color-text); }
         .section-score { font-size: 0.8rem; color: var(--color-text-muted); margin-left: auto; }
-        .help-link { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; background: var(--color-teal); color: white; border-radius: 50%; font-size: 1rem; font-weight: 600; text-decoration: none; margin-left: 6px; }
+        .help-link { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; background: var(--color-teal); color: white; border-radius: 50%; font-size: 0.65rem; font-weight: 600; text-decoration: none; margin-left: 6px; }
 
         .question-item { padding: 16px; background: var(--color-card); border-radius: 12px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
         .question-label { font-size: 0.95rem; color: var(--color-text); margin-bottom: 12px; font-weight: 500; }
@@ -629,11 +629,10 @@
                     },
                     sec3: {
                         title: "Protein", weight: 0.25, helpLink: "protein-evidence.html",
-                        description: "Not sure how much protein you need per meal and per day?",
-                        link: { text: "→ Open Nutrition Calculator", url: "nutrition-calculator.html" },
+                        footerLink: { text: "→ Open Nutrition Calculator", url: "nutrition-calculator.html", description: "Use nutrition calculator to calculate optimal protein intake according to your goals." },
                         questions: [
-                            { id: "N3_1", question: "I meet the required protein amount per day", type: "radio",
-                              options: [{ value: "10", label: "Always", points: 10 }, { value: "5", label: "Mostly", points: 5 }, { value: "0", label: "Rarely or never", points: 0 }] },
+                            { id: "N3_1", question: "What is your daily protein intake per kg of body weight?", type: "radio",
+                              options: [{ value: "10", label: "1.6–2.0 g/kg", points: 10 }, { value: "6", label: "1.2–1.5 g/kg", points: 6 }, { value: "2", label: "0.8–1.1 g/kg (RDA)", points: 2 }, { value: "0", label: "Below 0.8 g/kg", points: 0 }] },
                             { id: "N3_2", question: "How many meals per day contain the age-related minimum protein per portion?", type: "radio", helpLink: "protein-evidence.html#q4",
                               options: [{ value: "10", label: "4 or more meals/snacks", points: 10 }, { value: "6", label: "3 meals", points: 6 }, { value: "2", label: "2 meals", points: 2 }, { value: "0", label: "1 or fewer", points: 0 }] }
                         ]
@@ -932,6 +931,38 @@
         }
 
         // ========================================
+        // HELP-LINK SCROLL STATE (back-button restore)
+        // ========================================
+        function saveScrollState(event) {
+            const state = {
+                category: activeCategory,
+                scrollY: window.scrollY,
+                detailScrollY: document.getElementById('detailView') ? document.getElementById('detailView').scrollTop : 0
+            };
+            sessionStorage.setItem('helpLinkReturn', JSON.stringify(state));
+            // Let the default <a> navigation proceed
+        }
+
+        function restoreScrollState() {
+            const saved = sessionStorage.getItem('helpLinkReturn');
+            if (!saved) return;
+            sessionStorage.removeItem('helpLinkReturn');
+            try {
+                const state = JSON.parse(saved);
+                if (state.category) {
+                    openDimension(state.category);
+                    requestAnimationFrame(() => {
+                        const detailView = document.getElementById('detailView');
+                        if (detailView && state.detailScrollY) {
+                            detailView.scrollTop = state.detailScrollY;
+                        }
+                        window.scrollTo(0, state.scrollY || 0);
+                    });
+                }
+            } catch(e) { /* ignore parse errors */ }
+        }
+
+        // ========================================
         // DETAIL VIEW & ASSESSMENT
         // ========================================
         function openDimension(key) {
@@ -1043,7 +1074,7 @@
                 const percentage = (sectionScore / 10) * 100;
                 stepNumber++;
 
-                const helpLink = section.helpLink ? `<a href="${section.helpLink}" class="help-link">?</a>` : '';
+                const helpLink = section.helpLink ? `<a href="${section.helpLink}" class="help-link" onclick="saveScrollState(event)">?</a>` : '';
                 const isNotStarted = sectionScore === 0;
 
                 let html = `<div class="assessment-section">
@@ -1071,7 +1102,7 @@
                         if (d.age === null || d.age < q.ageMin) return;
                     }
                     const value = answers[q.id];
-                    const qHelpLink = q.helpLink ? `<a href="${q.helpLink}" class="help-link">?</a>` : '';
+                    const qHelpLink = q.helpLink ? `<a href="${q.helpLink}" class="help-link" onclick="saveScrollState(event)">?</a>` : '';
 
                     html += `<div class="question-item"><div class="question-label">${q.question}${qHelpLink}</div>`;
                     if (q.hint) html += `<div class="question-hint">${q.hint}</div>`;
@@ -1148,6 +1179,14 @@
                     }
                     html += `</div>`;
                 });
+
+                if (section.footerLink) {
+                    html += `<div class="intro-section" style="margin-top:12px;">
+                        ${section.footerLink.description ? `<p>${section.footerLink.description}</p>` : ''}
+                        <a href="${section.footerLink.url}" class="intro-link">${section.footerLink.text}</a>
+                    </div>`;
+                }
+
                 html += `</div>`;
                 content.innerHTML += html;
             });
@@ -1335,6 +1374,8 @@
             renderDimensions();
             updateTotalScore();
             initSwipeGesture();
+            // Restore dimension + scroll position after back-navigation from evidence pages
+            restoreScrollState();
         });
     </script>
 </body>
