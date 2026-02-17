@@ -68,6 +68,16 @@
     --color-warning-border: #FFA500;
     --color-warning-text: #856404;
 
+    /* Progress/Rating Colors */
+    --color-progress-excellent: #43a047;
+    --color-progress-good: #7cb342;
+    --color-progress-fair: var(--color-orange);
+    --color-progress-poor: #d32f2f;
+
+    /* Dashboard Colors */
+    --color-dashboard-border: #e0e0e0;
+    --color-dashboard-header: #f8f9fa;
+
     /* Border Radius */
     --radius: 16px;
     --radius-sm: 12px;
@@ -1265,6 +1275,158 @@ textarea:focus {
     color: var(--color-text-muted);
     font-size: 0.8rem;
     margin-top: 24px;
+}
+
+/* ===========================================
+   FAQ RATING
+   =========================================== */
+.faq-rating {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--color-border-light);
+}
+
+.faq-rating-label {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+}
+
+.faq-rating-buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.faq-rating-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 12px;
+    border: 1.5px solid var(--color-border);
+    border-radius: 20px;
+    background: white;
+    color: var(--color-text-muted);
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.faq-rating-btn:hover {
+    border-color: var(--color-text-muted);
+    color: var(--color-text);
+}
+
+.faq-rating-btn.selected-yes {
+    border-color: var(--color-teal);
+    background: var(--color-teal-light);
+    color: var(--color-teal);
+}
+
+.faq-rating-btn.selected-no {
+    border-color: var(--color-orange);
+    background: var(--color-orange-light);
+    color: var(--color-orange);
+}
+
+.faq-rating-thanks {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+
+/* ===========================================
+   COACHING SYMBOL (✦) — personalized insight badge
+   Used on score insight cards and coaching CTAs
+   to distinguish "based on your data" from general science (?)
+   =========================================== */
+.coaching-symbol {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--color-teal);
+    font-size: 0.85rem;
+    color: white;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+/* ===========================================
+   COACHING HINT (orange variant of tip-box)
+   =========================================== */
+.coaching-hint {
+    background: var(--color-orange-light);
+    border-left-color: var(--color-orange);
+}
+
+.coaching-hint .tip-box-label {
+    color: var(--color-orange);
+}
+
+.coaching-hint .tip-box-text {
+    font-size: 0.88rem;
+}
+
+.coaching-hint a {
+    color: var(--color-orange);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.coaching-hint a:hover {
+    text-decoration: underline;
+}
+
+/* ===========================================
+   FAQ DASHBOARD
+   =========================================== */
+.faq-dashboard {
+    margin: 24px 0;
+    border: 1px solid var(--color-dashboard-border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+
+.faq-dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 18px;
+    background: var(--color-dashboard-header);
+    cursor: pointer;
+    user-select: none;
+}
+
+.faq-dashboard-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.faq-dashboard-row:last-child {
+    border-bottom: none;
+}
+
+/* Progress bar (used in dashboard) */
+.progress-bar {
+    width: 80px;
+    height: 6px;
+    background: var(--color-border);
+    border-radius: 3px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.3s ease;
 }
 
 /* ===========================================

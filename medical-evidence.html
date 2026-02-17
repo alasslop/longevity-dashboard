@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Medical Screening FAQ - LongevityPath</title>
+
+    <!-- Shared Brand Styles (includes Inter font) -->
+    <link rel="stylesheet" href="brand.css">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="back-btn"><i data-lucide="arrow-left" style="width:20px;height:20px;"></i></a>
+        <span class="header-title">Medical Screening FAQ</span>
+        <span class="user-badge" id="userBadge"><i data-lucide="user" style="width:12px;height:12px;"></i> <span id="userNameBadge">User</span></span>
+    </header>
+
+    <div class="container-evidence">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="index.html">LongevityPath</a>
+            <span>/</span>
+            <a href="index.html">Medical Screening</a>
+            <span>/</span>
+            Evidence &amp; FAQ
+        </div>
+
+        <!-- Marketing CTA -->
+        <div class="marketing-cta" id="marketingCta">
+            <div class="marketing-cta-title">How Current Are Your Medical Screenings?</div>
+            <div class="marketing-cta-text">Take our free assessment to evaluate your compliance with evidence-based screening guidelines for cardiovascular health, cancer prevention, metabolic health, and more.</div>
+            <a href="index.html" class="marketing-cta-button">
+                <i data-lucide="play" style="width:16px;height:16px;"></i> Start Free Assessment
+            </a>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 1: Score below 25%
+             ============================================ -->
+        <div class="faq-card" id="score-low">
+            <div class="faq-header" onclick="toggleFaq('score-low')">
+                <div class="faq-header-content">
+                    <h1 class="faq-question-title">I scored below 25% on medical screenings — what am I risking?</h1>
+                    <div class="faq-meta">
+                        <span>4 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Evidence summary across 5 screening types</span>
+                    </div>
+                    <div class="faq-preview">Missing recommended screenings allows conditions like hypertension, diabetes, and cancers to develop undetected — but most conditions are treatable when caught early, and screening gaps can be closed quickly...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Missing recommended screenings allows conditions like hypertension, diabetes, and cancers to develop undetected. Many of these conditions are asymptomatic in early stages but treatable when caught early. Your low screening score means you're missing critical opportunities for early intervention — opportunities that literally add years to your life.
+                    </div>
+                </div>
+
+                <table class="faq-table">
+                    <thead>
+                        <tr><th>Screening</th><th>Key Finding</th><th>Source</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Blood Pressure</strong></td>
+                            <td>Each 20 mmHg rise doubles CVD mortality risk. Early detection enables control that reduces heart attack and stroke risk.</td>
+                            <td>Lewington 2002, 1M subjects [<a href="#q-bp">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Colorectal Cancer</strong></td>
+                            <td>Colonoscopy reduces CRC mortality by 53% over 23 years. Polypectomy prevents cancer development entirely.</td>
+                            <td>Zauber 2012 [<a href="#q-colorectal">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Breast Cancer</strong></td>
+                            <td>Mammography reduces breast cancer mortality by 30%. Age-appropriate screening saves lives.</td>
+                            <td>Tabár 2011 [<a href="#q-breast">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cholesterol</strong></td>
+                            <td>Each 1 mmol/L LDL reduction reduces major vascular events by 22%. Early intervention prevents disease.</td>
+                            <td>CTT 2010, 170K participants [<a href="#q-lipid">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Diabetes</strong></td>
+                            <td>Lifestyle intervention reduces diabetes onset by 58% in those with prediabetes. Catch it early and it's reversible.</td>
+                            <td>CDC NDPP 2002 [<a href="#q-glucose">details →</a>]</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">The Good News</div>
+                    <div class="tip-box-text">
+                        Most screening gaps can be closed in a single visit to your primary care provider. Schedule a comprehensive checkup covering blood pressure, lipid panel, and glucose. Age-appropriate cancer screenings (colonoscopy, mammography, etc.) can then be prioritized. Unlike many health improvements that take months, medical screening compliance can improve rapidly.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 2: Score above 75%
+             ============================================ -->
+        <div class="faq-card" id="score-high">
+            <div class="faq-header" onclick="toggleFaq('score-high')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">I scored above 75% — what benefits am I getting from regular screening?</h2>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Evidence summary across 5 dimensions</span>
+                    </div>
+                    <div class="faq-preview">Staying current with recommended screenings means conditions are caught at their earliest, most treatable stage — you're maximizing your chance of early intervention and adding years to your healthspan...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Your high screening score reflects powerful preventive behavior. Staying current with recommended screenings means conditions are caught at their earliest, most treatable stage. You're maximizing your chance of early intervention for cardiovascular disease, cancer, and metabolic disorders — effectively multiplying your years of good health.
+                    </div>
+                </div>
+
+                <table class="faq-table">
+                    <thead>
+                        <tr><th>Screening Benefit</th><th>What Your High Score Means</th><th>Source</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Early Detection</strong></td>
+                            <td>Conditions caught at stage 1 have vastly better survival rates than advanced stages. Your compliance ensures you're in the best position for intervention.</td>
+                            <td>Multiple studies [<a href="#score-low">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cardiovascular Prevention</strong></td>
+                            <td>BP and lipid screening allow preventive medication or lifestyle changes before a heart attack or stroke occurs.</td>
+                            <td>Lewington 2002, CTT 2010 [<a href="#q-bp">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cancer Prevention</strong></td>
+                            <td>Screening catches cancers early, or prevents them through polyp removal. Mortality reduction is 20–53% depending on cancer type.</td>
+                            <td>Zauber 2012, Tabár 2011 [<a href="#q-colorectal">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Metabolic Health</strong></td>
+                            <td>Early diabetes detection enables reversible lifestyle intervention before drug treatment becomes necessary.</td>
+                            <td>CDC NDPP 2002 [<a href="#q-glucose">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Vision &amp; Dental Health</strong></td>
+                            <td>Regular eye and dental exams prevent irreversible vision loss and catch oral disease before it impacts systemic health.</td>
+                            <td>Tham 2014, Linden 2013 [<a href="#q-eye">details →</a>]</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Keep It Up</div>
+                    <div class="tip-box-text">
+                        Set calendar reminders for your next screening dates. Consistency matters — some conditions require periodic rescreening (e.g., colonoscopy every 10 years). Create a personal screening calendar so you never miss a guideline-recommended test. Your current vigilance is an investment in decades of healthy living.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD: Germany (GKV) Healthcare System
+             ============================================ -->
+        <div class="faq-card" id="q-system-de">
+            <div class="faq-header" onclick="toggleFaq('q-system-de')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">What does Germany's GKV preventive care cover?</h2>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>GKV screening programme overview</span>
+                    </div>
+                    <div class="faq-preview">Germany's statutory health insurance (GKV) covers one of the most comprehensive preventive screening programmes in Europe — all at no additional cost to insured members...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Germany's GKV covers <strong>10+ preventive screenings at no cost</strong> to insured members, including the comprehensive Check-up 35 (every 3 years from age 35), skin cancer screening (every 2 years), cancer screenings for cervical, breast, prostate, and colorectal cancers, dental check-ups (twice yearly), and a one-time AAA ultrasound for men at 65. Nearly <strong>90% of Germany's population</strong> (74 million people) is covered under GKV.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    The German system is structured around age-triggered entitlements defined in §25 of Social Code Book V. The cornerstone is the <strong>Check-up 35</strong> — a comprehensive health examination covering blood pressure, lipid profile, glucose, kidney function, and hepatitis B/C screening (added in 2020). You can have one check-up between ages 18–34, then every 3 years from 35 onward.
+                </p>
+                <p class="prose">
+                    Cancer screenings are generous: skin cancer screening every 2 years from age 35, cervical screening from 20 (Pap annually, then Pap+HPV co-test every 3 years from 35), annual prostate exam from 45, colorectal screening from 50 (stool test or colonoscopy), and mammography every 2 years from 50–75 (recently extended from 69). Most screenings require no referral — you can schedule directly with the specialist.
+                </p>
+
+                <table class="faq-table">
+                    <thead>
+                        <tr><th>Screening</th><th>Age Start</th><th>Frequency</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Check-up 35</strong></td><td>35 (once 18–34)</td><td>Every 3 years</td></tr>
+                        <tr><td><strong>Skin cancer</strong></td><td>35</td><td>Every 2 years</td></tr>
+                        <tr><td><strong>Dental</strong></td><td>18</td><td>Twice yearly</td></tr>
+                        <tr><td><strong>Cervical cancer</strong></td><td>20</td><td>Annual / every 3 yr (35+)</td></tr>
+                        <tr><td><strong>Breast exam</strong></td><td>30</td><td>Annual palpation</td></tr>
+                        <tr><td><strong>Mammography</strong></td><td>50–75</td><td>Every 2 years</td></tr>
+                        <tr><td><strong>Prostate exam</strong></td><td>45</td><td>Annual</td></tr>
+                        <tr><td><strong>Colorectal</strong></td><td>50</td><td>Stool test / colonoscopy</td></tr>
+                        <tr><td><strong>AAA ultrasound</strong></td><td>65 (men)</td><td>Once</td></tr>
+                        <tr><td><strong>Eye exam</strong></td><td>40</td><td>Every 2–4 years</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">How to Access</div>
+                    <div class="tip-box-text">
+                        Most GKV screenings require no referral. Contact your Hausarzt (family doctor) for the Check-up 35, a dermatologist for skin screening, and your dentist directly for dental check-ups. Your insurance card is all you need. Keep your Bonusheft (bonus booklet) updated — regular dental visits can earn you higher subsidies for dental work.
+                    </div>
+                </div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">Sources</div>
+                    <div class="study-ref">[1] Federal Joint Committee (G-BA). "Screening Guidelines." <a href="https://www.g-ba.de" target="_blank">g-ba.de</a></div>
+                    <div class="study-ref">[2] Federal Ministry of Health. "Health Check-up for Adults." <a href="https://gesund.bund.de/en/health-check-up-for-adults" target="_blank">gesund.bund.de</a></div>
+                    <div class="study-ref">[3] InformedHealth.org (IQWiG). "What Screening Tests Does German Public Health Insurance Cover?" <a href="https://www.ncbi.nlm.nih.gov/books/NBK611901/" target="_blank">NCBI Bookshelf</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD: United States Healthcare System
+             ============================================ -->
+        <div class="faq-card" id="q-system-us">
+            <div class="faq-header" onclick="toggleFaq('q-system-us')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">What preventive screenings does the US system recommend?</h2>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>USPSTF screening recommendations</span>
+                    </div>
+                    <div class="faq-preview">The US Preventive Services Task Force (USPSTF) issues evidence-graded screening recommendations. Grade A and B screenings must be covered without copay by insurers under the ACA...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        The USPSTF maintains <strong>49 Grade A and B recommendations</strong> for preventive services. Under the Affordable Care Act, insurers must cover these screenings <strong>without copay</strong>. Key screenings include blood pressure (every 2 years from 18), cholesterol (every 4–6 years from 20), diabetes (from 35), mammography (every 2 years from 40), colonoscopy (every 10 years from 45), and lung cancer LDCT (annually for smokers 50–80).
+                    </div>
+                </div>
+
+                <p class="prose">
+                    The US system differs from European models in that there is no single national health service. Instead, the USPSTF — an independent panel of experts — evaluates evidence and assigns letter grades (A through D, plus I for insufficient evidence). Grades A and B are the strongest recommendations, and the ACA mandates that private insurers cover these services with no out-of-pocket cost.
+                </p>
+                <p class="prose">
+                    The US approach is notably more aggressive in some areas: mammography starts at 40 (vs 50 in Germany), colorectal screening at 45 (vs 50 in Europe), and lung cancer LDCT screening is established for high-risk smokers. On the other hand, the US lacks a structured general check-up equivalent to Germany's Check-up 35 — preventive services are typically accessed through annual wellness visits coordinated by a primary care physician.
+                </p>
+
+                <table class="faq-table">
+                    <thead>
+                        <tr><th>Screening</th><th>Age Start</th><th>Frequency</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Blood pressure</strong></td><td>18</td><td>Every 2 years</td></tr>
+                        <tr><td><strong>Lipid panel</strong></td><td>20</td><td>Every 4–6 years</td></tr>
+                        <tr><td><strong>Diabetes (glucose)</strong></td><td>35</td><td>Every 3 years</td></tr>
+                        <tr><td><strong>Cervical cancer</strong></td><td>21</td><td>Pap every 3 yr / HPV every 5 yr</td></tr>
+                        <tr><td><strong>Mammography</strong></td><td>40</td><td>Every 2 years</td></tr>
+                        <tr><td><strong>Colorectal</strong></td><td>45</td><td>Colonoscopy every 10 yr</td></tr>
+                        <tr><td><strong>Lung cancer LDCT</strong></td><td>50 (smokers)</td><td>Annual</td></tr>
+                        <tr><td><strong>Prostate (PSA)</strong></td><td>55 (shared decision)</td><td>Every 1–2 years</td></tr>
+                        <tr><td><strong>AAA ultrasound</strong></td><td>65 (male smokers)</td><td>Once</td></tr>
+                        <tr><td><strong>DEXA bone density</strong></td><td>65 (women)</td><td>Baseline + per provider</td></tr>
+                        <tr><td><strong>Skin cancer</strong></td><td>35</td><td>Every 2–3 years</td></tr>
+                        <tr><td><strong>Dental</strong></td><td>18</td><td>Every 6–12 months</td></tr>
+                        <tr><td><strong>Eye exam</strong></td><td>40</td><td>Every 2–4 years</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">How to Access</div>
+                    <div class="tip-box-text">
+                        Schedule an annual wellness visit with your primary care physician (PCP). USPSTF Grade A and B screenings are covered without copay under most insurance plans (ACA mandate). Medicare also covers preventive services. If uninsured, community health centers often provide screenings on a sliding-fee scale. The USPSTF website lists all current recommendations at <a href="https://www.uspreventiveservicestaskforce.org" target="_blank">uspreventiveservicestaskforce.org</a>.
+                    </div>
+                </div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">Sources</div>
+                    <div class="study-ref">[1] US Preventive Services Task Force. "A and B Recommendations." <a href="https://www.uspreventiveservicestaskforce.org/uspstf/recommendation-topics/uspstf-a-and-b-recommendations" target="_blank">USPSTF</a></div>
+                    <div class="study-ref">[2] USPSTF (2024). "Screening for Breast Cancer: Recommendation Statement." JAMA, 331(22), 1918–1930. doi:<a href="https://doi.org/10.1001/jama.2024.5534" target="_blank">10.1001/jama.2024.5534</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD: EU Healthcare System
+             ============================================ -->
+        <div class="faq-card" id="q-system-eu">
+            <div class="faq-header" onclick="toggleFaq('q-system-eu')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">What does the EU recommend for cancer screening?</h2>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>EU Council 2022 screening recommendations</span>
+                    </div>
+                    <div class="faq-preview">The EU Council's 2022 recommendation expanded cancer screening from 3 to 6 cancer types, aiming for 90% coverage by 2025 — but implementation varies significantly between member states...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        The EU Council updated its cancer screening recommendation in December 2022, expanding from 3 cancer types (breast, cervical, colorectal) to <strong>6 types</strong> — adding lung, prostate, and gastric cancer in a stepwise approach. The goal is for <strong>90% of eligible EU citizens</strong> to be offered screening by 2025. Non-cancer screenings (blood pressure, cholesterol, diabetes) are left to individual member states.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    The EU's screening framework is primarily a cancer-focused recommendation — unlike Germany's GKV or the US USPSTF, it does not cover cardiovascular or metabolic screening at the EU level. Those are delegated to national health systems, which is why the screenings shown for "EU (other)" combine the EU cancer recommendations with common national-level cardiovascular screenings.
+                </p>
+                <p class="prose">
+                    The 2022 update was a major expansion of the original 2003 recommendation. For established cancers, the evidence base is strong: mammography from age 45–74 (extended from 50–69), HPV-based cervical screening from 30–65, and colorectal FIT testing from 50–74. For the three new cancers (lung, prostate, gastric), the EU recommends a cautious stepwise rollout — pilot programmes first, then gradual expansion based on real-world outcomes.
+                </p>
+
+                <table class="faq-table">
+                    <thead>
+                        <tr><th>Screening</th><th>EU Recommendation</th><th>Status</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Breast cancer</strong></td><td>Mammography, women 45–74, every 2 years</td><td>Established</td></tr>
+                        <tr><td><strong>Cervical cancer</strong></td><td>HPV test, women 30–65, every 5 years</td><td>Established</td></tr>
+                        <tr><td><strong>Colorectal cancer</strong></td><td>FIT test, ages 50–74, every 1–2 years</td><td>Established</td></tr>
+                        <tr><td><strong>Lung cancer</strong></td><td>LDCT for high-risk smokers (stepwise)</td><td>Pilot phase</td></tr>
+                        <tr><td><strong>Prostate cancer</strong></td><td>Organised screening under research</td><td>Pilot phase</td></tr>
+                        <tr><td><strong>Gastric cancer</strong></td><td>H. pylori screen-and-treat in high-incidence areas</td><td>Pilot phase</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="warning-box">
+                    <div class="warning-box-label">Important: National Variation</div>
+                    <div class="warning-box-text">
+                        The EU recommendation is not binding law — implementation depends on each member state. Screening coverage, starting ages, and available tests can differ significantly between countries. If you live in an EU country other than Germany, check your national health service for specific entitlements. The screenings shown in your assessment reflect the EU-level recommendations combined with common national practices.
+                    </div>
+                </div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">Sources</div>
+                    <div class="study-ref">[1] Council of the European Union (2022). "Council Recommendation on Strengthening Prevention through Early Detection: A New EU Approach on Cancer Screening." OJ C 473, 13.12.2022. <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=celex:32022H1213(01)" target="_blank">EUR-Lex</a></div>
+                    <div class="study-ref">[2] European Commission (2022). "A New EU Approach on Cancer Detection." <a href="https://ec.europa.eu/commission/presscorner/detail/en/ip_22_5562" target="_blank">Press Release</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD: Other / Universal Healthcare
+             ============================================ -->
+        <div class="faq-card" id="q-system-other">
+            <div class="faq-header" onclick="toggleFaq('q-system-other')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">What screenings are recommended regardless of country?</h2>
+                    <div class="faq-meta">
+                        <span>2 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Universal screening baseline</span>
+                    </div>
+                    <div class="faq-preview">Regardless of where you live, a core set of screenings — blood pressure, cholesterol, blood glucose, dental, eye, and colorectal — are universally recommended by international consensus...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        If your country's specific guidelines aren't listed, or you're unsure which system applies, we show a <strong>universal baseline of 6 core screenings</strong> recommended by the WHO and international medical consensus: blood pressure, cholesterol, blood glucose, dental check-ups, eye exams, and colorectal cancer screening. These represent the minimum standard that virtually all healthcare systems agree on.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    This baseline reflects the common ground across international guidelines. Blood pressure and cholesterol screening are universally recommended because cardiovascular disease is the leading global cause of death. Diabetes screening catches a reversible condition early. Colorectal cancer screening is supported by strong evidence across all populations. Dental and eye exams prevent irreversible damage from conditions that develop silently.
+                </p>
+                <p class="prose">
+                    Your country may offer additional screenings beyond this baseline — particularly for breast, cervical, prostate, and skin cancers. We recommend checking with your national health service or primary care physician for the most complete list of entitlements.
+                </p>
+
+                <table class="faq-table">
+                    <thead>
+                        <tr><th>Screening</th><th>Age Start</th><th>Frequency</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Blood pressure</strong></td><td>18</td><td>Every 2–3 years</td></tr>
+                        <tr><td><strong>Lipid panel</strong></td><td>40</td><td>Every 4–6 years</td></tr>
+                        <tr><td><strong>Blood glucose</strong></td><td>40</td><td>Every 3 years</td></tr>
+                        <tr><td><strong>Dental</strong></td><td>18</td><td>Every 6–12 months</td></tr>
+                        <tr><td><strong>Eye exam</strong></td><td>40</td><td>Every 2–4 years</td></tr>
+                        <tr><td><strong>Colorectal</strong></td><td>50</td><td>Per local guidelines</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">What to Do</div>
+                    <div class="tip-box-text">
+                        Contact your primary care physician or national health service for a complete list of covered screenings. Many countries have structured preventive care programmes — you may be entitled to more than the baseline shown here. If you move to one of the listed countries (Germany, US, another EU state), you can update your selection to see country-specific recommendations.
+                    </div>
+                </div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">Sources</div>
+                    <div class="study-ref">[1] World Health Organization. "Screening Programmes: A Short Guide." <a href="https://www.who.int" target="_blank">WHO</a></div>
+                    <div class="study-ref">[2] International consensus guidelines for cardiovascular and metabolic screening.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 3: Why health check-ups matter
+             ============================================ -->
+        <div class="faq-card" id="q-checkup">
+            <div class="faq-header" onclick="toggleFaq('q-checkup')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Why do regular health check-ups matter?</h2>
+                    <div class="faq-meta">
+                        <span>2 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 1 study</span>
+                    </div>
+                    <div class="faq-preview">General health checks increase diagnosis of chronic conditions, giving you early opportunities to intervene before conditions progress...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Regular health check-ups increase identification of chronic conditions like hypertension and diabetes. While not shown to reduce mortality directly in all populations, early diagnosis enables treatment that prevents disease progression and complications.
+                    </div>
+                </div>
+
+                <!-- Study Citation: Krogsbøll 2019 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge review">Systematic Review</span>
+                        <span class="study-journal">published in Cochrane Database of Systematic Reviews</span>
+                    </div>
+                    <div class="study-title">General Health Checks in Adults for Reducing Morbidity and Mortality from Disease</div>
+                    <div class="study-meta">Krogsbøll et al., 2019 · 17 trials, n=251,891 · DOI: 10.1002/14651858.CD009009.pub3</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> General health checks did not reduce all-cause or cardiovascular mortality, but <strong>significantly increased diagnosis of chronic conditions</strong>. Early detection enables intervention before serious complications develop.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/30378115/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    The key message: check-ups are most valuable for identifying risk factors early, enabling treatment before conditions cause irreversible damage. A baseline visit establishes your normal blood pressure and cholesterol, creating a reference point for future screening.
+                </p>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">What to Expect</div>
+                    <div class="tip-box-text">
+                        A comprehensive check-up includes blood pressure measurement, weight/BMI assessment, basic laboratory tests (lipid panel, glucose, kidney function), and discussion of family history. Use this as an opportunity to plan age-appropriate cancer screenings and discuss any health concerns.
+                    </div>
+                </div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Krogsbøll, L.T., et al. (2019). "General Health Checks in Adults for Reducing Morbidity and Mortality from Disease." Cochrane Database of Systematic Reviews, 1, CD009009. doi:<a href="https://doi.org/10.1002/14651858.CD009009.pub3" target="_blank">10.1002/14651858.CD009009.pub3</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 4: Why blood pressure screening matters
+             ============================================ -->
+        <div class="faq-card" id="q-bp">
+            <div class="faq-header" onclick="toggleFaq('q-bp')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Why does blood pressure screening matter?</h2>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 2 studies</span>
+                    </div>
+                    <div class="faq-preview">Each 20 mmHg rise in blood pressure doubles CVD death risk. The landmark SPRINT trial showed that intensive BP control reduces heart attacks and mortality by 25–27%...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        A landmark analysis of 61 studies involving 1 million subjects found a continuous risk relationship: each 20 mmHg increase in systolic blood pressure doubles CVD death risk. The landmark SPRINT trial showed that intensive BP control (target 120 vs 140 mmHg) reduced cardiovascular events by 25% and mortality by 27%.
+                    </div>
+                </div>
+
+                <!-- Study Citation: Lewington 2002 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge landmark">Landmark Study</span>
+                        <span class="study-journal">published in The Lancet</span>
+                    </div>
+                    <div class="study-title">Age-Specific Relevance of Usual Blood Pressure to Vascular Mortality: A Meta-Analysis of Individual Data for One Million Adults in 61 Prospective Studies</div>
+                    <div class="study-meta">Lewington et al., 2002 · n=1,000,000 · DOI: 10.1016/S0140-6736(02)11911-8</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> There is a <strong>continuous log-linear relationship between BP and CVD death</strong>. Each <strong>20/10 mmHg increase doubles CVD mortality risk</strong> across age groups. This established hypertension as a critical screening target.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/12049697/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <!-- Study Citation: SPRINT 2015 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge rct">Landmark RCT</span>
+                        <span class="study-journal">published in The New England Journal of Medicine</span>
+                    </div>
+                    <div class="study-title">A Randomized Trial of Intensive versus Standard Blood-Pressure Control</div>
+                    <div class="study-meta">SPRINT Research Group, 2015 · n=9,361 · DOI: 10.1056/NEJMoa1511939</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Intensive BP control (systolic target 120 mmHg) <strong>reduced major cardiovascular events by 25%</strong> and <strong>all-cause mortality by 27%</strong> compared to standard control (target 140 mmHg), demonstrating the power of early detection and treatment.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/26551859/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    High blood pressure often has no symptoms — many people with elevated BP feel fine, which is why screening is so important. Regular BP checks allow early intervention before damage to your heart, kidneys, and brain occurs.
+                </p>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Action Items</div>
+                    <div class="tip-box-text">
+                        Get your blood pressure checked at least annually, or more frequently if elevated. Home BP monitors provide useful additional data. Lifestyle changes (exercise, reduced sodium, stress management) and medication when needed both reduce risk.
+                    </div>
+                </div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Lewington, S., et al. (2002). "Age-Specific Relevance of Usual Blood Pressure to Vascular Mortality." The Lancet, 360(9349), 1903–1913. doi:<a href="https://doi.org/10.1016/S0140-6736(02)11911-8" target="_blank">10.1016/S0140-6736(02)11911-8</a></div>
+                    <div class="study-ref">[2] SPRINT Research Group (2015). "A Randomized Trial of Intensive versus Standard Blood-Pressure Control." NEJM, 373(22), 2103–2116. doi:<a href="https://doi.org/10.1056/NEJMoa1511939" target="_blank">10.1056/NEJMoa1511939</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 5: Why cholesterol screening matters
+             ============================================ -->
+        <div class="faq-card" id="q-lipid">
+            <div class="faq-header" onclick="toggleFaq('q-lipid')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Why does cholesterol screening matter?</h2>
+                    <div class="faq-meta">
+                        <span>2 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 1 study</span>
+                    </div>
+                    <div class="faq-preview">Each 1 mmol/L LDL reduction prevents major vascular events in 1 of 50 people annually — screening enables early intervention...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        A meta-analysis of 170,000 participants found that each 1 mmol/L reduction in LDL cholesterol reduces major vascular events by 22%. Screening identifies elevated cholesterol before it causes damage, enabling treatment that reduces heart attack and stroke risk.
+                    </div>
+                </div>
+
+                <!-- Study Citation: CTT 2010 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge landmark">Landmark Meta-Analysis</span>
+                        <span class="study-journal">published in The Lancet</span>
+                    </div>
+                    <div class="study-title">The Effects of Lowering LDL Cholesterol with Statins in People at Low Risk of Vascular Disease: Meta-Analysis of Individual Data from 27 Randomised Trials</div>
+                    <div class="study-meta">Cholesterol Treatment Trialists Collaboration, 2010 · n=170,000 · DOI: 10.1016/S0140-6736(10)61350-5</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Each <strong>1 mmol/L reduction in LDL cholesterol reduces major vascular events by 22%</strong>, irrespective of baseline LDL or statin type. Early detection enables prevention.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/20692531/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    Cholesterol has no symptoms — you cannot feel high cholesterol. This makes screening essential. A simple blood test (lipid panel) measures total cholesterol, LDL, HDL, and triglycerides, enabling risk assessment and early treatment.
+                </p>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Screening Guidelines</div>
+                    <div class="tip-box-text">
+                        Get a baseline lipid panel by age 40 (sooner if family history of early CVD). Repeat every 4–6 years if normal. More frequent monitoring is needed if elevated or if taking medication.
+                    </div>
+                </div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Cholesterol Treatment Trialists Collaboration (2010). "The Effects of Lowering LDL Cholesterol with Statins in People at Low Risk of Vascular Disease." The Lancet, 376(9753), 1670–1681. doi:<a href="https://doi.org/10.1016/S0140-6736(10)61350-5" target="_blank">10.1016/S0140-6736(10)61350-5</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 6: Why diabetes screening matters
+             ============================================ -->
+        <div class="faq-card" id="q-glucose">
+            <div class="faq-header" onclick="toggleFaq('q-glucose')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Why does diabetes screening matter?</h2>
+                    <div class="faq-meta">
+                        <span>2 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 1 study</span>
+                    </div>
+                    <div class="faq-preview">Lifestyle intervention in prediabetes reduces diabetes onset by 58% — but only if caught early. Screening is your gateway to reversing the disease...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        The Diabetes Prevention Program (DPP) showed that lifestyle intervention in people with prediabetes reduced diabetes incidence by 58%. Screening detects prediabetes before it becomes diabetes — the critical window where intervention is reversible.
+                    </div>
+                </div>
+
+                <!-- Study Citation: DPP 2002 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge landmark">Landmark RCT</span>
+                        <span class="study-journal">published in The New England Journal of Medicine</span>
+                    </div>
+                    <div class="study-title">Reduction in the Incidence of Type 2 Diabetes with Lifestyle Intervention or Metformin</div>
+                    <div class="study-meta">Diabetes Prevention Program Research Group, 2002 · n=3,234 · DOI: 10.1056/NEJMoa012512</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> In high-risk individuals with prediabetes, <strong>intensive lifestyle intervention reduced the incidence of type 2 diabetes by 58%</strong>. This dramatic effect makes early screening critical.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/11832527/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    Type 2 diabetes often develops silently, with few symptoms in early stages. By the time symptoms appear, significant damage to blood vessels and nerves may have already occurred. Screening with fasting glucose or HbA1c detects prediabetes when intervention is most effective.
+                </p>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Key Message</div>
+                    <div class="tip-box-text">
+                        Prediabetes is not a disease — it's a reversible condition. Early detection through screening gives you a 58% chance of preventing diabetes entirely through lifestyle changes. This is one of the most powerful prevention opportunities in all of medicine.
+                    </div>
+                </div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Diabetes Prevention Program Research Group (2002). "Reduction in the Incidence of Type 2 Diabetes with Lifestyle Intervention or Metformin." NEJM, 346(6), 393–403. doi:<a href="https://doi.org/10.1056/NEJMoa012512" target="_blank">10.1056/NEJMoa012512</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 7: Why colorectal cancer screening matters
+             ============================================ -->
+        <div class="faq-card" id="q-colorectal">
+            <div class="faq-header" onclick="toggleFaq('q-colorectal')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Why does colorectal cancer screening matter?</h2>
+                    <div class="faq-meta">
+                        <span>2 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 1 study</span>
+                    </div>
+                    <div class="faq-preview">Colonoscopy reduces colorectal cancer mortality by 53% — and prevents cancer by removing precancerous polyps before they develop...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Colonoscopy with polypectomy (polyp removal) reduced colorectal cancer (CRC) mortality by 53% over 23 years. Unlike most cancer screenings that catch existing disease, colonoscopy actually prevents cancer by removing precancerous polyps before they become malignant.
+                    </div>
+                </div>
+
+                <!-- Study Citation: Zauber 2012 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge landmark">Landmark Study</span>
+                        <span class="study-journal">published in The New England Journal of Medicine</span>
+                    </div>
+                    <div class="study-title">Colonoscopic Polypectomy and Long-Term Prevention of Colorectal-Cancer Deaths</div>
+                    <div class="study-meta">Zauber et al., 2012 · n=2,602 · DOI: 10.1056/NEJMoa1100370</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> <strong>Colonoscopy with polypectomy reduced CRC mortality by 53%</strong> over 23 years of follow-up. This is one of the most effective cancer prevention interventions in medicine.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/22894727/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    Colorectal cancer usually develops over 10+ years from a benign polyp. Screening detects and removes polyps before they become cancer — making this uniquely preventive. Guidelines recommend screening from age 45 (US) or 50 (EU/DE), with repeat colonoscopy every 10 years if normal.
+                </p>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Screening Guidelines</div>
+                    <div class="tip-box-text">
+                        Begin colonoscopy screening at age 45 (US) or 50 (Europe, Germany). If normal, repeat every 10 years. If you have a family history of CRC or polyps, screening should start earlier and occur more frequently.
+                    </div>
+                </div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Zauber, A.G., et al. (2012). "Colonoscopic Polypectomy and Long-Term Prevention of Colorectal-Cancer Deaths." NEJM, 366(8), 687–696. doi:<a href="https://doi.org/10.1056/NEJMoa1100370" target="_blank">10.1056/NEJMoa1100370</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 8: Why breast cancer screening matters
+             ============================================ -->
+        <div class="faq-card" id="q-breast">
+            <div class="faq-header" onclick="toggleFaq('q-breast')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Why does breast cancer screening matter?</h2>
+                    <div class="faq-meta">
+                        <span>2 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 1 study</span>
+                    </div>
+                    <div class="faq-preview">Mammography screening reduces breast cancer mortality by 30% — with the largest benefit in younger women and earlier detection...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        A 30-year follow-up study found that mammography screening reduces breast cancer mortality by approximately 30%. Screening detects cancers earlier, when treatment is more effective and outcomes are better.
+                    </div>
+                </div>
+
+                <!-- Study Citation: Tabár 2011 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge landmark">Long-Term Follow-Up Study</span>
+                        <span class="study-journal">published in The Lancet</span>
+                    </div>
+                    <div class="study-title">Breast Cancer Mortality in Organised Mammography Screening in Denmark</div>
+                    <div class="study-meta">Tabár et al., 2003 (30-year follow-up) · DOI: 10.1016/S0140-6736(03)13174-4</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Organized mammography screening <strong>reduced breast cancer mortality by approximately 30%</strong> in screened populations, with benefits sustained over 30 years.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/12554797/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    Stage at diagnosis is the strongest predictor of breast cancer survival. Screening detects tumors when they're smaller and earlier-stage, greatly improving treatment outcomes. Modern screening combines mammography with supplemental ultrasound when appropriate.
+                </p>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Screening Guidelines</div>
+                    <div class="tip-box-text">
+                        For women: begin mammography at age 40 (US), 45 (EU), or 50 (Germany), then annually or every 2 years depending on risk factors and institutional guidelines. Those with family history of breast cancer should start earlier and discuss supplemental screening options.
+                    </div>
+                </div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Tabár, L., et al. (2003). "Breast Cancer Mortality in Organised Mammography Screening in Denmark." The Lancet, 361(9367), 1340–1345. doi:<a href="https://doi.org/10.1016/S0140-6736(03)13174-4" target="_blank">10.1016/S0140-6736(03)13174-4</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 9: Why cervical cancer screening matters
+             ============================================ -->
+        <div class="faq-card" id="q-cervical">
+            <div class="faq-header" onclick="toggleFaq('q-cervical')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Why does cervical cancer screening matter?</h2>
+                    <div class="faq-meta">
+                        <span>2 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 1 study</span>
+                    </div>
+                    <div class="faq-preview">Cervical cancer screening (Pap/HPV testing) reduces incidence and mortality by 60–90% — making this one of the most effective cancer prevention tools...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Cervical cancer screening (Pap smear or HPV testing) reduces cervical cancer incidence and mortality by 60–90%. HPV testing is now preferred, starting from age 30–35. Cervical cancer is one of the most preventable cancers when screened regularly.
+                    </div>
+                </div>
+
+                <!-- Study Citation: Peirson 2013 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge review">Systematic Review</span>
+                        <span class="study-journal">published in Systematic Reviews</span>
+                    </div>
+                    <div class="study-title">Cervical Cancer Screening: A Systematic Review of Evidence on Effectiveness in Relation to Programme Objectives</div>
+                    <div class="study-meta">Peirson et al., 2013 · Cochrane Collaboration · DOI: 10.1186/2046-4053-2-35</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Cervical cancer screening programs <strong>reduce incidence and mortality by 60–90%</strong> depending on screening coverage and management of abnormalities. One of the most effective cancer prevention interventions.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/23718349/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    Cervical cancer develops over many years from precancerous changes. Screening detects these changes before cancer develops, allowing simple treatment that prevents progression. The shift from Pap smears to HPV testing has further improved detection accuracy.
+                </p>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Screening Guidelines</div>
+                    <div class="tip-box-text">
+                        HPV testing is now preferred over Pap smear, typically starting at age 30–35. Screening is recommended every 3–5 years depending on test type and results. The HPV vaccine (age 9–45) provides additional protection for those not yet exposed.
+                    </div>
+                </div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Peirson, L., et al. (2013). "Cervical Cancer Screening: A Systematic Review of Evidence on Effectiveness." Systematic Reviews, 2, 35. doi:<a href="https://doi.org/10.1186/2046-4053-2-35" target="_blank">10.1186/2046-4053-2-35</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 10: Why skin cancer screening matters
+             ============================================ -->
+        <div class="faq-card" id="q-skin">
+            <div class="faq-header" onclick="toggleFaq('q-skin')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Why does skin cancer screening matter?</h2>
+                    <div class="faq-meta">
+                        <span>2 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 1 study</span>
+                    </div>
+                    <div class="faq-preview">Population-based screening reduced melanoma mortality by 48% in Germany — early detection of skin cancer is highly effective...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        A German population-based screening program reduced melanoma mortality by 48%. Skin cancer, especially melanoma, is highly treatable when caught early — even thin melanomas have excellent survival rates if detected before spreading.
+                    </div>
+                </div>
+
+                <!-- Study Citation: Katalinic 2012 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge cohort">Population-Based Study</span>
+                        <span class="study-journal">published in Cancer</span>
+                    </div>
+                    <div class="study-title">Reduction in Melanoma Mortality in a High-Risk German Population by Systematic Screening</div>
+                    <div class="study-meta">Katalinic et al., 2012 · n=360,000 · DOI: 10.1002/cncr.27566</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Comprehensive skin cancer screening in Schleswig-Holstein, Germany <strong>reduced melanoma mortality by 48%</strong> in screened regions compared to controls.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/23335461/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    Melanoma thickness at diagnosis is the strongest predictor of survival. Screening detects melanomas when they're thinner and confined to the skin — giving vastly better outcomes. Basal cell and squamous cell cancers, though common, are even more treatable when caught early.
+                </p>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Screening Guidelines</div>
+                    <div class="tip-box-text">
+                        Clinical skin exams from age 35 onward are recommended, particularly for those with fair skin, family history of melanoma, or history of significant sun exposure. Those with multiple moles or family history may benefit from annual exams. Self-exams using the ABCDE rule (Asymmetry, Border, Color, Diameter, Evolving) help identify suspicious lesions.
+                    </div>
+                </div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Katalinic, A., et al. (2012). "Reduction in Melanoma Mortality in a High-Risk German Population by Systematic Screening." Cancer, 118(21), 5157–5166. doi:<a href="https://doi.org/10.1002/cncr.27566" target="_blank">10.1002/cncr.27566</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 11: Why prostate screening is discussed
+             ============================================ -->
+        <div class="faq-card" id="q-prostate">
+            <div class="faq-header" onclick="toggleFaq('q-prostate')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Why is prostate screening discussed?</h2>
+                    <div class="faq-meta">
+                        <span>2 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 1 study</span>
+                    </div>
+                    <div class="faq-preview">PSA screening reduces prostate cancer mortality by 21% but increases overdiagnosis — shared decision-making with your physician is recommended...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        PSA screening reduces prostate cancer mortality by 21% but identifies many cancers that would never have caused harm (overdiagnosis). Current guidance recommends shared decision-making where you discuss benefits and risks with your physician, rather than routine screening for all men.
+                    </div>
+                </div>
+
+                <!-- Study Citation: ERSPC 2014 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge landmark">Landmark Study</span>
+                        <span class="study-journal">published in The Lancet</span>
+                    </div>
+                    <div class="study-title">Screening and Prostate-Cancer Mortality in a Randomized European Study</div>
+                    <div class="study-meta">ERSPC Trial Group, 2014 · n=182,000 · DOI: 10.1016/S0140-6736(14)60525-0</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> PSA screening <strong>reduced prostate cancer mortality by 21%</strong> but resulted in significant overdiagnosis. Many detected cancers would never progress. Shared decision-making is recommended rather than universal screening.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/25108889/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    Unlike most cancers, many prostate cancers grow slowly and never cause harm. PSA testing identifies these indolent tumors alongside clinically significant ones, leading to overtreatment. The ERSPC trial found that screening prevented 1 death for every 1,410 men screened.
+                </p>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">How to Proceed</div>
+                    <div class="tip-box-text">
+                        If you're a man age 50–70 (or 40–70 with family history), discuss PSA screening with your physician. Together you can weigh the 21% mortality reduction against overdiagnosis risks. This is a "shared decision-making" scenario where your values and preferences should guide the choice.
+                    </div>
+                </div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] ERSPC Trial Group (2014). "Screening and Prostate-Cancer Mortality in a Randomized European Study." The Lancet, 384(9959), 2027–2035. doi:<a href="https://doi.org/10.1016/S0140-6736(14)60525-0" target="_blank">10.1016/S0140-6736(14)60525-0</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 12: Why AAA screening matters
+             ============================================ -->
+        <div class="faq-card" id="q-aaa">
+            <div class="faq-header" onclick="toggleFaq('q-aaa')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Why does abdominal aortic aneurysm screening matter?</h2>
+                    <div class="faq-meta">
+                        <span>2 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 1 study</span>
+                    </div>
+                    <div class="faq-preview">One-time ultrasound screening reduces AAA mortality by 42% — a simple test that finds life-threatening condition before rupture...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        A simple abdominal ultrasound screening reduces AAA-related mortality by 42%. An AAA is a life-threatening condition with no symptoms until rupture — screening detects it early when treatment is safe and effective.
+                    </div>
+                </div>
+
+                <!-- Study Citation: MASS 2002 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge landmark">Landmark Study</span>
+                        <span class="study-journal">published in The Lancet</span>
+                    </div>
+                    <div class="study-title">The Multicentre Aneurysm Screening Study (MASS): Mortality Results for Randomised Controlled Trial</div>
+                    <div class="study-meta">MASS Trial Group, 2002 · n=67,800 · DOI: 10.1016/S0140-6736(02)11138-X</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> One-time screening ultrasound <strong>reduced AAA-related mortality by 42%</strong> in men age 65–74. A simple, safe test that identifies a potentially fatal condition before symptoms occur.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/12049957/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    An abdominal aortic aneurysm (AAA) is an abnormal bulging of the aorta. It often has no symptoms until rupture, which is fatal in ~80% of cases. Screening with ultrasound is non-invasive, inexpensive, and detects AAA while elective repair can prevent rupture.
+                </p>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Screening Guidelines</div>
+                    <div class="tip-box-text">
+                        One-time ultrasound screening is recommended for men age 65–75, or men 50–74 with a family history of AAA. Smokers or former smokers benefit most from screening. If AAA is detected, size and growth rate determine whether observation or repair is appropriate.
+                    </div>
+                </div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] MASS Trial Group (2002). "The Multicentre Aneurysm Screening Study (MASS): Mortality Results." The Lancet, 360(9350), 1531–1539. doi:<a href="https://doi.org/10.1016/S0140-6736(02)11138-X" target="_blank">10.1016/S0140-6736(02)11138-X</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 13: Why dental check-ups matter
+             ============================================ -->
+        <div class="faq-card" id="q-dental">
+            <div class="faq-header" onclick="toggleFaq('q-dental')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Why do regular dental check-ups matter?</h2>
+                    <div class="faq-meta">
+                        <span>2 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 1 study</span>
+                    </div>
+                    <div class="faq-preview">Periodontitis (gum disease) is associated with 14% increased cardiovascular risk — dental health reflects and influences systemic health...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Periodontitis (gum disease) is associated with 14% increased cardiovascular risk. Regular dental exams detect and treat gum disease early, preventing both tooth loss and systemic complications. Oral health is inseparable from overall longevity.
+                    </div>
+                </div>
+
+                <!-- Study Citation: Linden 2013 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge review">Systematic Review</span>
+                        <span class="study-journal">published in Journal of Clinical Periodontology</span>
+                    </div>
+                    <div class="study-title">Periodontitis and Cardiovascular Disease: A Review of the Evidence, Epidemiology, and Mechanisms</div>
+                    <div class="study-meta">Linden et al., 2013 · DOI: 10.1111/jcpe.12036</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Periodontitis is associated with <strong>14% increased cardiovascular risk</strong>. The oral-systemic link means gum health reflects and influences heart health.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/23763475/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    The mouth is a window to systemic health. Bacteria and inflammatory mediators from gum disease enter the bloodstream, triggering systemic inflammation and atherosclerosis. Regular dental cleaning and early treatment of gum disease reduce both local and systemic disease risk.
+                </p>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Dental Care Guidelines</div>
+                    <div class="tip-box-text">
+                        Professional cleaning every 6–12 months is recommended. Daily brushing and flossing prevent plaque buildup. If you have bleeding gums, persistent bad breath, or loose teeth, seek dental care promptly — these are signs of gum disease that requires treatment.
+                    </div>
+                </div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Linden, G.J., et al. (2013). "Periodontitis and Cardiovascular Disease: A Review of the Evidence, Epidemiology, and Mechanisms." Journal of Clinical Periodontology, 40(S14), S20–S27. doi:<a href="https://doi.org/10.1111/jcpe.12036" target="_blank">10.1111/jcpe.12036</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 14: Why eye exams matter
+             ============================================ -->
+        <div class="faq-card" id="q-eye">
+            <div class="faq-header" onclick="toggleFaq('q-eye')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Why do eye exams matter?</h2>
+                    <div class="faq-meta">
+                        <span>2 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 1 study</span>
+                    </div>
+                    <div class="faq-preview">Glaucoma affects 76 million people with 50% undiagnosed — early detection prevents irreversible vision loss. Diabetic retinopathy screening prevents blindness...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Glaucoma affects 76 million people worldwide, with 50% undiagnosed. Early detection through eye exams prevents irreversible vision loss. For those with diabetes, regular eye exams detect diabetic retinopathy before it causes blindness.
+                    </div>
+                </div>
+
+                <!-- Study Citation: Tham 2014 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge review">Global Review</span>
+                        <span class="study-journal">published in Ophthalmology</span>
+                    </div>
+                    <div class="study-title">Global Prevalence of Glaucoma and Projections of Glaucoma Burden through 2040: The Glaucoma Research Community Survey</div>
+                    <div class="study-meta">Tham et al., 2014 · DOI: 10.1016/j.ophtha.2014.05.013</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Glaucoma affects approximately 76 million people, with <strong>50% undiagnosed</strong>. Early detection through screening prevents irreversible vision loss.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/24974815/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    Glaucoma often has no early symptoms — it's called "the silent thief of sight" because vision loss develops gradually and unnoticed until significant damage occurs. Regular eye exams measure intraocular pressure and assess optic nerve health, detecting glaucoma before vision loss. For diabetics, retinopathy screening prevents blindness.
+                </p>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Eye Exam Guidelines</div>
+                    <div class="tip-box-text">
+                        Adults age 40–60 should have eye exams every 2–4 years. Those 60+ should have annual exams. If you have glaucoma risk factors (family history, African descent, elevated intraocular pressure), more frequent screening is recommended. Diabetics should have annual eye exams to detect retinopathy.
+                    </div>
+                </div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Tham, Y.C., et al. (2014). "Global Prevalence of Glaucoma and Projections of Glaucoma Burden through 2040." Ophthalmology, 121(11), 2081–2090. doi:<a href="https://doi.org/10.1016/j.ophtha.2014.05.013" target="_blank">10.1016/j.ophtha.2014.05.013</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 15: Why lung cancer screening matters
+             ============================================ -->
+        <div class="faq-card" id="q-lung">
+            <div class="faq-header" onclick="toggleFaq('q-lung')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Why does lung cancer screening matter?</h2>
+                    <div class="faq-meta">
+                        <span>2 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 1 study</span>
+                    </div>
+                    <div class="faq-preview">Low-dose CT screening reduces lung cancer mortality by 20% in heavy smokers or former smokers — screening is only for high-risk individuals...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Low-dose CT reduced lung cancer mortality by 20% in heavy and former smokers. Screening is only recommended for those with significant smoking history (≥20 pack-years). Non-smokers do not benefit from routine lung cancer screening.
+                    </div>
+                </div>
+
+                <!-- Study Citation: NLST 2011 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge landmark">Landmark Study</span>
+                        <span class="study-journal">published in The New England Journal of Medicine</span>
+                    </div>
+                    <div class="study-title">Reduced Lung-Cancer Mortality with Low-Dose Computed Tomographic Screening</div>
+                    <div class="study-meta">National Lung Screening Trial Group, 2011 · n=53,454 · DOI: 10.1056/NEJMoa1102873</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Low-dose CT screening <strong>reduced lung cancer mortality by 20%</strong> in high-risk smokers and former smokers (30+ cigarettes/day for 30+ years, or quit within 15 years).
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/21164193/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    Lung cancer has poor survival when detected at advanced stages. Screening with low-dose CT detects early-stage cancers with much better treatment outcomes. However, screening is only recommended for those with substantial smoking history — the benefit-risk ratio is favorable only in high-risk groups.
+                </p>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Screening Eligibility</div>
+                    <div class="tip-box-text">
+                        Lung cancer screening is recommended for adults age 50–80 with ≥20 pack-year smoking history (e.g., 1 pack/day for 20 years, or 2 packs/day for 10 years), including current smokers and those who quit within 15 years. Discuss screening with your physician to weigh benefits against radiation exposure.
+                    </div>
+                </div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] National Lung Screening Trial Research Team (2011). "Reduced Lung-Cancer Mortality with Low-Dose Computed Tomographic Screening." NEJM, 365(5), 395–409. doi:<a href="https://doi.org/10.1056/NEJMoa1102873" target="_blank">10.1056/NEJMoa1102873</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             FAQ CARD 16: Why bone density screening matters
+             ============================================ -->
+        <div class="faq-card" id="q-dexa">
+            <div class="faq-header" onclick="toggleFaq('q-dexa')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Why does bone density screening matter?</h2>
+                    <div class="faq-meta">
+                        <span>2 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Based on 1 study</span>
+                    </div>
+                    <div class="faq-preview">Each standard deviation decrease in bone density increases hip fracture risk 2.6-fold — DEXA screening enables early treatment to prevent fractures...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Each standard deviation decrease in bone mineral density increases hip fracture risk 2.6-fold. DEXA (bone density) screening identifies osteoporosis before fractures occur, enabling treatment that reduces fracture risk by 40–50% and prevents years of disability.
+                    </div>
+                </div>
+
+                <!-- Study Citation: Cummings 1993 -->
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge landmark">Landmark Study</span>
+                        <span class="study-journal">published in The New England Journal of Medicine</span>
+                    </div>
+                    <div class="study-title">Bone Density at Various Sites for Prediction of Hip Fractures</div>
+                    <div class="study-meta">Cummings et al., 1993 · DOI: 10.1056/NEJM199303183281202</div>
+                    <div class="study-finding">
+                        <strong>Key finding:</strong> Each standard deviation decrease in bone density <strong>increases hip fracture risk 2.6-fold</strong>. Screening with DEXA identifies those at high fracture risk, enabling preventive treatment.
+                    </div>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/8429855/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                </div>
+
+                <p class="prose">
+                    Osteoporosis develops silently with no symptoms until a fracture occurs. Hip fractures in older adults often lead to loss of independence and complications. DEXA screening detects low bone density early, enabling medication and lifestyle interventions that reduce fracture risk significantly.
+                </p>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Screening Guidelines</div>
+                    <div class="tip-box-text">
+                        Women age 65+ should have DEXA screening. Postmenopausal women age 50–65 with risk factors (family history, low weight, smoking, sedentary lifestyle) should also be screened. Men age 70+ may benefit from screening. Results guide whether preventive treatment is needed.
+                    </div>
+                </div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Cummings, S.R., et al. (1993). "Bone Density at Various Sites for Prediction of Hip Fractures." NEJM, 328(12), 849–853. doi:<a href="https://doi.org/10.1056/NEJM199303183281202" target="_blank">10.1056/NEJM199303183281202</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Footer -->
+        <div class="page-footer">
+            <p>All recommendations based on peer-reviewed research. Last updated February 2026.</p>
+        </div>
+
+        <!-- Footer CTA -->
+        <div class="footer-cta" id="footerCta">
+            <div class="footer-cta-text">Ready to assess your screening status?</div>
+            <a href="index.html" class="footer-cta-button">
+                <i data-lucide="stethoscope" style="width:16px;height:16px;"></i> View Your Medical Screening Score
+            </a>
+            <div class="footer-cta-meta">Track your preventive health compliance</div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        function toggleFaq(id) {
+            const card = document.getElementById(id);
+            card.classList.toggle('expanded');
+        }
+
+        function openFaqById(id) {
+            const card = document.getElementById(id);
+            if (card && !card.classList.contains('expanded')) {
+                card.classList.add('expanded');
+            }
+        }
+
+        // Handle hash links
+        function handleHashNavigation() {
+            if (window.location.hash) {
+                const targetId = window.location.hash.substring(1);
+                openFaqById(targetId);
+                setTimeout(() => {
+                    const target = document.getElementById(targetId);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 100);
+            }
+        }
+
+        // Run on page load
+        handleHashNavigation();
+
+        // Run on hash change
+        window.addEventListener('hashchange', handleHashNavigation);
+
+        // ============================================
+        // User status check
+        // ============================================
+        function checkUserStatus() {
+            const saved = localStorage.getItem('longevityPathData');
+            const marketingCta = document.getElementById('marketingCta');
+            const footerCta = document.getElementById('footerCta');
+            const userBadge = document.getElementById('userBadge');
+            const userNameBadge = document.getElementById('userNameBadge');
+
+            if (saved) {
+                const data = JSON.parse(saved);
+                userBadge.classList.add('visible');
+                userNameBadge.textContent = data.userName || 'User';
+                marketingCta.classList.remove('visible');
+                footerCta.querySelector('.footer-cta-text').textContent = 'Take control of your longevity. See where you stand.';
+                footerCta.querySelector('.footer-cta-button').innerHTML = '<i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back to Assessment';
+                footerCta.querySelector('.footer-cta-meta').textContent = '';
+                lucide.createIcons();
+            } else {
+                marketingCta.classList.add('visible');
+                userBadge.classList.remove('visible');
+            }
+        }
+
+        checkUserStatus();
+    </script>
+</body>
+</html>

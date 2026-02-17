@@ -1,0 +1,348 @@
+# LongevityPath — System Architecture
+
+> **MANDATORY**: Read this file before making ANY code changes. This document is the single source of truth for data contracts, conventions, and design decisions. It focuses on the *why* behind decisions and the shapes of data — things that are hard to recover from code alone.
+
+## Documentation Principles
+
+These rules govern this document itself. Follow them when updating ARCHITECTURE.md:
+
+1. **Document the why, not the what.** Code is the truth for *how* things work. This doc explains *why* they work that way and what shapes/contracts must be preserved.
+2. **Never include line numbers or line counts.** They drift on every edit and create false confidence. Use `grep` or search to find functions.
+3. **Never include counts of items** (FAQ cards, screening entries, etc.). The code is the source of truth for quantities.
+4. **Use ADR format for design decisions.** Each decision records Context → Decision → Consequences, so future readers understand trade-offs.
+5. **Update this doc when you change a contract.** If you modify a data shape, add a question type, or change scoring logic, update the relevant section here in the same commit.
+6. **Don't update this doc for routine content changes.** Adding a FAQ card, tweaking question text, or adding a screening entry doesn't need a doc update — the how-to recipes already cover those.
+7. **Keep it under 350 lines.** If it grows beyond that, something is duplicating code. Cut it.
+
+---
+
+## 1. Project Overview
+
+LongevityPath is a single-page health assessment tool. Users answer questions across 6 health dimensions, receive a 0–100 composite score, and get evidence-backed explanations via linked FAQ pages.
+
+The entire app lives in one HTML file (`system/index.html`) with inline CSS and JS. Evidence pages are separate HTML files sharing a common stylesheet (`system/brand.css`). All application and system files live in the `system/` folder; the root contains only source .docx files and the `Deleted/` folder awaiting permanent removal.
+
+## 2. File Map
+
+All paths below are relative to `system/`.
+
+### Core
+
+| File | Purpose |
+|------|---------|
+| `index.html` | Main app: UI, all JS logic, scoring, data. Question data injected by build.py |
+| `questions.json` | All question/category data — edit this, then run `build.py` to inject into index.html |
+| `build.py` | Build script: `--extract` (HTML→JSON), default (JSON→HTML), `--check` (verify sync) |
+| `brand.css` | Shared stylesheet for all evidence pages |
+
+### Evidence FAQ Files
+
+Each category has a matching evidence file with expandable FAQ cards. Naming: `{topic}-evidence.html` or `{topic}-evidence-v2.html`. Medical has one file; nutrition has two (general + protein); energy has two (vo2max + muscle-strength).
+
+### Supporting Files
+
+| File | Purpose |
+|------|---------|
+| `nutrition-calculator.html` | Standalone protein/nutrition calculator |
+| `nutrition-calculator-faq.html` | FAQ for the calculator |
+| `body-fat-guide.html`, `muscle-gain-guide.html` | Supplementary guides |
+| `validate.py` | HTML quality gate (see Section 9) |
+| `check-screening-guidelines.sh` | Screening guideline update checker (see §12) |
+| `registry.py` | SQLite database manager: evidence map, accounts, anonymous analytics (see §3.6) |
+| `longevitypath.db` | SQLite database (auto-created by `registry.py init`) |
+| `study-registry.md` | Evidence map reference: claim tag vocabulary + Claim Summary Index |
+| `ARCHITECTURE.md` | This file — system architecture and design decisions |
+| `CLAUDE.md` | Project instructions for AI assistants |
+
+### Directories
+
+| Path | Purpose |
+|------|---------|
+| `.claude/skills/` | Editable skills (authoritative — always prefer over `.skills/`) |
+| `.skills/skills/` | Read-only plugin skills (may be outdated) |
+| `Deleted/` | Obsolete files awaiting permanent deletion |
+
+## 3. Data Contracts
+
+### 3.1 localStorage Shape
+
+All user health data lives in `localStorage` under key `longevityPathData` as JSON. This data **never** leaves the client — see §3.6 for the data separation contract:
+
+```
+{
+  userName: "...",
+  answers: {
+    <categoryKey>: { <sectionKey>: { <questionId>: <value>, ... }, ... },
+    ...
+  },
+  scores: { <categoryKey>: <number 0-10>, ... },
+  previousScores: { <categoryKey>: <number 0-10>, ... }
+}
+```
+
+### 3.2 Answer Value Types
+
+| Question Type | Storage Format | Example |
+|---------------|---------------|---------|
+| `number` | Number or `null` | `45.2` |
+| `radio` (with points) | String of the value | `"10"` |
+| `radio` (without points) | String of the value | `"male"`, `"de"` |
+| `slider` | Number | `7` |
+| `checkbox` | Array of strings | `["vegetables", "whole_foods"]` |
+| Screening checkbox | Array | `["done"]` or `[]` |
+
+### 3.3 Demographics Object
+
+`getDemographics()` returns:
+```
+{ age: 41, yob: 1985, sex: "male", country: "de", smoking: "never" }
+```
+- `age` computed dynamically: `currentYear - yob`
+- All fields nullable (user hasn't answered yet)
+- Consumers: norms lookup, fitness age, screening filter, scoring
+
+### 3.4 Question Object Shape
+
+```javascript
+{
+  id: "E1_vo2",                    // Unique ID → answer key in localStorage
+  question: "What is your VO2max?",
+  hint: "Enter in ml/kg/min...",    // Optional italic hint
+  type: "number",                   // radio | checkbox | slider | number
+  helpLink: "vo2max-evidence.html#q3",  // Optional → renders ? icon
+  // Type-specific fields:
+  min, max, step,                   // number: input constraints
+  unit: "ml/kg/min",                // number: display unit
+  normsTable: 'VO2MAX_NORMS',      // number: norms-based scoring
+  fitnessAgeLabel: 'VO2max age',   // number: enables fitness age display
+  cooperCalc: true,                 // number: shows Cooper Test calculator
+  ageMin: 60,                       // number: hide if user younger
+  inputMin: 0, inputMax: 100,       // number: linear 0-100 scoring (no norms)
+  options: [...],                   // radio/checkbox: option objects
+  scoring: "count" | "principles",  // checkbox: scoring method
+}
+```
+
+### 3.5 SCREENING_GUIDELINES Shape
+
+```javascript
+const SCREENING_GUIDELINES = {
+  de: [...], us: [...], eu: [...], other: [...]
+};
+// Each entry:
+{
+  id: "lung",                       // → stored as screen_{id}
+  name: "Lung Cancer Screening",
+  desc: "Low-dose CT for...",
+  gender: "all" | "male" | "female",
+  ageStart: 50, ageEnd: 80,
+  freq: "Annual",
+  source: "USPSTF",
+  smoking: "ever",                  // Optional: requires current/former smoker
+  helpLink: "medical-evidence.html#q-lung"
+}
+```
+
+Filtering (`getRelevantScreenings`): country → age range → gender → smoking (if field present).
+
+### 3.6 Data Separation (Three Tiers)
+
+All data falls into exactly one of three tiers. **No code change may move health data to the server or personal data into analytics.**
+
+**Tier 1 — Client-Only (User Health Data).** Answers, scores, goals, habit tracking — everything the user enters about their health. Lives in localStorage/IndexedDB only. Never sent to our servers. This avoids HIPAA/GDPR Article 9 obligations for health data. Export/import is client-side only. If cloud sync is added later, health data must be end-to-end encrypted (server stores opaque blobs).
+
+**Tier 2 — Server, Identified (Accounts & Payments).** Email, display name, plan, payment transactions. Tables: `accounts`, `payments` in `longevitypath.db`. Personal data (GDPR applies) but NOT health data. What NEVER goes here: scores, answers, goals, test results.
+
+**Tier 3 — Server, Anonymous (Aggregate Analytics).** Opt-in, non-identifiable snapshots: category scores, score deltas, demographic brackets (age range, sex, country code). Tables: `anon_snapshots`, `anon_scores`, `anon_deltas`. No user ID, email, name, device ID, or IP. Max 3 demographic dimensions to prevent re-identification. No foreign key to `accounts`. `registry.py anon-ingest` rejects payloads with personal data fields.
+
+**Six non-negotiable rules:**
+
+1. Health data never leaves the client
+2. Identified and anonymous data never join (no FK, no correlation)
+3. Analytics payloads validated on ingest (forbidden fields rejected)
+4. Demographics use brackets, not exact values
+5. No server-side scoring (browser computes, server only receives pre-computed numbers)
+6. Export is client-side only (no server endpoint)
+
+### 3.7 Evidence Map Database
+
+Study evidence lives in `longevitypath.db` (5 tables: `studies`, `claims`, `study_claims`, `evidence_usage`, `removed_studies`). Managed via `registry.py`. This is public scientific data — no personal or health information.
+
+**Key commands:** `registry.py query "claim-tag"` (find studies), `registry.py summary` (Claim Summary Index), `registry.py stale` (overdue verifications), `registry.py add` (new study), `registry.py export-summary` (update study-registry.md), `registry.py stats` (overview).
+
+**Claim vocabulary and generated summary index** live in `study-registry.md` as a human-readable reference. Tags use `exposure→outcome` format (e.g., `protein→cancer`).
+
+## 4. Scoring System
+
+### 4.1 Category Score (0–10)
+
+```
+categoryScore = Σ(sectionScore × sectionWeight) / Σ(answeredSectionWeights)
+```
+
+Only sections with at least one answer contribute. Section weights within each category must sum to 1.0.
+
+### 4.2 Section Score (0–10)
+
+Regular sections: `totalPoints / maxPoints × 10`
+
+Dynamic screening section: `completedScreenings / totalRelevantScreenings × 10`
+
+### 4.3 Question Scoring by Type
+
+| Type | Scoring |
+|------|---------|
+| `radio` (with points) | Direct: value string is the point value (0–10) |
+| `slider` | `(value - min) / (max - min) × 9` (slider starts at 1) |
+| `checkbox` (count) | `(checkedCount / totalOptions) × 10` |
+| `checkbox` (principles) | `checkedCount × 2` (max 10) |
+| `number` (normsTable) | Norms lookup with interpolation → 0–10 |
+| `number` (inputMin/Max) | Linear: `(value - inputMin) / (inputMax - inputMin) × 10` |
+| `radio` (no points) | Not scored (demographics) |
+| `number` (no norms/range) | Not scored (year of birth) |
+
+### 4.4 Norms-Based Scoring
+
+Three norms tables: `VO2MAX_NORMS` (Cooper Institute), `PUSHUP_NORMS` (CSEP), `CHAIRSTAND_NORMS` (Rikli & Jones). Each has gender × age bracket × category ranges mapping to 0–10 points with **interpolation** within category boundaries.
+
+### 4.5 Fitness Age
+
+Linear interpolation across "Fair/Average" midpoints of each age bracket. Displayed as difference from chronological age.
+
+### 4.6 Total Score (0–100)
+
+Average of all 6 category scores, scaled to 0–100.
+
+### 4.7 Traffic Light Colors
+
+| Range | Class |
+|-------|-------|
+| 0–25% | `score-red` |
+| 25–50% | `score-amber` |
+| 50–75% | `score-yellow-green` |
+| 75–100% | `score-green` |
+
+## 5. Category Configuration
+
+The 6 dimensions are defined in `questions.json` and injected into `index.html` by `build.py`. Each category has a key, display name, icon, and weighted sections containing questions.
+
+### Build Workflow
+
+Edit `questions.json` (not index.html) to change questions, categories, weights, or options. Then run `python build.py` to inject changes into index.html. The build produces a single self-contained HTML file that works in every browser including `file://` on mobile — no server required. Run `python build.py --check` to verify sync. Run `python build.py --extract` to pull current index.html data back into questions.json (one-time migration or after manual HTML edits).
+
+### Special Behaviors
+
+**Medical**: sec2 uses `dynamic: "screenings"` — no static questions. Rendering generates checkboxes from `getRelevantScreenings()`. Answers stored as `screen_{id}` in sec2. `toggleScreening()` handles checkbox state.
+
+**Nutrition**: sec3 has a `footerLink` to the nutrition calculator, rendered after questions.
+
+**Mindset**: Has `scoreInsights` with 4 tiers (low/belowAvg/aboveAvg/high). The `{section}` placeholder is replaced with the weakest section name.
+
+## 6. Rendering Pipeline
+
+```
+Tab 1: My Score (score ring, dimension cards)
+Tab 2: Habits (static mockup)
+Tab 3: Community (static mockup)
+Detail View: Slides in from right when a dimension card is clicked
+```
+
+`renderCategoryContent()` builds the detail view: section breakdown card → per-section headers with scores → questions rendered by type. `helpLink` on questions creates `?` icons; per-option `helpLink` creates `?` per radio option with `stopPropagation()`.
+
+Navigation: `openDimension()` slides in, `closeDetailView()` slides out and saves. `saveScrollState()` preserves position before navigating to evidence. Evidence pages use `helpLinkReturn` in `sessionStorage` to navigate back.
+
+## 7. Evidence FAQ File Conventions
+
+All evidence HTML files follow this structure: bookend card (score-low) → per-topic FAQ cards → bookend card (score-high). Each card has: faq-header (clickable) → faq-content (collapsible) containing quick-answer box → prose → tip-box/warning-box → study-refs.
+
+### Key CSS Classes
+
+| Class | Purpose |
+|-------|---------|
+| `quick-answer` | Green box with concise answer |
+| `tip-box` | Orange-bordered actionable tip |
+| `warning-box` | Red-bordered warning/caveat |
+| `faq-table` | Summary table in bookend and system cards |
+
+### Medical Evidence Special Cards
+
+In addition to per-screening cards (`q-{screening}`), medical-evidence.html has 4 healthcare system overview cards: `q-system-de`, `q-system-us`, `q-system-eu`, `q-system-other`.
+
+## 8. Brand CSS Conventions
+
+`brand.css` is the single source of truth for all visual styling. Key rules enforced by `validate.py`:
+
+- **Teal (#00905A)** = science & credibility only (study badges, quick-answer boxes, tip borders, links, labels). Never for body text or headings.
+- **Orange (#E9A04E)** = user action & CTA (buttons, step numbers, sliders, focus states). Never for science elements.
+- **Red (#EF4444)** = warnings and cautions (warning-box borders).
+- **Text (#1F2937)** = all body text and headings.
+- All colors must use CSS variables (`var(--color-teal)` etc.), never hardcoded hex values.
+- Table headers: solid teal background + white text.
+- All pages must import `brand.css` — no `:root` overrides in `<style>` blocks.
+
+## 9. Validator (`validate.py`)
+
+Automated quality gate for all HTML content pages. Run: `python validate.py` (all files) or `python validate.py <file>`. Flags: `--fix` (show suggestions), `--verbose` (show all checks).
+
+Six check categories: BRAND (CSS compliance, color usage, fonts, icons, viewport), SCIENCE (citations match references, DOIs present, no blog sources, content sections have citations), STRUCTURE (header, back nav, last-updated date, evidence marker, container, lang, charset, title), REFERENCE (format consistency, year, journal italics, DOI validity, permanent links, age of studies >15yr), COMPONENT (study links present), FAQ (card count, bookend cards, quick-answer sections, citations per card, closing action cards, rating widget).
+
+Exit code 0 = all pass, 1 = failures found.
+
+## 10. Migration & Backward Compatibility
+
+`loadData()` handles migrations: MD1_age → MD1_yob (converts old age to year of birth), missing fields get type-appropriate defaults, new sections/questions are automatically picked up from CATEGORIES.
+
+---
+
+## 11. Design Decisions (ADR Format)
+
+### ADR-1: Year of birth instead of age
+
+**Context:** Age changes every year, causing stored answers to become stale. **Decision:** Store year of birth (MD1_yob), compute age dynamically as `currentYear - yob`. **Consequences:** Age is always current. Migration needed for existing MD1_age users.
+
+### ADR-2: Multiplicative study scoring (Quality × Relevance)
+
+**Context:** Additive scoring allowed weak studies with high relevance to outscore strong RCTs. **Decision:** Multiply Quality × Relevance. Both dimensions must be strong. **Consequences:** Studies weak on either axis are effectively excluded. Documented in study-usage-guide skill.
+
+### ADR-3: Dynamic screening section
+
+**Context:** Static medical questions can't adapt to age, sex, country, or smoking status. **Decision:** Medical sec2 uses `dynamic: "screenings"` flag, triggering different rendering/scoring. `SCREENING_GUIDELINES` keyed by country; `getRelevantScreenings()` filters by demographics. **Consequences:** Medical sec2 has no static questions. Rendering, scoring, and storage all have special-case branches.
+
+### ADR-4: Ongoing-cohort exception for study age
+
+**Context:** Studies from long-running cohorts (Health ABC, Framingham, NHANES) may be old but definitive. **Decision:** Keep regardless of age if cohort is still active. **Consequences:** validate.py's >15yr flag is a warning, not a hard reject.
+
+### ADR-5: Client-only health data (data separation)
+
+**Context:** Storing health data server-side triggers HIPAA/GDPR Article 9 obligations. **Decision:** All health data stays in localStorage/IndexedDB — never sent to servers. Server stores only accounts/payments (Tier 2) and anonymous aggregate analytics (Tier 3). See §3.6. **Consequences:** No server-side health data processing. Cloud sync requires E2E encryption. Anonymous analytics must use brackets, not exact values.
+
+---
+
+## 12. Maintenance & How-To Recipes
+
+### Screening Guideline Updates
+
+Run `check-screening-guidelines.sh` every **6 months** (January + July). The script fetches 7 guideline source pages, saves snapshots, and diffs against the previous run.
+
+**Update cycles:** USPSTF (rolling, ~5yr per topic), G-BA (as-needed), EU Council (first report due end 2026, then every 4 years).
+
+**When script flags changes**, update: `SCREENING_GUIDELINES` in index.html, `getRelevantScreenings()` if new filter conditions, system cards and per-screening cards in medical-evidence.html.
+
+### Adding a New Screening
+
+1. Add entry to the relevant country array in `SCREENING_GUIDELINES`
+2. Create a FAQ card in `medical-evidence.html` with ID `q-{screening-id}`
+3. If screening has special conditions (like smoking), add the condition field and update `getRelevantScreenings()` filter
+
+### Adding a New Country
+
+1. Add new array to `SCREENING_GUIDELINES` with country code key
+2. Add option to MD1_country question in CATEGORIES.medical.sec1 (with `helpLink`)
+3. Create system overview card `q-system-{code}` in medical-evidence.html
+
+### Adding a New Category
+
+1. Add entry to `CATEGORIES` object with sections, weights, and questions
+2. Create `{category}-evidence.html` with bookend cards + per-question FAQ cards
+3. Add helpLinks on questions pointing to FAQ card IDs
+4. Scoring and rendering automatically pick up the new category

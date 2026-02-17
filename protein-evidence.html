@@ -38,6 +38,156 @@
         </div>
 
         <!-- ============================================
+             BOOKEND CARD: Score below 25%
+             ============================================ -->
+        <div class="faq-card" id="score-low">
+            <div class="faq-header" onclick="toggleFaq('score-low')">
+                <div class="faq-header-content">
+                    <h1 class="faq-question-title">I scored below 25% on protein — what does that mean for my health?</h1>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Evidence summary across 6 dimensions</span>
+                    </div>
+                    <div class="faq-preview">Insufficient protein intake accelerates muscle loss, weakens bones, and undermines weight management — but increasing intake is one of the most straightforward nutrition changes you can make...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        A low protein score suggests your intake may be below the optimal range for longevity. Adults consuming insufficient protein lose <strong>40% more muscle mass</strong> over three years compared to those with adequate intake. Low protein also impairs recovery from exercise, reduces satiety, and accelerates age-related decline. The standard RDA of 0.8 g/kg/day prevents deficiency but does not optimize health — most longevity researchers now recommend <strong>1.2–1.6 g/kg/day</strong>.
+                    </div>
+                </div>
+
+                <table class="faq-table">
+                    <thead>
+                        <tr><th>Dimension</th><th>Key Finding</th><th>Source</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Muscle Preservation</strong></td>
+                            <td>Lowest protein intake group lost <strong>40% more muscle mass</strong> over 3 years than highest group.</td>
+                            <td>Houston 2008, n=2,066 [<a href="#q1">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sarcopenia Risk</strong></td>
+                            <td>Adults consuming &lt;0.8 g/kg/day have <strong>significantly higher sarcopenia risk</strong> vs. ≥1.2 g/kg/day.</td>
+                            <td>Han 2024, MA [<a href="#q1">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Meal Distribution</strong></td>
+                            <td>Skewed protein distribution (low breakfast/lunch) reduces <strong>24-hour MPS by 25%</strong> vs. even spread.</td>
+                            <td>Mamerow 2014, RCT [<a href="#q4">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Training Response</strong></td>
+                            <td>Without adequate protein, resistance training yields <strong>only 0.13% strength gain</strong> vs. 2% with protein.</td>
+                            <td>Tagawa 2022, 78 RCTs [<a href="#q6">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Weight Management</strong></td>
+                            <td>Higher protein diets produce <strong>1.6 kg more weight loss</strong> with better lean mass preservation.</td>
+                            <td>Hansen 2021, 43 RCTs [<a href="#q7">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Muscle During Dieting</strong></td>
+                            <td>In a caloric deficit, high protein (2.4 g/kg) <strong>gained 1.2 kg lean mass</strong> while losing 4.8 kg fat.</td>
+                            <td>Longland 2016, RCT [<a href="#q5">details →</a>]</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p class="prose">
+                    The consequences of low protein compound with age. After 40, the body becomes progressively less efficient at using dietary protein for muscle building — a phenomenon called anabolic resistance. This means you need <em>more</em> protein as you age, not less, to maintain the same muscle mass and metabolic health.
+                </p>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Where to Start</div>
+                    <div class="tip-box-text">
+                        Track your protein for 3 days to see where you stand. Most people discover they're getting 40–60% of the optimal range. Simple swaps — Greek yogurt at breakfast, adding legumes to lunch — can close the gap without overhauling your diet. See the <a href="#q8" onclick="event.preventDefault(); openFaqById('q8'); document.getElementById('q8').scrollIntoView({behavior:'smooth',block:'start'});">practical portion guide</a> for exactly what 30g of protein looks like.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             BOOKEND CARD: Score above 75%
+             ============================================ -->
+        <div class="faq-card" id="score-high">
+            <div class="faq-header" onclick="toggleFaq('score-high')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">I scored above 75% — what benefits am I getting from optimal protein?</h2>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Evidence summary across 6 dimensions</span>
+                    </div>
+                    <div class="faq-preview">Your protein intake is in the range associated with preserved muscle mass, enhanced training response, better weight management, and reduced age-related decline...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Your high protein score places you in the range recommended by international expert groups for optimal health span. You're getting <strong>maximum muscle-protective benefits</strong>, enhanced training response, better satiety, and stronger metabolic health. This intake level is associated with <strong>lower all-cause mortality</strong> and significantly reduced sarcopenia risk.
+                    </div>
+                </div>
+
+                <table class="faq-table">
+                    <thead>
+                        <tr><th>Dimension</th><th>What Your High Score Means</th><th>Source</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Muscle Preservation</strong></td>
+                            <td>Your intake minimizes age-related muscle loss — the <strong>strongest dietary predictor</strong> of functional independence.</td>
+                            <td>Bauer 2013, PROT-AGE [<a href="#q1">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Safety Confirmed</strong></td>
+                            <td>No association with cancer mortality. <strong>Kidney function unaffected</strong> in healthy adults at your intake level.</td>
+                            <td>Naghshi 2020; Devries 2018 [<a href="#q2">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Meal Distribution</strong></td>
+                            <td>Adequate per-meal protein ensures <strong>maximal muscle protein synthesis</strong> at every feeding opportunity.</td>
+                            <td>Moore 2015, Dose-response [<a href="#q4">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Training Amplification</strong></td>
+                            <td>Your protein intake <strong>amplifies resistance training effects</strong> — each 0.1 g/kg adds 0.72% strength gain.</td>
+                            <td>Tagawa 2022, 78 RCTs [<a href="#q6">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Satiety and Weight</strong></td>
+                            <td>Higher protein provides the <strong>highest thermic effect</strong> (20–30% of calories) and best appetite control of any macronutrient.</td>
+                            <td>Hansen 2021, 43 RCTs [<a href="#q7">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Deficit Protection</strong></td>
+                            <td>If you ever need to diet, your protein habits protect against the <strong>muscle loss that derails most weight-loss attempts</strong>.</td>
+                            <td>Longland 2016, RCT [<a href="#q5">details →</a>]</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p class="prose">
+                    What makes optimal protein particularly valuable is its synergy with exercise. Protein alone produces modest benefits, but combined with resistance training it becomes one of the most powerful tools for preserving functional independence, metabolic health, and body composition across the lifespan.
+                </p>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Maintaining Your Score</div>
+                    <div class="tip-box-text">
+                        Consistency matters most. Keep distributing protein evenly across meals (25–40g each), prioritize high-quality sources with adequate leucine, and pair your intake with regular resistance training to maximize benefits. Periodic reassessment helps ensure your habits stay on track as your needs evolve with age.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
              FAQ CARD 1: How much protein?
              ============================================ -->
         <div class="faq-card" id="q1">
@@ -833,13 +983,15 @@
             const current = ratings[cardId];
 
             if (current) {
-                container.innerHTML = `<div class="faq-rating-thanks" style="font-size:0.85rem;color:#666;padding:8px 0;">
-                    ${current.rating === 'up' ? '👍' : '👎'} Thanks for your feedback!</div>`;
+                container.innerHTML = `<div class="faq-rating">
+                    <span class="faq-rating-thanks">Thanks for your feedback!</span></div>`;
             } else {
-                container.innerHTML = `<div class="faq-rating" style="display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid #eee;margin-top:12px;">
-                    <span style="font-size:0.85rem;color:#666;">Was this helpful?</span>
-                    <button onclick="saveRating('${cardId}','up')" style="background:none;border:1px solid #ddd;border-radius:6px;padding:4px 12px;cursor:pointer;font-size:0.9rem;" onmouseover="this.style.background='#e8f5e9'" onmouseout="this.style.background='none'">👍</button>
-                    <button onclick="saveRating('${cardId}','down')" style="background:none;border:1px solid #ddd;border-radius:6px;padding:4px 12px;cursor:pointer;font-size:0.9rem;" onmouseover="this.style.background='#ffebee'" onmouseout="this.style.background='none'">👎</button>
+                container.innerHTML = `<div class="faq-rating">
+                    <span class="faq-rating-label">Was this helpful?</span>
+                    <div class="faq-rating-buttons">
+                        <button class="faq-rating-btn" onclick="saveRating('${cardId}','up')">Yes</button>
+                        <button class="faq-rating-btn" onclick="saveRating('${cardId}','down')">No</button>
+                    </div>
                 </div>`;
             }
         }

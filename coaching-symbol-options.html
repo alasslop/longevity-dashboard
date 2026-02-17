@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coaching Symbol Options</title>
+    <link rel="stylesheet" href="brand.css">
+    <style>
+        body { background: var(--color-bg); padding: 24px; font-family: var(--font-family); }
+        .options-grid { display: flex; flex-direction: column; gap: 32px; max-width: 500px; margin: 0 auto; }
+        .option-label { font-size: 0.8rem; color: var(--color-text-muted); font-weight: 600; margin-bottom: 8px; letter-spacing: 0.5px; }
+        .demo-card {
+            display: block; padding: 14px 16px; background: #fff;
+            border-radius: 10px; border: 1px solid var(--color-border);
+            text-decoration: none; color: var(--color-text);
+        }
+        .demo-card-header {
+            font-weight: 600; font-size: 0.9rem; margin-bottom: 6px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .demo-card-text { font-size: 0.82rem; color: var(--color-text-muted); margin-left: 36px; }
+        .symbol {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 28px; height: 28px; border-radius: 50%;
+            font-size: 0.85rem; flex-shrink: 0; line-height: 1;
+        }
+        /* Dark CTA demo */
+        .demo-dark {
+            display: block; padding: 14px 16px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);
+            text-decoration: none; color: white; margin-top: 8px;
+        }
+        .demo-dark .demo-card-text { color: rgba(255,255,255,0.7); }
+        .demo-dark .demo-card-header { color: white; }
+
+        h2 { font-size: 1.1rem; margin: 0 0 16px 0; color: var(--color-text); }
+
+        /* For comparison: the ? help link */
+        .help-link-demo {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 20px; height: 20px; background: var(--color-teal);
+            color: white; border-radius: 50%; font-size: 0.65rem; font-weight: 600;
+        }
+        .comparison { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; font-size: 0.85rem; color: var(--color-text-muted); }
+    </style>
+</head>
+<body>
+    <div class="options-grid">
+        <div>
+            <h2>Coaching Symbol ✦ — Pick one</h2>
+            <div class="comparison">
+                <span class="help-link-demo">?</span> <span>= general science (current)</span>
+                &nbsp;&nbsp;
+                <span class="symbol" style="background:var(--color-teal);color:white;">✦</span> <span>= personalized (new)</span>
+            </div>
+        </div>
+
+        <!-- OPTION A -->
+        <div>
+            <div class="option-label">OPTION A — WHITE ✦ ON TEAL</div>
+            <div class="demo-card">
+                <div class="demo-card-header">
+                    <span class="symbol" style="background:var(--color-teal);color:white;">✦</span>
+                    <span>Your nutrition score needs attention</span>
+                </div>
+                <div class="demo-card-text">You scored below 25%. Small changes to meal timing and protein distribution can improve your score significantly.</div>
+            </div>
+            <div class="demo-dark">
+                <div class="demo-card-header">
+                    <span class="symbol" style="background:var(--color-teal);color:white;">✦</span>
+                    <span>Your Personal Longevity Coach</span>
+                </div>
+                <div class="demo-card-text">Get personalized coaching based on your scores.</div>
+            </div>
+        </div>
+
+        <!-- OPTION B -->
+        <div>
+            <div class="option-label">OPTION B — WHITE ✦ ON ORANGE</div>
+            <div class="demo-card">
+                <div class="demo-card-header">
+                    <span class="symbol" style="background:var(--color-orange);color:white;">✦</span>
+                    <span>Your nutrition score needs attention</span>
+                </div>
+                <div class="demo-card-text">You scored below 25%. Small changes to meal timing and protein distribution can improve your score significantly.</div>
+            </div>
+            <div class="demo-dark">
+                <div class="demo-card-header">
+                    <span class="symbol" style="background:var(--color-orange);color:white;">✦</span>
+                    <span>Your Personal Longevity Coach</span>
+                </div>
+                <div class="demo-card-text">Get personalized coaching based on your scores.</div>
+            </div>
+        </div>
+
+        <!-- OPTION C -->
+        <div>
+            <div class="option-label">OPTION C — TEAL ✦ ON TEAL-LIGHT</div>
+            <div class="demo-card">
+                <div class="demo-card-header">
+                    <span class="symbol" style="background:var(--color-teal-light);color:var(--color-teal);">✦</span>
+                    <span>Your nutrition score needs attention</span>
+                </div>
+                <div class="demo-card-text">You scored below 25%. Small changes to meal timing and protein distribution can improve your score significantly.</div>
+            </div>
+            <div class="demo-dark">
+                <div class="demo-card-header">
+                    <span class="symbol" style="background:var(--color-teal-light);color:var(--color-teal);">✦</span>
+                    <span>Your Personal Longevity Coach</span>
+                </div>
+                <div class="demo-card-text">Get personalized coaching based on your scores.</div>
+            </div>
+        </div>
+
+        <!-- OPTION D -->
+        <div>
+            <div class="option-label">OPTION D — ORANGE ✦ ON ORANGE-LIGHT</div>
+            <div class="demo-card">
+                <div class="demo-card-header">
+                    <span class="symbol" style="background:var(--color-orange-light);color:var(--color-orange);">✦</span>
+                    <span>Your nutrition score needs attention</span>
+                </div>
+                <div class="demo-card-text">You scored below 25%. Small changes to meal timing and protein distribution can improve your score significantly.</div>
+            </div>
+            <div class="demo-dark">
+                <div class="demo-card-header">
+                    <span class="symbol" style="background:var(--color-orange-light);color:var(--color-orange);">✦</span>
+                    <span>Your Personal Longevity Coach</span>
+                </div>
+                <div class="demo-card-text">Get personalized coaching based on your scores.</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

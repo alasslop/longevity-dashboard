@@ -38,6 +38,176 @@
         </div>
 
         <!-- ============================================
+             BOOKEND CARD: Score below 25%
+             ============================================ -->
+        <div class="faq-card" id="score-low">
+            <div class="faq-header" onclick="toggleFaq('score-low')">
+                <div class="faq-header-content">
+                    <h1 class="faq-question-title">I scored below 25% on nutrition — what health risks am I facing?</h1>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Evidence summary across 8 dimensions</span>
+                    </div>
+                    <div class="faq-preview">Poor nutrition habits raise mortality risk by 13–34%, promote chronic disease, and undermine long-term diet success — but each principle you adopt provides independent, measurable benefits...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        A low nutrition score means several evidence-based protective habits are missing from your routine. Low vegetable intake is associated with <strong>13% higher all-cause mortality</strong>, high ultra-processed food consumption with <strong>15% higher mortality</strong>, and trans fat intake with <strong>34% higher mortality</strong>. The encouraging news: each nutrition principle you adopt provides independent benefits, so even small changes matter.
+                    </div>
+                </div>
+
+                <table class="faq-table">
+                    <thead>
+                        <tr><th>Dimension</th><th>Key Finding</th><th>Source</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Vegetable Intake</strong></td>
+                            <td>Eating 5 vs. 2 servings daily: <strong>13% lower all-cause mortality</strong>. Leafy greens show strongest effect.</td>
+                            <td>Wang 2021, n=108,735 [<a href="#q1">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ultra-Processed Foods</strong></td>
+                            <td>Higher UPF intake: <strong>+15% all-cause mortality</strong>, +50% CVD mortality. UPF drives ~500 kcal/day passive overeating.</td>
+                            <td>Lane 2024, 9.9M participants [<a href="#q2">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Healthy Fats</strong></td>
+                            <td>Mediterranean diet with olive oil or nuts: <strong>30% reduction in cardiovascular events</strong>.</td>
+                            <td>Estruch 2018, n=7,447 [<a href="#q3">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Trans Fats</strong></td>
+                            <td>Trans fat intake: <strong>+34% all-cause mortality</strong>, +28% coronary heart disease mortality.</td>
+                            <td>de Souza 2015, SR [<a href="#q4">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Alcohol</strong></td>
+                            <td>No safe level for overall health. Above 7 drinks/week: <strong>progressive mortality increase</strong>.</td>
+                            <td>GBD 2018, 195 countries [<a href="#q5">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Food Enjoyment</strong></td>
+                            <td>Diet quality positively associated with quality of life. Enjoyment predicts <strong>long-term adherence</strong>.</td>
+                            <td>Govindaraju 2018, SR [<a href="#q8">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Diet Flexibility</strong></td>
+                            <td>Rigid dieting predicts <strong>fat mass regain</strong>; flexible approaches maintain results long-term.</td>
+                            <td>Conlin 2021, RCT [<a href="#q9">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Progress Tracking</strong></td>
+                            <td>Self-monitoring is the <strong>most effective behavior change strategy</strong> for diet management.</td>
+                            <td>Burke 2011, SR [<a href="#q11">details →</a>]</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p class="prose">
+                    These nutrition dimensions work synergistically — following several principles moderately well outperforms perfecting just one. Each principle you adopt provides independent, cumulative protection against chronic disease and premature mortality.
+                </p>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Where to Start</div>
+                    <div class="tip-box-text">
+                        Pick the principle that feels most achievable and build from there. Switching to olive oil, adding one serving of leafy greens, or reducing ultra-processed snacks are all high-impact, low-effort starting points. See the <a href="#q7" onclick="event.preventDefault(); openFaqById('q7'); document.getElementById('q7').scrollIntoView({behavior:'smooth',block:'start'});">improvement priority guide</a> for a step-by-step approach.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
+             BOOKEND CARD: Score above 75%
+             ============================================ -->
+        <div class="faq-card" id="score-high">
+            <div class="faq-header" onclick="toggleFaq('score-high')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">I scored above 75% — what benefits am I getting from good nutrition?</h2>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                        <span class="faq-meta-divider">·</span>
+                        <span>Evidence summary across 8 dimensions</span>
+                    </div>
+                    <div class="faq-preview">Your high nutrition score reflects powerful, compounding health benefits — from 30% lower cardiovascular risk to sustained diet adherence backed by enjoyment and flexibility...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Your high score reflects a dietary pattern closely aligned with longevity research. You're getting <strong>cumulative protection</strong> from multiple independent nutrition principles — each one reducing disease risk through a different mechanism. This pattern is associated with significantly lower all-cause mortality, cardiovascular disease, cancer risk, and better long-term weight management.
+                    </div>
+                </div>
+
+                <table class="faq-table">
+                    <thead>
+                        <tr><th>Dimension</th><th>What Your High Score Means</th><th>Source</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Vegetable Intake</strong></td>
+                            <td>Your regular vegetable consumption provides <strong>10–15% mortality reduction</strong> per 200g daily.</td>
+                            <td>Aune 2017, 95 studies [<a href="#q1">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Whole Foods Focus</strong></td>
+                            <td>By limiting ultra-processed foods, you avoid <strong>~500 kcal/day passive overeating</strong> and 32 adverse outcomes.</td>
+                            <td>Hall 2019, RCT [<a href="#q2">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Healthy Fats</strong></td>
+                            <td>Your healthy fat intake mirrors the PREDIMED pattern: <strong>30% lower cardiovascular risk</strong>.</td>
+                            <td>Estruch 2018, n=7,447 [<a href="#q3">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Avoiding Harmful Fats</strong></td>
+                            <td>By avoiding trans fats, you eliminate the dietary factor with the <strong>strongest mortality association</strong>.</td>
+                            <td>de Souza 2015, SR [<a href="#q4">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Moderate Alcohol</strong></td>
+                            <td>Your alcohol moderation keeps you in the <strong>lowest-risk category</strong> for all-cause mortality.</td>
+                            <td>Wood 2018, n=599,912 [<a href="#q5">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Food Enjoyment</strong></td>
+                            <td>You enjoy your healthy eating pattern — the strongest predictor of <strong>long-term sustainability</strong>.</td>
+                            <td>Metzgar 2022, Qualitative [<a href="#q8">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Diet Flexibility</strong></td>
+                            <td>Your flexible approach predicts <strong>maintained results</strong> rather than the regain cycle of rigid dieting.</td>
+                            <td>Conlin 2021, RCT [<a href="#q9">details →</a>]</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Progress Awareness</strong></td>
+                            <td>Tracking progress amplifies all other habits — associated with <strong>2.9 kg additional weight management benefit</strong>.</td>
+                            <td>Berry 2021, 12 RCTs [<a href="#q11">details →</a>]</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p class="prose">
+                    What makes a high nutrition score particularly powerful is the compounding effect: these principles protect through different biological mechanisms — anti-inflammatory, anti-oxidant, metabolic, cardiovascular, and behavioral. Together, they create overlapping layers of protection that no single dietary change can match.
+                </p>
+
+                <div class="tip-box">
+                    <div class="tip-box-label">Maintaining Your Score</div>
+                    <div class="tip-box-text">
+                        Consistency matters more than perfection. The research measures patterns over months and years, not individual meals. Periodic re-assessment helps you notice if any habits are slipping before they become entrenched. Keep doing what you're doing — the evidence strongly supports your approach.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================
              FAQ CARD 1: Vegetables & longevity
              ============================================ -->
         <div class="faq-card" id="q1">
@@ -673,7 +843,7 @@
                     <div class="faq-meta">
                         <span>2 min read</span>
                         <span class="faq-meta-divider">·</span>
-                        <span>Based on 2 studies</span>
+                        <span>Based on 1 study</span>
                     </div>
                     <div class="faq-preview">Flexible dietary control is associated with lower BMI and less binge eating, while rigid "all-or-nothing" dieting predicts weight regain and disordered eating...</div>
                 </div>
@@ -688,35 +858,21 @@
                 </div>
 
                 <p class="prose">
-                    Research on dietary restraint styles reveals a clear pattern: how you approach your diet matters as much as what you eat [1][2]. The distinction between flexible and rigid dietary control has important implications for long-term success:
+                    Research on dietary restraint styles reveals a clear pattern: how you approach your diet matters as much as what you eat. Early research from Westenhoefer and colleagues established that the distinction between flexible and rigid dietary control has important implications for long-term success. A more recent randomized trial directly tested the long-term consequences of these two approaches [1]:
                 </p>
 
-                <!-- Study Citation: Westenhoefer 1999 -->
+                <!-- Study Citation: Conlin et al. 2021 -->
                 <div class="study-citation">
                     <div class="study-header">
-                        <span class="study-badge cohort">Observational Study</span>
-                        <span class="study-journal">published in Appetite</span>
+                        <span class="study-badge rct">RCT</span>
+                        <span class="study-journal">published in Journal of the International Society of Sports Nutrition</span>
                     </div>
-                    <div class="study-title">Flexible vs. Rigid Dieting Strategies: Relationship with Adverse Behavioral Outcomes</div>
-                    <div class="study-meta">Westenhoefer et al., 1999 · n=74 (weight management program) · DOI: 10.1006/appe.1998.0204</div>
+                    <div class="study-title">Flexible vs. Rigid Dieting in Resistance-Trained Individuals: Effects on Weight Loss and Body Composition</div>
+                    <div class="study-meta">Conlin et al., 2021 · n=72 resistance-trained individuals · 20 weeks · DOI: 10.1186/s12970-021-00452-2</div>
                     <div class="study-finding">
-                        <strong>Key finding:</strong> Flexible control was associated with <strong>absence of overeating, lower BMI, and lower negative mood</strong> (canonical correlation r=0.65). Rigid control was positively related to disinhibited eating and higher BMI.
+                        <strong>Key finding:</strong> Both flexible and rigid groups lost similar weight during the initial diet phase. However, during the post-diet phase, the rigid group <strong>significantly regained fat mass</strong> while the flexible group <strong>maintained results</strong>, suggesting that flexible approaches preserve nutritional skills and support long-term adherence.
                     </div>
-                    <a href="https://pubmed.ncbi.nlm.nih.gov/10336790/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
-                </div>
-
-                <!-- Study Citation: Stewart et al. 2002 -->
-                <div class="study-citation">
-                    <div class="study-header">
-                        <span class="study-badge cohort">Observational Study</span>
-                        <span class="study-journal">published in Appetite</span>
-                    </div>
-                    <div class="study-title">Rigid vs. Flexible Dieting: Association with Eating Disorder Symptoms in Nonobese Women</div>
-                    <div class="study-meta">Stewart et al., 2002 · n=63 · DOI: 10.1006/appe.2001.0445</div>
-                    <div class="study-finding">
-                        <strong>Key finding:</strong> Rigid dietary control was significantly associated with <strong>higher eating disorder symptoms, mood disturbances, and body dissatisfaction</strong>. Flexible control showed no such associations.
-                    </div>
-                    <a href="https://pubmed.ncbi.nlm.nih.gov/11883916/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/34187492/" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
                 </div>
 
                 <div id="flexibilityCoachingHint"></div>
@@ -731,8 +887,7 @@
                 <!-- References -->
                                 <div class="references-section">
                     <h2>References</h2>
-                    <div class="reference">[1] Westenhoefer, J., Stunkard, A.J., Pudel, V. (1999). "Flexible and rigid control of eating behavior." <em>Appetite</em>, 33(1), 37-45. doi:<a href="https://doi.org/10.1006/appe.1998.0204" target="_blank">10.1006/appe.1998.0204</a></div>
-                    <div class="reference">[2] Stewart, T.M., Williamson, D.A., White, M.A. (2002). "Rigid vs. flexible dieting: association with eating disorder symptoms in nonobese women." <em>Appetite</em>, 38(1), 39-44. doi:<a href="https://doi.org/10.1006/appe.2001.0445" target="_blank">10.1006/appe.2001.0445</a></div>
+                    <div class="reference">[1] Conlin, M.J., Scheck McAleese, J., Davis, C.P., et al. (2021). "Effects of flexible versus rigid dieting on body composition and psychological well-being." <em>Journal of the International Society of Sports Nutrition</em>, 18, 24. doi:<a href="https://doi.org/10.1186/s12970-021-00452-2" target="_blank">10.1186/s12970-021-00452-2</a></div>
                 </div>
             </div>
         </div>
@@ -747,7 +902,7 @@
                     <div class="faq-meta">
                         <span>2 min read</span>
                         <span class="faq-meta-divider">·</span>
-                        <span>Based on 2 studies</span>
+                        <span>Based on 1 study</span>
                     </div>
                     <div class="faq-preview">Higher satiety from meals predicts lower energy intake and better weight management outcomes. Whole foods rich in protein and fiber promote greater satisfaction per calorie...</div>
                 </div>
@@ -762,22 +917,8 @@
                 </div>
 
                 <p class="prose">
-                    Post-meal satisfaction is a practical indicator of diet quality [1]. Meals that leave you feeling genuinely satisfied—not just full—tend to be nutritionally superior, and this satisfaction has measurable effects on subsequent eating behavior [2]:
+                    Post-meal satisfaction is a practical indicator of diet quality. Meals that leave you feeling genuinely satisfied—not just full—tend to be nutritionally superior, and this satisfaction has measurable effects on subsequent eating behavior. A comprehensive meta-analysis quantifies how food structure drives these satiety differences [1]:
                 </p>
-
-                <!-- Study Citation: Benelam 2009 -->
-                <div class="study-citation">
-                    <div class="study-header">
-                        <span class="study-badge review">Review</span>
-                        <span class="study-journal">published in Nutrition Research Reviews</span>
-                    </div>
-                    <div class="study-title">Potential Benefits of Satiety to the Consumer: Scientific Considerations</div>
-                    <div class="study-meta">Benelam, 2009 · DOI: 10.1017/S0954422409990012</div>
-                    <div class="study-finding">
-                        <strong>Key finding:</strong> Enhanced satiety can reduce opportunistic eating, improve hunger management, and <strong>support compliance with goal-directed behaviors</strong>. Higher appetite ratings are associated with lower weight loss in dieters. Initial satiety changes predict subsequent energy intake and weight outcomes.
-                    </div>
-                    <a href="https://doi.org/10.1017/S0954422409990012" target="_blank" class="study-link">View Study <i data-lucide="external-link" style="width:12px;height:12px;"></i></a>
-                </div>
 
                 <!-- Study Citation: Forde et al. 2020 -->
                 <div class="study-citation">
@@ -805,8 +946,7 @@
                 <!-- References -->
                                 <div class="references-section">
                     <h2>References</h2>
-                    <div class="reference">[1] Benelam, B. (2009). "Satiation, satiety and their effects on eating behaviour." <em>Nutrition Research Reviews</em>, 22(2), 153-174. doi:<a href="https://doi.org/10.1017/S0954422409990012" target="_blank">10.1017/S0954422409990012</a></div>
-                    <div class="reference">[2] Forde, C.G., Bolhuis, D., et al. (2020). "Food Texture Influences on Satiety: Systematic Review and Meta-Analysis." <em>Scientific Reports</em>, 10, 12929. doi:<a href="https://doi.org/10.1038/s41598-020-69504-y" target="_blank">10.1038/s41598-020-69504-y</a></div>
+                    <div class="reference">[1] Forde, C.G., Bolhuis, D., et al. (2020). "Food Texture Influences on Satiety: Systematic Review and Meta-Analysis." <em>Scientific Reports</em>, 10, 12929. doi:<a href="https://doi.org/10.1038/s41598-020-69504-y" target="_blank">10.1038/s41598-020-69504-y</a></div>
                 </div>
             </div>
         </div>
@@ -1050,13 +1190,15 @@
             const current = ratings[cardId];
 
             if (current) {
-                container.innerHTML = `<div class="faq-rating-thanks" style="font-size:0.85rem;color:#666;padding:8px 0;">
-                    ${current.rating === 'up' ? '👍' : '👎'} Thanks for your feedback!</div>`;
+                container.innerHTML = `<div class="faq-rating">
+                    <span class="faq-rating-thanks">Thanks for your feedback!</span></div>`;
             } else {
-                container.innerHTML = `<div class="faq-rating" style="display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid #eee;margin-top:12px;">
-                    <span style="font-size:0.85rem;color:#666;">Was this helpful?</span>
-                    <button onclick="saveRating('${cardId}','up')" style="background:none;border:1px solid #ddd;border-radius:6px;padding:4px 12px;cursor:pointer;font-size:0.9rem;" onmouseover="this.style.background='#e8f5e9'" onmouseout="this.style.background='none'">👍</button>
-                    <button onclick="saveRating('${cardId}','down')" style="background:none;border:1px solid #ddd;border-radius:6px;padding:4px 12px;cursor:pointer;font-size:0.9rem;" onmouseover="this.style.background='#ffebee'" onmouseout="this.style.background='none'">👎</button>
+                container.innerHTML = `<div class="faq-rating">
+                    <span class="faq-rating-label">Was this helpful?</span>
+                    <div class="faq-rating-buttons">
+                        <button class="faq-rating-btn" onclick="saveRating('${cardId}','up')">Yes</button>
+                        <button class="faq-rating-btn" onclick="saveRating('${cardId}','down')">No</button>
+                    </div>
                 </div>`;
             }
         }
