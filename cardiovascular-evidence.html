@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Cardiovascular Health FAQ - LongevityPath</title>
+    <link rel="stylesheet" href="brand.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="back-btn"><i data-lucide="arrow-left" style="width:20px;height:20px;"></i></a>
+        <span class="header-title">Cardiovascular Health FAQ</span>
+        <span class="user-badge" id="userBadge"><i data-lucide="user" style="width:12px;height:12px;"></i> <span id="userNameBadge">User</span></span>
+    </header>
+
+    <div class="container-evidence">
+        <div class="breadcrumb">
+            <a href="index.html">LongevityPath</a>
+            <span>/</span>
+            <a href="index.html">Medical</a>
+            <span>/</span>
+            Evidence &amp; FAQ
+        </div>
+
+        <div class="marketing-cta" id="marketingCta">
+            <div class="marketing-cta-title">Know Your Heart Health Numbers</div>
+            <div class="marketing-cta-text">Our free assessment calculates your cardiovascular health score from five key blood markers — ApoB, blood pressure, HDL, triglycerides, and Lp(a).</div>
+            <a href="index.html" class="marketing-cta-button">
+                <i data-lucide="play" style="width:16px;height:16px;"></i> Start Free Assessment
+            </a>
+        </div>
+
+                <div class="faq-card" id="q-score-low">
+            <div class="faq-header" onclick="toggleFaq('q-score-low')">
+                <div class="faq-header-content">
+                    <h1 class="faq-question-title">I scored below 25% on cardiovascular markers — what risks am I facing?</h1>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                    </div>
+                    <div class="faq-preview">Poor cardiovascular biomarkers don't just raise heart disease risk — they have multiplicative effects that compound over time...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Multiple suboptimal cardiovascular markers have <strong>multiplicative effects</strong> on risk. Framingham data shows the highest-risk quintile faces <strong>5-10× the coronary heart disease risk</strong> vs the lowest quintile. The metabolic syndrome — which overlaps with several of these markers — doubles CVD risk overall. The critical insight: this risk is largely <strong>reversible</strong> through targeted intervention.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    Cardiovascular risk isn't simply additive — when ApoB, blood pressure, triglycerides, and HDL are all in suboptimal ranges, the effects compound. The Framingham Heart Study demonstrated that risk factor clustering creates a synergistic effect on atherosclerotic disease progression.
+                </p>
+
+                <p class="prose">
+                    Peter Attia frames cardiovascular disease as a function of three overlapping mechanisms: atherogenic lipoprotein burden (measured by ApoB), endothelial dysfunction (reflected in blood pressure), and systemic inflammation. When all three are elevated, the atherosclerotic process accelerates dramatically.
+                </p>
+
+                <p class="prose">
+                    The encouraging reality: cardiovascular markers are among the most modifiable biomarkers. Lipid-lowering therapy, blood pressure management, and lifestyle changes can shift risk trajectories significantly — even after years of suboptimal levels.
+                </p>
+
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge cohort">Prospective Cohort (Framingham)</span>
+                        <span class="study-journal">published in Circulation</span>
+                    </div>
+                    <div class="study-title">Prediction of coronary heart disease using risk factor categories</div>
+                    <div class="study-meta">Peter WF Wilson, Ralph B D'Agostino, Daniel Levy et al.,  · n=5,345 participants (2,489 men, 2,856 women), 12-year follow-up · DOI: 10.1161/01.CIR.97.18.1837</div>
+                    <div class="study-finding"><strong>Key finding:</strong> Multiple risk factors (BP, cholesterol, HDL, diabetes, smoking) have multiplicative effects on CHD risk. A composite approach to cardiovascular risk assessment outperforms single-marker screening.</div>
+                    <a href="https://doi.org/10.1161/01.CIR.97.18.1837" target="_blank" class="study-link">View Study</a>
+                </div>
+
+                <div class="tip-box"><div class="tip-box-label">The Good News</div>Cardiovascular markers respond strongly to intervention. Statins alone reduce major cardiovascular events by ~25% per 1 mmol/L LDL reduction. Blood pressure management, dietary changes, and exercise each add further protection.</div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Peter WF Wilson, Ralph B D'Agostino, Daniel Levy et al. (). "Prediction of coronary heart disease using risk factor categories" Circulation. doi:<a href="https://doi.org/10.1161/01.CIR.97.18.1837" target="_blank">10.1161/01.CIR.97.18.1837</a></div>
+                    <div class="study-ref">[2] Samuel Mottillo, Kristian B Filion, Jacques Genest et al. (). "The Metabolic Syndrome and Cardiovascular Risk: A Systematic Review and Meta-Analysis" Journal of the American College of Cardiology. doi:<a href="https://doi.org/10.1016/j.jacc.2010.05.003" target="_blank">10.1016/j.jacc.2010.05.003</a></div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="faq-card" id="q-score-high">
+            <div class="faq-header" onclick="toggleFaq('q-score-high')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">I scored above 75% — what protection am I getting?</h2>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                    </div>
+                    <div class="faq-preview">Optimal cardiovascular biomarkers translate to dramatically lower lifetime disease risk and greater longevity...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Your strong cardiovascular markers provide substantial protection. Mendelian randomization studies show that <strong>each 1 mmol/L lower lifetime ApoB exposure reduces CHD risk by 54%</strong>. Optimal blood pressure adds further protection: maintaining systolic BP below 120 mmHg reduces cardiovascular events by <strong>25%</strong>. You're compounding these benefits across all five markers.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    The concept of cumulative lifetime exposure is central to understanding your protection. Ference et al. demonstrated through genetic Mendelian randomization that the benefit of low ApoB is proportional to both the magnitude and duration of exposure — meaning every year with optimal levels adds compounding benefit.
+                </p>
+
+                <p class="prose">
+                    High HDL and low triglycerides reflect healthy reverse cholesterol transport and efficient fat metabolism. The TG/HDL ratio in particular captures atherogenic dyslipidemia — when both are optimal, it signals that your lipoprotein profile is functioning as it should.
+                </p>
+
+                <p class="prose">
+                    Maintaining these levels isn't just about avoiding disease — it's about preserving vascular function, cognitive performance, and physical resilience as you age. Cardiovascular fitness and cardiovascular biomarkers together are the strongest predictors of functional longevity.
+                </p>
+
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge ">Consensus Statement / Mendelian Randomization</span>
+                        <span class="study-journal">published in European Heart Journal</span>
+                    </div>
+                    <div class="study-title">Low-density lipoproteins cause atherosclerotic cardiovascular disease. 1. Evidence from genetic, epidemiologic, and clinical studies</div>
+                    <div class="study-meta">Brian A Ference, Henry N Ginsberg, Ian Graham et al.,  · n=Synthesis of >200 studies, >2 million participants · DOI: 10.1093/eurheartj/ehz962</div>
+                    <div class="study-finding"><strong>Key finding:</strong> Causal relationship between ApoB-containing lipoproteins and ASCVD is established beyond reasonable doubt. Cumulative lifetime exposure determines risk, supporting early and sustained lipid lowering.</div>
+                    <a href="https://doi.org/10.1093/eurheartj/ehz962" target="_blank" class="study-link">View Study</a>
+                </div>
+
+                <div class="tip-box"><div class="tip-box-label">Keep It Up</div>Maintain your advantage with annual lipid panels and blood pressure monitoring. Consistent tracking catches any drift before it becomes clinically significant.</div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Brian A Ference, Henry N Ginsberg, Ian Graham et al. (). "Low-density lipoproteins cause atherosclerotic cardiovascular disease. 1. Evidence from genetic, epidemiologic, and clinical studies" European Heart Journal. doi:<a href="https://doi.org/10.1093/eurheartj/ehz962" target="_blank">10.1093/eurheartj/ehz962</a></div>
+                    <div class="study-ref">[2] Emanuele Di Angelantonio, Nadeem Sarwar, Philip Perry et al. (). "Major lipids, apolipoproteins, and risk of vascular disease" JAMA. doi:<a href="https://doi.org/10.1001/jama.2009.1619" target="_blank">10.1001/jama.2009.1619</a></div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="faq-card" id="q-apob">
+            <div class="faq-header" onclick="toggleFaq('q-apob')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Why is ApoB the primary cardiovascular marker instead of LDL?</h2>
+                    <div class="faq-meta">
+                        <span>4 min read</span>
+                    </div>
+                    <div class="faq-preview">Every atherogenic lipoprotein particle contains exactly one ApoB molecule, making it a direct count of the particles driving plaque formation...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        ApoB counts every atherogenic particle in your blood — including LDL, VLDL, IDL, and Lp(a). LDL cholesterol only measures the cholesterol <em>inside</em> LDL particles, missing the others entirely. When ApoB and LDL disagree (which happens in ~30% of people), <strong>ApoB is the better predictor</strong> of cardiovascular events. The European Society of Cardiology endorsed ApoB as the superior measure in 2019.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    The key insight is biological: atherosclerosis is driven by the number of atherogenic particles entering the arterial wall, not the amount of cholesterol they carry. Each atherogenic particle — whether LDL, VLDL, or Lp(a) — contains exactly one ApoB molecule. So ApoB gives you a direct particle count.
+                </p>
+
+                <p class="prose">
+                    LDL cholesterol can be misleading because particle size varies. Someone with many small, dense LDL particles may have a 'normal' LDL-C but a dangerously high particle count. ApoB catches this discordance. Sniderman et al. showed in systematic analyses that ApoB outperforms both LDL-C and non-HDL-C for risk prediction across all discordant subgroups.
+                </p>
+
+                <p class="prose">
+                    Peter Attia targets ApoB below 60 mg/dL for most patients, with optimal levels in the 20-40 mg/dL range. The European Heart Journal consensus by Ference et al. established that lifetime exposure to ApoB-containing lipoproteins has a causal, dose-dependent relationship with atherosclerotic disease — each 1 mmol/L reduction yields a 54% CHD risk reduction.
+                </p>
+
+                <p class="prose">
+                    For practical purposes: if you can only test one lipid marker, ApoB gives you more information than LDL-C, total cholesterol, or any other single lipid measure.
+                </p>
+
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge ">Consensus Review</span>
+                        <span class="study-journal">published in The Lancet</span>
+                    </div>
+                    <div class="study-title">ApoB vs LDL-cholesterol and non-HDL-cholesterol as the primary measure of apoB-containing lipoprotein-related risk</div>
+                    <div class="study-meta">Allan D Sniderman, George Thanassoulis, Tamara Glavinovic et al.,  · n=Review of multiple cohort studies (>500,000 participants) · DOI: 10.1016/S0140-6736(21)01123-1</div>
+                    <div class="study-finding"><strong>Key finding:</strong> ApoB is a more accurate measure of atherogenic lipoprotein burden than LDL-C and should be the primary target for lipid-lowering therapy. European Society of Cardiology 2019 endorsed ApoB as superior.</div>
+                    <a href="https://doi.org/10.1016/S0140-6736(21)01123-1" target="_blank" class="study-link">View Study</a>
+                </div>
+
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge ">Consensus Statement / Mendelian Randomization</span>
+                        <span class="study-journal">published in European Heart Journal</span>
+                    </div>
+                    <div class="study-title">Low-density lipoproteins cause atherosclerotic cardiovascular disease. 1. Evidence from genetic, epidemiologic, and clinical studies</div>
+                    <div class="study-meta">Brian A Ference, Henry N Ginsberg, Ian Graham et al.,  · n=Synthesis of >200 studies, >2 million participants · DOI: 10.1093/eurheartj/ehz962</div>
+                    <div class="study-finding"><strong>Key finding:</strong> Causal relationship between ApoB-containing lipoproteins and ASCVD is established beyond reasonable doubt. Cumulative lifetime exposure determines risk, supporting early and sustained lipid lowering.</div>
+                    <a href="https://doi.org/10.1093/eurheartj/ehz962" target="_blank" class="study-link">View Study</a>
+                </div>
+
+                <div class="tip-box"><div class="tip-box-label">Target Ranges</div><strong>Optimal:</strong> ApoB &lt; 60 mg/dL (Attia). <strong>Low risk:</strong> 60-80 mg/dL. <strong>Elevated:</strong> 80-120 mg/dL. <strong>High:</strong> &gt;120 mg/dL. Ask your doctor for an advanced lipid panel that includes ApoB.</div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Allan D Sniderman, George Thanassoulis, Tamara Glavinovic et al. (). "ApoB vs LDL-cholesterol and non-HDL-cholesterol as the primary measure of apoB-containing lipoprotein-related risk" The Lancet. doi:<a href="https://doi.org/10.1016/S0140-6736(21)01123-1" target="_blank">10.1016/S0140-6736(21)01123-1</a></div>
+                    <div class="study-ref">[2] Brian A Ference, Henry N Ginsberg, Ian Graham et al. (). "Low-density lipoproteins cause atherosclerotic cardiovascular disease. 1. Evidence from genetic, epidemiologic, and clinical studies" European Heart Journal. doi:<a href="https://doi.org/10.1093/eurheartj/ehz962" target="_blank">10.1093/eurheartj/ehz962</a></div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="faq-card" id="q-bp">
+            <div class="faq-header" onclick="toggleFaq('q-bp')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">How does blood pressure affect cardiovascular longevity?</h2>
+                    <div class="faq-meta">
+                        <span>4 min read</span>
+                    </div>
+                    <div class="faq-preview">Blood pressure is the single most actionable cardiovascular risk factor — and the evidence for aggressive management is overwhelming...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        The relationship between blood pressure and cardiovascular disease is <strong>continuous, graded, and causal</strong>. A meta-analysis of 1 million adults found that each 20 mmHg increase in systolic BP doubles stroke and ischemic heart disease mortality. The SPRINT trial demonstrated that targeting systolic BP below 120 mmHg (vs 140) reduced cardiovascular events by <strong>25%</strong> and all-cause mortality by <strong>27%</strong>.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    Lewington et al. analyzed individual data from 61 prospective studies covering 1 million adults and found no safe threshold for blood pressure. From 115/75 mmHg upward, each 20/10 mmHg increment doubles the risk of death from stroke and ischemic heart disease. This relationship is consistent across all ages from 40-89.
+                </p>
+
+                <p class="prose">
+                    The landmark SPRINT trial settled a long-running debate about BP targets. In 9,361 high-risk adults, intensive treatment (target systolic <120 mmHg) reduced the primary composite cardiovascular outcome by 25% and all-cause mortality by 27%, compared to standard treatment (target <140 mmHg). The trial was stopped early due to the clear benefit.
+                </p>
+
+                <p class="prose">
+                    Blood pressure is arguably the most actionable cardiovascular marker because it responds to multiple interventions: sodium reduction, the DASH diet, regular aerobic exercise, weight management, stress reduction, and if needed, well-tolerated medications with decades of safety data.
+                </p>
+
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge meta-analysis">Meta-analysis</span>
+                        <span class="study-journal">published in The Lancet</span>
+                    </div>
+                    <div class="study-title">Age-specific relevance of usual blood pressure to vascular mortality: a meta-analysis of individual data for one million adults in 61 prospective studies</div>
+                    <div class="study-meta">Lewington et al., 2002 · n=1,000,000 adults; 12.7M person-years · DOI: 10.1016/S0140-6736(02)11911-8</div>
+                    <div class="study-finding"><strong>Key finding:</strong> Each 20 mmHg rise in systolic BP doubles stroke and IHD death rate; continuous relationship down to 115/75 mmHg with no threshold</div>
+                    <a href="https://doi.org/10.1016/S0140-6736(02)11911-8" target="_blank" class="study-link">View Study</a>
+                </div>
+
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge rct">Randomized Controlled Trial</span>
+                        <span class="study-journal">published in New England Journal of Medicine</span>
+                    </div>
+                    <div class="study-title">A Randomized Trial of Intensive versus Standard Blood-Pressure Control</div>
+                    <div class="study-meta">SPRINT Research Group, 2015 · n=9,361 · DOI: 10.1056/NEJMoa1511939</div>
+                    <div class="study-finding"><strong>Key finding:</strong> Intensive BP control (<120 mmHg) reduced CV events by 25% (HR 0.75) and all-cause mortality by 27% (HR 0.73); stopped early for efficacy</div>
+                    <a href="https://doi.org/10.1056/NEJMoa1511939" target="_blank" class="study-link">View Study</a>
+                </div>
+
+                <div class="tip-box"><div class="tip-box-label">Target Ranges</div><strong>Optimal:</strong> &lt;120/80 mmHg. <strong>Elevated:</strong> 120-129/&lt;80. <strong>Stage 1 hypertension:</strong> 130-139/80-89. <strong>Stage 2:</strong> ≥140/90. Home monitoring is more accurate than office measurements.</div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Lewington et al. (2002). "Age-specific relevance of usual blood pressure to vascular mortality: a meta-analysis of individual data for one million adults in 61 prospective studies" The Lancet, 360, 1903-1913. doi:<a href="https://doi.org/10.1016/S0140-6736(02)11911-8" target="_blank">10.1016/S0140-6736(02)11911-8</a></div>
+                    <div class="study-ref">[2] SPRINT Research Group (2015). "A Randomized Trial of Intensive versus Standard Blood-Pressure Control" New England Journal of Medicine, 373, 2103-2116. doi:<a href="https://doi.org/10.1056/NEJMoa1511939" target="_blank">10.1056/NEJMoa1511939</a></div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="faq-card" id="q-hdl">
+            <div class="faq-header" onclick="toggleFaq('q-hdl')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">What role does HDL cholesterol play in heart health?</h2>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                    </div>
+                    <div class="faq-preview">HDL participates in reverse cholesterol transport — moving cholesterol out of arterial walls — but the relationship is more nuanced than 'higher is better'...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        HDL facilitates <strong>reverse cholesterol transport</strong> — removing cholesterol from arterial plaques and returning it to the liver. A meta-analysis of 302,430 people found that each 15 mg/dL increase in HDL is associated with a <strong>22% lower CHD risk</strong>. However, extremely high HDL (>90 mg/dL) may not add further protection. HDL also contributes to your metabolic health score, as low HDL is a hallmark of insulin resistance.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    Di Angelantonio et al. pooled data from 68 prospective studies and confirmed HDL's independent protective association with coronary heart disease, even after adjusting for LDL, triglycerides, and other risk factors.
+                </p>
+
+                <p class="prose">
+                    The nuance: HDL function may matter more than HDL quantity. Recent research suggests that HDL's anti-inflammatory and antioxidant properties — not just its cholesterol-carrying capacity — drive its protective effects. This is why pharmacologically raising HDL (e.g., with CETP inhibitors) hasn't consistently reduced cardiovascular events.
+                </p>
+
+                <p class="prose">
+                    In the LongevityPath scoring, HDL contributes to both your cardiovascular score (15% weight) and your metabolic score (25% weight). Low HDL is one of the five metabolic syndrome criteria and tracks closely with insulin resistance and elevated triglycerides.
+                </p>
+
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge meta-analysis">Meta-analysis</span>
+                        <span class="study-journal">published in JAMA</span>
+                    </div>
+                    <div class="study-title">Major lipids, apolipoproteins, and risk of vascular disease</div>
+                    <div class="study-meta">Emanuele Di Angelantonio, Nadeem Sarwar, Philip Perry et al.,  · n=302,430 participants across 68 prospective studies · DOI: 10.1001/jama.2009.1619</div>
+                    <div class="study-finding"><strong>Key finding:</strong> HDL cholesterol and triglycerides are independently associated with CHD risk. TG/HDL ratio captures both dimensions of atherogenic dyslipidemia.</div>
+                    <a href="https://doi.org/10.1001/jama.2009.1619" target="_blank" class="study-link">View Study</a>
+                </div>
+
+                <div class="tip-box"><div class="tip-box-label">How to Raise HDL</div>Regular aerobic exercise is the most effective HDL booster (+5-10%). Moderate alcohol intake, omega-3 fatty acids, and maintaining a healthy weight also help. Avoid trans fats, which simultaneously lower HDL and raise LDL.</div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Emanuele Di Angelantonio, Nadeem Sarwar, Philip Perry et al. (). "Major lipids, apolipoproteins, and risk of vascular disease" JAMA. doi:<a href="https://doi.org/10.1001/jama.2009.1619" target="_blank">10.1001/jama.2009.1619</a></div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="faq-card" id="q-trig">
+            <div class="faq-header" onclick="toggleFaq('q-trig')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Why do triglycerides matter for heart health?</h2>
+                    <div class="faq-meta">
+                        <span>3 min read</span>
+                    </div>
+                    <div class="faq-preview">Triglycerides are a direct marker of how your body handles dietary fat and carbohydrates — and they bridge cardiovascular and metabolic risk...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Elevated triglycerides reflect both cardiovascular and metabolic dysfunction. A meta-analysis of 262,525 participants found that each 88 mg/dL increase in triglycerides raises CHD risk by <strong>37%</strong>. The <strong>TG/HDL ratio</strong> is particularly powerful: Casey Means cites evidence that a high ratio increases heart attack risk up to <strong>16-fold</strong>. Triglycerides contribute to both your cardiovascular and metabolic scores.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    Sarwar et al. demonstrated in their large meta-analysis that moderate adjustment for HDL attenuated but did not eliminate the triglyceride-CHD association — confirming that triglycerides carry independent risk beyond their correlation with low HDL.
+                </p>
+
+                <p class="prose">
+                    The biological mechanism connects cardiovascular and metabolic pathways: elevated triglycerides typically reflect insulin resistance (the metabolic dimension), which drives the production of small, dense LDL particles and triglyceride-rich remnant lipoproteins (the cardiovascular dimension). This is why triglycerides appear in both your sub-scores.
+                </p>
+
+                <p class="prose">
+                    Gerald Reaven's landmark 1988 Banting Lecture identified the triglyceride-HDL connection as a hallmark of insulin resistance ('Syndrome X'). When triglycerides are elevated and HDL is low, it signals that insulin is failing to regulate fat metabolism — a metabolic problem with direct cardiovascular consequences.
+                </p>
+
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge meta-analysis">Meta-analysis</span>
+                        <span class="study-journal">published in JAMA</span>
+                    </div>
+                    <div class="study-title">Major lipids, apolipoproteins, and risk of vascular disease</div>
+                    <div class="study-meta">Emanuele Di Angelantonio, Nadeem Sarwar, Philip Perry et al.,  · n=302,430 participants across 68 prospective studies · DOI: 10.1001/jama.2009.1619</div>
+                    <div class="study-finding"><strong>Key finding:</strong> HDL cholesterol and triglycerides are independently associated with CHD risk. TG/HDL ratio captures both dimensions of atherogenic dyslipidemia.</div>
+                    <a href="https://doi.org/10.1001/jama.2009.1619" target="_blank" class="study-link">View Study</a>
+                </div>
+
+                <div class="tip-box"><div class="tip-box-label">Target Ranges</div><strong>Optimal:</strong> &lt;80 mg/dL (Means). <strong>Normal:</strong> &lt;150 mg/dL (ATP III). <strong>TG/HDL ratio:</strong> aim for &lt;2:1, ideal &lt;1:1. Reducing refined carbohydrates is the fastest way to lower triglycerides.</div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Emanuele Di Angelantonio, Nadeem Sarwar, Philip Perry et al. (). "Major lipids, apolipoproteins, and risk of vascular disease" JAMA. doi:<a href="https://doi.org/10.1001/jama.2009.1619" target="_blank">10.1001/jama.2009.1619</a></div>
+                    <div class="study-ref">[2] Gerald M Reaven (). "Banting Lecture 1988: Role of insulin resistance in human disease" Diabetes. doi:<a href="https://doi.org/10.2337/diab.37.12.1595" target="_blank">10.2337/diab.37.12.1595</a></div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="faq-card" id="q-lpa">
+            <div class="faq-header" onclick="toggleFaq('q-lpa')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">What is Lp(a) and why should I test it?</h2>
+                    <div class="faq-meta">
+                        <span>4 min read</span>
+                    </div>
+                    <div class="faq-preview">Lipoprotein(a) is a genetically determined cardiovascular risk factor that affects ~20% of the population — and most people have never been tested...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Lp(a) is a modified LDL particle that is <strong>6× more atherogenic</strong> than standard LDL. Your Lp(a) level is ~90% genetically determined and remains stable throughout life. Approximately <strong>1 in 5 people</strong> have elevated levels (>50 mg/dL or >125 nmol/L), which increases CVD risk by <strong>2-3×</strong>. Peter Attia considers it a must-test biomarker alongside ApoB. You only need to test it once.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    Lp(a) consists of an LDL particle with an additional apolipoprotein(a) protein attached. This makes it both atherogenic (promotes plaque formation like LDL) and prothrombotic (interferes with clot dissolution). The combination is why it carries substantially higher risk per particle than standard LDL.
+                </p>
+
+                <p class="prose">
+                    Nordestgaard et al. established in a European Heart Journal consensus that Lp(a) is an independent, causal risk factor for atherosclerotic CVD. Because Lp(a) levels are genetically fixed, knowing your level helps calibrate how aggressively to manage your other modifiable risk factors (especially ApoB and blood pressure).
+                </p>
+
+                <p class="prose">
+                    Currently, no approved therapy specifically targets Lp(a), though clinical trials for antisense oligonucleotides are underway. The practical value of testing is risk stratification: if your Lp(a) is high, it argues for more aggressive management of ApoB and blood pressure to compensate for the unmodifiable genetic risk.
+                </p>
+
+                <p class="prose">
+                    Because Lp(a) is genetically stable, a single lifetime measurement is sufficient. It does not change with diet, exercise, or most medications.
+                </p>
+
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge ">Expert Consensus / Review</span>
+                        <span class="study-journal">published in European Heart Journal</span>
+                    </div>
+                    <div class="study-title">Lipoprotein(a) as a cardiovascular risk factor: current status</div>
+                    <div class="study-meta">Børge G Nordestgaard, M John Chapman, Kausik Ray et al.,  · n=Review of studies covering >100,000 participants · DOI: 10.1093/eurheartj/ehq386</div>
+                    <div class="study-finding"><strong>Key finding:</strong> Lp(a) is an independent, causal, genetically determined risk factor for CVD. Recommended screening at least once in lifetime, especially in high-risk individuals.</div>
+                    <a href="https://doi.org/10.1093/eurheartj/ehq386" target="_blank" class="study-link">View Study</a>
+                </div>
+
+                <div class="tip-box"><div class="tip-box-label">When to Test</div>Get Lp(a) tested once in your lifetime. <strong>Desirable:</strong> &lt;30 nmol/L. <strong>Borderline:</strong> 30-50 nmol/L. <strong>High risk:</strong> &gt;125 nmol/L. If elevated, work with your doctor to optimize all other cardiovascular markers more aggressively.</div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Børge G Nordestgaard, M John Chapman, Kausik Ray et al. (). "Lipoprotein(a) as a cardiovascular risk factor: current status" European Heart Journal. doi:<a href="https://doi.org/10.1093/eurheartj/ehq386" target="_blank">10.1093/eurheartj/ehq386</a></div>
+                    <div class="study-ref">[2] Brian A Ference, Henry N Ginsberg, Ian Graham et al. (). "Low-density lipoproteins cause atherosclerotic cardiovascular disease. 1. Evidence from genetic, epidemiologic, and clinical studies" European Heart Journal. doi:<a href="https://doi.org/10.1093/eurheartj/ehz962" target="_blank">10.1093/eurheartj/ehz962</a></div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="faq-card" id="q-attia">
+            <div class="faq-header" onclick="toggleFaq('q-attia')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">What are the drivers of cardiovascular health?</h2>
+                    <div class="faq-meta">
+                        <span>4 min read</span>
+                    </div>
+                    <div class="faq-preview">Dr. Peter Attia, MD identifies four causal drivers of atherosclerotic cardiovascular disease — and argues that managing them early, not waiting for symptoms, is the key to prevention...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        Dr. Peter Attia, MD (<em>Outlive</em>) identifies <strong>four causal drivers</strong> of atherosclerotic cardiovascular disease: <strong>ApoB-containing lipoproteins (cholesterol), hypertension, smoking, and metabolic health</strong> — calling metabolic health 'perhaps the most important, subtle thing that is not appreciated.' His targets are far more aggressive than standard guidelines: <strong>ApoB &lt;60 mg/dL (ideally 20-40), BP &lt;120/80 mmHg, Lp(a) tested once for risk stratification</strong>. Inflammation (measured via hsCRP) is a downstream consequence of the atherosclerotic process, not a separate causal driver.
+                    </div>
+                </div>
+
+                <table class="faq-table"><thead><tr><th>Marker</th><th>Optimal (Attia)</th><th>Standard Guidelines</th></tr></thead><tbody><tr><td><strong>ApoB</strong></td><td>&lt;60 mg/dL (ideally 20-40)</td><td>Not routinely tested</td></tr><tr><td><strong>Blood Pressure</strong></td><td>&lt;120/80 mmHg</td><td>&lt;140/90 mmHg</td></tr><tr><td><strong>Lp(a)</strong></td><td>Test once; stratify risk</td><td>Not routinely tested</td></tr><tr><td><strong>Triglycerides</strong></td><td>&lt;100 mg/dL</td><td>&lt;150 mg/dL</td></tr><tr><td><strong>HDL</strong></td><td>Function over quantity</td><td>&gt;40M / &gt;50F mg/dL</td></tr></tbody></table>
+
+                <p class="prose">
+                    Dr. Peter Attia, MD frames ASCVD prevention around four causal factors: cholesterol (specifically ApoB-containing lipoproteins), hypertension, smoking, and metabolic health. He emphasizes that ApoB is 'a necessary, though not sufficient, factor in the development of ASCVD — which means the more you lower it, the more you lower risk. Full stop.' In his practice, apoB is the most important metric for predicting cardiovascular risk.
+                </p>
+
+                <p class="prose">
+                    On inflammation and CRP: Attia explains that when ApoB particles get retained and oxidized in the arterial wall, damaged endothelial cells release Interleukin-6 and other cytokines, which circulate to the liver where they induce the production of C-reactive protein (CRP). He explicitly notes that 'cytokines and C-reactive protein are not cardiovascular specific' — a common cold can elevate CRP to 6-7 when normal is 1. CRP is therefore a useful measurement of ongoing inflammation, but not a causal driver in itself.
+                </p>
+
+                <p class="prose">
+                    The role of metabolic health is central but often overlooked. In AMA #43, Attia explains how hyperinsulinemia drives endothelial dysfunction — when the endothelium is not working properly, ApoB particles have an easier time penetrating into the subendothelial space, accelerating the atherosclerotic cascade. This is why insulin, apoB, and triglycerides are deeply interrelated as ASCVD risk factors.
+                </p>
+
+                <p class="prose">
+                    His 'Medicine 3.0' framework rejects the standard 10-year risk calculators (like the ASCVD risk score), arguing they systematically underestimate risk in younger patients. The lifetime exposure concept is supported by Mendelian randomization studies (Ference et al., 2019): each 1 mmol/L lower lifetime ApoB exposure reduces coronary heart disease risk by 54%. Attia compares the disease to 'moving towards an iceberg at three knots from hundreds of miles away — you can't wait until you're looking at the iceberg to do anything about it.'
+                </p>
+
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge ">Consensus Statement / Mendelian Randomization</span>
+                        <span class="study-journal">published in European Heart Journal</span>
+                    </div>
+                    <div class="study-title">Low-density lipoproteins cause atherosclerotic cardiovascular disease. 1. Evidence from genetic, epidemiologic, and clinical studies</div>
+                    <div class="study-meta">Brian A Ference, Henry N Ginsberg, Ian Graham et al.,  · n=Synthesis of >200 studies, >2 million participants · DOI: 10.1093/eurheartj/ehz962</div>
+                    <div class="study-finding"><strong>Key finding:</strong> Causal relationship between ApoB-containing lipoproteins and ASCVD is established beyond reasonable doubt. Cumulative lifetime exposure determines risk, supporting early and sustained lipid lowering.</div>
+                    <a href="https://doi.org/10.1093/eurheartj/ehz962" target="_blank" class="study-link">View Study</a>
+                </div>
+
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge ">Consensus Review</span>
+                        <span class="study-journal">published in The Lancet</span>
+                    </div>
+                    <div class="study-title">ApoB vs LDL-cholesterol and non-HDL-cholesterol as the primary measure of apoB-containing lipoprotein-related risk</div>
+                    <div class="study-meta">Allan D Sniderman, George Thanassoulis, Tamara Glavinovic et al.,  · n=Review of multiple cohort studies (>500,000 participants) · DOI: 10.1016/S0140-6736(21)01123-1</div>
+                    <div class="study-finding"><strong>Key finding:</strong> ApoB is a more accurate measure of atherogenic lipoprotein burden than LDL-C and should be the primary target for lipid-lowering therapy. European Society of Cardiology 2019 endorsed ApoB as superior.</div>
+                    <a href="https://doi.org/10.1016/S0140-6736(21)01123-1" target="_blank" class="study-link">View Study</a>
+                </div>
+
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge">Expert</span>
+                    </div>
+                    <div class="study-title">Dr. Peter Attia, MD</div>
+                    <div class="study-meta">Outlive: The Science and Art of Longevity — Chapter 7: The Ticker (2023)</div>
+                    <div style="margin-top:10px; font-size:0.88rem; font-weight:600; color:var(--color-teal);">Source: Blog — peterattiamd.com</div>
+                    <div style="padding-left:16px;">
+                        <a href="https://peterattiamd.com/measuring-cardiovascular-disease-risk-and-the-importance-of-apob-part-1/" target="_blank" class="study-link">Measuring cardiovascular disease risk and the importance of apoB</a>
+                        <a href="https://peterattiamd.com/understanding-cardiovascular-disease/" target="_blank" class="study-link">Understanding cardiovascular disease risk, cholesterol, and apoB</a>
+                        <a href="https://peterattiamd.com/early-and-aggressive-lowering-of-apob/" target="_blank" class="study-link">How early and aggressive lowering of apoB could change the course of ASCVD</a>
+                    </div>
+                </div>
+
+                <div class="tip-box"><div class="tip-box-label">LongevityPath Adaptation</div>Our cardiovascular score gives equal weight (25% each) to Attia's four causal drivers of ASCVD: <strong>1. ApoB-containing lipoproteins (25%)</strong> — ApoB and Lp(a); <strong>2. Hypertension (25%)</strong> — systolic blood pressure; <strong>3. Smoking (25%)</strong> — never/former/current from your profile; <strong>4. Metabolic health (25%)</strong> — HDL, triglycerides, fasting insulin, fasting glucose. If a driver has no data, its share redistributes proportionally across the others.</div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] Brian A Ference, Henry N Ginsberg, Ian Graham et al. (). "Low-density lipoproteins cause atherosclerotic cardiovascular disease. 1. Evidence from genetic, epidemiologic, and clinical studies" European Heart Journal. doi:<a href="https://doi.org/10.1093/eurheartj/ehz962" target="_blank">10.1093/eurheartj/ehz962</a></div>
+                    <div class="study-ref">[2] Allan D Sniderman, George Thanassoulis, Tamara Glavinovic et al. (). "ApoB vs LDL-cholesterol and non-HDL-cholesterol as the primary measure of apoB-containing lipoprotein-related risk" The Lancet. doi:<a href="https://doi.org/10.1016/S0140-6736(21)01123-1" target="_blank">10.1016/S0140-6736(21)01123-1</a></div>
+                    <div class="study-ref">[3] Peter WF Wilson, Ralph B D'Agostino, Daniel Levy et al. (). "Prediction of coronary heart disease using risk factor categories" Circulation. doi:<a href="https://doi.org/10.1161/01.CIR.97.18.1837" target="_blank">10.1161/01.CIR.97.18.1837</a></div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="faq-card" id="q-improve">
+            <div class="faq-header" onclick="toggleFaq('q-improve')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">How can I improve my cardiovascular markers?</h2>
+                    <div class="faq-meta">
+                        <span>4 min read</span>
+                    </div>
+                    <div class="faq-preview">Cardiovascular markers respond powerfully to both lifestyle intervention and medical therapy — here's what the evidence supports...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        The evidence for cardiovascular risk reduction is exceptionally strong. The CTT meta-analysis of 170,000 participants showed that statin therapy reduces major cardiovascular events by <strong>~25% per 1 mmol/L LDL reduction</strong>. Lifestyle interventions — particularly the DASH diet, regular aerobic exercise, and sodium reduction — can lower blood pressure by <strong>10-15 mmHg</strong> and improve lipid profiles without medication.
+                    </div>
+                </div>
+
+                <table class="faq-table"><thead><tr><th>Intervention</th><th>Effect</th><th>Timeline</th></tr></thead><tbody><tr><td><strong>Statin therapy</strong></td><td>~25% reduction in major CVD events per 1 mmol/L LDL drop</td><td>1-2 years</td></tr><tr><td><strong>DASH diet</strong></td><td>BP reduction of 8-14 mmHg systolic</td><td>2-4 weeks</td></tr><tr><td><strong>Aerobic exercise</strong></td><td>BP reduction 5-8 mmHg; HDL increase 5-10%</td><td>4-12 weeks</td></tr><tr><td><strong>Sodium reduction</strong></td><td>BP reduction 2-8 mmHg</td><td>2-4 weeks</td></tr><tr><td><strong>Weight loss (5-10%)</strong></td><td>Improves all markers; TG drops 20-30%</td><td>3-6 months</td></tr></tbody></table>
+
+                <p class="prose">
+                    The Cholesterol Treatment Trialists' meta-analysis (CTT 2010) pooled data from 170,000 participants across 26 randomized trials and demonstrated that each 1 mmol/L reduction in LDL cholesterol via statin therapy produces a consistent ~22% reduction in major vascular events, regardless of baseline risk level. The benefits emerge within the first year and continue to accrue over time.
+                </p>
+
+                <p class="prose">
+                    For blood pressure, SPRINT demonstrated that intensive targets (systolic <120 mmHg) are achievable and beneficial. Most people can reach meaningful BP reductions through a combination of dietary sodium restriction, increased potassium intake, regular aerobic exercise, and weight management before considering medication.
+                </p>
+
+                <p class="prose">
+                    For triglycerides and HDL, the most effective intervention is reducing refined carbohydrate intake — particularly sugar and processed grains. Regular exercise (both aerobic and resistance training) improves HDL function and lowers triglycerides. Omega-3 supplementation at therapeutic doses (2-4g EPA/DHA) can further reduce triglycerides by 20-30%.
+                </p>
+
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge meta-analysis">Meta-analysis</span>
+                        <span class="study-journal">published in The Lancet</span>
+                    </div>
+                    <div class="study-title">Efficacy and safety of more intensive lowering of LDL cholesterol: a meta-analysis of data from 170,000 participants in 26 randomised trials</div>
+                    <div class="study-meta">CTT Collaboration, 2010 · n=170,000 · DOI: 10.1016/S0140-6736(10)61350-5</div>
+                    <div class="study-finding"><strong>Key finding:</strong> Each 1 mmol/L reduction in LDL cholesterol reduces major vascular events by 22% (RR 0.78); no increased cancer or non-vascular mortality</div>
+                    <a href="https://doi.org/10.1016/S0140-6736(10)61350-5" target="_blank" class="study-link">View Study</a>
+                </div>
+
+                <div class="tip-box"><div class="tip-box-label">Priority Order</div><strong>1.</strong> Get ApoB tested (most informative single marker). <strong>2.</strong> Optimize blood pressure (most actionable). <strong>3.</strong> Address TG/HDL ratio (diet responsive). <strong>4.</strong> Test Lp(a) once (genetic baseline). <strong>5.</strong> Discuss statin therapy if ApoB remains elevated despite lifestyle changes.</div>
+
+                <div class="study-refs">
+                    <div class="study-refs-label">References</div>
+                    <div class="study-ref">[1] CTT Collaboration (2010). "Efficacy and safety of more intensive lowering of LDL cholesterol: a meta-analysis of data from 170,000 participants in 26 randomised trials" The Lancet, 376, 1670-1681. doi:<a href="https://doi.org/10.1016/S0140-6736(10)61350-5" target="_blank">10.1016/S0140-6736(10)61350-5</a></div>
+                    <div class="study-ref">[2] SPRINT Research Group (2015). "A Randomized Trial of Intensive versus Standard Blood-Pressure Control" New England Journal of Medicine, 373, 2103-2116. doi:<a href="https://doi.org/10.1056/NEJMoa1511939" target="_blank">10.1056/NEJMoa1511939</a></div>
+                    <div class="study-ref">[3] Lewington et al. (2002). "Age-specific relevance of usual blood pressure to vascular mortality: a meta-analysis of individual data for one million adults in 61 prospective studies" The Lancet, 360, 1903-1913. doi:<a href="https://doi.org/10.1016/S0140-6736(02)11911-8" target="_blank">10.1016/S0140-6736(02)11911-8</a></div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="faq-card" id="q-coaching">
+            <div class="faq-header" onclick="toggleFaq('q-coaching')">
+                <div class="faq-header-content">
+                    <h2 class="faq-question-title">Where can I get personalized help with my cardiovascular markers?</h2>
+                    <div class="faq-meta">
+                        <span>2 min read</span>
+                    </div>
+                    <div class="faq-preview">This assessment identifies where you stand — personalized implementation can help you optimize your specific marker profile...</div>
+                </div>
+                <i data-lucide="chevron-down" class="faq-toggle" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="faq-content">
+                <div class="quick-answer">
+                    <div class="quick-answer-label">Quick Answer</div>
+                    <div class="quick-answer-text">
+                        This assessment gives you a cardiovascular health score based on five evidence-based markers. For personalized implementation, consider the coaching program for expert guidance, or analyze your complete test results with AI to identify priority areas and create an action plan tailored to your specific biomarker profile.
+                    </div>
+                </div>
+
+                <p class="prose">
+                    Your cardiovascular sub-score highlights which markers need attention and which are already strong. A coaching program can help translate these numbers into a specific action plan — including which tests to request from your doctor, which lifestyle changes to prioritize, and when to discuss medication options.
+                </p>
+
+                <p class="prose">
+                    You can also use AI analysis of your full assessment results to identify interactions between your cardiovascular and metabolic scores and develop an integrated improvement strategy.
+                </p>
+
+                <div class="tip-box"><div class="tip-box-label">Next Steps</div>Share your results with your primary care physician. Request an advanced lipid panel (including ApoB) and Lp(a) if you haven't been tested. Use the coaching program for an implementation roadmap.</div>
+
+            </div>
+        </div>
+
+
+        <div class="page-footer">
+            <p>All recommendations based on peer-reviewed research. Last updated February 2026.</p>
+        </div>
+
+        <div class="footer-cta" id="footerCta">
+            <div class="footer-cta-text">Ready to assess your cardiovascular health?</div>
+            <a href="index.html" class="footer-cta-button">
+                <i data-lucide="heart" style="width:16px;height:16px;"></i> Start Free Assessment
+            </a>
+            <div class="footer-cta-meta">Track your progress over time</div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        function toggleFaq(id) {
+            const card = document.getElementById(id);
+            card.classList.toggle('expanded');
+        }
+
+        function openFaqById(id) {
+            const card = document.getElementById(id);
+            if (card && !card.classList.contains('expanded')) {
+                card.classList.add('expanded');
+            }
+        }
+
+        function handleHashNavigation() {
+            if (window.location.hash) {
+                const targetId = window.location.hash.substring(1);
+                openFaqById(targetId);
+                setTimeout(() => {
+                    const target = document.getElementById(targetId);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 100);
+            }
+        }
+
+        handleHashNavigation();
+        window.addEventListener('hashchange', handleHashNavigation);
+
+        
+
+        
+
+        function checkUserStatus() {
+            const saved = localStorage.getItem('longevityPathData');
+            const marketingCta = document.getElementById('marketingCta');
+            const footerCta = document.getElementById('footerCta');
+            const userBadge = document.getElementById('userBadge');
+            const userNameBadge = document.getElementById('userNameBadge');
+
+            if (saved) {
+                const data = JSON.parse(saved);
+                userBadge.classList.add('visible');
+                userNameBadge.textContent = data.userName || 'User';
+                marketingCta.classList.remove('visible');
+                footerCta.querySelector('.footer-cta-text').textContent = 'Take control of your longevity. See where you stand.';
+                footerCta.querySelector('.footer-cta-button').innerHTML = '<i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back to Assessment';
+                footerCta.querySelector('.footer-cta-meta').textContent = '';
+                lucide.createIcons();
+            } else {
+                marketingCta.classList.add('visible');
+                userBadge.classList.remove('visible');
+            }
+        }
+
+        checkUserStatus();
+    </script>
+</body>
+</html>

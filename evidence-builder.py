@@ -11,6 +11,10 @@ import os
 from pathlib import Path
 from html.parser import HTMLParser
 from typing import Dict, List, Any, Optional
+try:
+    from version_manager import version_file
+except ImportError:
+    version_file = None  # graceful fallback if module not found
 
 # ============================================
 # Embedded HTML Template
@@ -320,15 +324,15 @@ def extract_cards(html: str) -> List[Dict[str, Any]]:
         if coaching_match:
             card['coachingHintId'] = coaching_match.group(1)
 
-        # Extract tip box
-        tip_match = re.search(r'<div class="tip-box">(.*?)</div>\s*(?=<|$)', card_html, re.DOTALL)
-        if tip_match:
-            card['tipBox'] = '<div class="tip-box">' + tip_match.group(1) + '</div>'
+        # Extract tip box (nested-div aware)
+        tip_html = _extract_div_block(card_html, 'tip-box')
+        if tip_html:
+            card['tipBox'] = tip_html
 
-        # Extract warning box
-        warning_match = re.search(r'<div class="warning-box">(.*?)</div>\s*(?=<|$)', card_html, re.DOTALL)
-        if warning_match:
-            card['warningBox'] = '<div class="warning-box">' + warning_match.group(1) + '</div>'
+        # Extract warning box (nested-div aware)
+        warning_html = _extract_div_block(card_html, 'warning-box')
+        if warning_html:
+            card['warningBox'] = warning_html
 
         # Extract study citations
         study_cite_pattern = r'<div class="study-citation">(.*?)</div>'
@@ -336,11 +340,25 @@ def extract_cards(html: str) -> List[Dict[str, Any]]:
         for study_match in study_matches:
             card['studyCitations'].append('<div class="study-citation">' + study_match.group(1) + '</div>')
 
-        # Extract study refs
-        study_refs_pattern = r'<div class="study-refs">(.*?)</div>'
-        refs_match = re.search(study_refs_pattern, card_html, re.DOTALL)
-        if refs_match:
-            card['studyRefs'] = [refs_match.group(1)]
+        # Extract study refs — find matching closing div by nesting depth
+        refs_start = card_html.find('<div class="study-refs">')
+        if refs_start != -1:
+            inner_start = refs_start + len('<div class="study-refs">')
+            depth = 1
+            pos = inner_start
+            while depth > 0 and pos < len(card_html):
+                next_open = card_html.find('<div', pos)
+                next_close = card_html.find('</div>', pos)
+                if next_close == -1:
+                    break
+                if next_open != -1 and next_open < next_close:
+                    depth += 1
+                    pos = next_open + 4
+                else:
+                    depth -= 1
+                    if depth == 0:
+                        card['studyRefs'] = [card_html[inner_start:next_close].strip()]
+                    pos = next_close + 6
 
         cards.append(card)
 
@@ -391,6 +409,29 @@ def get_rating_key(html: str) -> str:
     return ""
 
 
+def _extract_div_block(html: str, css_class: str) -> Optional[str]:
+    """Extract a complete <div class="css_class">...</div> block, handling nested divs."""
+    marker = f'<div class="{css_class}">'
+    start = html.find(marker)
+    if start == -1:
+        return None
+    depth = 0
+    i = start
+    while i < len(html):
+        if html[i:].startswith('<div'):
+            depth += 1
+            i += 4
+        elif html[i:].startswith('</div>'):
+            depth -= 1
+            if depth == 0:
+                return html[start:i + 6]
+            i += 6
+        else:
+            i += 1
+    # Fallback: return what we have with missing close tags
+    return html[start:] + '</div>' * depth
+
+
 def extract_evidence_page(filepath: str) -> Dict[str, Any]:
     """Extract all data from an evidence HTML page."""
     html = read_html_file(filepath)
@@ -406,6 +447,131 @@ def extract_evidence_page(filepath: str) -> Dict[str, Any]:
     }
 
     return data
+
+
+# ============================================
+# Study Resolution from studies.json
+# ============================================
+
+STUDIES_DB_CACHE: Optional[Dict] = None
+
+def load_studies_db() -> Dict:
+    """Load studies.json once and cache."""
+    global STUDIES_DB_CACHE
+    if STUDIES_DB_CACHE is None:
+        db_path = Path(__file__).parent / 'studies.json'
+        if db_path.exists():
+            with open(db_path, 'r', encoding='utf-8') as f:
+                STUDIES_DB_CACHE = json.load(f)
+        else:
+            STUDIES_DB_CACHE = {'studies': [], 'claims': [], 'study_claims': [], 'evidence_usage': []}
+    return STUDIES_DB_CACHE
+
+
+def get_study_by_id(study_id: str) -> Optional[Dict]:
+    """Look up a study by ID from studies.json."""
+    db = load_studies_db()
+    for s in db['studies']:
+        if s['study_id'] == study_id:
+            return s
+    return None
+
+
+def is_study_id(value: str) -> bool:
+    """Check if a string is a study ID (not HTML)."""
+    return bool(value) and '<' not in value and '>' not in value and len(value) < 80
+
+
+def study_type_badge_class(study_type: str) -> str:
+    """Map study type to CSS badge class."""
+    t = study_type.lower()
+    if 'meta' in t:
+        return 'meta-analysis'
+    if 'systematic' in t:
+        return 'review'
+    if 'rct' in t or 'randomized' in t:
+        return 'rct'
+    if 'cohort' in t or 'prospective' in t:
+        return 'cohort'
+    if 'validation' in t:
+        return 'validation'
+    if 'framework' in t:
+        return 'review'
+    return ''
+
+
+def resolve_study_citation_html(study_id: str) -> str:
+    """Generate study-citation HTML block from a study ID."""
+    s = get_study_by_id(study_id)
+    if not s:
+        return f'<!-- Study not found: {study_id} -->'
+
+    badge_class = study_type_badge_class(s.get('study_type', 'Study'))
+    badge_text = s.get('study_type', 'Study')
+    journal = s.get('journal', '')
+
+    html = f'<div class="study-citation">\n'
+    html += f'                    <div class="study-header">\n'
+    html += f'                        <span class="study-badge {badge_class}">{badge_text}</span>\n'
+    if journal:
+        html += f'                        <span class="study-journal">published in {journal}</span>\n'
+    html += f'                    </div>\n'
+
+    if s.get('title'):
+        html += f'                    <div class="study-title">{s["title"]}</div>\n'
+
+    # Meta line
+    meta_parts = []
+    meta_parts.append(f'{s.get("authors_short", s.get("authors", ""))}, {s.get("pub_year", "")}')
+    if s.get('sample_size'):
+        meta_parts.append(f'n={s["sample_size"]}')
+    if s.get('doi'):
+        meta_parts.append(f'DOI: {s["doi"]}')
+    html += f'                    <div class="study-meta">{" · ".join(meta_parts)}</div>\n'
+
+    if s.get('key_finding'):
+        html += f'                    <div class="study-finding"><strong>Key finding:</strong> {s["key_finding"]}</div>\n'
+
+    if s.get('doi'):
+        html += f'                    <a href="https://doi.org/{s["doi"]}" target="_blank" class="study-link">View Study</a>\n'
+
+    html += f'                </div>'
+    return html
+
+
+def resolve_study_refs_html(study_ids: List[str]) -> str:
+    """Generate study-refs HTML block from a list of study IDs."""
+    html = '<div class="study-refs-label">References</div>\n'
+    for i, sid in enumerate(study_ids, 1):
+        s = get_study_by_id(sid)
+        if not s:
+            html += f'                    <div class="study-ref">[{i}] <!-- Study not found: {sid} --></div>\n'
+            continue
+
+        authors = s.get('authors_short', s.get('authors', ''))
+        year = s.get('pub_year', '')
+        title = s.get('title', '')
+        journal = s.get('journal', '')
+        volume = s.get('volume', '')
+        pages = s.get('pages', '')
+        doi = s.get('doi', '')
+
+        ref = f'[{i}] {authors} ({year}).'
+        if title:
+            ref += f' "{title}"'
+        if journal:
+            ref += f' {journal}'
+        if volume:
+            ref += f', {volume}'
+        if pages:
+            ref += f', {pages}'
+        ref += '.'
+        if doi:
+            ref += f' doi:<a href="https://doi.org/{doi}" target="_blank">{doi}</a>'
+
+        html += f'                    <div class="study-ref">{ref}</div>\n'
+
+    return html
 
 
 def build_card_html(card: Dict[str, Any], is_first: bool = False) -> str:
@@ -463,8 +629,54 @@ def build_card_html(card: Dict[str, Any], is_first: bool = False) -> str:
 """
 
     for citation in card['studyCitations']:
-        html += f"""
+        if is_study_id(citation):
+            resolved = resolve_study_citation_html(citation)
+            html += f"""
+                {resolved}
+"""
+        else:
+            html += f"""
                 {citation}
+"""
+
+    # Render expert citations (book + public URL format)
+    # Rule: We verify facts using paid content, but only cite publicly accessible sources.
+    # Format: One block per expert, with multiple public URLs listed underneath.
+    for ec in card.get('expertCitations', []):
+        if isinstance(ec, dict):
+            expert = ec.get('expert', '')
+            work = ec.get('work', '')
+            # Support both old single-URL format and new multi-URL format
+            pub_urls = ec.get('publicUrls', [])
+            if not pub_urls and ec.get('publicUrl'):
+                pub_urls = [{'url': ec['publicUrl'], 'label': ec.get('publicUrlLabel', 'View public source')}]
+            # Group links by source
+            links_by_source = {}
+            for pu in pub_urls:
+                u = pu.get('url', '')
+                l = pu.get('label', 'View source')
+                source = pu.get('source', '')
+                if u:
+                    if source not in links_by_source:
+                        links_by_source[source] = []
+                    links_by_source[source].append((u, l))
+            links_html = ''
+            for source, items in links_by_source.items():
+                if source:
+                    links_html += f'<div style="margin-top:10px; font-size:0.88rem; font-weight:600; color:var(--color-teal);">Source: {source}</div>\n                    '
+                links_html += '<div style="padding-left:16px;">\n                    '
+                for u, l in items:
+                    links_html += f'<a href="{u}" target="_blank" class="study-link">{l}</a>\n                        '
+                links_html += '</div>\n                    '
+            html += f"""
+                <div class="study-citation">
+                    <div class="study-header">
+                        <span class="study-badge">Expert</span>
+                    </div>
+                    <div class="study-title">{expert}</div>
+                    <div class="study-meta">{work}</div>
+                    {links_html.strip()}
+                </div>
 """
 
     if card['coachingHintId']:
@@ -483,8 +695,24 @@ def build_card_html(card: Dict[str, Any], is_first: bool = False) -> str:
 """
 
     if card['studyRefs']:
-        for ref in card['studyRefs']:
+        # Check if studyRefs contains study IDs (list of plain IDs) or HTML strings
+        all_ids = all(is_study_id(ref) for ref in card['studyRefs'])
+        if all_ids and card['studyRefs']:
+            resolved_refs = resolve_study_refs_html(card['studyRefs'])
             html += f"""
+                <div class="study-refs">
+                    {resolved_refs}
+                </div>
+"""
+        else:
+            for ref in card['studyRefs']:
+                # Auto-linkify plain text DOIs (doi:10.xxx not already in an <a> tag)
+                ref = re.sub(
+                    r'(?<!href="https://doi.org/)(?<!">)doi:(10\.\S+?)(?=\s|<|$)',
+                    r'doi:<a href="https://doi.org/\1" target="_blank">\1</a>',
+                    ref
+                )
+                html += f"""
                 <div class="study-refs">
                     {ref}
                 </div>
@@ -569,6 +797,8 @@ def main():
         # Write JSON
         output_file = evidence_dir / f'{slug}.json'
         output_file.parent.mkdir(parents=True, exist_ok=True)
+        if version_file and output_file.exists():
+            version_file(output_file, reason=f"pre-extract: {slug}")
 
         with open(output_file, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=2)
@@ -628,12 +858,14 @@ def main():
             built_page = build_page(config, None)
 
             output_file = system_dir / config.get('outputFile', f'evidence-{slug}.html')
+            if version_file and output_file.exists():
+                version_file(output_file, reason=f"pre-build: --all ({slug})")
             with open(output_file, 'w', encoding='utf-8') as f:
                 f.write(built_page)
 
-            print(f"Built {output_file.name} ({len(config['cards'])} cards)")
+            print(f"  ✓ Built {output_file.name} ({len(config['cards'])} cards)")
 
-        print(f"Done! Built {len(json_files)} pages")
+        print(f"\nDone! Built {len(json_files)} pages")
 
     else:
         # Default: build from SLUG
@@ -648,6 +880,8 @@ def main():
             config = json.load(f)
 
         output_file = system_dir / config.get('outputFile', f'evidence-{slug}.html')
+        if version_file and output_file.exists():
+            version_file(output_file, reason=f"pre-build: {slug}")
         print(f"Building {output_file.name} from {json_file.name}...")
         built_page = build_page(config, None)
         with open(output_file, 'w', encoding='utf-8') as f:

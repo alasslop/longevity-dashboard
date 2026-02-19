@@ -1,180 +1,275 @@
 #!/usr/bin/env python3
 """
-LongevityPath Evidence Registry — SQLite Database Manager
+LongevityPath Evidence Registry — JSON-backed CLI
 
-CLI tool to manage the evidence map and server-side data.
-Replaces the flat markdown tables with a queryable database.
+Manages the evidence map: studies, claims, study↔claim links, and evidence usage.
+All data stored in studies.json (no SQLite, works on any filesystem).
 
-DATA SEPARATION: This database stores ONLY scientific evidence + account/payment
-data + anonymous analytics. User health data (answers, scores, goals) stays
-client-side in localStorage/IndexedDB. See ARCHITECTURE.md §3.6.
+DATA SEPARATION: This file stores ONLY scientific evidence metadata.
+User health data stays client-side in localStorage. See ARCHITECTURE.md §3.6.
 
 Usage:
-    python registry.py init                       Create DB + all tables
-    python registry.py import-md FILE             Parse markdown → DB
+    python registry.py init                       Create empty studies.json
+    python registry.py import-md FILE             Parse markdown → studies.json
+    python registry.py import-refs PAGE           Parse studyRefs from evidence JSON → studies.json
     python registry.py query CLAIM [--dir +/-/±]  Studies for a claim
     python registry.py summary                    Claim Summary Index
     python registry.py export-summary             Write index to study-registry.md
+    python registry.py export-refs CLAIM [--json] Builder-ready study refs
+    python registry.py export-xlsx [CATEGORY]     Export studies to xlsx for review
     python registry.py stale                      Studies verified >6 months ago
+    python registry.py gaps [--category CAT]      Claims with weak or missing evidence
+    python registry.py supersede OLD_ID NEW_ID    Mark a study as superseded
+    python registry.py enrich-all                 List studies with incomplete fields
     python registry.py add                        Interactive: add a study
-    python registry.py anon-ingest FILE           Ingest anonymous analytics snapshot
-    python registry.py anon-report                Aggregate anonymous analytics
     python registry.py stats                      Database statistics
+    python registry.py verify-dois [--category]   Batch-verify all DOIs against doi.org
 """
 
 import argparse
 import json
-import os
 import re
-import sqlite3
 import sys
 import uuid
+import urllib.request
+import urllib.error
 from datetime import datetime, timedelta
 from pathlib import Path
-from textwrap import dedent
 
-# DB lives in a writable directory. The mounted workspace may not support SQLite locking.
-# Override with LONGEVITYPATH_DB env var if needed.
-DB_PATH = Path(os.environ.get("LONGEVITYPATH_DB", Path(__file__).parent / "longevitypath.db"))
+DATA_PATH = Path(__file__).parent / "studies.json"
 REGISTRY_MD = Path(__file__).parent / "study-registry.md"
 
+
 # ─────────────────────────────────────────────
-# Schema
+# Data access
 # ─────────────────────────────────────────────
 
-SCHEMA_SQL = dedent("""\
-    -- Domain 1: Study Evidence
-
-    CREATE TABLE IF NOT EXISTS studies (
-        study_id         TEXT PRIMARY KEY,
-        authors          TEXT NOT NULL,
-        pub_year         INTEGER NOT NULL,
-        doi              TEXT UNIQUE,
-        study_type       TEXT NOT NULL,
-        sample_size      TEXT,
-        quality_score    REAL NOT NULL,
-        relevance_mult   REAL NOT NULL,
-        final_score      REAL NOT NULL,
-        landmark         BOOLEAN DEFAULT 0,
-        direction        TEXT NOT NULL,
-        population       TEXT DEFAULT 'all',
-        key_finding      TEXT,
-        verified_date    TEXT,
-        supercheck_date  TEXT,
-        notes            TEXT,
-        created_at       TEXT DEFAULT (datetime('now')),
-        updated_at       TEXT DEFAULT (datetime('now'))
-    );
-
-    CREATE TABLE IF NOT EXISTS claims (
-        claim_id    TEXT PRIMARY KEY,
-        exposure    TEXT NOT NULL,
-        outcome     TEXT NOT NULL,
-        description TEXT
-    );
-
-    CREATE TABLE IF NOT EXISTS study_claims (
-        study_id TEXT NOT NULL REFERENCES studies(study_id),
-        claim_id TEXT NOT NULL REFERENCES claims(claim_id),
-        PRIMARY KEY (study_id, claim_id)
-    );
-
-    CREATE TABLE IF NOT EXISTS evidence_usage (
-        id        TEXT PRIMARY KEY,
-        study_id  TEXT NOT NULL REFERENCES studies(study_id),
-        page_file TEXT NOT NULL,
-        card_id   TEXT NOT NULL,
-        role      TEXT NOT NULL
-    );
-
-    CREATE TABLE IF NOT EXISTS removed_studies (
-        id           TEXT PRIMARY KEY,
-        authors      TEXT,
-        pub_year     INTEGER,
-        doi          TEXT,
-        removed_from TEXT,
-        replaced_by  TEXT,
-        reason       TEXT,
-        removed_date TEXT
-    );
-
-    -- Domain 2: Accounts & Payments (NO health data — see ARCHITECTURE.md §3.6)
-
-    CREATE TABLE IF NOT EXISTS accounts (
-        account_id   TEXT PRIMARY KEY,
-        email        TEXT UNIQUE NOT NULL,
-        display_name TEXT,
-        plan         TEXT DEFAULT 'free',
-        created_at   TEXT DEFAULT (datetime('now')),
-        updated_at   TEXT DEFAULT (datetime('now'))
-    );
-
-    CREATE TABLE IF NOT EXISTS payments (
-        payment_id   TEXT PRIMARY KEY,
-        account_id   TEXT NOT NULL REFERENCES accounts(account_id),
-        amount_cents INTEGER NOT NULL,
-        currency     TEXT DEFAULT 'EUR',
-        status       TEXT NOT NULL,
-        provider_ref TEXT,
-        created_at   TEXT DEFAULT (datetime('now'))
-    );
-
-    -- Domain 3: Anonymous Analytics (opt-in, non-identifiable)
-    -- NEVER store anything linkable to a person. See ARCHITECTURE.md §3.6.
-
-    CREATE TABLE IF NOT EXISTS anon_snapshots (
-        snapshot_id   TEXT PRIMARY KEY,
-        submitted_at  TEXT DEFAULT (datetime('now')),
-        test_version  TEXT DEFAULT '1.0',
-        age_bracket   TEXT,
-        sex_bracket   TEXT,
-        country_code  TEXT
-    );
-
-    CREATE TABLE IF NOT EXISTS anon_scores (
-        id            TEXT PRIMARY KEY,
-        snapshot_id   TEXT NOT NULL REFERENCES anon_snapshots(snapshot_id),
-        category_key  TEXT NOT NULL,
-        score_value   REAL NOT NULL,
-        UNIQUE(snapshot_id, category_key)
-    );
-
-    CREATE TABLE IF NOT EXISTS anon_deltas (
-        id              TEXT PRIMARY KEY,
-        snapshot_id     TEXT NOT NULL REFERENCES anon_snapshots(snapshot_id),
-        category_key    TEXT NOT NULL,
-        previous_score  REAL,
-        current_score   REAL NOT NULL,
-        days_between    INTEGER,
-        UNIQUE(snapshot_id, category_key)
-    );
-
-    -- Indexes
-
-    CREATE INDEX IF NOT EXISTS idx_studies_doi ON studies(doi);
-    CREATE INDEX IF NOT EXISTS idx_studies_score ON studies(final_score DESC);
-    CREATE INDEX IF NOT EXISTS idx_study_claims_claim ON study_claims(claim_id);
-    CREATE INDEX IF NOT EXISTS idx_usage_study ON evidence_usage(study_id);
-    CREATE INDEX IF NOT EXISTS idx_usage_page ON evidence_usage(page_file, card_id);
-    CREATE INDEX IF NOT EXISTS idx_accounts_email ON accounts(email);
-    CREATE INDEX IF NOT EXISTS idx_payments_account ON payments(account_id);
-    CREATE INDEX IF NOT EXISTS idx_anon_scores_snapshot ON anon_scores(snapshot_id);
-    CREATE INDEX IF NOT EXISTS idx_anon_deltas_snapshot ON anon_deltas(snapshot_id);
-""")
+def load_db():
+    """Load studies.json, creating empty structure if missing."""
+    if DATA_PATH.exists():
+        return json.loads(DATA_PATH.read_text(encoding='utf-8'))
+    return {'studies': [], 'claims': [], 'study_claims': [], 'evidence_usage': []}
 
 
-def get_db(db_path=None):
-    """Open a connection with foreign keys enabled."""
-    path = db_path or DB_PATH
-    conn = sqlite3.connect(str(path))
-    conn.execute("PRAGMA foreign_keys = ON")
-    conn.row_factory = sqlite3.Row
-    return conn
+def save_db(db):
+    """Write studies.json."""
+    DATA_PATH.write_text(json.dumps(db, indent=2, ensure_ascii=False), encoding='utf-8')
 
 
 def uid():
-    """Generate a short UUID."""
     return uuid.uuid4().hex[:12]
+
+
+# ─────────────────────────────────────────────
+# Helpers
+# ─────────────────────────────────────────────
+
+def find_studies_for_claim(db, claim_id, direction=None):
+    """Return studies linked to a claim, sorted by final_score desc.
+    Each returned study dict gets an extra 'direction' key from the link."""
+    # Build map: study_id → direction from the link
+    link_map = {lk['study_id']: lk.get('direction', '')
+                for lk in db['study_claims'] if lk['claim_id'] == claim_id}
+    results = []
+    for s in db['studies']:
+        if s['study_id'] in link_map:
+            enriched = dict(s)
+            enriched['direction'] = link_map[s['study_id']]
+            results.append(enriched)
+    if direction:
+        results = [s for s in results if s.get('direction') == direction]
+    results.sort(key=lambda s: s.get('final_score', 0), reverse=True)
+    return results
+
+
+def make_study_id(authors, year):
+    author = authors.strip().strip('*').split(' ')[0].split('&')[0].strip()
+    author = re.sub(r'[^a-zA-Z]', '', author).lower()
+    return f"{author}-{year}-{uid()[:4]}"
+
+
+# ─────────────────────────────────────────────
+# DOI validation
+# ─────────────────────────────────────────────
+
+def validate_doi(doi, expected_title=None, expected_authors=None, timeout=10):
+    """Validate a DOI by resolving it via doi.org content negotiation.
+
+    Returns dict with:
+        valid: bool - DOI resolves to a real paper
+        title_match: bool|None - title matches if expected_title given
+        resolved_title: str - title from DOI metadata
+        resolved_authors: str - first author from DOI metadata
+        error: str|None - error message if validation failed
+    """
+    result = {'valid': False, 'title_match': None, 'resolved_title': '',
+              'resolved_authors': '', 'error': None}
+
+    if not doi:
+        result['error'] = 'No DOI provided'
+        return result
+
+    # Clean DOI
+    doi = doi.strip()
+    if doi.startswith('https://doi.org/'):
+        doi = doi[len('https://doi.org/'):]
+    if doi.startswith('http://doi.org/'):
+        doi = doi[len('http://doi.org/'):]
+
+    url = f'https://doi.org/{doi}'
+    req = urllib.request.Request(url, headers={
+        'Accept': 'application/vnd.citationstyles.csl+json',
+        'User-Agent': 'LongevityPath-Registry/1.0 (mailto:registry@longevitypath.org)'
+    })
+
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            data = json.loads(resp.read().decode('utf-8'))
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            result['error'] = f'DOI not found (404): {doi}'
+        else:
+            result['error'] = f'HTTP {e.code} resolving DOI: {doi}'
+        return result
+    except urllib.error.URLError as e:
+        result['error'] = f'Network error resolving DOI: {e.reason}'
+        return result
+    except Exception as e:
+        result['error'] = f'Error resolving DOI: {str(e)}'
+        return result
+
+    result['valid'] = True
+
+    # Extract title
+    resolved_title = data.get('title', '')
+    if isinstance(resolved_title, list):
+        resolved_title = resolved_title[0] if resolved_title else ''
+    result['resolved_title'] = resolved_title
+
+    # Extract first author
+    authors = data.get('author', [])
+    if authors:
+        first = authors[0]
+        result['resolved_authors'] = f"{first.get('family', '')} {first.get('given', '')}".strip()
+
+    # Title comparison (fuzzy — normalize and compare first 40 chars)
+    if expected_title:
+        def normalize(t):
+            return re.sub(r'[^a-z0-9]', '', t.lower())[:60]
+        n_expected = normalize(expected_title)
+        n_resolved = normalize(resolved_title)
+        # Check if they share significant overlap
+        result['title_match'] = (n_expected[:40] == n_resolved[:40]) or (n_expected in n_resolved) or (n_resolved in n_expected)
+
+    return result
+
+
+def validate_study_doi(study, strict=True):
+    """Validate a study's DOI and check title match.
+
+    Returns (is_ok: bool, message: str)
+    """
+    doi = study.get('doi', '')
+    if not doi:
+        if strict:
+            return False, f"  ✗ {study['study_id']}: No DOI"
+        return True, f"  ⚠ {study['study_id']}: No DOI (skipped)"
+
+    title = study.get('title', '')
+    result = validate_doi(doi, expected_title=title)
+
+    if not result['valid']:
+        return False, f"  ✗ {study['study_id']}: {result['error']}"
+
+    if result['title_match'] is False:
+        return False, (
+            f"  ✗ {study['study_id']}: TITLE MISMATCH\n"
+            f"    Expected: {title[:80]}\n"
+            f"    Resolved: {result['resolved_title'][:80]}\n"
+            f"    DOI: {doi}"
+        )
+
+    return True, f"  ✓ {study['study_id']}: DOI verified — {result['resolved_title'][:60]}"
+
+
+# ─────────────────────────────────────────────
+# verify-dois
+# ─────────────────────────────────────────────
+
+def cmd_verify_dois(args):
+    """Batch-verify all DOIs in studies.json against doi.org."""
+    import time
+
+    db = load_db()
+    category = getattr(args, 'category', None)
+
+    # Filter by category if requested
+    if category:
+        claim_ids = {c['claim_id'] for c in db['claims']
+                     if get_claim_category(c['claim_id']) == category}
+        study_ids = {sc['study_id'] for sc in db['study_claims']
+                     if sc['claim_id'] in claim_ids}
+        studies = [s for s in db['studies'] if s['study_id'] in study_ids]
+    else:
+        studies = db['studies']
+
+    total = len(studies)
+    ok = 0
+    failed = []
+    no_doi = []
+    mismatched = []
+
+    print(f"\n  Verifying {total} study DOIs against doi.org...\n")
+
+    for i, s in enumerate(studies, 1):
+        sid = s['study_id']
+        doi = s.get('doi', '')
+
+        if not doi:
+            no_doi.append(s)
+            print(f"  [{i}/{total}] ⚠ {sid}: No DOI")
+            continue
+
+        # Rate-limit: ~1 request per second to be polite
+        if i > 1:
+            time.sleep(1.0)
+
+        is_ok, msg = validate_study_doi(s, strict=True)
+        print(f"  [{i}/{total}] {msg.strip()}")
+
+        if is_ok:
+            ok += 1
+        else:
+            if 'TITLE MISMATCH' in msg:
+                mismatched.append((s, msg))
+            else:
+                failed.append((s, msg))
+
+    # Summary
+    print(f"\n{'='*60}")
+    print(f"  DOI Verification Summary")
+    print(f"{'='*60}")
+    print(f"  Total studies:   {total}")
+    print(f"  DOI verified OK: {ok}")
+    print(f"  No DOI:          {len(no_doi)}")
+    print(f"  Failed/404:      {len(failed)}")
+    print(f"  Title mismatch:  {len(mismatched)}")
+
+    if failed:
+        print(f"\n  ✗ FAILED DOIs:")
+        for s, msg in failed:
+            print(f"    {s['study_id']}: {s.get('doi', '')} — {s.get('authors', '')} {s.get('pub_year', '')}")
+
+    if mismatched:
+        print(f"\n  ⚠ TITLE MISMATCHES (DOI points to wrong paper?):")
+        for s, msg in mismatched:
+            print(f"    {s['study_id']}: {s.get('doi', '')}")
+            print(f"      Expected: {s.get('title', '')[:80]}")
+
+    if not failed and not mismatched:
+        print(f"\n  ✓ All DOIs verified successfully!")
+
+    print()
 
 
 # ─────────────────────────────────────────────
@@ -182,11 +277,11 @@ def uid():
 # ─────────────────────────────────────────────
 
 def cmd_init(args):
-    """Create database and all tables."""
-    conn = get_db()
-    conn.executescript(SCHEMA_SQL)
-    conn.close()
-    print(f"✓ Database initialized at {DB_PATH}")
+    if DATA_PATH.exists():
+        print(f"studies.json already exists ({DATA_PATH})")
+        return
+    save_db({'studies': [], 'claims': [], 'study_claims': [], 'evidence_usage': []})
+    print(f"✓ Created {DATA_PATH}")
 
 
 # ─────────────────────────────────────────────
@@ -196,221 +291,71 @@ def cmd_init(args):
 SECTION_PATTERN = re.compile(r'^## (.+)$')
 TABLE_ROW_PATTERN = re.compile(r'^\|(.+)\|$')
 
-# Map section names to evidence page file prefixes
 SECTION_TO_PAGE = {
-    "Sleep": "sleep",
-    "Mindset": "mindset",
-    "Wellbeing": "wellbeing",
-    "Nutrition": "nutrition",
-    "Protein": "protein",
-    "VO2max": "vo2max",
+    "Sleep": "sleep", "Mindset": "mindset", "Wellbeing": "wellbeing",
+    "Nutrition": "nutrition", "Protein": "protein", "VO2max": "vo2max",
     "Muscle Strength": "muscle",
 }
 
 
 def parse_claim_tags(claims_str):
-    """Extract claim tags from a cell like '`sleep-duration→mortality`, `sleep-quality→health`'."""
     return re.findall(r'`([^`]+→[^`]+)`', claims_str)
 
 
 def parse_used_in(used_in_str, section_page):
-    """
-    Parse 'sleep#q3(F), sleep#q1,q2' into list of (page_file, card_id, role).
-    """
     usages = []
     if not used_in_str or used_in_str.strip() == '—':
         return usages
-
-    # Split by comma, but be careful: "sleep#q1,q2" means q1 and q2 on same page
-    # Pattern: page#cardlist(Role) or page#cardlist
     parts = re.split(r',\s*(?=[a-z])', used_in_str.strip())
     for part in parts:
         part = part.strip()
         if not part:
             continue
-
-        # Extract role if present
         role_match = re.search(r'\(([FS])\)', part)
         role = 'featured' if role_match and role_match.group(1) == 'F' else 'supporting'
         part_clean = re.sub(r'\([FS]\)', '', part).strip()
-
-        # Extract page and cards
         page_match = re.match(r'([a-z0-9]+)#(.+)', part_clean)
         if page_match:
             page = page_match.group(1)
-            cards_str = page_match.group(2)
-            # Cards can be comma-separated: q1,q2,q3
-            cards = re.findall(r'q\d+', cards_str)
+            cards = re.findall(r'q\d+', page_match.group(2))
             page_file = f"{page}-evidence.html"
             for card in cards:
                 usages.append((page_file, card, role))
         else:
-            # Sometimes it's just card references without page prefix
             cards = re.findall(r'q\d+', part_clean)
             page_file = f"{section_page}-evidence.html" if section_page else "unknown.html"
             for card in cards:
                 usages.append((page_file, card, role))
-
     return usages
 
 
-def make_study_id(authors, year):
-    """Generate a study_id like 'naghshi-2020-a1b2'."""
-    # Clean author name: take first author surname
-    author = authors.strip().strip('*').split(' ')[0].split('&')[0].strip()
-    author = re.sub(r'[^a-zA-Z]', '', author).lower()
-    return f"{author}-{year}-{uid()[:4]}"
-
-
 def parse_score(score_str):
-    """
-    Parse score cell. The registry merged Quality×Relevance into a single 'Score' column.
-    Most entries show final score directly (e.g., '12', '10', '8').
-    Some may show partial relevance like '4.5'.
-    Returns (quality_score, relevance_mult, final_score).
-    """
-    score_str = score_str.strip()
     try:
-        final = float(score_str)
+        final = float(score_str.strip())
     except ValueError:
-        final = 0.0
-
-    # If score is a whole number ≤14, assume full relevance
+        return (0.0, 1.0, 0.0)
     if final == int(final) and final <= 14:
         return (final, 1.0, final)
     elif final < 7:
-        # Likely partial relevance: e.g., 4.5 = 9 × 0.5
         return (final * 2, 0.5, final)
-    else:
-        return (final, 1.0, final)
-
-
-def parse_study_row(cells, section_name, section_page):
-    """Parse a markdown table row into a study dict + claims + usages."""
-    if len(cells) < 12:
-        return None
-
-    # Columns: Study | Age | DOI | Type | Sample | Score | LM | Dir | Pop | Claims | Used In | Notes
-    authors_raw = cells[0].strip()
-    age_str = cells[1].strip()
-    doi = cells[2].strip()
-    study_type = cells[3].strip()
-    sample = cells[4].strip()
-    score_str = cells[5].strip()
-    lm = cells[6].strip()
-    direction = cells[7].strip()
-    population = cells[8].strip() or 'all'
-    claims_str = cells[9].strip()
-    used_in_str = cells[10].strip()
-    notes = cells[11].strip() if len(cells) > 11 else ''
-
-    # Skip header/separator rows
-    if authors_raw.startswith('---') or authors_raw == 'Study' or not authors_raw:
-        return None
-
-    # Compute pub_year from age
-    try:
-        age = int(age_str)
-        pub_year = 2026 - age
-    except ValueError:
-        pub_year = 2020  # fallback
-
-    # Clean authors (remove italic markers)
-    authors = authors_raw.strip('*').strip()
-
-    # Parse score
-    quality_score, relevance_mult, final_score = parse_score(score_str)
-
-    # Landmark
-    landmark = lm.upper() == 'Y'
-
-    # Direction normalization
-    dir_map = {'+': '+', '−': '−', '-': '−', '±': '±'}
-    direction = dir_map.get(direction, direction)
-
-    # DOI cleanup
-    if doi and not doi.startswith('10.'):
-        doi = None  # invalid
-
-    study_id = make_study_id(authors, pub_year)
-
-    study = {
-        'study_id': study_id,
-        'authors': authors,
-        'pub_year': pub_year,
-        'doi': doi if doi else None,
-        'study_type': study_type,
-        'sample_size': sample if sample else None,
-        'quality_score': quality_score,
-        'relevance_mult': relevance_mult,
-        'final_score': final_score,
-        'landmark': landmark,
-        'direction': direction,
-        'population': population,
-        'key_finding': notes if notes else None,
-        'verified_date': '2026-02',
-        'supercheck_date': None,
-        'notes': notes if notes else None,
-    }
-
-    claim_tags = parse_claim_tags(claims_str)
-    usages = parse_used_in(used_in_str, section_page)
-
-    return study, claim_tags, usages
-
-
-def parse_removed_row(cells):
-    """Parse a removed studies table row."""
-    if len(cells) < 6:
-        return None
-
-    # Columns: Study | DOI | Removed From | Replaced By | Reason | Date
-    authors = cells[0].strip()
-    doi = cells[1].strip()
-    removed_from = cells[2].strip()
-    replaced_by = cells[3].strip()
-    reason = cells[4].strip()
-    removed_date = cells[5].strip()
-
-    if authors.startswith('---') or authors == 'Study' or not authors:
-        return None
-
-    # Try to extract year from authors
-    year_match = re.search(r'(\d{4})', authors)
-    pub_year = int(year_match.group(1)) if year_match else None
-
-    return {
-        'id': uid(),
-        'authors': authors,
-        'pub_year': pub_year,
-        'doi': doi if doi and doi != '—' else None,
-        'removed_from': removed_from,
-        'replaced_by': replaced_by if replaced_by and replaced_by != '—' else None,
-        'reason': reason,
-        'removed_date': removed_date,
-    }
+    return (final, 1.0, final)
 
 
 def cmd_import_md(args):
-    """Parse study-registry.md and populate the database."""
     md_path = Path(args.file)
     if not md_path.exists():
         print(f"✗ File not found: {md_path}")
         sys.exit(1)
 
-    conn = get_db()
+    db = load_db()
+    existing_dois = {s['doi'] for s in db['studies'] if s.get('doi')}
+    existing_claims = {c['claim_id'] for c in db['claims']}
     text = md_path.read_text(encoding='utf-8')
     lines = text.splitlines()
 
-    current_section = None
-    current_page = None
-    in_removed = False
     studies_added = 0
-    claims_added = set()
-    usages_added = 0
-    removed_added = 0
 
-    # First pass: extract claim vocabulary to pre-populate claims table
+    # Extract claim vocabulary
     in_vocab = False
     for line in lines:
         if '## Claim Tag Vocabulary' in line:
@@ -425,28 +370,28 @@ def cmd_import_md(args):
                 if len(cells) >= 2:
                     tag = cells[0].strip().strip('`')
                     desc = cells[1].strip()
-                    if '→' in tag and tag != 'Tag':
+                    if '→' in tag and tag != 'Tag' and tag not in existing_claims:
                         parts = tag.split('→', 1)
-                        try:
-                            conn.execute(
-                                "INSERT OR IGNORE INTO claims (claim_id, exposure, outcome, description) VALUES (?, ?, ?, ?)",
-                                (tag, parts[0], parts[1], desc)
-                            )
-                            claims_added.add(tag)
-                        except sqlite3.IntegrityError:
-                            pass
+                        db['claims'].append({
+                            'claim_id': tag, 'exposure': parts[0],
+                            'outcome': parts[1], 'description': desc
+                        })
+                        existing_claims.add(tag)
 
-    # Second pass: parse study tables
+    # Parse study tables
+    current_section = None
+    current_page = None
+    in_removed = False
+
     for line in lines:
-        # Detect section headers
         sec_match = SECTION_PATTERN.match(line)
         if sec_match:
-            section_name = sec_match.group(1).strip()
-            if section_name in SECTION_TO_PAGE:
-                current_section = section_name
-                current_page = SECTION_TO_PAGE[section_name]
+            name = sec_match.group(1).strip()
+            if name in SECTION_TO_PAGE:
+                current_section = name
+                current_page = SECTION_TO_PAGE[name]
                 in_removed = False
-            elif 'Removed' in section_name:
+            elif 'Removed' in name:
                 in_removed = True
                 current_section = None
             else:
@@ -454,106 +399,67 @@ def cmd_import_md(args):
                 in_removed = False
             continue
 
-        # Parse table rows
-        if not line.startswith('|'):
+        if not line.startswith('|') or in_removed or not current_section:
             continue
 
         match = TABLE_ROW_PATTERN.match(line)
         if not match:
             continue
-
         cells = [c.strip() for c in match.group(1).split('|')]
-
-        # Skip separator rows
-        if cells and cells[0].startswith('---'):
+        if not cells or cells[0].startswith('---') or cells[0] == 'Study':
+            continue
+        if len(cells) < 12:
             continue
 
-        if in_removed:
-            removed = parse_removed_row(cells)
-            if removed:
-                try:
-                    conn.execute(
-                        "INSERT OR IGNORE INTO removed_studies (id, authors, pub_year, doi, removed_from, replaced_by, reason, removed_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-                        (removed['id'], removed['authors'], removed['pub_year'],
-                         removed['doi'], removed['removed_from'], removed['replaced_by'],
-                         removed['reason'], removed['removed_date'])
-                    )
-                    removed_added += 1
-                except sqlite3.IntegrityError:
-                    pass
+        authors = cells[0].strip('*').strip()
+        try:
+            pub_year = 2026 - int(cells[1].strip())
+        except ValueError:
+            pub_year = 2020
+        doi = cells[2].strip() if cells[2].strip().startswith('10.') else None
+        study_type = cells[3].strip()
+        sample = cells[4].strip() or None
+        q, r, f = parse_score(cells[5])
+        landmark = cells[6].strip().upper() == 'Y'
+        direction = {'+': '+', '−': '−', '-': '−', '±': '±'}.get(cells[7].strip(), cells[7].strip())
+        population = cells[8].strip() or 'all'
+        claims_str = cells[9].strip()
+        used_in_str = cells[10].strip()
+        notes = cells[11].strip() if len(cells) > 11 else ''
+
+        if doi and doi in existing_dois:
             continue
 
-        if current_section:
-            result = parse_study_row(cells, current_section, current_page)
-            if result:
-                study, claim_tags, usages = result
+        sid = make_study_id(authors, pub_year)
+        db['studies'].append({
+            'study_id': sid, 'authors': authors, 'pub_year': pub_year,
+            'doi': doi, 'study_type': study_type, 'sample_size': sample,
+            'quality_score': q, 'relevance_mult': r, 'final_score': f,
+            'landmark': landmark, 'direction': direction, 'population': population,
+            'key_finding': notes or None, 'verified_date': '2026-02',
+            'notes': notes or None,
+        })
+        if doi:
+            existing_dois.add(doi)
+        studies_added += 1
 
-                # Insert study
-                try:
-                    conn.execute(
-                        """INSERT OR IGNORE INTO studies
-                        (study_id, authors, pub_year, doi, study_type, sample_size,
-                         quality_score, relevance_mult, final_score, landmark,
-                         direction, population, key_finding, verified_date,
-                         supercheck_date, notes)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-                        (study['study_id'], study['authors'], study['pub_year'],
-                         study['doi'], study['study_type'], study['sample_size'],
-                         study['quality_score'], study['relevance_mult'], study['final_score'],
-                         study['landmark'], study['direction'], study['population'],
-                         study['key_finding'], study['verified_date'],
-                         study['supercheck_date'], study['notes'])
-                    )
-                    studies_added += 1
-                except sqlite3.IntegrityError as e:
-                    # DOI conflict — study with same DOI already exists
-                    print(f"  ⚠ Skipped duplicate: {study['authors']} {study['pub_year']} ({e})")
-                    # Get existing study_id for claim/usage linking
-                    if study['doi']:
-                        row = conn.execute("SELECT study_id FROM studies WHERE doi = ?", (study['doi'],)).fetchone()
-                        if row:
-                            study['study_id'] = row['study_id']
-                    continue
+        for tag in parse_claim_tags(claims_str):
+            if tag not in existing_claims:
+                parts = tag.split('→', 1)
+                db['claims'].append({'claim_id': tag, 'exposure': parts[0], 'outcome': parts[1], 'description': ''})
+                existing_claims.add(tag)
+            link = {'study_id': sid, 'claim_id': tag}
+            if link not in db['study_claims']:
+                db['study_claims'].append(link)
 
-                # Link claims
-                for tag in claim_tags:
-                    # Ensure claim exists
-                    if tag not in claims_added:
-                        parts = tag.split('→', 1)
-                        if len(parts) == 2:
-                            conn.execute(
-                                "INSERT OR IGNORE INTO claims (claim_id, exposure, outcome, description) VALUES (?, ?, ?, ?)",
-                                (tag, parts[0], parts[1], '')
-                            )
-                            claims_added.add(tag)
+        for page_file, card_id, role in parse_used_in(used_in_str, current_page):
+            db['evidence_usage'].append({
+                'id': uid(), 'study_id': sid, 'page_file': page_file,
+                'card_id': card_id, 'role': role
+            })
 
-                    try:
-                        conn.execute(
-                            "INSERT OR IGNORE INTO study_claims (study_id, claim_id) VALUES (?, ?)",
-                            (study['study_id'], tag)
-                        )
-                    except sqlite3.IntegrityError:
-                        pass
-
-                # Link evidence usage
-                for page_file, card_id, role in usages:
-                    try:
-                        conn.execute(
-                            "INSERT OR IGNORE INTO evidence_usage (id, study_id, page_file, card_id, role) VALUES (?, ?, ?, ?, ?)",
-                            (uid(), study['study_id'], page_file, card_id, role)
-                        )
-                        usages_added += 1
-                    except sqlite3.IntegrityError:
-                        pass
-
-    conn.commit()
-    conn.close()
-
-    print(f"✓ Import complete:")
-    print(f"  {studies_added} studies")
-    print(f"  {len(claims_added)} claims")
-    print(f"  {usages_added} evidence usages")
-    print(f"  {removed_added} removed studies")
+    save_db(db)
+    print(f"✓ Import complete: {studies_added} studies, {len(existing_claims)} claims")
 
 
 # ─────────────────────────────────────────────
@@ -561,168 +467,97 @@ def cmd_import_md(args):
 # ─────────────────────────────────────────────
 
 def cmd_query(args):
-    """Show all studies for a claim."""
-    conn = get_db()
-    claim = args.claim
+    db = load_db()
+    results = find_studies_for_claim(db, args.claim, args.dir)
 
-    query = """
-        SELECT s.authors, s.pub_year, s.study_type, s.final_score, s.landmark,
-               s.direction, s.population, s.key_finding, s.doi
-        FROM studies s
-        JOIN study_claims sc ON s.study_id = sc.study_id
-        WHERE sc.claim_id = ?
-    """
-    params = [claim]
-
-    if args.dir:
-        query += " AND s.direction = ?"
-        params.append(args.dir)
-
-    query += " ORDER BY s.final_score DESC"
-    rows = conn.execute(query, params).fetchall()
-
-    if not rows:
-        # Try fuzzy match
-        fuzzy = conn.execute(
-            "SELECT claim_id FROM claims WHERE claim_id LIKE ?",
-            (f"%{claim}%",)
-        ).fetchall()
+    if not results:
+        fuzzy = [c['claim_id'] for c in db['claims'] if args.claim in c['claim_id']]
         if fuzzy:
-            print(f"No exact match for '{claim}'. Did you mean:")
-            for r in fuzzy:
-                print(f"  • {r['claim_id']}")
+            print(f"No exact match for '{args.claim}'. Did you mean:")
+            for c in fuzzy:
+                print(f"  • {c}")
         else:
-            print(f"No studies found for claim '{claim}'")
-        conn.close()
+            print(f"No studies found for claim '{args.claim}'")
         return
 
     print(f"\n{'='*70}")
-    print(f"  Claim: {claim}")
-    dir_filter = f" (filtered: Dir {args.dir})" if args.dir else ""
-    print(f"  {len(rows)} studies found{dir_filter}")
+    print(f"  Claim: {args.claim}  ({len(results)} studies)")
     print(f"{'='*70}\n")
 
-    for r in rows:
-        lm = " ★" if r['landmark'] else ""
-        pop = f" [{r['population']}]" if r['population'] != 'all' else ""
-        print(f"  {r['direction']}  {r['authors']} {r['pub_year']}  "
-              f"({r['study_type']}, Score {r['final_score']:.0f}{lm}){pop}")
-        if r['key_finding']:
-            # Truncate long findings
-            finding = r['key_finding'][:100]
-            print(f"     → {finding}")
-        if r['doi']:
-            print(f"     DOI: {r['doi']}")
+    for s in results:
+        lm = " ★" if s.get('is_landmark') else ""
+        pop = f" [{s['population']}]" if s.get('population', 'all') != 'all' else ""
+        print(f"  {s.get('direction','')}  {s['authors']} {s['pub_year']}  "
+              f"({s.get('study_type','')}, Score {s.get('final_score',0):.0f}{lm}){pop}")
+        if s.get('key_finding'):
+            print(f"     → {s['key_finding'][:100]}")
+        if s.get('doi'):
+            print(f"     DOI: {s['doi']}")
         print()
-
-    conn.close()
 
 
 # ─────────────────────────────────────────────
 # summary
 # ─────────────────────────────────────────────
 
-def build_summary_data(conn):
-    """Build claim summary index from database."""
-    claims = conn.execute("SELECT claim_id FROM claims ORDER BY claim_id").fetchall()
+def build_summary_data(db):
     summary = []
-
-    for claim_row in claims:
-        cid = claim_row['claim_id']
-        studies = conn.execute("""
-            SELECT s.direction, s.final_score, s.authors, s.pub_year
-            FROM studies s
-            JOIN study_claims sc ON s.study_id = sc.study_id
-            WHERE sc.claim_id = ?
-            ORDER BY s.final_score DESC
-        """, (cid,)).fetchall()
-
+    claim_ids = sorted({c['claim_id'] for c in db['claims']})
+    for cid in claim_ids:
+        studies = find_studies_for_claim(db, cid)
         if not studies:
             continue
 
-        plus = [s for s in studies if s['direction'] == '+']
-        minus = [s for s in studies if s['direction'] == '−']
-        mixed = [s for s in studies if s['direction'] == '±']
+        plus = [s for s in studies if s.get('direction') == '+']
+        minus = [s for s in studies if s.get('direction') == '−']
+        mixed = [s for s in studies if s.get('direction') == '±']
 
         best_plus = f"{plus[0]['authors']} {plus[0]['pub_year']} ({plus[0]['final_score']:.0f})" if plus else '—'
         best_minus = f"{minus[0]['authors']} {minus[0]['pub_year']} ({minus[0]['final_score']:.0f})" if minus else '—'
 
-        # Net direction
-        if len(plus) > 0 and len(minus) == 0 and len(mixed) == 0:
+        if plus and not minus and not mixed:
             net = '+'
-        elif len(minus) > 0 and len(plus) == 0:
+        elif minus and not plus:
             net = '−'
-        elif len(mixed) > 0 and len(plus) == 0 and len(minus) == 0:
+        elif mixed and not plus and not minus:
             net = '±'
         else:
-            # Mixed — check which side has stronger evidence
-            best_p = plus[0]['final_score'] if plus else 0
-            best_m = minus[0]['final_score'] if minus else 0
-            if best_p > best_m:
-                net = '+ (contested)' if minus else '+'
-            elif best_m > best_p:
-                net = '− (contested)' if plus else '−'
-            else:
-                net = '±'
+            bp = plus[0]['final_score'] if plus else 0
+            bm = minus[0]['final_score'] if minus else 0
+            net = '+ (contested)' if bp >= bm else '− (contested)'
 
-        # Confidence
-        top_score = max(s['final_score'] for s in studies)
-        has_landmark = any(True for s in studies)  # simplified
-        if top_score >= 12:
-            confidence = 'Strong'
-        elif top_score >= 10:
-            confidence = 'Moderate'
-        else:
-            confidence = 'Limited'
+        top = max(s.get('final_score', 0) for s in studies)
+        confidence = 'Strong' if top >= 12 else 'Moderate' if top >= 10 else 'Limited'
 
-        # Evidence gap
         gap = ''
-        if len(minus) == 0 and len(mixed) == 0 and len(plus) > 0:
+        if not minus and not mixed and plus:
             gap = 'Need contradicting study'
-        elif len(minus) > 0 and len(plus) == 0:
+        elif minus and not plus:
             gap = 'Need supporting study'
 
         summary.append({
-            'claim': cid,
-            'n_plus': len(plus),
-            'n_minus': len(minus),
-            'n_mixed': len(mixed),
-            'best_plus': best_plus,
-            'best_minus': best_minus,
-            'net': net,
-            'confidence': confidence,
-            'gap': gap,
+            'claim': cid, 'n_plus': len(plus), 'n_minus': len(minus),
+            'n_mixed': len(mixed), 'best_plus': best_plus, 'best_minus': best_minus,
+            'net': net, 'confidence': confidence, 'gap': gap,
         })
-
     return summary
 
 
 def cmd_summary(args):
-    """Print the Claim Summary Index."""
-    conn = get_db()
-    summary = build_summary_data(conn)
-    conn.close()
-
+    db = load_db()
+    summary = build_summary_data(db)
     if not summary:
-        print("No claims found. Run 'import-md' first.")
+        print("No claims with studies. Run 'import-md' first.")
         return
 
     print(f"\n{'='*90}")
     print("  Claim Summary Index")
     print(f"{'='*90}\n")
-
-    # Header
     print(f"  {'Claim':<35} {'#+':>3} {'#−':>3} {'#±':>3}  {'Net':<16} {'Confidence':<12} {'Gap'}")
     print(f"  {'─'*35} {'─'*3} {'─'*3} {'─'*3}  {'─'*16} {'─'*12} {'─'*25}")
-
     for s in summary:
         print(f"  {s['claim']:<35} {s['n_plus']:>3} {s['n_minus']:>3} {s['n_mixed']:>3}  "
               f"{s['net']:<16} {s['confidence']:<12} {s['gap']}")
-
-    print(f"\n  Total: {len(summary)} claims, "
-          f"{sum(s['n_plus'] for s in summary)} supporting, "
-          f"{sum(s['n_minus'] for s in summary)} contradicting, "
-          f"{sum(s['n_mixed'] for s in summary)} conditional\n")
 
 
 # ─────────────────────────────────────────────
@@ -730,48 +565,91 @@ def cmd_summary(args):
 # ─────────────────────────────────────────────
 
 def cmd_export_summary(args):
-    """Write the Claim Summary Index back to study-registry.md."""
-    conn = get_db()
-    summary = build_summary_data(conn)
-    conn.close()
-
+    db = load_db()
+    summary = build_summary_data(db)
     if not summary:
-        print("No claims found. Run 'import-md' first.")
+        print("No claims with studies.")
         return
 
-    md_path = REGISTRY_MD
-    if not md_path.exists():
-        print(f"✗ {md_path} not found")
-        return
-
-    text = md_path.read_text(encoding='utf-8')
-
-    # Build the new summary table
-    lines = []
-    lines.append("| Claim | #+ | #− | #± | Best+ | Best− | Net | Confidence | Gap? |")
-    lines.append("|-------|----|----|-----|-------|-------|-----|------------|------|")
-
+    lines = [
+        "| Claim | #+ | #− | #± | Best+ | Best− | Net | Confidence | Gap? |",
+        "|-------|----|----|-----|-------|-------|-----|------------|------|"
+    ]
     for s in summary:
         lines.append(
             f"| `{s['claim']}` | {s['n_plus']} | {s['n_minus']} | {s['n_mixed']} | "
             f"{s['best_plus']} | {s['best_minus']} | {s['net']} | {s['confidence']} | {s['gap']} |"
         )
 
-    new_table = '\n'.join(lines)
-
-    # Find and replace the existing summary table
-    # Pattern: from the header row to the next --- or ## section
-    pattern = re.compile(
-        r'(\| Claim \| #\+ \|.*?\n\|[-|\s]+\n)((?:\|.*\n)*)',
-        re.MULTILINE
-    )
+    text = REGISTRY_MD.read_text(encoding='utf-8')
+    pattern = re.compile(r'(\| Claim \| #\+ \|.*?\n\|[-|\s]+\n)((?:\|.*\n)*)', re.MULTILINE)
     match = pattern.search(text)
     if match:
-        text = text[:match.start()] + new_table + '\n' + text[match.end():]
-        md_path.write_text(text, encoding='utf-8')
-        print(f"✓ Claim Summary Index updated in {md_path} ({len(summary)} claims)")
+        text = text[:match.start()] + '\n'.join(lines) + '\n' + text[match.end():]
+        REGISTRY_MD.write_text(text, encoding='utf-8')
+        print(f"✓ Updated study-registry.md ({len(summary)} claims)")
     else:
-        print("✗ Could not find Claim Summary Index table in study-registry.md")
+        print("✗ Could not find Claim Summary Index table")
+
+
+# ─────────────────────────────────────────────
+# export-refs
+# ─────────────────────────────────────────────
+
+def cmd_export_refs(args):
+    db = load_db()
+
+    if args.claim == 'all':
+        # Group by claim
+        claim_ids = sorted({lk['claim_id'] for lk in db['study_claims']})
+        rows = []
+        for cid in claim_ids:
+            for s in find_studies_for_claim(db, cid):
+                rows.append({**s, 'claim_id': cid})
+    else:
+        studies = find_studies_for_claim(db, args.claim)
+        rows = [{**s, 'claim_id': args.claim} for s in studies]
+
+    if not rows:
+        print(f"No studies found for claim: {args.claim}", file=sys.stderr)
+        sys.exit(1)
+
+    if args.json:
+        out = []
+        for r in rows:
+            out.append({
+                'authors': r['authors'], 'year': r['pub_year'], 'doi': r.get('doi'),
+                'studyType': r.get('study_type'), 'sampleSize': r.get('sample_size'),
+                'qualityScore': r.get('quality_score'), 'keyFinding': r.get('key_finding'),
+                'claim': r['claim_id'],
+            })
+        print(json.dumps(out, indent=2))
+    else:
+        current_claim = None
+        ref_num = 0
+        for r in rows:
+            if r['claim_id'] != current_claim:
+                current_claim = r['claim_id']
+                ref_num = 0
+                print(f"\n--- {current_claim} ---\n")
+
+            ref_num += 1
+            doi_str = f'doi:{r["doi"]}' if r.get('doi') else 'no DOI'
+            badge = r.get('study_type', 'Study')
+
+            if ref_num == 1:
+                print(f'<!-- FEATURED (score={r.get("final_score", 0)}) -->')
+                print(f'<div class="study-citation">')
+                print(f'  <div class="study-header">')
+                print(f'    <span class="study-badge meta-analysis">{badge}</span>')
+                print(f'  </div>')
+                if r.get('key_finding'):
+                    print(f'  <div class="study-finding"><strong>Key finding:</strong> {r["key_finding"]}</div>')
+                print(f'  <div class="study-detail">{r["authors"]} {r["pub_year"]} · N={r.get("sample_size") or "?"}</div>')
+                print(f'</div>')
+                print()
+
+            print(f'<div class="study-ref">[{ref_num}] {r["authors"]} ({r["pub_year"]}). {r.get("key_finding") or ""} {doi_str}</div>')
 
 
 # ─────────────────────────────────────────────
@@ -779,42 +657,58 @@ def cmd_export_summary(args):
 # ─────────────────────────────────────────────
 
 def cmd_stale(args):
-    """List studies with verified_date > 6 months old."""
-    conn = get_db()
+    db = load_db()
     cutoff = (datetime.now() - timedelta(days=180)).strftime('%Y-%m')
+    stale = [s for s in db['studies']
+             if not s.get('verified_date') or s['verified_date'] < cutoff]
+    stale.sort(key=lambda s: s.get('verified_date') or '')
 
-    rows = conn.execute("""
-        SELECT authors, pub_year, verified_date, final_score, direction
-        FROM studies
-        WHERE verified_date < ? OR verified_date IS NULL
-        ORDER BY verified_date ASC
-    """, (cutoff,)).fetchall()
-
-    conn.close()
-
-    if not rows:
+    if not stale:
         print("✓ No stale studies. All verified within 6 months.")
         return
 
-    print(f"\n⚠ {len(rows)} stale studies (verified before {cutoff}):\n")
-    for r in rows:
-        vdate = r['verified_date'] or 'never'
-        print(f"  {r['authors']} {r['pub_year']}  (Score {r['final_score']:.0f}, Dir {r['direction']})  "
-              f"Verified: {vdate}")
-    print()
+    print(f"\n⚠ {len(stale)} stale studies (verified before {cutoff}):\n")
+    for s in stale:
+        print(f"  {s['authors']} {s['pub_year']}  (Score {s.get('final_score',0):.0f})  "
+              f"Verified: {s.get('verified_date') or 'never'}")
 
 
 # ─────────────────────────────────────────────
-# add (interactive)
+# add
 # ─────────────────────────────────────────────
 
 def cmd_add(args):
-    """Interactively add a new study."""
     print("\n─── Add New Study ───\n")
+    db = load_db()
 
-    authors = input("Authors (e.g., 'Smith 2024'): ").strip()
+    authors = input("Authors (e.g., 'Smith et al.'): ").strip()
     pub_year = int(input("Publication year: ").strip())
     doi = input("DOI (or blank): ").strip() or None
+    title = input("Title: ").strip() or None
+
+    # ── DOI validation gate ──
+    if doi:
+        print(f"\n  Validating DOI: {doi} ...")
+        result = validate_doi(doi, expected_title=title)
+        if not result['valid']:
+            print(f"  ✗ DOI INVALID: {result['error']}")
+            print(f"  Study NOT added. Fix the DOI and try again.")
+            sys.exit(1)
+        if result['title_match'] is False:
+            print(f"  ⚠ TITLE MISMATCH:")
+            print(f"    You entered:  {title[:80]}")
+            print(f"    DOI resolves: {result['resolved_title'][:80]}")
+            confirm = input("  Continue anyway? (y/N): ").strip().lower()
+            if confirm != 'y':
+                print("  Study NOT added.")
+                sys.exit(0)
+        else:
+            print(f"  ✓ DOI verified: {result['resolved_title'][:70]}")
+        # Auto-fill title from DOI if not provided
+        if not title and result['resolved_title']:
+            title = result['resolved_title']
+            print(f"  Auto-filled title: {title[:70]}")
+
     study_type = input("Type (MA/SR/RCT/Cohort/etc.): ").strip()
     sample = input("Sample size: ").strip() or None
     quality = float(input("Quality score (0-14): ").strip())
@@ -825,187 +719,32 @@ def cmd_add(args):
     population = input("Population (all/<65/>65/etc.): ").strip() or 'all'
     finding = input("Key finding: ").strip() or None
 
-    # Claims
-    print("\nEnter claim tags (comma-separated, e.g., 'protein→cancer, protein→mortality'):")
+    print("\nClaim tags (comma-separated, e.g., 'protein→cancer, protein→mortality'):")
     claims_raw = input("> ").strip()
     claim_tags = [c.strip() for c in claims_raw.split(',') if '→' in c]
 
-    # Used in
-    print("\nUsed in (e.g., 'nutrition#q3(F), nutrition#q1' or '—'):")
-    used_in_raw = input("> ").strip()
+    sid = make_study_id(authors, pub_year)
+    db['studies'].append({
+        'study_id': sid, 'authors': authors, 'pub_year': pub_year,
+        'doi': doi, 'title': title, 'study_type': study_type, 'sample_size': sample,
+        'quality_score': quality, 'relevance_mult': relevance, 'final_score': final,
+        'landmark': landmark, 'direction': direction, 'population': population,
+        'key_finding': finding, 'verified_date': datetime.now().strftime('%Y-%m'),
+        'notes': None,
+    })
 
-    study_id = make_study_id(authors, pub_year)
-
-    conn = get_db()
-    try:
-        conn.execute(
-            """INSERT INTO studies
-            (study_id, authors, pub_year, doi, study_type, sample_size,
-             quality_score, relevance_mult, final_score, landmark,
-             direction, population, key_finding, verified_date)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-            (study_id, authors, pub_year, doi, study_type, sample,
-             quality, relevance, final, landmark, direction, population,
-             finding, datetime.now().strftime('%Y-%m'))
-        )
-
-        for tag in claim_tags:
+    existing_claims = {c['claim_id'] for c in db['claims']}
+    for tag in claim_tags:
+        if tag not in existing_claims:
             parts = tag.split('→', 1)
-            if len(parts) == 2:
-                conn.execute(
-                    "INSERT OR IGNORE INTO claims (claim_id, exposure, outcome, description) VALUES (?, ?, ?, ?)",
-                    (tag, parts[0], parts[1], '')
-                )
-                conn.execute(
-                    "INSERT OR IGNORE INTO study_claims (study_id, claim_id) VALUES (?, ?)",
-                    (study_id, tag)
-                )
+            db['claims'].append({'claim_id': tag, 'exposure': parts[0], 'outcome': parts[1], 'description': ''})
+            existing_claims.add(tag)
+        db['study_claims'].append({'study_id': sid, 'claim_id': tag})
 
-        # Parse and add usage
-        if used_in_raw and used_in_raw != '—':
-            usages = parse_used_in(used_in_raw, None)
-            for page_file, card_id, role in usages:
-                conn.execute(
-                    "INSERT INTO evidence_usage (id, study_id, page_file, card_id, role) VALUES (?, ?, ?, ?, ?)",
-                    (uid(), study_id, page_file, card_id, role)
-                )
-
-        conn.commit()
-        print(f"\n✓ Added: {authors} {pub_year} → {study_id}")
-        print(f"  Claims: {', '.join(claim_tags)}")
-        print(f"  Score: {final:.1f} (Q{quality:.0f} × R{relevance}), Dir {direction}")
-
-    except sqlite3.IntegrityError as e:
-        print(f"\n✗ Error: {e}")
-    finally:
-        conn.close()
-
-
-# ─────────────────────────────────────────────
-# anon-ingest (anonymous analytics)
-# ─────────────────────────────────────────────
-
-def cmd_anon_ingest(args):
-    """Ingest an anonymous analytics snapshot (from client opt-in).
-
-    Expected JSON format (NO personal data):
-    {
-        "age_bracket": "30-39",
-        "sex_bracket": "M",
-        "country_code": "DE",
-        "scores": {"nutrition": 7.2, "sleep": 6.1, ...},
-        "deltas": {"nutrition": {"previous": 5.8, "current": 7.2, "days": 90}, ...}
-    }
-    """
-    json_path = Path(args.file)
-    if not json_path.exists():
-        print(f"✗ File not found: {json_path}")
-        sys.exit(1)
-
-    data = json.loads(json_path.read_text(encoding='utf-8'))
-
-    # Validate: reject anything that looks personal
-    forbidden_keys = {'name', 'email', 'userName', 'user_name', 'phone', 'address', 'ip', 'device_id'}
-    found = forbidden_keys.intersection(data.keys())
-    if found:
-        print(f"✗ REJECTED: payload contains personal data fields: {found}")
-        print("  Anonymous snapshots must not contain identifiable information.")
-        sys.exit(1)
-
-    conn = get_db()
-    snapshot_id = uid()
-
-    conn.execute(
-        """INSERT INTO anon_snapshots
-        (snapshot_id, age_bracket, sex_bracket, country_code)
-        VALUES (?, ?, ?, ?)""",
-        (snapshot_id, data.get('age_bracket'), data.get('sex_bracket'),
-         data.get('country_code'))
-    )
-
-    scores = data.get('scores', {})
-    for cat, val in scores.items():
-        conn.execute(
-            "INSERT INTO anon_scores (id, snapshot_id, category_key, score_value) VALUES (?, ?, ?, ?)",
-            (uid(), snapshot_id, cat, float(val))
-        )
-
-    deltas = data.get('deltas', {})
-    for cat, d in deltas.items():
-        conn.execute(
-            "INSERT INTO anon_deltas (id, snapshot_id, category_key, previous_score, current_score, days_between) VALUES (?, ?, ?, ?, ?, ?)",
-            (uid(), snapshot_id, cat,
-             d.get('previous'), float(d['current']), d.get('days'))
-        )
-
-    conn.commit()
-    conn.close()
-    print(f"✓ Anonymous snapshot ingested: {snapshot_id}")
-    print(f"  Scores: {len(scores)} categories")
-    print(f"  Deltas: {len(deltas)} categories")
-
-
-# ─────────────────────────────────────────────
-# anon-report (aggregate analytics)
-# ─────────────────────────────────────────────
-
-def cmd_anon_report(args):
-    """Show aggregate anonymous analytics."""
-    conn = get_db()
-
-    total = conn.execute("SELECT COUNT(*) as n FROM anon_snapshots").fetchone()['n']
-    if total == 0:
-        print("No anonymous snapshots yet.")
-        conn.close()
-        return
-
-    print(f"\n{'='*60}")
-    print(f"  Anonymous Analytics Report  ({total} snapshots)")
-    print(f"{'='*60}\n")
-
-    # Average scores per category
-    rows = conn.execute("""
-        SELECT category_key,
-               COUNT(*) as n,
-               ROUND(AVG(score_value), 1) as avg_score,
-               ROUND(MIN(score_value), 1) as min_score,
-               ROUND(MAX(score_value), 1) as max_score
-        FROM anon_scores
-        GROUP BY category_key
-        ORDER BY avg_score DESC
-    """).fetchall()
-
-    if rows:
-        print("  Category Averages:")
-        print(f"  {'Category':<15} {'N':>5} {'Avg':>6} {'Min':>6} {'Max':>6}")
-        print(f"  {'─'*15} {'─'*5} {'─'*6} {'─'*6} {'─'*6}")
-        for r in rows:
-            print(f"  {r['category_key']:<15} {r['n']:>5} {r['avg_score']:>6} "
-                  f"{r['min_score']:>6} {r['max_score']:>6}")
-
-    # Average improvement per category
-    delta_rows = conn.execute("""
-        SELECT category_key,
-               COUNT(*) as n,
-               ROUND(AVG(current_score - previous_score), 2) as avg_change,
-               ROUND(AVG(days_between), 0) as avg_days
-        FROM anon_deltas
-        WHERE previous_score IS NOT NULL
-        GROUP BY category_key
-        ORDER BY avg_change DESC
-    """).fetchall()
-
-    if delta_rows:
-        print(f"\n  Score Changes (returning users):")
-        print(f"  {'Category':<15} {'N':>5} {'Avg Δ':>7} {'Avg Days':>9}")
-        print(f"  {'─'*15} {'─'*5} {'─'*7} {'─'*9}")
-        for r in delta_rows:
-            sign = '+' if r['avg_change'] >= 0 else ''
-            print(f"  {r['category_key']:<15} {r['n']:>5} {sign}{r['avg_change']:>6} "
-                  f"{r['avg_days']:>9.0f}")
-
-    print()
-    conn.close()
+    save_db(db)
+    print(f"\n✓ Added: {authors} {pub_year} → {sid}")
+    print(f"  Claims: {', '.join(claim_tags)}")
+    print(f"  Score: {final:.1f} (Q{quality:.0f} × R{relevance}), Dir {direction}")
 
 
 # ─────────────────────────────────────────────
@@ -1013,43 +752,330 @@ def cmd_anon_report(args):
 # ─────────────────────────────────────────────
 
 def cmd_stats(args):
-    """Show database statistics."""
-    conn = get_db()
-
-    studies = conn.execute("SELECT COUNT(*) as n FROM studies").fetchone()['n']
-    claims = conn.execute("SELECT COUNT(*) as n FROM claims").fetchone()['n']
-    links = conn.execute("SELECT COUNT(*) as n FROM study_claims").fetchone()['n']
-    usages = conn.execute("SELECT COUNT(*) as n FROM evidence_usage").fetchone()['n']
-    removed = conn.execute("SELECT COUNT(*) as n FROM removed_studies").fetchone()['n']
-    accounts = conn.execute("SELECT COUNT(*) as n FROM accounts").fetchone()['n']
-    snapshots = conn.execute("SELECT COUNT(*) as n FROM anon_snapshots").fetchone()['n']
-
-    # Direction breakdown
-    dir_plus = conn.execute("SELECT COUNT(*) as n FROM studies WHERE direction = '+'").fetchone()['n']
-    dir_minus = conn.execute("SELECT COUNT(*) as n FROM studies WHERE direction = '−'").fetchone()['n']
-    dir_mixed = conn.execute("SELECT COUNT(*) as n FROM studies WHERE direction = '±'").fetchone()['n']
-
-    # Landmark count
-    landmarks = conn.execute("SELECT COUNT(*) as n FROM studies WHERE landmark = 1").fetchone()['n']
+    db = load_db()
+    studies = db['studies']
+    # Count directions from study_claims links (not study-level)
+    dir_plus = sum(1 for sc in db['study_claims'] if sc.get('direction') == '+')
+    dir_minus = sum(1 for sc in db['study_claims'] if sc.get('direction') == '−')
+    dir_mixed = sum(1 for sc in db['study_claims'] if sc.get('direction') == '±')
+    landmarks = sum(1 for s in studies if s.get('is_landmark'))
+    with_doi = sum(1 for s in studies if s.get('doi'))
+    with_finding = sum(1 for s in studies if s.get('key_finding'))
 
     print(f"\n{'='*50}")
-    print("  LongevityPath Database Statistics")
+    print("  LongevityPath Evidence Registry")
     print(f"{'='*50}\n")
-    print(f"  Evidence Map:")
-    print(f"    Studies:        {studies}")
-    print(f"      Supporting:   {dir_plus}")
-    print(f"      Contradicting:{dir_minus}")
-    print(f"      Conditional:  {dir_mixed}")
-    print(f"      Landmarks:    {landmarks}")
-    print(f"    Claims:         {claims}")
-    print(f"    Study↔Claim:    {links}")
-    print(f"    Evidence usage: {usages}")
-    print(f"    Removed:        {removed}")
-    print(f"  Accounts:         {accounts}")
-    print(f"  Anon. snapshots:  {snapshots}")
+    print(f"  Studies:        {len(studies)}")
+    print(f"    With DOI:     {with_doi}")
+    print(f"    With finding: {with_finding}")
+    print(f"    Supporting:   {dir_plus}")
+    print(f"    Contradicting:{dir_minus}")
+    print(f"    Conditional:  {dir_mixed}")
+    print(f"    Landmarks:    {landmarks}")
+    print(f"  Claims:         {len(db['claims'])}")
+    print(f"  Study↔Claim:    {len(db['study_claims'])}")
+    print(f"  Evidence usage: {len(db['evidence_usage'])}")
+    print(f"  Storage:        {DATA_PATH}")
     print()
 
-    conn.close()
+
+# ─────────────────────────────────────────────
+# gaps
+# ─────────────────────────────────────────────
+
+CLAIM_TO_CATEGORY = {}
+_CATEGORY_MAP = {
+    'sleep': ['sleep-duration', 'sleep-regularity', 'sleep-quality', 'insomnia',
+              'long-sleep', 'social-jet-lag', 'catch-up-sleep', 'wearable',
+              'caffeine', 'temperature', 'light-therapy', 'warm-bath', 'CBT-I',
+              'magnesium', 'ashwagandha', 'glycine', 'melatonin', 'sleep-debt'],
+    'nutrition': ['diet-quality', 'fruit-veg', 'UPF', 'mediterranean', 'saturated-fat',
+                  'sodium', 'alcohol', 'centenarian-diet', 'flexible-dieting',
+                  'eating-speed', 'food-tracking', 'meal-timing'],
+    'protein': ['protein', 'protein-source', 'protein-dose', 'protein-distribution',
+                'protein-deficit', 'protein-timing', 'amino-acids'],
+    'vo2max': ['CRF', 'HIIT', 'exercise-dose', 'PA', 'VO2max-estimation'],
+    'muscle-strength': ['muscle-strength', 'resistance-training', 'push-ups', 'chair-stand'],
+    'mindset': ['motivation', 'grit', 'locus-of-control', 'growth-mindset', 'mHealth', 'habit'],
+    'wellbeing': ['positive-affect', 'flow', 'social-connection', 'purpose', 'goal-pursuit',
+                  'stress-mindset', 'emotion-regulation', 'meditation', 'nature', 'gratitude', 'PERMA'],
+}
+for cat, prefixes in _CATEGORY_MAP.items():
+    for prefix in prefixes:
+        CLAIM_TO_CATEGORY[prefix] = cat
+
+
+def get_claim_category(claim_id):
+    exposure = claim_id.split('→')[0] if '→' in claim_id else claim_id
+    return CLAIM_TO_CATEGORY.get(exposure, 'other')
+
+
+def cmd_gaps(args):
+    db = load_db()
+    category = getattr(args, 'category', None)
+    summary = build_summary_data(db)
+
+    if category:
+        summary = [s for s in summary if get_claim_category(s['claim']) == category]
+
+    weak = [s for s in summary if s['n_plus'] < 2 or s['n_minus'] == 0]
+    if not weak:
+        print("✓ No evidence gaps found.")
+        return
+
+    print(f"\n{'='*80}")
+    title = f"  Evidence Gaps" + (f" — {category}" if category else "")
+    print(title)
+    print(f"{'='*80}\n")
+    print(f"  {'Claim':<35} {'#+':>3} {'#−':>3}  {'Confidence':<12} {'Gap'}")
+    print(f"  {'─'*35} {'─'*3} {'─'*3}  {'─'*12} {'─'*35}")
+    for s in weak:
+        gaps = []
+        if s['n_plus'] < 2:
+            gaps.append(f"Need {2-s['n_plus']} more supporting")
+        if s['n_minus'] == 0 and s['n_plus'] > 0:
+            gaps.append("Need contradicting study")
+        gap_str = '; '.join(gaps)
+        print(f"  {s['claim']:<35} {s['n_plus']:>3} {s['n_minus']:>3}  {s['confidence']:<12} {gap_str}")
+    print(f"\n  Total gaps: {len(weak)} / {len(summary)} claims\n")
+
+
+# ─────────────────────────────────────────────
+# supersede
+# ─────────────────────────────────────────────
+
+def cmd_supersede(args):
+    db = load_db()
+    old_id, new_id = args.old_id, args.new_id
+    old_study = next((s for s in db['studies'] if s['study_id'] == old_id), None)
+    new_study = next((s for s in db['studies'] if s['study_id'] == new_id), None)
+    if not old_study:
+        print(f"✗ Old study not found: {old_id}")
+        sys.exit(1)
+    if not new_study:
+        print(f"✗ New study not found: {new_id}")
+        sys.exit(1)
+    old_study['status'] = 'superseded'
+    old_study['superseded_by'] = new_id
+    save_db(db)
+    print(f"✓ {old_id} marked as superseded by {new_id}")
+
+
+# ─────────────────────────────────────────────
+# enrich-all
+# ─────────────────────────────────────────────
+
+REQUIRED_FIELDS = ['title', 'journal', 'doi', 'study_type', 'key_finding', 'effect_sizes']
+
+def cmd_enrich_all(args):
+    db = load_db()
+    incomplete = []
+    for s in db['studies']:
+        missing = []
+        for f in REQUIRED_FIELDS:
+            val = s.get(f)
+            if val is None or val == '' or (isinstance(val, list) and len(val) == 0 and f == 'effect_sizes'):
+                missing.append(f)
+        if missing:
+            incomplete.append((s, missing))
+
+    if not incomplete:
+        print("✓ All studies have complete required fields.")
+        return
+
+    incomplete.sort(key=lambda x: len(x[1]), reverse=True)
+    print(f"\n⚠ {len(incomplete)} studies with incomplete fields:\n")
+    for s, missing in incomplete:
+        print(f"  {s['authors']:<25} {s['pub_year']}  Missing: {', '.join(missing)}")
+    print(f"\n  Required fields: {', '.join(REQUIRED_FIELDS)}")
+
+
+# ─────────────────────────────────────────────
+# export-xlsx
+# ─────────────────────────────────────────────
+
+def cmd_export_xlsx(args):
+    try:
+        import openpyxl
+        from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
+        from openpyxl.utils import get_column_letter
+    except ImportError:
+        print("✗ openpyxl not installed. Run: pip install openpyxl")
+        sys.exit(1)
+
+    db = load_db()
+    category = getattr(args, 'category', None)
+
+    # Filter studies by category via evidence_usage or study_claims
+    if category:
+        usage_ids = {eu['study_id'] for eu in db['evidence_usage']
+                     if eu.get('evidence_page') == category}
+        claim_ids = {c['claim_id'] for c in db['claims']
+                     if get_claim_category(c['claim_id']) == category}
+        claim_study_ids = {sc['study_id'] for sc in db['study_claims']
+                          if sc['claim_id'] in claim_ids}
+        target_ids = usage_ids | claim_study_ids
+        studies = [s for s in db['studies'] if s['study_id'] in target_ids]
+    else:
+        studies = db['studies']
+
+    studies.sort(key=lambda s: (-s.get('final_score', 0), s.get('pub_year', 0)))
+
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = f"Evidence {'— ' + category if category else 'All'}"
+
+    headers = [
+        'Study ID', 'Authors', 'Year', 'Title', 'Journal', 'DOI',
+        'Study Type', 'Sample Size', 'Population', 'Country',
+        'Quality Score', 'Risk of Bias', 'GRADE', 'Direction',
+        'Status', 'Key Finding', 'Effect Sizes',
+        'Claims', 'Evidence Cards', 'Verified', 'Next Review', 'Notes'
+    ]
+
+    hfill = PatternFill('solid', fgColor='1B4332')
+    hfont = Font(bold=True, color='FFFFFF', size=10, name='Arial')
+    dfont = Font(size=9.5, name='Arial')
+    wrap = Alignment(wrap_text=True, vertical='top')
+    border = Border(
+        left=Side(style='thin', color='D0D0D0'), right=Side(style='thin', color='D0D0D0'),
+        top=Side(style='thin', color='D0D0D0'), bottom=Side(style='thin', color='D0D0D0')
+    )
+
+    for col, h in enumerate(headers, 1):
+        cell = ws.cell(row=1, column=col, value=h)
+        cell.font = hfont; cell.fill = hfill; cell.alignment = wrap; cell.border = border
+
+    # Build lookups
+    study_claims = {}
+    for sc in db['study_claims']:
+        study_claims.setdefault(sc['study_id'], []).append(
+            f"{sc.get('direction', '')} {sc['claim_id']}")
+    study_usage = {}
+    for eu in db['evidence_usage']:
+        study_usage.setdefault(eu['study_id'], []).append(
+            f"{eu.get('evidence_page', '')}#{eu.get('card_id', '')}")
+
+    dir_colors = {'+': 'C6F6D5', '−': 'FED7D7', '±': 'FFF3CD'}
+    status_colors = {'active': 'FFFFFF', 'superseded': 'F8D7DA', 'retracted': 'F5C6CB'}
+
+    for i, s in enumerate(studies, 1):
+        row = i + 1
+        effect_str = '; '.join(
+            f"{e.get('metric','')} {e.get('value','')} [{e.get('ci_lower','')},{e.get('ci_upper','')}] {e.get('comparison','')[:50]}"
+            for e in (s.get('effect_sizes') or [])
+        )
+        values = [
+            s['study_id'], s.get('authors_short') or s.get('authors', ''),
+            s.get('pub_year', ''), s.get('title', ''), s.get('journal', ''),
+            s.get('doi', ''), s.get('study_type', ''), s.get('sample_size', ''),
+            s.get('population', ''), s.get('country', ''),
+            s.get('quality_score', ''), s.get('risk_of_bias', ''),
+            s.get('grade_certainty', ''), s.get('direction', ''),
+            s.get('status', 'active'), s.get('key_finding', ''),
+            effect_str,
+            ', '.join(study_claims.get(s['study_id'], [])),
+            ', '.join(study_usage.get(s['study_id'], [])),
+            s.get('verified_date', ''), s.get('next_review_date', ''),
+            s.get('notes', ''),
+        ]
+        for col, val in enumerate(values, 1):
+            cell = ws.cell(row=row, column=col, value=val)
+            cell.font = dfont; cell.alignment = wrap; cell.border = border
+
+        # Color direction
+        d = s.get('direction', '')
+        if d in dir_colors:
+            ws.cell(row=row, column=14).fill = PatternFill('solid', fgColor=dir_colors[d])
+
+        # Color status
+        st = s.get('status', 'active')
+        if st in status_colors and st != 'active':
+            for col in range(1, len(headers) + 1):
+                ws.cell(row=row, column=col).fill = PatternFill('solid', fgColor=status_colors[st])
+
+        # Hyperlink DOI
+        if s.get('doi'):
+            cell = ws.cell(row=row, column=6)
+            cell.hyperlink = f"https://doi.org/{s['doi']}"
+            cell.font = Font(size=9.5, name='Arial', color='0563C1', underline='single')
+
+    widths = {1:18, 2:18, 3:6, 4:45, 5:22, 6:25, 7:18, 8:12, 9:18, 10:10,
+              11:8, 12:12, 13:10, 14:6, 15:10, 16:50, 17:50, 18:30, 19:25, 20:10, 21:10, 22:30}
+    for col, w in widths.items():
+        ws.column_dimensions[get_column_letter(col)].width = w
+
+    ws.freeze_panes = 'A2'
+    ws.auto_filter.ref = f'A1:{get_column_letter(len(headers))}{len(studies)+1}'
+
+    suffix = f'-{category}' if category else ''
+    out_path = Path(__file__).parent.parent / f'evidence-registry{suffix}.xlsx'
+    wb.save(str(out_path))
+    print(f"✓ Exported {len(studies)} studies to {out_path}")
+
+
+# ─────────────────────────────────────────────
+# import-refs
+# ─────────────────────────────────────────────
+
+def cmd_import_refs(args):
+    evidence_dir = Path(__file__).parent / 'evidence-pages'
+    page_name = args.page
+    json_path = evidence_dir / f'{page_name}.json'
+    if not json_path.exists():
+        print(f"✗ Evidence JSON not found: {json_path}")
+        available = [p.stem for p in evidence_dir.glob('*.json')]
+        print(f"  Available: {', '.join(available)}")
+        sys.exit(1)
+
+    data = json.loads(json_path.read_text(encoding='utf-8'))
+    db = load_db()
+    existing_dois = {s['doi'] for s in db['studies'] if s.get('doi')}
+    added = 0
+
+    for card in data.get('cards', []):
+        for ref_html in card.get('studyRefs', []):
+            refs = re.findall(r'\[(\d+)\]\s*(.*?)(?=<\/div>)', ref_html, re.DOTALL)
+            for ref_num, ref_text in refs:
+                # Extract DOI
+                doi_match = re.search(r'href="https://doi\.org/([^"]+)"', ref_text)
+                doi = doi_match.group(1) if doi_match else None
+                if doi and doi in existing_dois:
+                    continue
+
+                # Extract authors
+                clean = re.sub(r'<[^>]+>', '', ref_text).strip()
+                authors_match = re.search(r'^(.*?)\s*\(\d{4}\)', clean)
+                authors = authors_match.group(1).strip().rstrip(',').strip() if authors_match else ''
+                authors = authors.replace('&amp;', '&')
+
+                year_match = re.search(r'\((\d{4})\)', clean)
+                year = int(year_match.group(1)) if year_match else 2020
+
+                title_match = re.search(r'"([^"]+)"', ref_text)
+                title = title_match.group(1) if title_match else ''
+
+                sid = make_study_id(authors, year)
+                db['studies'].append({
+                    'study_id': sid, 'authors': authors,
+                    'authors_short': authors if len(authors) < 30 else authors[:30],
+                    'pub_year': year, 'title': title, 'doi': doi,
+                    'url': f'https://doi.org/{doi}' if doi else '',
+                    'study_type': 'Study', 'quality_score': 0,
+                    'is_landmark': False, 'direction': '+',
+                    'relevance': 1.0, 'final_score': 0,
+                    'key_finding': '', 'status': 'active',
+                    'verified_date': datetime.now().strftime('%Y-%m'),
+                    'added_date': datetime.now().strftime('%Y-%m-%d'),
+                    'notes': f'Auto-imported from {page_name}.json card {card["id"]}',
+                })
+                if doi:
+                    existing_dois.add(doi)
+                added += 1
+                print(f"  + {authors} ({year}) from {card['id']}")
+
+    save_db(db)
+    print(f"\n✓ Imported {added} new studies from {page_name}.json")
 
 
 # ─────────────────────────────────────────────
@@ -1058,65 +1084,51 @@ def cmd_stats(args):
 
 def main():
     parser = argparse.ArgumentParser(
-        description='LongevityPath Evidence Registry — Database Manager',
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog=__doc__
+        description='LongevityPath Evidence Registry',
+        formatter_class=argparse.RawDescriptionHelpFormatter, epilog=__doc__
     )
     sub = parser.add_subparsers(dest='command', help='Available commands')
 
-    # init
-    sub.add_parser('init', help='Create database and all tables')
-
-    # import-md
+    sub.add_parser('init', help='Create empty studies.json')
     p_import = sub.add_parser('import-md', help='Import from study-registry.md')
     p_import.add_argument('file', help='Path to study-registry.md')
-
-    # query
     p_query = sub.add_parser('query', help='Query studies by claim')
     p_query.add_argument('claim', help='Claim tag (e.g., protein→cancer)')
     p_query.add_argument('--dir', help='Filter by direction (+/−/±)')
-
-    # summary
     sub.add_parser('summary', help='Print Claim Summary Index')
-
-    # export-summary
     sub.add_parser('export-summary', help='Write Claim Summary Index to study-registry.md')
-
-    # stale
+    p_refs = sub.add_parser('export-refs', help='Export builder-ready study refs')
+    p_refs.add_argument('claim', help='Claim tag or "all"')
+    p_refs.add_argument('--json', action='store_true', help='Output as JSON')
     sub.add_parser('stale', help='List studies needing re-verification')
-
-    # add
+    p_gaps = sub.add_parser('gaps', help='Show claims with weak or missing evidence')
+    p_gaps.add_argument('--category', help='Filter by category (sleep, nutrition, etc.)')
+    p_supersede = sub.add_parser('supersede', help='Mark a study as superseded')
+    p_supersede.add_argument('old_id', help='Study ID to mark as superseded')
+    p_supersede.add_argument('new_id', help='Study ID of the replacement')
+    sub.add_parser('enrich-all', help='List studies with incomplete fields')
+    p_xlsx = sub.add_parser('export-xlsx', help='Export studies to xlsx')
+    p_xlsx.add_argument('category', nargs='?', help='Category to export (or all)')
+    p_irefs = sub.add_parser('import-refs', help='Import studies from evidence page JSON')
+    p_irefs.add_argument('page', help='Evidence page name (e.g., sleep, nutrition-principles)')
     sub.add_parser('add', help='Interactively add a new study')
-
-    # anon-ingest
-    p_anon = sub.add_parser('anon-ingest', help='Ingest anonymous analytics snapshot')
-    p_anon.add_argument('file', help='Path to anonymous JSON payload')
-
-    # anon-report
-    sub.add_parser('anon-report', help='Aggregate anonymous analytics report')
-
-    # stats
-    sub.add_parser('stats', help='Show database statistics')
+    sub.add_parser('stats', help='Show statistics')
+    p_vdoi = sub.add_parser('verify-dois', help='Batch-verify all DOIs against doi.org')
+    p_vdoi.add_argument('--category', help='Filter by category (sleep, nutrition, etc.)')
 
     args = parser.parse_args()
-
     if not args.command:
         parser.print_help()
         sys.exit(1)
 
     commands = {
-        'init': cmd_init,
-        'import-md': cmd_import_md,
-        'query': cmd_query,
-        'summary': cmd_summary,
-        'export-summary': cmd_export_summary,
-        'stale': cmd_stale,
-        'add': cmd_add,
-        'anon-ingest': cmd_anon_ingest,
-        'anon-report': cmd_anon_report,
-        'stats': cmd_stats,
+        'init': cmd_init, 'import-md': cmd_import_md, 'query': cmd_query,
+        'summary': cmd_summary, 'export-summary': cmd_export_summary,
+        'export-refs': cmd_export_refs, 'stale': cmd_stale, 'add': cmd_add,
+        'stats': cmd_stats, 'gaps': cmd_gaps, 'supersede': cmd_supersede,
+        'enrich-all': cmd_enrich_all, 'export-xlsx': cmd_export_xlsx,
+        'import-refs': cmd_import_refs, 'verify-dois': cmd_verify_dois,
     }
-
     commands[args.command](args)
 
 

@@ -5,7 +5,7 @@
     "sections": {
       "sec1": {
         "title": "Your Profile",
-        "weight": 0.4,
+        "weight": 0.15,
         "questions": [
           {
             "id": "MD1_yob",
@@ -135,15 +135,167 @@
                 "points": 0
               }
             ]
+          },
+          {
+            "id": "MD1_whr",
+            "question": "What is your waist-to-hip ratio?",
+            "hint": "Measure waist at navel, hips at widest point. Divide waist by hips. Leave blank if unknown.",
+            "type": "number",
+            "min": 0.5,
+            "max": 1.5,
+            "step": 0.01,
+            "genderScoring": {
+              "male": {
+                "inputMin": 0.95,
+                "inputMax": 0.8
+              },
+              "female": {
+                "inputMin": 0.85,
+                "inputMax": 0.7
+              }
+            },
+            "helpLink": "cardiometabolic-evidence.html#q-whr"
           }
         ]
       },
       "sec2": {
         "title": "Recommended Screenings",
-        "weight": 0.6,
+        "weight": 0.35,
         "description": "Based on your profile, here are the screenings recommended for you. Check the ones you are up to date on.",
         "dynamic": "screenings",
         "questions": []
+      },
+      "sec3": {
+        "title": "Blood Markers",
+        "weight": 0.5,
+        "description": "Enter your blood test results below. These markers are used to calculate both your Cardiovascular Health Score and your Metabolic Health Score.",
+        "subScores": {
+          "cardiovascular": {
+            "label": "Cardiovascular Health",
+            "icon": "heart",
+            "helpLink": "cardiovascular-evidence.html#q-attia"
+          },
+          "metabolic": {
+            "label": "Metabolic Health",
+            "icon": "activity",
+            "helpLink": "metabolic-evidence.html#q-means"
+          }
+        },
+        "questions": [
+          {
+            "id": "MD3_apob",
+            "question": "What is your ApoB level?",
+            "hint": "Found on advanced lipid panel (mg/dL). Leave blank if not tested.",
+            "type": "number",
+            "min": 20,
+            "max": 250,
+            "step": 1,
+            "unit": "mg/dL",
+            "inputMin": 130,
+            "inputMax": 60,
+            "cardiovascularWeight": 0.3,
+            "metabolicWeight": 0,
+            "helpLink": "cardiovascular-evidence.html#q-apob"
+          },
+          {
+            "id": "MD3_bp",
+            "question": "What is your systolic blood pressure?",
+            "hint": "The top number, e.g. 120 in 120/80 (mmHg). Leave blank if unknown.",
+            "type": "number",
+            "min": 70,
+            "max": 200,
+            "step": 1,
+            "unit": "mmHg",
+            "inputMin": 130,
+            "inputMax": 110,
+            "cardiovascularWeight": 0.25,
+            "metabolicWeight": 0,
+            "helpLink": "cardiovascular-evidence.html#q-bp"
+          },
+          {
+            "id": "MD3_hdl",
+            "question": "What is your HDL cholesterol?",
+            "hint": "Found on standard lipid panel (mg/dL). Leave blank if not tested.",
+            "type": "number",
+            "min": 10,
+            "max": 150,
+            "step": 1,
+            "unit": "mg/dL",
+            "genderScoring": {
+              "male": {
+                "inputMin": 40,
+                "inputMax": 60
+              },
+              "female": {
+                "inputMin": 50,
+                "inputMax": 70
+              }
+            },
+            "cardiovascularWeight": 0.15,
+            "metabolicWeight": 0.25,
+            "helpLink": "cardiovascular-evidence.html#q-hdl"
+          },
+          {
+            "id": "MD3_trig",
+            "question": "What are your triglycerides?",
+            "hint": "Found on standard lipid panel (mg/dL). Leave blank if not tested.",
+            "type": "number",
+            "min": 20,
+            "max": 500,
+            "step": 1,
+            "unit": "mg/dL",
+            "inputMin": 150,
+            "inputMax": 70,
+            "cardiovascularWeight": 0.15,
+            "metabolicWeight": 0.25,
+            "helpLink": "cardiovascular-evidence.html#q-trig"
+          },
+          {
+            "id": "MD3_lpa",
+            "question": "What is your Lp(a) level?",
+            "hint": "Specialized test, usually in nmol/L. Leave blank if not tested.",
+            "type": "number",
+            "min": 0,
+            "max": 500,
+            "step": 1,
+            "unit": "nmol/L",
+            "inputMin": 125,
+            "inputMax": 30,
+            "cardiovascularWeight": 0.15,
+            "metabolicWeight": 0,
+            "helpLink": "cardiovascular-evidence.html#q-lpa"
+          },
+          {
+            "id": "MD3_insulin",
+            "question": "What is your fasting insulin level?",
+            "hint": "Found on metabolic panel (µIU/mL). Leave blank if not tested.",
+            "type": "number",
+            "min": 0,
+            "max": 50,
+            "step": 0.1,
+            "unit": "µIU/mL",
+            "inputMin": 25,
+            "inputMax": 5,
+            "cardiovascularWeight": 0,
+            "metabolicWeight": 0.25,
+            "helpLink": "metabolic-evidence.html#q-insulin"
+          },
+          {
+            "id": "MD3_glucose",
+            "question": "What is your fasting blood glucose?",
+            "hint": "Found on basic metabolic panel (mg/dL). Leave blank if not tested.",
+            "type": "number",
+            "min": 40,
+            "max": 300,
+            "step": 1,
+            "unit": "mg/dL",
+            "inputMin": 100,
+            "inputMax": 80,
+            "cardiovascularWeight": 0,
+            "metabolicWeight": 0.25,
+            "helpLink": "metabolic-evidence.html#q-glucose"
+          }
+        ]
       }
     }
   },

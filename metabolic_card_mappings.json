@@ -1,0 +1,60 @@
+{
+  "studyCitations": {
+    "q-score-low": [
+      "mottillo-2010"
+    ],
+    "q-score-high": [
+      "wang-2023-metabolic"
+    ],
+    "q-insulin": [
+      "balkau-2014",
+      "malmö-2003"
+    ],
+    "q-glucose": [
+      "glucose-diabetes-collaboration-2011"
+    ],
+    "q-trig-metabolic": [
+      "reaven-1988"
+    ],
+    "q-hdl-metabolic": [
+      "reaven-1988"
+    ],
+    "q-means-framework": [
+      "araujo-2019"
+    ],
+    "q-improve-metabolic": [
+      "knowler-2002"
+    ]
+  },
+  "studyRefs": {
+    "q-score-low": [
+      "mottillo-2010"
+    ],
+    "q-score-high": [
+      "wang-2023-metabolic",
+      "kramer-2013"
+    ],
+    "q-insulin": [
+      "balkau-2014",
+      "malmö-2003"
+    ],
+    "q-glucose": [
+      "glucose-diabetes-collaboration-2011"
+    ],
+    "q-trig-metabolic": [
+      "sarwar-2007",
+      "reaven-1988"
+    ],
+    "q-hdl-metabolic": [
+      "gordon dj-1989",
+      "reaven-1988"
+    ],
+    "q-means-framework": [
+      "araujo-2019"
+    ],
+    "q-improve-metabolic": [
+      "knowler-2002",
+      "kramer-2013"
+    ]
+  }
+}

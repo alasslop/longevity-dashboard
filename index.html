@@ -227,6 +227,20 @@
         .room-to-grow { font-size: 0.7rem; font-weight: 500; color: var(--color-red); background: var(--color-red-light); padding: 2px 8px; border-radius: 10px; }
         .not-started { font-size: 0.7rem; font-weight: 500; color: var(--color-text-muted); background: var(--color-border); padding: 2px 8px; border-radius: 10px; }
 
+        /* Sub-score rows (Cardiovascular / Metabolic) */
+        .subscore-group { padding-left: 36px; }
+        .subscore-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; }
+        .subscore-item:not(:last-child) { border-bottom: 1px solid color-mix(in srgb, var(--color-border) 50%, transparent); }
+        .subscore-icon { width: 20px; height: 20px; flex-shrink: 0; color: var(--color-teal); }
+        .subscore-info { flex: 1; min-width: 0; }
+        .subscore-name { font-size: 0.82rem; font-weight: 500; color: var(--color-text); margin-bottom: 3px; display: flex; align-items: center; gap: 6px; }
+        .subscore-name .help-link { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; background: var(--color-teal); color: white; border-radius: 50%; font-size: 0.6rem; font-weight: 700; text-decoration: none; flex-shrink: 0; }
+        .subscore-bar { height: 5px; background: var(--color-border); border-radius: 3px; overflow: hidden; }
+        .subscore-fill { height: 100%; border-radius: 3px; transition: width 0.3s ease; }
+        .subscore-fill.cardio { background: #e57373; }
+        .subscore-fill.metabolic { background: #64b5f6; }
+        .subscore-score { font-size: 0.8rem; font-weight: 600; color: var(--color-text); min-width: 42px; text-align: right; }
+
         /* Detail CTA for empty assessments */
         .detail-cta { background: var(--color-orange-light); border-radius: 12px; padding: 20px; margin-bottom: 20px; border-left: 4px solid var(--color-orange); }
         .detail-cta-title { font-size: 1rem; font-weight: 600; color: var(--color-orange); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
@@ -657,7 +671,7 @@
                     "sections": {
                         "sec1": {
                             "title": "Your Profile",
-                            "weight": 0.4,
+                            "weight": 0.15,
                             "questions": [
                                 {
                                     "id": "MD1_yob",
@@ -787,15 +801,167 @@
                                             "points": 0
                                         }
                                     ]
+                                },
+                                {
+                                    "id": "MD1_whr",
+                                    "question": "What is your waist-to-hip ratio?",
+                                    "hint": "Measure waist at navel, hips at widest point. Divide waist by hips. Leave blank if unknown.",
+                                    "type": "number",
+                                    "min": 0.5,
+                                    "max": 1.5,
+                                    "step": 0.01,
+                                    "genderScoring": {
+                                        "male": {
+                                            "inputMin": 0.95,
+                                            "inputMax": 0.8
+                                        },
+                                        "female": {
+                                            "inputMin": 0.85,
+                                            "inputMax": 0.7
+                                        }
+                                    },
+                                    "helpLink": "cardiometabolic-evidence.html#q-whr"
                                 }
                             ]
                         },
                         "sec2": {
                             "title": "Recommended Screenings",
-                            "weight": 0.6,
+                            "weight": 0.35,
                             "description": "Based on your profile, here are the screenings recommended for you. Check the ones you are up to date on.",
                             "dynamic": "screenings",
                             "questions": []
+                        },
+                        "sec3": {
+                            "title": "Blood Markers",
+                            "weight": 0.5,
+                            "description": "Enter your blood test results below. These markers are used to calculate both your Cardiovascular Health Score and your Metabolic Health Score.",
+                            "subScores": {
+                                "cardiovascular": {
+                                    "label": "Cardiovascular Health",
+                                    "icon": "heart",
+                                    "helpLink": "cardiovascular-evidence.html#q-attia"
+                                },
+                                "metabolic": {
+                                    "label": "Metabolic Health",
+                                    "icon": "activity",
+                                    "helpLink": "metabolic-evidence.html#q-means"
+                                }
+                            },
+                            "questions": [
+                                {
+                                    "id": "MD3_apob",
+                                    "question": "What is your ApoB level?",
+                                    "hint": "Found on advanced lipid panel (mg/dL). Leave blank if not tested.",
+                                    "type": "number",
+                                    "min": 20,
+                                    "max": 250,
+                                    "step": 1,
+                                    "unit": "mg/dL",
+                                    "inputMin": 130,
+                                    "inputMax": 60,
+                                    "cardiovascularWeight": 0.3,
+                                    "metabolicWeight": 0,
+                                    "helpLink": "cardiovascular-evidence.html#q-apob"
+                                },
+                                {
+                                    "id": "MD3_bp",
+                                    "question": "What is your systolic blood pressure?",
+                                    "hint": "The top number, e.g. 120 in 120/80 (mmHg). Leave blank if unknown.",
+                                    "type": "number",
+                                    "min": 70,
+                                    "max": 200,
+                                    "step": 1,
+                                    "unit": "mmHg",
+                                    "inputMin": 130,
+                                    "inputMax": 110,
+                                    "cardiovascularWeight": 0.25,
+                                    "metabolicWeight": 0,
+                                    "helpLink": "cardiovascular-evidence.html#q-bp"
+                                },
+                                {
+                                    "id": "MD3_hdl",
+                                    "question": "What is your HDL cholesterol?",
+                                    "hint": "Found on standard lipid panel (mg/dL). Leave blank if not tested.",
+                                    "type": "number",
+                                    "min": 10,
+                                    "max": 150,
+                                    "step": 1,
+                                    "unit": "mg/dL",
+                                    "genderScoring": {
+                                        "male": {
+                                            "inputMin": 40,
+                                            "inputMax": 60
+                                        },
+                                        "female": {
+                                            "inputMin": 50,
+                                            "inputMax": 70
+                                        }
+                                    },
+                                    "cardiovascularWeight": 0.15,
+                                    "metabolicWeight": 0.25,
+                                    "helpLink": "cardiovascular-evidence.html#q-hdl"
+                                },
+                                {
+                                    "id": "MD3_trig",
+                                    "question": "What are your triglycerides?",
+                                    "hint": "Found on standard lipid panel (mg/dL). Leave blank if not tested.",
+                                    "type": "number",
+                                    "min": 20,
+                                    "max": 500,
+                                    "step": 1,
+                                    "unit": "mg/dL",
+                                    "inputMin": 150,
+                                    "inputMax": 70,
+                                    "cardiovascularWeight": 0.15,
+                                    "metabolicWeight": 0.25,
+                                    "helpLink": "cardiovascular-evidence.html#q-trig"
+                                },
+                                {
+                                    "id": "MD3_lpa",
+                                    "question": "What is your Lp(a) level?",
+                                    "hint": "Specialized test, usually in nmol/L. Leave blank if not tested.",
+                                    "type": "number",
+                                    "min": 0,
+                                    "max": 500,
+                                    "step": 1,
+                                    "unit": "nmol/L",
+                                    "inputMin": 125,
+                                    "inputMax": 30,
+                                    "cardiovascularWeight": 0.15,
+                                    "metabolicWeight": 0,
+                                    "helpLink": "cardiovascular-evidence.html#q-lpa"
+                                },
+                                {
+                                    "id": "MD3_insulin",
+                                    "question": "What is your fasting insulin level?",
+                                    "hint": "Found on metabolic panel (µIU/mL). Leave blank if not tested.",
+                                    "type": "number",
+                                    "min": 0,
+                                    "max": 50,
+                                    "step": 0.1,
+                                    "unit": "µIU/mL",
+                                    "inputMin": 25,
+                                    "inputMax": 5,
+                                    "cardiovascularWeight": 0,
+                                    "metabolicWeight": 0.25,
+                                    "helpLink": "metabolic-evidence.html#q-insulin"
+                                },
+                                {
+                                    "id": "MD3_glucose",
+                                    "question": "What is your fasting blood glucose?",
+                                    "hint": "Found on basic metabolic panel (mg/dL). Leave blank if not tested.",
+                                    "type": "number",
+                                    "min": 40,
+                                    "max": 300,
+                                    "step": 1,
+                                    "unit": "mg/dL",
+                                    "inputMin": 100,
+                                    "inputMax": 80,
+                                    "cardiovascularWeight": 0,
+                                    "metabolicWeight": 0.25,
+                                    "helpLink": "metabolic-evidence.html#q-glucose"
+                                }
+                            ]
                         }
                     }
                 },
@@ -1775,6 +1941,12 @@
                 const v = parseFloat(value);
                 return Math.max(0, Math.min(100, ((v - q.inputMin) / (q.inputMax - q.inputMin)) * 100));
             }
+            if (q.type === 'number' && q.genderScoring) {
+                const v = parseFloat(value);
+                const sex = getDemographics().sex || 'male';
+                const bounds = q.genderScoring[sex] || q.genderScoring['male'];
+                return Math.max(0, Math.min(100, ((v - bounds.inputMin) / (bounds.inputMax - bounds.inputMin)) * 100));
+            }
             return null;
         }
 
@@ -1829,10 +2001,111 @@
                         totalScore += Math.max(0, Math.min(10, score));
                         maxScore += 10; // Only count if answered
                     }
+                } else if (q.type === 'number' && q.genderScoring) {
+                    // Gender-specific linear scoring (e.g. HDL, waist-to-hip ratio)
+                    if (value !== null && value !== undefined && value !== '') {
+                        const v = parseFloat(value);
+                        const sex = demo.sex || 'male';
+                        const bounds = q.genderScoring[sex] || q.genderScoring['male'];
+                        const score = ((v - bounds.inputMin) / (bounds.inputMax - bounds.inputMin)) * 10;
+                        totalScore += Math.max(0, Math.min(10, score));
+                        maxScore += 10;
+                    }
                 }
                 // radio without points (sex, method) and number without normsTable/inputRange (age) are skipped
             });
             return maxScore > 0 ? (totalScore / maxScore) * 10 : 0;
+        }
+
+        function calculateSubScore(catKey, secKey, subType) {
+            // subType = 'cardiovascular' or 'metabolic'
+            const section = CATEGORIES[catKey].sections[secKey];
+            const answers = currentData.answers[catKey]?.[secKey] || {};
+            const demo = getDemographics();
+            const weightKey = subType + 'Weight'; // e.g. 'cardiovascularWeight'
+            let weightedTotal = 0, sumWeights = 0;
+
+            section.questions.forEach(q => {
+                const w = q[weightKey];
+                if (!w) return; // weight is 0 or undefined → skip
+                const value = answers[q.id];
+                if (value === null || value === undefined || value === '') return;
+
+                let raw = null; // 0-100 scale
+                if (q.type === 'number' && q.genderScoring) {
+                    const v = parseFloat(value);
+                    const sex = demo.sex || 'male';
+                    const bounds = q.genderScoring[sex] || q.genderScoring['male'];
+                    raw = Math.max(0, Math.min(100, ((v - bounds.inputMin) / (bounds.inputMax - bounds.inputMin)) * 100));
+                } else if (q.type === 'number' && q.inputMin !== undefined && q.inputMax !== undefined) {
+                    const v = parseFloat(value);
+                    raw = Math.max(0, Math.min(100, ((v - q.inputMin) / (q.inputMax - q.inputMin)) * 100));
+                }
+                if (raw !== null) {
+                    weightedTotal += raw * w;
+                    sumWeights += w;
+                }
+            });
+            const bloodMarkerScore = sumWeights > 0 ? weightedTotal / sumWeights : -1;
+
+            // Attia's 4 causal drivers of ASCVD — equal 25% each:
+            // 1. ApoB-containing lipoproteins (ApoB, Lp(a))
+            // 2. Hypertension (systolic BP)
+            // 3. Smoking
+            // 4. Metabolic health (HDL, Trig, Insulin, Glucose)
+            if (subType === 'cardiovascular') {
+                const answers_sec = currentData.answers[catKey]?.[secKey] || {};
+                const demo = getDemographics();
+
+                // --- Driver 1: Lipoproteins (ApoB + Lp(a)) ---
+                let lipoScore = null, lipoW = 0;
+                const apobVal = parseFloat(answers_sec['MD3_apob']);
+                if (!isNaN(apobVal)) {
+                    const q = section.questions.find(q => q.id === 'MD3_apob');
+                    const s = Math.max(0, Math.min(100, ((apobVal - q.inputMin) / (q.inputMax - q.inputMin)) * 100));
+                    lipoScore = (lipoScore || 0) + s * 0.65;
+                    lipoW += 0.65;
+                }
+                const lpaVal = parseFloat(answers_sec['MD3_lpa']);
+                if (!isNaN(lpaVal)) {
+                    const q = section.questions.find(q => q.id === 'MD3_lpa');
+                    const s = Math.max(0, Math.min(100, ((lpaVal - q.inputMin) / (q.inputMax - q.inputMin)) * 100));
+                    lipoScore = (lipoScore || 0) + s * 0.35;
+                    lipoW += 0.35;
+                }
+                if (lipoW > 0) lipoScore = lipoScore / lipoW;
+
+                // --- Driver 2: Hypertension (BP) ---
+                let bpScore = null;
+                const bpVal = parseFloat(answers_sec['MD3_bp']);
+                if (!isNaN(bpVal)) {
+                    const q = section.questions.find(q => q.id === 'MD3_bp');
+                    bpScore = Math.max(0, Math.min(100, ((bpVal - q.inputMin) / (q.inputMax - q.inputMin)) * 100));
+                }
+
+                // --- Driver 3: Smoking ---
+                const smoking = currentData.answers?.medical?.sec1?.MD1_smoking;
+                let smokingScore = null;
+                if (smoking === 'never')   smokingScore = 100;
+                else if (smoking === 'former')  smokingScore = 60;
+                else if (smoking === 'current') smokingScore = 0;
+
+                // --- Driver 4: Metabolic health (HDL, Trig, Insulin, Glucose) ---
+                const metabScore = calculateSubScore(catKey, secKey, 'metabolic');
+                const metabFinal = metabScore >= 0 ? metabScore : null;
+
+                // Blend available drivers with equal weight (25% each)
+                let blended = 0, totalWeight = 0;
+                if (lipoScore !== null)   { blended += lipoScore * 0.25;   totalWeight += 0.25; }
+                if (bpScore !== null)     { blended += bpScore * 0.25;     totalWeight += 0.25; }
+                if (smokingScore !== null) { blended += smokingScore * 0.25; totalWeight += 0.25; }
+                if (metabFinal !== null)  { blended += metabFinal * 0.25;  totalWeight += 0.25; }
+
+                if (totalWeight > 0) return blended / totalWeight;
+                return -1;
+            }
+
+            return bloodMarkerScore; // -1 means no data
         }
 
         function calculateCategoryScore(catKey) {
@@ -2076,6 +2349,34 @@
                             </div>
                             <div class="section-breakdown-score" id="secBreakScore-${secKey}">${Math.round(percentage)}%</div>
                         </div>`;
+
+                    // Render sub-scores (Cardiovascular / Metabolic) if section defines them
+                    if (section.subScores) {
+                        breakdownHTML += `<div class="subscore-group">`;
+                        Object.keys(section.subScores).forEach(subKey => {
+                            const sub = section.subScores[subKey];
+                            const subPct = calculateSubScore(catKey, secKey, subKey);
+                            const hasData = subPct >= 0;
+                            const displayPct = hasData ? Math.round(subPct) : 0;
+                            const iconName = sub.icon || 'activity';
+                            const fillClass = subKey === 'cardiovascular' ? 'cardio' : 'metabolic';
+                            const label = hasData ? `${displayPct}%` : '—';
+                            const helpBadge = sub.helpLink ? `<a href="${sub.helpLink}" class="help-link" onclick="saveScrollState(event)" title="Evidence & FAQ">?</a>` : '';
+
+                            breakdownHTML += `
+                                <div class="subscore-item">
+                                    <i data-lucide="${iconName}" class="subscore-icon"></i>
+                                    <div class="subscore-info">
+                                        <div class="subscore-name">${sub.label} ${helpBadge}</div>
+                                        <div class="subscore-bar">
+                                            <div class="subscore-fill ${fillClass}" style="width: ${displayPct}%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="subscore-score">${label}</div>
+                                </div>`;
+                        });
+                        breakdownHTML += `</div>`;
+                    }
                 });
                 breakdownHTML += `</div>`;
                 content.innerHTML += breakdownHTML;
@@ -2269,6 +2570,20 @@
                                 const v = parseFloat(currentValue);
                                 const pct = Math.round(((v - q.inputMin) / (q.inputMax - q.inputMin)) * 100);
                                 html += '<div class="norm-rating"><span class="norm-category">Score: ' + Math.max(0, Math.min(100, pct)) + '%</span></div>';
+                            }
+                            html += '</div>';
+                        }
+
+                        // Gender-specific linear score display (e.g. HDL, WHR)
+                        if (q.genderScoring) {
+                            html += '<div id="normRating-' + q.id + '">';
+                            if (currentValue !== '' && currentValue !== null && demo.sex) {
+                                const v = parseFloat(currentValue);
+                                const bounds = q.genderScoring[demo.sex] || q.genderScoring['male'];
+                                const pct = Math.round(((v - bounds.inputMin) / (bounds.inputMax - bounds.inputMin)) * 100);
+                                html += '<div class="norm-rating"><span class="norm-category">Score: ' + Math.max(0, Math.min(100, pct)) + '%</span></div>';
+                            } else if (!demo.sex) {
+                                html += '<div class="demographics-prompt"><i data-lucide="alert-circle" style="width:16px;height:16px;flex-shrink:0;"></i> Enter your biological sex in the Medical section to see your personalized rating.</div>';
                             }
                             html += '</div>';
                         }
@@ -2490,11 +2805,28 @@
             const value = currentData.answers[catKey]?.[secKey]?.[qId];
 
             // Linear-scored inputs (e.g. wearable sleep score 0-100)
-            if (q.inputMin !== undefined && q.inputMax !== undefined && !q.normsTable) {
+            if (q.inputMin !== undefined && q.inputMax !== undefined && !q.normsTable && !q.genderScoring) {
                 if (value !== null && value !== undefined && value !== '') {
                     const v = parseFloat(value);
                     const pct = Math.round(((v - q.inputMin) / (q.inputMax - q.inputMin)) * 100);
                     container.innerHTML = '<div class="norm-rating"><span class="norm-category">Score: ' + Math.max(0, Math.min(100, pct)) + '%</span></div>';
+                } else {
+                    container.innerHTML = '';
+                }
+                return;
+            }
+
+            // Gender-specific linear scoring (e.g. HDL, WHR)
+            if (q.genderScoring) {
+                const demo = getDemographics();
+                if (value !== null && value !== undefined && value !== '' && demo.sex) {
+                    const v = parseFloat(value);
+                    const bounds = q.genderScoring[demo.sex] || q.genderScoring['male'];
+                    const pct = Math.round(((v - bounds.inputMin) / (bounds.inputMax - bounds.inputMin)) * 100);
+                    container.innerHTML = '<div class="norm-rating"><span class="norm-category">Score: ' + Math.max(0, Math.min(100, pct)) + '%</span></div>';
+                } else if (!getDemographics().sex) {
+                    container.innerHTML = '<div class="demographics-prompt"><i data-lucide="alert-circle" style="width:16px;height:16px;flex-shrink:0;"></i> Enter your biological sex in the Medical section to see your personalized rating.</div>';
+                    lucide.createIcons();
                 } else {
                     container.innerHTML = '';
                 }
@@ -2557,6 +2889,9 @@
         document.addEventListener('DOMContentLoaded', function() {
             lucide.createIcons();
             loadData();
+            // Recalculate all scores on load (picks up formula changes and cross-section inputs)
+            calculateAllScores();
+            saveData();
             // Capture baseline scores for this session (for accurate change tracking)
             sessionStartScores = { ...currentData.scores };
             document.getElementById('userName').textContent = currentData.userName;
