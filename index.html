@@ -522,12 +522,18 @@
                     else ageHTML = '<div class="fitness-age neutral">' + label + ': <strong>' + fa + '</strong> (matches your age)</div>';
                 }
             }
+
             return '<div class="norm-rating ' + result.ratingClass + '">' +
                 '<div class="norm-rating-label">Your rating (' + demo.sex + ', age ' + demo.age + ')</div>' +
                 '<div class="norm-rating-value">' + result.category + ' — ' + Math.round(result.score * 10) + '%</div>' +
                 ageHTML + '</div>';
         }
 
+        /**
+         * Build a dynamic coaching line for norm-table questions.
+         * Only shows when there's a previous answer to compare against.
+         * References the actual score delta, category, and a concrete nudge.
+         */
         // ========================================
         // COOPER INSTITUTE VO2MAX NORMS
         // ========================================
@@ -599,7 +605,7 @@
         // ========================================
         // SCREENING GUIDELINES (by country)
         // ========================================
-        const SCREENING_GUIDELINES = {
+        let SCREENING_GUIDELINES = {
             de: [
                 { id: "checkup35", name: "General Health Check-up (Check-up 35)", desc: "Blood pressure, lipids, glucose, kidney function, hepatitis B/C", gender: "all", ageStart: 35, ageEnd: 120, freq: "Every 3 years", source: "GKV / G-BA", helpLink: "medical-evidence.html#q-checkup" },
                 { id: "skin", name: "Skin Cancer Screening", desc: "Full-body dermatological exam for melanoma and other skin cancers", gender: "all", ageStart: 35, ageEnd: 120, freq: "Every 2 years", source: "GKV", helpLink: "medical-evidence.html#q-skin" },
@@ -848,6 +854,7 @@
                                 }
                             },
                             "questions": [
+                                // --- Cardiovascular only ---
                                 {
                                     "id": "MD3_apob",
                                     "question": "What is your ApoB level?",
@@ -859,9 +866,12 @@
                                     "unit": "mg/dL",
                                     "inputMin": 130,
                                     "inputMax": 60,
+                                    "edgeFloor": 30,
+                                    "edgeFloorLabel": "ApoB below 30 mg/dL is unusually low — verify with your lab.",
                                     "cardiovascularWeight": 0.3,
                                     "metabolicWeight": 0,
-                                    "helpLink": "cardiovascular-evidence.html#q-apob"
+                                    "helpLink": "cardiovascular-evidence.html#q-apob",
+                                    "group": "cardiovascular"
                                 },
                                 {
                                     "id": "MD3_bp",
@@ -869,15 +879,35 @@
                                     "hint": "The top number, e.g. 120 in 120/80 (mmHg). Leave blank if unknown.",
                                     "type": "number",
                                     "min": 70,
-                                    "max": 200,
+                                    "max": 220,
                                     "step": 1,
                                     "unit": "mmHg",
                                     "inputMin": 130,
                                     "inputMax": 110,
+                                    "edgeFloor": 100,
+                                    "edgeFloorLabel": "Systolic BP below 100 mmHg (hypotension) may indicate a health issue.",
                                     "cardiovascularWeight": 0.25,
                                     "metabolicWeight": 0,
-                                    "helpLink": "cardiovascular-evidence.html#q-bp"
+                                    "helpLink": "cardiovascular-evidence.html#q-bp",
+                                    "group": "cardiovascular"
                                 },
+                                {
+                                    "id": "MD3_lpa",
+                                    "question": "What is your Lp(a) level?",
+                                    "hint": "Specialized test, usually in nmol/L. Leave blank if not tested.",
+                                    "type": "number",
+                                    "min": 0,
+                                    "max": 500,
+                                    "step": 1,
+                                    "unit": "nmol/L",
+                                    "inputMin": 125,
+                                    "inputMax": 30,
+                                    "cardiovascularWeight": 0.15,
+                                    "metabolicWeight": 0,
+                                    "helpLink": "cardiovascular-evidence.html#q-lpa",
+                                    "group": "cardiovascular"
+                                },
+                                // --- Shared (CV + Metabolic) ---
                                 {
                                     "id": "MD3_hdl",
                                     "question": "What is your HDL cholesterol?",
@@ -897,9 +927,12 @@
                                             "inputMax": 70
                                         }
                                     },
+                                    "edgeCeiling": 100,
+                                    "edgeCeilingLabel": "HDL above 100 mg/dL may paradoxically increase mortality risk (Madsen et al. 2017) — discuss with your doctor.",
                                     "cardiovascularWeight": 0.15,
                                     "metabolicWeight": 0.25,
-                                    "helpLink": "cardiovascular-evidence.html#q-hdl"
+                                    "helpLink": "cardiovascular-evidence.html#q-hdl",
+                                    "group": "shared"
                                 },
                                 {
                                     "id": "MD3_trig",
@@ -912,39 +945,31 @@
                                     "unit": "mg/dL",
                                     "inputMin": 150,
                                     "inputMax": 70,
+                                    "edgeFloor": 30,
+                                    "edgeFloorLabel": "Triglycerides below 30 mg/dL are very unusual — verify with your lab.",
                                     "cardiovascularWeight": 0.15,
                                     "metabolicWeight": 0.25,
-                                    "helpLink": "cardiovascular-evidence.html#q-trig"
+                                    "helpLink": "cardiovascular-evidence.html#q-trig",
+                                    "group": "shared"
                                 },
-                                {
-                                    "id": "MD3_lpa",
-                                    "question": "What is your Lp(a) level?",
-                                    "hint": "Specialized test, usually in nmol/L. Leave blank if not tested.",
-                                    "type": "number",
-                                    "min": 0,
-                                    "max": 500,
-                                    "step": 1,
-                                    "unit": "nmol/L",
-                                    "inputMin": 125,
-                                    "inputMax": 30,
-                                    "cardiovascularWeight": 0.15,
-                                    "metabolicWeight": 0,
-                                    "helpLink": "cardiovascular-evidence.html#q-lpa"
-                                },
+                                // --- Metabolic only ---
                                 {
                                     "id": "MD3_insulin",
                                     "question": "What is your fasting insulin level?",
                                     "hint": "Found on metabolic panel (µIU/mL). Leave blank if not tested.",
                                     "type": "number",
                                     "min": 0,
-                                    "max": 50,
+                                    "max": 80,
                                     "step": 0.1,
                                     "unit": "µIU/mL",
                                     "inputMin": 25,
                                     "inputMax": 5,
+                                    "edgeFloor": 1,
+                                    "edgeFloorLabel": "Fasting insulin below 1 µIU/mL is very unusual — verify with your lab.",
                                     "cardiovascularWeight": 0,
                                     "metabolicWeight": 0.25,
-                                    "helpLink": "metabolic-evidence.html#q-insulin"
+                                    "helpLink": "metabolic-evidence.html#q-insulin",
+                                    "group": "metabolic"
                                 },
                                 {
                                     "id": "MD3_glucose",
@@ -952,14 +977,17 @@
                                     "hint": "Found on basic metabolic panel (mg/dL). Leave blank if not tested.",
                                     "type": "number",
                                     "min": 40,
-                                    "max": 300,
+                                    "max": 400,
                                     "step": 1,
                                     "unit": "mg/dL",
                                     "inputMin": 100,
                                     "inputMax": 80,
+                                    "edgeFloor": 55,
+                                    "edgeFloorLabel": "Fasting glucose below 55 mg/dL (hypoglycemia) may indicate a health issue.",
                                     "cardiovascularWeight": 0,
                                     "metabolicWeight": 0.25,
-                                    "helpLink": "metabolic-evidence.html#q-glucose"
+                                    "helpLink": "metabolic-evidence.html#q-glucose",
+                                    "group": "metabolic"
                                 }
                             ]
                         }
@@ -1207,7 +1235,38 @@
                                     "normsTable": "VO2MAX_NORMS",
                                     "cooperCalc": true,
                                     "fitnessAgeLabel": "VO2max age",
-                                    "helpLink": "vo2max-evidence.html#q3"
+                                    "helpLink": "vo2max-evidence.html#q3",
+                                    "coaching": {
+                                        "impactWeight": 0.95,
+                                        "improvability": 0.95,
+                                        "benefitType": "short-term",
+                                        "benefitTimeline": "2–6 weeks",
+                                        "preScoreNudge": "VO2max is the single strongest predictor of longevity — yet most people have never measured theirs. Without knowing your number, you can't see your biggest lever.",
+                                        "concreteBenefit": "Every MET you gain gives you more energy for daily life and adds measurable longevity protection.",
+                                        "recoveryNudge": "VO2max bounces back quickly — a few weeks of consistent movement will reverse this.",
+                                        "messages": {
+                                            "q1_initial": {"headline":"Your VO2max puts you in the bottom quartile — but this is where gains come fastest","detail":"People starting here typically gain 1 MET (3.5 ml/kg/min) within 4–6 weeks of regular brisk walking. That means climbing 2–3 flights of stairs without stopping for breath. VO2max is the strongest single predictor of all-cause mortality — and it's highly trainable at any starting point."},
+                                            "q1_improved": {"headline":"You're making real progress — every point of VO2max you gain adds measurable daily capacity","detail":"The improvement you've made translates directly to easier movement: less breathlessness on stairs, more energy for daily tasks. Keep this trajectory — research shows the biggest mortality reduction comes from moving out of the bottom 25%."},
+                                            "q1_stable": {"headline":"Your VO2max hasn't changed yet — let's find what unlocks movement for you","detail":"Even 10 minutes of brisk walking per day can start shifting VO2max within weeks. The key is consistency, not intensity. Could you add a short walk after one meal each day?"},
+                                            "q1_declined": {"headline":"Your VO2max has dipped — this is common and reversible","detail":"VO2max fluctuates with illness, stress, and inactivity. A few weeks of regular movement will recover what you've lost. The important thing is restarting, not where you restart from."},
+                                            "q2_initial": {"headline":"You have a solid foundation — the next tier unlocks noticeably easier daily movement","detail":"At your current level, daily activities are manageable but may still feel effortful. Improving by 1 MET means brisk walking feels easy, moderate hikes become enjoyable, and you recover faster from physical tasks. This is achievable in 4–8 weeks."},
+                                            "q2_improved": {"headline":"You've crossed into the next tier — can you feel the difference?","detail":"Most people at this stage notice stairs getting easier and energy lasting longer through the afternoon. You're moving away from the risk zone — each additional point compounds your protection."},
+                                            "q2_stable": {"headline":"You're holding steady — now is the time to push for the next level","detail":"Consistency brought you here. Adding interval efforts — even short bursts of faster walking — is what drives VO2max from fair toward good. Two sessions per week is enough to see change."},
+                                            "q2_declined": {"headline":"Your VO2max has dropped — worth checking what changed","detail":"Common causes: reduced activity during a busy period, illness, or poor sleep. VO2max responds quickly to resumed training. Even 2–3 weeks of regular activity should reverse this decline."},
+                                            "q3_initial": {"headline":"You're above average — pushing further puts you in the protective range","detail":"At this level, you can hike, cycle, and handle physically demanding days comfortably. Moving into the top quartile is associated with significantly lower all-cause mortality. You're within reach — structured cardio 3× per week can get you there."},
+                                            "q3_improved": {"headline":"Strong progress — you're entering the range where health protection compounds","detail":"Your improvement means more than fitness — it's extending your healthspan. At this level, activities like hill hiking, recreational sports, and active travel become easy. The gap to 'excellent' is smaller than what you've already covered."},
+                                            "q3_stable": {"headline":"Good and consistent — the foundation is solid","detail":"Maintaining this level already puts you ahead of most people your age. To push higher, consider adding one high-intensity interval session per week — the most time-efficient way to drive VO2max upward."},
+                                            "q3_declined": {"headline":"A small decline from a good base — easy to recover","detail":"You have the fitness foundation to bounce back quickly. Resuming your previous routine should restore your level within 2–3 weeks. Fitness memory works in your favor."},
+                                            "q4_initial": {"headline":"Excellent — you're in the top quartile for your age and sex","detail":"Your VO2max puts you in a category associated with dramatically lower mortality risk and high functional independence into older age. Hiking with a heavy pack, vigorous sports, and physically demanding work are all well within your capacity."},
+                                            "q4_improved": {"headline":"You've pushed into excellent territory — this is where longevity protection is strongest","detail":"Research shows diminishing returns above this level for mortality — but the functional capacity gains continue. You're building a reserve that pays dividends for decades."},
+                                            "q4_stable": {"headline":"Maintaining excellent fitness — this is the goal","detail":"Consistency at this level is more valuable than occasional peaks. Your current routine is working. Focus on sustainability and injury prevention to keep this level for years."},
+                                            "q4_declined": {"headline":"A dip from excellent — your base fitness makes recovery fast","detail":"At your level, VO2max fluctuations are normal with training cycles, travel, or seasonal changes. Your cardiovascular system retains adaptations well — a focused 2–3 week block will restore your level."},
+                                            "q5_initial": {"headline":"Superior — you're performing at an exceptional level","detail":"Your VO2max places you in the top 3% for your age and sex. This level of cardiovascular fitness is associated with the lowest possible mortality risk. You have the aerobic capacity for mountaineering, competitive endurance sports, and sustained high-output activities."},
+                                            "q5_improved": {"headline":"You've reached the highest tier — an extraordinary achievement","detail":"Very few people achieve this level. You're maximizing both longevity protection and functional capacity. The focus now is maintaining this through smart, sustainable training."},
+                                            "q5_stable": {"headline":"Maintaining superior fitness — you're in the optimal zone","detail":"At this level, the priority shifts from improvement to longevity of the habit. Injury prevention, recovery quality, and training variety keep you here for years rather than months."},
+                                            "q5_declined": {"headline":"A step back from superior — still in excellent range","detail":"Even with a decline, you're likely still in the top 10%. The fitness base you've built retains well. Adjust training load or recovery as needed — you know your body at this level."}
+                                        }
+                                    }
                                 },
                                 {
                                     "id": "E1_method",
@@ -1883,6 +1942,7 @@
                 if (!currentData.previousScores) currentData.previousScores = {};
                 if (!currentData.scores) currentData.scores = {};
                 if (!currentData.answers) currentData.answers = {};
+                if (!currentData.previousAnswers) currentData.previousAnswers = {};
             }
 
             // Migrate MD1_age → MD1_yob for existing users
@@ -1910,11 +1970,199 @@
             calculateAllScores();
         }
 
-        function saveData() { localStorage.setItem('longevityPathData', JSON.stringify(currentData)); }
+        function saveData() {
+            updatePreviousAnswers();
+            localStorage.setItem('longevityPathData', JSON.stringify(currentData));
+        }
 
         // ========================================
         // SCORE CALCULATION
         // ========================================
+
+        /**
+         * Apply edge barriers to a raw 0-100 score.
+         * If value is below edgeFloor → score drops linearly from 100% at edgeFloor to 0% at question.min
+         * If value is above edgeCeiling → score drops linearly from 100% at edgeCeiling to 0% at question.max
+         * Otherwise returns the raw score unchanged.
+         */
+        function applyEdgeBarriers(rawScore, value, q, genderBounds) {
+            const v = parseFloat(value);
+            if (isNaN(v)) return rawScore;
+            // Edge floor: values too low are bad (e.g., BP < 100)
+            if (q.edgeFloor !== undefined && v < q.edgeFloor) {
+                const optimalLow = genderBounds ? genderBounds.inputMax : q.inputMax;
+                // Score drops from 100 at edgeFloor to 0 at question.min
+                const range = q.edgeFloor - q.min;
+                if (range <= 0) return 0;
+                return Math.max(0, Math.min(100, ((v - q.min) / range) * 100));
+            }
+            // Edge ceiling: values too high are bad (e.g., HDL > 120)
+            if (q.edgeCeiling !== undefined && v > q.edgeCeiling) {
+                const range = q.max - q.edgeCeiling;
+                if (range <= 0) return 0;
+                return Math.max(0, Math.min(100, ((q.max - v) / range) * 100));
+            }
+            return rawScore;
+        }
+
+        // ========================================
+        // COACHING ENGINE
+        // ========================================
+
+        /**
+         * Determine the score bucket (q1–q5) for a norm-table question.
+         * Uses the same lookupNormScore() function the display uses.
+         * Returns 'q1'–'q5' or null if insufficient data.
+         *
+         * Buckets map to Cooper percentile ranges:
+         *   q1 = <25%  (Very Poor / Poor)
+         *   q2 = <50%  (Fair)
+         *   q3 = <75%  (Good)
+         *   q4 = <97%  (Excellent)
+         *   q5 = ≥97%  (Superior)
+         */
+        function getScoreBucket(q, value) {
+            if (value === null || value === undefined || value === '') return null;
+            const v = parseFloat(value);
+            if (isNaN(v)) return null;
+
+            // Norm-table questions (VO2max, push-ups, chair stand)
+            if (q.normsTable) {
+                const demo = getDemographics();
+                if (!demo.age || !demo.sex) return null;
+                const table = q.normsTable === 'VO2MAX_NORMS' ? VO2MAX_NORMS
+                    : q.normsTable === 'PUSHUP_NORMS' ? PUSHUP_NORMS
+                    : q.normsTable === 'CHAIRSTAND_NORMS' ? CHAIRSTAND_NORMS : null;
+                if (!table) return null;
+                const result = lookupNormScore(table, demo.sex, demo.age, v);
+                const pct = result.score * 10; // 0–100
+                if (pct < 25) return 'q1';
+                if (pct < 50) return 'q2';
+                if (pct < 75) return 'q3';
+                if (pct < 97) return 'q4';
+                return 'q5';
+            }
+
+            // Linear/gender-scored questions — use questionScorePct
+            const pct = questionScorePct(q, value);
+            if (pct === null) return null;
+            if (pct < 25) return 'q1';
+            if (pct < 50) return 'q2';
+            if (pct < 75) return 'q3';
+            if (pct < 97) return 'q4';
+            return 'q5';
+        }
+
+        /**
+         * Determine trajectory for a question by comparing current vs previous answer.
+         * Uses previousAnswers from localStorage (set at end of previous session),
+         * NOT keystroke-level tracking.
+         * Returns 'initial' | 'improved' | 'stable' | 'declined'
+         */
+        function getTrajectory(qId, currentValue, previousValue) {
+            if (previousValue === null || previousValue === undefined) return 'initial';
+            const curr = parseFloat(currentValue);
+            const prev = parseFloat(previousValue);
+            if (isNaN(curr) || isNaN(prev)) return 'initial';
+            const diff = curr - prev;
+            // Use a small threshold (0.5) to avoid "improved" from measurement noise
+            if (diff > 0.5) return 'improved';
+            if (diff < -0.5) return 'declined';
+            return 'stable';
+        }
+
+        /**
+         * Get the coaching message for a question based on current score bucket and trajectory.
+         * Returns { headline, detail } or null if no coaching data exists.
+         */
+        function getCoachingMessage(catKey, secKey, qId) {
+            const q = CATEGORIES[catKey].sections[secKey].questions.find(x => x.id === qId);
+            if (!q || !q.coaching || !q.coaching.messages) return null;
+
+            const value = currentData.answers[catKey]?.[secKey]?.[qId];
+            const bucket = getScoreBucket(q, value);
+            if (!bucket) return null;
+
+            const prevValue = currentData.previousAnswers?.[qId] ?? null;
+            const trajectory = getTrajectory(qId, value, prevValue);
+
+            const key = bucket + '_' + trajectory;
+            return q.coaching.messages[key] || null;
+        }
+
+        /**
+         * Build HTML for coaching message display.
+         */
+        function buildCoachingHTML(msg) {
+            if (!msg) return '';
+            return '<div class="coaching-card" style="margin-top:8px;padding:10px 12px;background:linear-gradient(135deg,#f0f9ff 0%,#e8f4f8 100%);border-radius:8px;border-left:3px solid var(--color-teal);font-size:0.82rem;">' +
+                '<div style="font-weight:600;color:var(--color-text);margin-bottom:4px;display:flex;align-items:center;gap:6px;">' +
+                '<span style="color:var(--color-teal);font-size:0.9rem;">✦</span> ' + msg.headline + '</div>' +
+                '<div style="color:var(--color-text-muted);line-height:1.5;">' + msg.detail + '</div>' +
+                '</div>';
+        }
+
+        /**
+         * Update coaching display for a specific question (called after value changes).
+         */
+        function updateCoachingDisplay(catKey, secKey, qId) {
+            const container = document.getElementById('coaching-' + qId);
+            if (!container) return;
+            const q = CATEGORIES[catKey].sections[secKey].questions.find(x => x.id === qId);
+            if (!q || !q.coaching) return;
+            const msg = getCoachingMessage(catKey, secKey, qId);
+            if (msg) {
+                container.innerHTML = buildCoachingHTML(msg);
+            } else {
+                const value = currentData.answers[catKey]?.[secKey]?.[qId];
+                if (q.coaching.preScoreNudge && (value === null || value === undefined || value === '')) {
+                    container.innerHTML = '<div class="coaching-nudge" style="margin-top:8px;padding:10px 12px;background:#fafafa;border-radius:8px;border-left:3px solid var(--color-amber);font-size:0.82rem;color:var(--color-text-muted);line-height:1.5;">' +
+                        '<span style="color:var(--color-amber);">✦</span> ' + q.coaching.preScoreNudge + '</div>';
+                } else {
+                    container.innerHTML = '';
+                }
+            }
+        }
+
+        /**
+         * Snapshot of answers at session start — used to compute previousAnswers
+         * when saving. This avoids keystroke-level tracking that corrupts trajectory.
+         */
+        let sessionStartAnswers = {};
+
+        /**
+         * Take a flat snapshot of all current answers (called once at session start).
+         * Format: { 'E1_vo2': 40, 'MD3_bp': 120, ... }
+         */
+        function snapshotAnswers() {
+            const snap = {};
+            Object.keys(CATEGORIES).forEach(catKey => {
+                Object.keys(CATEGORIES[catKey].sections).forEach(secKey => {
+                    const answers = currentData.answers[catKey]?.[secKey] || {};
+                    CATEGORIES[catKey].sections[secKey].questions.forEach(q => {
+                        const val = answers[q.id];
+                        if (val !== null && val !== undefined && val !== '') {
+                            snap[q.id] = val;
+                        }
+                    });
+                });
+            });
+            return snap;
+        }
+
+        /**
+         * Update previousAnswers from session start snapshot.
+         * Called by saveData() — sets previousAnswers to the values the user had
+         * when they opened the page (not intermediate keystrokes).
+         */
+        function updatePreviousAnswers() {
+            if (!currentData.previousAnswers) currentData.previousAnswers = {};
+            Object.keys(sessionStartAnswers).forEach(qId => {
+                // Only overwrite if session start had a real value
+                currentData.previousAnswers[qId] = sessionStartAnswers[qId];
+            });
+        }
+
         // Traffic light class: maps a 0-100 percentage to a coach color class
         function trafficClass(pct) {
             if (pct < 0) return '';
@@ -2031,17 +2279,25 @@
                 const value = answers[q.id];
                 if (value === null || value === undefined || value === '') return;
 
+                // Skip out-of-range values entirely — don't let them affect score
+                if (q.type === 'number') {
+                    const v = parseFloat(value);
+                    if (isNaN(v) || v < q.min || v > q.max) return;
+                }
+
                 let raw = null; // 0-100 scale
+                let genderBounds = null;
                 if (q.type === 'number' && q.genderScoring) {
                     const v = parseFloat(value);
                     const sex = demo.sex || 'male';
-                    const bounds = q.genderScoring[sex] || q.genderScoring['male'];
-                    raw = Math.max(0, Math.min(100, ((v - bounds.inputMin) / (bounds.inputMax - bounds.inputMin)) * 100));
+                    genderBounds = q.genderScoring[sex] || q.genderScoring['male'];
+                    raw = Math.max(0, Math.min(100, ((v - genderBounds.inputMin) / (genderBounds.inputMax - genderBounds.inputMin)) * 100));
                 } else if (q.type === 'number' && q.inputMin !== undefined && q.inputMax !== undefined) {
                     const v = parseFloat(value);
                     raw = Math.max(0, Math.min(100, ((v - q.inputMin) / (q.inputMax - q.inputMin)) * 100));
                 }
                 if (raw !== null) {
+                    raw = applyEdgeBarriers(raw, value, q, genderBounds);
                     weightedTotal += raw * w;
                     sumWeights += w;
                 }
@@ -2062,16 +2318,22 @@
                 const apobVal = parseFloat(answers_sec['MD3_apob']);
                 if (!isNaN(apobVal)) {
                     const q = section.questions.find(q => q.id === 'MD3_apob');
-                    const s = Math.max(0, Math.min(100, ((apobVal - q.inputMin) / (q.inputMax - q.inputMin)) * 100));
-                    lipoScore = (lipoScore || 0) + s * 0.65;
-                    lipoW += 0.65;
+                    if (apobVal >= q.min && apobVal <= q.max) {
+                        let s = Math.max(0, Math.min(100, ((apobVal - q.inputMin) / (q.inputMax - q.inputMin)) * 100));
+                        s = applyEdgeBarriers(s, apobVal, q, null);
+                        lipoScore = (lipoScore || 0) + s * 0.65;
+                        lipoW += 0.65;
+                    }
                 }
                 const lpaVal = parseFloat(answers_sec['MD3_lpa']);
                 if (!isNaN(lpaVal)) {
                     const q = section.questions.find(q => q.id === 'MD3_lpa');
-                    const s = Math.max(0, Math.min(100, ((lpaVal - q.inputMin) / (q.inputMax - q.inputMin)) * 100));
-                    lipoScore = (lipoScore || 0) + s * 0.35;
-                    lipoW += 0.35;
+                    if (lpaVal >= q.min && lpaVal <= q.max) {
+                        let s = Math.max(0, Math.min(100, ((lpaVal - q.inputMin) / (q.inputMax - q.inputMin)) * 100));
+                        s = applyEdgeBarriers(s, lpaVal, q, null);
+                        lipoScore = (lipoScore || 0) + s * 0.35;
+                        lipoW += 0.35;
+                    }
                 }
                 if (lipoW > 0) lipoScore = lipoScore / lipoW;
 
@@ -2080,7 +2342,10 @@
                 const bpVal = parseFloat(answers_sec['MD3_bp']);
                 if (!isNaN(bpVal)) {
                     const q = section.questions.find(q => q.id === 'MD3_bp');
-                    bpScore = Math.max(0, Math.min(100, ((bpVal - q.inputMin) / (q.inputMax - q.inputMin)) * 100));
+                    if (bpVal >= q.min && bpVal <= q.max) {
+                        bpScore = Math.max(0, Math.min(100, ((bpVal - q.inputMin) / (q.inputMax - q.inputMin)) * 100));
+                        bpScore = applyEdgeBarriers(bpScore, bpVal, q, null);
+                    }
                 }
 
                 // --- Driver 3: Smoking ---
@@ -2506,11 +2771,24 @@
                     return; // Skip the regular question loop for this section
                 }
 
+                let lastGroup = null;
                 section.questions.forEach(q => {
                     // Hide age-gated questions completely if user is below minimum age (or age unknown)
                     if (q.ageMin) {
                         const d = getDemographics();
                         if (d.age === null || d.age < q.ageMin) return;
+                    }
+                    // Group labels for blood markers
+                    if (q.group && q.group !== lastGroup) {
+                        lastGroup = q.group;
+                        const groupLabels = {
+                            'cardiovascular': 'Cardiovascular Markers',
+                            'shared': 'Shared Markers (CV + Metabolic)',
+                            'metabolic': 'Metabolic Markers'
+                        };
+                        if (groupLabels[q.group]) {
+                            html += '<div style="font-size:0.82rem;font-weight:600;color:var(--color-teal);text-transform:uppercase;letter-spacing:0.05em;margin:18px 0 6px 0;padding-bottom:4px;border-bottom:1px solid rgba(0,0,0,0.08);">' + groupLabels[q.group] + '</div>';
+                        }
                     }
                     const value = answers[q.id];
                     const qHelpLink = q.helpLink ? `<a href="${q.helpLink}" class="help-link" onclick="saveScrollState(event)">?</a>` : '';
@@ -2568,8 +2846,22 @@
                             html += '<div id="normRating-' + q.id + '">';
                             if (currentValue !== '' && currentValue !== null) {
                                 const v = parseFloat(currentValue);
-                                const pct = Math.round(((v - q.inputMin) / (q.inputMax - q.inputMin)) * 100);
-                                html += '<div class="norm-rating"><span class="norm-category">Score: ' + Math.max(0, Math.min(100, pct)) + '%</span></div>';
+                                // Out-of-range check
+                                if (v < q.min || v > q.max) {
+                                    html += '<div class="norm-rating" style="color:var(--color-red);"><i data-lucide="alert-triangle" style="width:14px;height:14px;"></i> Value out of possible range (' + q.min + '–' + q.max + ' ' + (q.unit||'') + ')</div>';
+                                } else {
+                                    let pct = Math.round(((v - q.inputMin) / (q.inputMax - q.inputMin)) * 100);
+                                    pct = Math.max(0, Math.min(100, pct));
+                                    pct = Math.round(applyEdgeBarriers(pct, v, q, null));
+                                    html += '<div class="norm-rating"><span class="norm-category">Score: ' + pct + '%</span></div>';
+                                    // Edge barrier warning
+                                    if (q.edgeFloor !== undefined && v < q.edgeFloor) {
+                                        html += '<div class="norm-rating" style="color:var(--color-amber);font-size:0.82rem;margin-top:2px;"><i data-lucide="alert-circle" style="width:13px;height:13px;"></i> ' + q.edgeFloorLabel + '</div>';
+                                    }
+                                    if (q.edgeCeiling !== undefined && v > q.edgeCeiling) {
+                                        html += '<div class="norm-rating" style="color:var(--color-amber);font-size:0.82rem;margin-top:2px;"><i data-lucide="alert-circle" style="width:13px;height:13px;"></i> ' + q.edgeCeilingLabel + '</div>';
+                                    }
+                                }
                             }
                             html += '</div>';
                         }
@@ -2579,9 +2871,20 @@
                             html += '<div id="normRating-' + q.id + '">';
                             if (currentValue !== '' && currentValue !== null && demo.sex) {
                                 const v = parseFloat(currentValue);
-                                const bounds = q.genderScoring[demo.sex] || q.genderScoring['male'];
-                                const pct = Math.round(((v - bounds.inputMin) / (bounds.inputMax - bounds.inputMin)) * 100);
-                                html += '<div class="norm-rating"><span class="norm-category">Score: ' + Math.max(0, Math.min(100, pct)) + '%</span></div>';
+                                // Out-of-range check
+                                if (v < q.min || v > q.max) {
+                                    html += '<div class="norm-rating" style="color:var(--color-red);"><i data-lucide="alert-triangle" style="width:14px;height:14px;"></i> Value out of possible range (' + q.min + '–' + q.max + ' ' + (q.unit||'') + ')</div>';
+                                } else {
+                                    const bounds = q.genderScoring[demo.sex] || q.genderScoring['male'];
+                                    let pct = Math.round(((v - bounds.inputMin) / (bounds.inputMax - bounds.inputMin)) * 100);
+                                    pct = Math.max(0, Math.min(100, pct));
+                                    pct = Math.round(applyEdgeBarriers(pct, v, q, bounds));
+                                    html += '<div class="norm-rating"><span class="norm-category">Score: ' + pct + '%</span></div>';
+                                    // Edge barrier warning
+                                    if (q.edgeCeiling !== undefined && v > q.edgeCeiling) {
+                                        html += '<div class="norm-rating" style="color:var(--color-amber);font-size:0.82rem;margin-top:2px;"><i data-lucide="alert-circle" style="width:13px;height:13px;"></i> ' + q.edgeCeilingLabel + '</div>';
+                                    }
+                                }
                             } else if (!demo.sex) {
                                 html += '<div class="demographics-prompt"><i data-lucide="alert-circle" style="width:16px;height:16px;flex-shrink:0;"></i> Enter your biological sex in the Medical section to see your personalized rating.</div>';
                             }
@@ -2601,6 +2904,8 @@
                             }
                             html += '</div>';
                         }
+
+                        // Coaching will be in a separate Coach view — not in the score section
                     }
                     html += `</div>`;
                 });
@@ -2808,8 +3113,22 @@
             if (q.inputMin !== undefined && q.inputMax !== undefined && !q.normsTable && !q.genderScoring) {
                 if (value !== null && value !== undefined && value !== '') {
                     const v = parseFloat(value);
-                    const pct = Math.round(((v - q.inputMin) / (q.inputMax - q.inputMin)) * 100);
-                    container.innerHTML = '<div class="norm-rating"><span class="norm-category">Score: ' + Math.max(0, Math.min(100, pct)) + '%</span></div>';
+                    if (v < q.min || v > q.max) {
+                        container.innerHTML = '<div class="norm-rating" style="color:var(--color-red);"><i data-lucide="alert-triangle" style="width:14px;height:14px;"></i> Value out of possible range (' + q.min + '–' + q.max + ' ' + (q.unit||'') + ')</div>';
+                    } else {
+                        let pct = Math.round(((v - q.inputMin) / (q.inputMax - q.inputMin)) * 100);
+                        pct = Math.max(0, Math.min(100, pct));
+                        pct = Math.round(applyEdgeBarriers(pct, v, q, null));
+                        let html = '<div class="norm-rating"><span class="norm-category">Score: ' + pct + '%</span></div>';
+                        if (q.edgeFloor !== undefined && v < q.edgeFloor) {
+                            html += '<div class="norm-rating" style="color:var(--color-amber);font-size:0.82rem;margin-top:2px;"><i data-lucide="alert-circle" style="width:13px;height:13px;"></i> ' + q.edgeFloorLabel + '</div>';
+                        }
+                        if (q.edgeCeiling !== undefined && v > q.edgeCeiling) {
+                            html += '<div class="norm-rating" style="color:var(--color-amber);font-size:0.82rem;margin-top:2px;"><i data-lucide="alert-circle" style="width:13px;height:13px;"></i> ' + q.edgeCeilingLabel + '</div>';
+                        }
+                        container.innerHTML = html;
+                    }
+                    lucide.createIcons();
                 } else {
                     container.innerHTML = '';
                 }
@@ -2821,9 +3140,20 @@
                 const demo = getDemographics();
                 if (value !== null && value !== undefined && value !== '' && demo.sex) {
                     const v = parseFloat(value);
-                    const bounds = q.genderScoring[demo.sex] || q.genderScoring['male'];
-                    const pct = Math.round(((v - bounds.inputMin) / (bounds.inputMax - bounds.inputMin)) * 100);
-                    container.innerHTML = '<div class="norm-rating"><span class="norm-category">Score: ' + Math.max(0, Math.min(100, pct)) + '%</span></div>';
+                    if (v < q.min || v > q.max) {
+                        container.innerHTML = '<div class="norm-rating" style="color:var(--color-red);"><i data-lucide="alert-triangle" style="width:14px;height:14px;"></i> Value out of possible range (' + q.min + '–' + q.max + ' ' + (q.unit||'') + ')</div>';
+                    } else {
+                        const bounds = q.genderScoring[demo.sex] || q.genderScoring['male'];
+                        let pct = Math.round(((v - bounds.inputMin) / (bounds.inputMax - bounds.inputMin)) * 100);
+                        pct = Math.max(0, Math.min(100, pct));
+                        pct = Math.round(applyEdgeBarriers(pct, v, q, bounds));
+                        let html = '<div class="norm-rating"><span class="norm-category">Score: ' + pct + '%</span></div>';
+                        if (q.edgeCeiling !== undefined && v > q.edgeCeiling) {
+                            html += '<div class="norm-rating" style="color:var(--color-amber);font-size:0.82rem;margin-top:2px;"><i data-lucide="alert-circle" style="width:13px;height:13px;"></i> ' + q.edgeCeilingLabel + '</div>';
+                        }
+                        container.innerHTML = html;
+                    }
+                    lucide.createIcons();
                 } else if (!getDemographics().sex) {
                     container.innerHTML = '<div class="demographics-prompt"><i data-lucide="alert-circle" style="width:16px;height:16px;flex-shrink:0;"></i> Enter your biological sex in the Medical section to see your personalized rating.</div>';
                     lucide.createIcons();
@@ -2886,14 +3216,57 @@
         // ========================================
         // INITIALIZATION
         // ========================================
-        document.addEventListener('DOMContentLoaded', function() {
+        async function initApp() {
+            // Load question definitions from external JSON (system data, no client data)
+            let jsonLoaded = false;
+            try {
+                const resp = await fetch('questions.json');
+                if (!resp.ok) throw new Error('HTTP ' + resp.status);
+                const qData = await resp.json();
+                // Merge externally-defined categories into CATEGORIES
+                if (qData.categories) {
+                    Object.keys(qData.categories).forEach(catKey => {
+                        // Deep-merge: copy coaching + other new properties onto existing questions
+                        if (CATEGORIES[catKey] && qData.categories[catKey].sections) {
+                            Object.keys(qData.categories[catKey].sections).forEach(secKey => {
+                                const jsonSec = qData.categories[catKey].sections[secKey];
+                                const inlineSec = CATEGORIES[catKey].sections?.[secKey];
+                                if (inlineSec && jsonSec.questions) {
+                                    jsonSec.questions.forEach(jsonQ => {
+                                        const inlineQ = inlineSec.questions?.find(q => q.id === jsonQ.id);
+                                        if (inlineQ) {
+                                            // Copy any properties from JSON that aren't in inline
+                                            Object.keys(jsonQ).forEach(prop => {
+                                                inlineQ[prop] = jsonQ[prop];
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                    jsonLoaded = true;
+                }
+                // Merge screening guidelines
+                if (qData.screeningGuidelines) {
+                    Object.keys(qData.screeningGuidelines).forEach(key => {
+                        SCREENING_GUIDELINES[key] = qData.screeningGuidelines[key];
+                    });
+                }
+                console.log('[LongevityPath] questions.json merged successfully');
+            } catch (e) {
+                console.warn('[LongevityPath] Could not load questions.json — using inline defaults:', e.message);
+                console.warn('[LongevityPath] Coaching features require questions.json (serve via HTTP, not file://)');
+            }
+
             lucide.createIcons();
             loadData();
             // Recalculate all scores on load (picks up formula changes and cross-section inputs)
             calculateAllScores();
             saveData();
-            // Capture baseline scores for this session (for accurate change tracking)
+            // Capture baseline scores and answers for this session
             sessionStartScores = { ...currentData.scores };
+            sessionStartAnswers = snapshotAnswers();
             document.getElementById('userName').textContent = currentData.userName;
             document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
             renderDimensions();
@@ -2901,6 +3274,10 @@
             initSwipeGesture();
             // Restore dimension + scroll position after back-navigation from evidence pages
             restoreScrollState();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initApp();
         });
     </script>
 </body>

@@ -1,1201 +1,1745 @@
 {
-  "medical": {
-    "name": "Medical",
-    "icon": "heart-pulse",
-    "sections": {
-      "sec1": {
-        "title": "Your Profile",
-        "weight": 0.15,
-        "questions": [
-          {
-            "id": "MD1_yob",
-            "question": "What year were you born?",
-            "hint": "Used for age-specific fitness norms and screening recommendations",
-            "type": "number",
-            "min": 1920,
-            "max": 2008,
-            "step": 1,
-            "unit": "year"
-          },
-          {
-            "id": "MD1_sex",
-            "question": "What is your biological sex?",
-            "hint": "Used for sex-specific fitness norms and screening recommendations",
-            "type": "radio",
-            "options": [
-              {
-                "value": "male",
-                "label": "Male"
-              },
-              {
-                "value": "female",
-                "label": "Female"
-              }
-            ]
-          },
-          {
-            "id": "MD1_country",
-            "question": "Which preventive care system applies to you?",
-            "hint": "Determines which screening guidelines we show",
-            "type": "radio",
-            "options": [
-              {
-                "value": "de",
-                "label": "Germany (GKV)",
-                "helpLink": "medical-evidence.html#q-system-de"
-              },
-              {
-                "value": "us",
-                "label": "United States",
-                "helpLink": "medical-evidence.html#q-system-us"
-              },
-              {
-                "value": "eu",
-                "label": "EU (other)",
-                "helpLink": "medical-evidence.html#q-system-eu"
-              },
-              {
-                "value": "other",
-                "label": "Other / Not sure",
-                "helpLink": "medical-evidence.html#q-system-other"
-              }
-            ]
-          },
-          {
-            "id": "MD1_smoking",
-            "question": "What is your smoking status?",
-            "hint": "Some screenings (e.g. lung cancer, aortic aneurysm) depend on smoking history",
-            "type": "radio",
-            "options": [
-              {
-                "value": "never",
-                "label": "Never smoked"
-              },
-              {
-                "value": "former",
-                "label": "Former smoker"
-              },
-              {
-                "value": "current",
-                "label": "Current smoker"
-              }
-            ]
-          },
-          {
-            "id": "MD1_1",
-            "question": "When was your last comprehensive health checkup?",
-            "type": "radio",
-            "helpLink": "medical-evidence.html#q-checkup",
-            "options": [
-              {
-                "value": "10",
-                "label": "Within the last year",
-                "points": 10
-              },
-              {
-                "value": "7",
-                "label": "1-2 years ago",
-                "points": 7
-              },
-              {
-                "value": "4",
-                "label": "2-3 years ago",
-                "points": 4
-              },
-              {
-                "value": "0",
-                "label": "More than 3 years ago",
-                "points": 0
-              }
-            ]
-          },
-          {
-            "id": "MD1_2",
-            "question": "Do you know your key health numbers? (Blood pressure, cholesterol, blood sugar)",
-            "type": "radio",
-            "options": [
-              {
-                "value": "10",
-                "label": "Yes, all of them",
-                "points": 10
-              },
-              {
-                "value": "7",
-                "label": "Most of them",
-                "points": 7
-              },
-              {
-                "value": "4",
-                "label": "Some of them",
-                "points": 4
-              },
-              {
-                "value": "0",
-                "label": "No, I don't know them",
-                "points": 0
-              }
-            ]
-          },
-          {
-            "id": "MD1_whr",
-            "question": "What is your waist-to-hip ratio?",
-            "hint": "Measure waist at navel, hips at widest point. Divide waist by hips. Leave blank if unknown.",
-            "type": "number",
-            "min": 0.5,
-            "max": 1.5,
-            "step": 0.01,
-            "genderScoring": {
-              "male": {
-                "inputMin": 0.95,
-                "inputMax": 0.8
-              },
-              "female": {
-                "inputMin": 0.85,
-                "inputMax": 0.7
-              }
+  "_version": "1.0",
+  "_description": "Question definitions, scoring rules, and coaching properties. System file — no client data.",
+  "categories": {
+    "medical": {
+      "name": "Medical",
+      "icon": "heart-pulse",
+      "sections": {
+        "sec1": {
+          "title": "Your Profile",
+          "weight": 0.15,
+          "questions": [
+            {
+              "id": "MD1_yob",
+              "question": "What year were you born?",
+              "hint": "Used for age-specific fitness norms and screening recommendations",
+              "type": "number",
+              "min": 1920,
+              "max": 2008,
+              "step": 1,
+              "unit": "year"
             },
-            "helpLink": "cardiometabolic-evidence.html#q-whr"
-          }
-        ]
-      },
-      "sec2": {
-        "title": "Recommended Screenings",
-        "weight": 0.35,
-        "description": "Based on your profile, here are the screenings recommended for you. Check the ones you are up to date on.",
-        "dynamic": "screenings",
-        "questions": []
-      },
-      "sec3": {
-        "title": "Blood Markers",
-        "weight": 0.5,
-        "description": "Enter your blood test results below. These markers are used to calculate both your Cardiovascular Health Score and your Metabolic Health Score.",
-        "subScores": {
-          "cardiovascular": {
-            "label": "Cardiovascular Health",
-            "icon": "heart",
-            "helpLink": "cardiovascular-evidence.html#q-attia"
-          },
-          "metabolic": {
-            "label": "Metabolic Health",
-            "icon": "activity",
-            "helpLink": "metabolic-evidence.html#q-means"
-          }
-        },
-        "questions": [
-          {
-            "id": "MD3_apob",
-            "question": "What is your ApoB level?",
-            "hint": "Found on advanced lipid panel (mg/dL). Leave blank if not tested.",
-            "type": "number",
-            "min": 20,
-            "max": 250,
-            "step": 1,
-            "unit": "mg/dL",
-            "inputMin": 130,
-            "inputMax": 60,
-            "cardiovascularWeight": 0.3,
-            "metabolicWeight": 0,
-            "helpLink": "cardiovascular-evidence.html#q-apob"
-          },
-          {
-            "id": "MD3_bp",
-            "question": "What is your systolic blood pressure?",
-            "hint": "The top number, e.g. 120 in 120/80 (mmHg). Leave blank if unknown.",
-            "type": "number",
-            "min": 70,
-            "max": 200,
-            "step": 1,
-            "unit": "mmHg",
-            "inputMin": 130,
-            "inputMax": 110,
-            "cardiovascularWeight": 0.25,
-            "metabolicWeight": 0,
-            "helpLink": "cardiovascular-evidence.html#q-bp"
-          },
-          {
-            "id": "MD3_hdl",
-            "question": "What is your HDL cholesterol?",
-            "hint": "Found on standard lipid panel (mg/dL). Leave blank if not tested.",
-            "type": "number",
-            "min": 10,
-            "max": 150,
-            "step": 1,
-            "unit": "mg/dL",
-            "genderScoring": {
-              "male": {
-                "inputMin": 40,
-                "inputMax": 60
-              },
-              "female": {
-                "inputMin": 50,
-                "inputMax": 70
-              }
+            {
+              "id": "MD1_sex",
+              "question": "What is your biological sex?",
+              "hint": "Used for sex-specific fitness norms and screening recommendations",
+              "type": "radio",
+              "options": [
+                {
+                  "value": "male",
+                  "label": "Male"
+                },
+                {
+                  "value": "female",
+                  "label": "Female"
+                }
+              ]
             },
-            "cardiovascularWeight": 0.15,
-            "metabolicWeight": 0.25,
-            "helpLink": "cardiovascular-evidence.html#q-hdl"
-          },
-          {
-            "id": "MD3_trig",
-            "question": "What are your triglycerides?",
-            "hint": "Found on standard lipid panel (mg/dL). Leave blank if not tested.",
-            "type": "number",
-            "min": 20,
-            "max": 500,
-            "step": 1,
-            "unit": "mg/dL",
-            "inputMin": 150,
-            "inputMax": 70,
-            "cardiovascularWeight": 0.15,
-            "metabolicWeight": 0.25,
-            "helpLink": "cardiovascular-evidence.html#q-trig"
-          },
-          {
-            "id": "MD3_lpa",
-            "question": "What is your Lp(a) level?",
-            "hint": "Specialized test, usually in nmol/L. Leave blank if not tested.",
-            "type": "number",
-            "min": 0,
-            "max": 500,
-            "step": 1,
-            "unit": "nmol/L",
-            "inputMin": 125,
-            "inputMax": 30,
-            "cardiovascularWeight": 0.15,
-            "metabolicWeight": 0,
-            "helpLink": "cardiovascular-evidence.html#q-lpa"
-          },
-          {
-            "id": "MD3_insulin",
-            "question": "What is your fasting insulin level?",
-            "hint": "Found on metabolic panel (µIU/mL). Leave blank if not tested.",
-            "type": "number",
-            "min": 0,
-            "max": 50,
-            "step": 0.1,
-            "unit": "µIU/mL",
-            "inputMin": 25,
-            "inputMax": 5,
-            "cardiovascularWeight": 0,
-            "metabolicWeight": 0.25,
-            "helpLink": "metabolic-evidence.html#q-insulin"
-          },
-          {
-            "id": "MD3_glucose",
-            "question": "What is your fasting blood glucose?",
-            "hint": "Found on basic metabolic panel (mg/dL). Leave blank if not tested.",
-            "type": "number",
-            "min": 40,
-            "max": 300,
-            "step": 1,
-            "unit": "mg/dL",
-            "inputMin": 100,
-            "inputMax": 80,
-            "cardiovascularWeight": 0,
-            "metabolicWeight": 0.25,
-            "helpLink": "metabolic-evidence.html#q-glucose"
-          }
-        ]
-      }
-    }
-  },
-  "nutrition": {
-    "name": "Nutrition",
-    "icon": "apple",
-    "sections": {
-      "sec1": {
-        "title": "Diet Adherence",
-        "weight": 0.25,
-        "questions": [
-          {
-            "id": "N1_1",
-            "question": "How much do you enjoy your food?",
-            "hint": "Rate from 1 (not at all) to 10 (always a delight)",
-            "type": "slider",
-            "min": 1,
-            "max": 10,
-            "helpLink": "nutrition-evidence.html#q8"
-          },
-          {
-            "id": "N1_2",
-            "question": "In which situations does your diet work well?",
-            "type": "checkbox",
-            "scoring": "count",
-            "helpLink": "nutrition-evidence.html#q9",
-            "options": [
-              {
-                "value": "restaurant",
-                "label": "Restaurant"
+            {
+              "id": "MD1_country",
+              "question": "Which preventive care system applies to you?",
+              "hint": "Determines which screening guidelines we show",
+              "type": "radio",
+              "options": [
+                {
+                  "value": "de",
+                  "label": "Germany (GKV)",
+                  "helpLink": "medical-evidence.html#q-system-de"
+                },
+                {
+                  "value": "us",
+                  "label": "United States",
+                  "helpLink": "medical-evidence.html#q-system-us"
+                },
+                {
+                  "value": "eu",
+                  "label": "EU (other)",
+                  "helpLink": "medical-evidence.html#q-system-eu"
+                },
+                {
+                  "value": "other",
+                  "label": "Other / Not sure",
+                  "helpLink": "medical-evidence.html#q-system-other"
+                }
+              ]
+            },
+            {
+              "id": "MD1_smoking",
+              "question": "What is your smoking status?",
+              "hint": "Some screenings (e.g. lung cancer, aortic aneurysm) depend on smoking history",
+              "type": "radio",
+              "options": [
+                {
+                  "value": "never",
+                  "label": "Never smoked"
+                },
+                {
+                  "value": "former",
+                  "label": "Former smoker"
+                },
+                {
+                  "value": "current",
+                  "label": "Current smoker"
+                }
+              ]
+            },
+            {
+              "id": "MD1_1",
+              "question": "When was your last comprehensive health checkup?",
+              "type": "radio",
+              "helpLink": "medical-evidence.html#q-checkup",
+              "options": [
+                {
+                  "value": "10",
+                  "label": "Within the last year",
+                  "points": 10
+                },
+                {
+                  "value": "7",
+                  "label": "1-2 years ago",
+                  "points": 7
+                },
+                {
+                  "value": "4",
+                  "label": "2-3 years ago",
+                  "points": 4
+                },
+                {
+                  "value": "0",
+                  "label": "More than 3 years ago",
+                  "points": 0
+                }
+              ]
+            },
+            {
+              "id": "MD1_2",
+              "question": "Do you know your key health numbers? (Blood pressure, cholesterol, blood sugar)",
+              "type": "radio",
+              "options": [
+                {
+                  "value": "10",
+                  "label": "Yes, all of them",
+                  "points": 10
+                },
+                {
+                  "value": "7",
+                  "label": "Most of them",
+                  "points": 7
+                },
+                {
+                  "value": "4",
+                  "label": "Some of them",
+                  "points": 4
+                },
+                {
+                  "value": "0",
+                  "label": "No, I don't know them",
+                  "points": 0
+                }
+              ]
+            },
+            {
+              "id": "MD1_whr",
+              "question": "What is your waist-to-hip ratio?",
+              "hint": "Measure waist at navel, hips at widest point. Divide waist by hips. Leave blank if unknown.",
+              "type": "number",
+              "min": 0.5,
+              "max": 1.5,
+              "step": 0.01,
+              "genderScoring": {
+                "male": {
+                  "inputMin": 0.95,
+                  "inputMax": 0.8
+                },
+                "female": {
+                  "inputMin": 0.85,
+                  "inputMax": 0.7
+                }
               },
-              {
-                "value": "travel",
-                "label": "Travel"
-              },
-              {
-                "value": "family",
-                "label": "Family and friends"
-              },
-              {
-                "value": "stress",
-                "label": "Stressful situations"
-              }
-            ]
-          },
-          {
-            "id": "N1_3",
-            "question": "How satisfied do you feel after eating?",
-            "type": "radio",
-            "helpLink": "nutrition-evidence.html#q10",
-            "options": [
-              {
-                "value": "10",
-                "label": "Always full, no cravings",
-                "points": 10
-              },
-              {
-                "value": "5",
-                "label": "Mostly full, rarely hungry",
-                "points": 5
-              },
-              {
-                "value": "2",
-                "label": "Regularly hungry",
-                "points": 2
-              },
-              {
-                "value": "0",
-                "label": "Constantly hungry",
-                "points": 0
-              }
-            ]
-          }
-        ]
-      },
-      "sec2": {
-        "title": "Progress",
-        "weight": 0.25,
-        "questions": [
-          {
-            "id": "N2_1",
-            "question": "How is your progress towards your goals?",
-            "type": "radio",
-            "helpLink": "nutrition-evidence.html#q11",
-            "options": [
-              {
-                "value": "10",
-                "label": "Every week is a win",
-                "points": 10
-              },
-              {
-                "value": "8",
-                "label": "Most weeks successful",
-                "points": 8
-              },
-              {
-                "value": "5",
-                "label": "Slow but visible progress",
-                "points": 5
-              },
-              {
-                "value": "2",
-                "label": "Stagnation",
-                "points": 2
-              },
-              {
-                "value": "0",
-                "label": "Getting worse",
-                "points": 0
-              }
-            ]
-          }
-        ]
-      },
-      "sec3": {
-        "title": "Protein",
-        "weight": 0.25,
-        "footerLink": {
-          "text": "→ Open Nutrition Calculator",
-          "url": "nutrition-calculator.html",
-          "description": "Use nutrition calculator to calculate optimal protein intake according to your goals."
+              "helpLink": "cardiometabolic-evidence.html#q-whr"
+            }
+          ]
         },
-        "questions": [
-          {
-            "id": "N3_1",
-            "question": "What is your daily protein intake per kg of body weight?",
-            "type": "radio",
-            "helpLink": "protein-evidence.html#q1",
-            "options": [
-              {
-                "value": "10",
-                "label": "1.6–2.0 g/kg",
-                "points": 10
-              },
-              {
-                "value": "6",
-                "label": "1.2–1.5 g/kg",
-                "points": 6
-              },
-              {
-                "value": "2",
-                "label": "0.8–1.1 g/kg (RDA)",
-                "points": 2
-              },
-              {
-                "value": "0",
-                "label": "Below 0.8 g/kg",
-                "points": 0
-              }
-            ]
+        "sec2": {
+          "title": "Recommended Screenings",
+          "weight": 0.35,
+          "description": "Based on your profile, here are the screenings recommended for you. Check the ones you are up to date on.",
+          "dynamic": "screenings",
+          "questions": []
+        },
+        "sec3": {
+          "title": "Blood Markers",
+          "weight": 0.5,
+          "description": "Enter your blood test results below. These markers are used to calculate both your Cardiovascular Health Score and your Metabolic Health Score.",
+          "subScores": {
+            "cardiovascular": {
+              "label": "Cardiovascular Health",
+              "icon": "heart",
+              "helpLink": "cardiovascular-evidence.html#q-attia"
+            },
+            "metabolic": {
+              "label": "Metabolic Health",
+              "icon": "activity",
+              "helpLink": "metabolic-evidence.html#q-means"
+            }
           },
-          {
-            "id": "N3_2",
-            "question": "How many meals per day contain the age-related minimum protein per portion?",
-            "type": "radio",
-            "helpLink": "protein-evidence.html#q4",
-            "options": [
-              {
-                "value": "10",
-                "label": "4 or more meals/snacks",
-                "points": 10
+          "questions": [
+            {
+              "id": "MD3_apob",
+              "question": "What is your ApoB level?",
+              "hint": "Found on advanced lipid panel (mg/dL). Leave blank if not tested.",
+              "type": "number",
+              "min": 20,
+              "max": 250,
+              "step": 1,
+              "unit": "mg/dL",
+              "inputMin": 130,
+              "inputMax": 60,
+              "edgeFloor": 30,
+              "edgeFloorLabel": "ApoB below 30 mg/dL is unusually low — verify with your lab.",
+              "cardiovascularWeight": 0.3,
+              "metabolicWeight": 0,
+              "helpLink": "cardiovascular-evidence.html#q-apob",
+              "group": "cardiovascular"
+            },
+            {
+              "id": "MD3_bp",
+              "question": "What is your systolic blood pressure?",
+              "hint": "The top number, e.g. 120 in 120/80 (mmHg). Leave blank if unknown.",
+              "type": "number",
+              "min": 70,
+              "max": 220,
+              "step": 1,
+              "unit": "mmHg",
+              "inputMin": 130,
+              "inputMax": 110,
+              "edgeFloor": 100,
+              "edgeFloorLabel": "Systolic BP below 100 mmHg (hypotension) may indicate a health issue.",
+              "cardiovascularWeight": 0.25,
+              "metabolicWeight": 0,
+              "helpLink": "cardiovascular-evidence.html#q-bp",
+              "group": "cardiovascular"
+            },
+            {
+              "id": "MD3_lpa",
+              "question": "What is your Lp(a) level?",
+              "hint": "Specialized test, usually in nmol/L. Leave blank if not tested.",
+              "type": "number",
+              "min": 0,
+              "max": 500,
+              "step": 1,
+              "unit": "nmol/L",
+              "inputMin": 125,
+              "inputMax": 30,
+              "cardiovascularWeight": 0.15,
+              "metabolicWeight": 0,
+              "helpLink": "cardiovascular-evidence.html#q-lpa",
+              "group": "cardiovascular"
+            },
+            {
+              "id": "MD3_hdl",
+              "question": "What is your HDL cholesterol?",
+              "hint": "Found on standard lipid panel (mg/dL). Leave blank if not tested.",
+              "type": "number",
+              "min": 10,
+              "max": 150,
+              "step": 1,
+              "unit": "mg/dL",
+              "genderScoring": {
+                "male": {
+                  "inputMin": 40,
+                  "inputMax": 60
+                },
+                "female": {
+                  "inputMin": 50,
+                  "inputMax": 70
+                }
               },
-              {
-                "value": "6",
-                "label": "3 meals",
-                "points": 6
-              },
-              {
-                "value": "2",
-                "label": "2 meals",
-                "points": 2
-              },
-              {
-                "value": "0",
-                "label": "1 or fewer",
-                "points": 0
-              }
-            ]
-          }
-        ]
-      },
-      "sec4": {
-        "title": "Nutrition Principles",
-        "weight": 0.25,
-        "description": "Check habits you follow 7+ out of 10 days.",
-        "questions": [
-          {
-            "id": "N4_principles",
-            "question": "Which nutrition principles do you follow?",
-            "type": "checkbox",
-            "scoring": "principles",
-            "helpLink": "nutrition-evidence.html#q6",
-            "options": [
-              {
-                "value": "vegetables",
-                "label": "3+ servings vegetables daily",
-                "evidence": "13% lower mortality"
-              },
-              {
-                "value": "whole_foods",
-                "label": "Home-cooked whole foods",
-                "evidence": "15% lower mortality"
-              },
-              {
-                "value": "healthy_fats",
-                "label": "Healthy fats (olive oil, nuts)",
-                "evidence": "30% less CVD"
-              },
-              {
-                "value": "avoid_harmful",
-                "label": "Avoid trans fats & processed meat",
-                "evidence": "34% reduction"
-              },
-              {
-                "value": "alcohol",
-                "label": "Moderate alcohol (max 7/week)",
-                "evidence": "Linear dose-response"
-              }
-            ]
-          }
-        ]
-      }
-    }
-  },
-  "energy": {
-    "name": "Energy & Performance",
-    "icon": "zap",
-    "sections": {
-      "sec1": {
-        "title": "VO2max / Aerobic Capacity",
-        "weight": 0.5,
-        "description": "Cardiorespiratory fitness is one of the strongest predictors of longevity. Enter your VO2max from a wearable, the Cooper Test, or a lab test.",
-        "questions": [
-          {
-            "id": "E1_vo2",
-            "question": "What is your VO2max?",
-            "hint": "Enter in ml/kg/min. Check your fitness watch, or use the Cooper Test calculator below.",
-            "type": "number",
-            "min": 5,
-            "max": 100,
-            "step": 0.1,
-            "unit": "ml/kg/min",
-            "normsTable": "VO2MAX_NORMS",
-            "cooperCalc": true,
-            "fitnessAgeLabel": "VO2max age",
-            "helpLink": "vo2max-evidence.html#q3"
-          },
-          {
-            "id": "E1_method",
-            "question": "How did you measure your VO2max?",
-            "hint": "Informational only — does not affect your score",
-            "type": "radio",
-            "helpLink": "vo2max-evidence.html#q6",
-            "options": [
-              {
-                "value": "wearable",
-                "label": "Wearable device (Apple Watch, Garmin, etc.)"
-              },
-              {
-                "value": "cooper",
-                "label": "Cooper 12-minute run test"
-              },
-              {
-                "value": "lab",
-                "label": "Laboratory test (metabolic cart)"
-              }
-            ]
-          }
-        ]
-      },
-      "sec2": {
-        "title": "Muscle Strength",
-        "weight": 0.5,
-        "description": "Muscle strength predicts functional independence and longevity. Complete one or both tests below.",
-        "questions": [
-          {
-            "id": "E2_pushups",
-            "question": "How many consecutive push-ups can you complete?",
-            "hint": "Men: standard (from toes). Women: modified (from knees). Maintain proper form throughout.",
-            "type": "number",
-            "min": 0,
-            "max": 200,
-            "step": 1,
-            "unit": "reps",
-            "normsTable": "PUSHUP_NORMS",
-            "fitnessAgeLabel": "Strength age",
-            "helpLink": "muscle-strength-evidence.html#q3"
-          },
-          {
-            "id": "E2_chair",
-            "question": "How many chair stands can you do in 30 seconds?",
-            "hint": "Stand fully from a chair and sit back down. Count complete cycles. This test is for ages 60+.",
-            "type": "number",
-            "min": 0,
-            "max": 50,
-            "step": 1,
-            "unit": "reps",
-            "normsTable": "CHAIRSTAND_NORMS",
-            "ageMin": 60,
-            "fitnessAgeLabel": "Functional age",
-            "helpLink": "muscle-strength-evidence.html#q4"
-          }
-        ]
-      }
-    }
-  },
-  "sleep": {
-    "name": "Sleep",
-    "icon": "moon",
-    "sections": {
-      "sec1": {
-        "title": "Sleep Duration & Regularity",
-        "weight": 0.35,
-        "questions": [
-          {
-            "id": "SS1_1",
-            "question": "How many hours of sleep do you typically get per night?",
-            "hint": "Average over the past month",
-            "type": "radio",
-            "helpLink": "sleep-evidence.html#q4",
-            "options": [
-              {
-                "value": "10",
-                "label": "7–8 hours",
-                "points": 10
-              },
-              {
-                "value": "7",
-                "label": "6–7 or 8–9 hours",
-                "points": 7
-              },
-              {
-                "value": "4",
-                "label": "5–6 or 9–10 hours",
-                "points": 4
-              },
-              {
-                "value": "0",
-                "label": "Less than 5 or more than 10 hours",
-                "points": 0
-              }
-            ]
-          },
-          {
-            "id": "SS1_2",
-            "question": "How consistent is your sleep schedule?",
-            "hint": "Same bedtime and wake time each day",
-            "type": "radio",
-            "helpLink": "sleep-evidence.html#q3",
-            "options": [
-              {
-                "value": "10",
-                "label": "Very consistent (±30 min)",
-                "points": 10
-              },
-              {
-                "value": "7",
-                "label": "Fairly consistent (±1 hour)",
-                "points": 7
-              },
-              {
-                "value": "4",
-                "label": "Somewhat irregular (±2 hours)",
-                "points": 4
-              },
-              {
-                "value": "0",
-                "label": "Highly irregular (varies widely)",
-                "points": 0
-              }
-            ]
-          }
-        ]
-      },
-      "sec2": {
-        "title": "Sleep Quality",
-        "weight": 0.35,
-        "questions": [
-          {
-            "id": "SS2_1",
-            "question": "How would you rate your overall sleep quality?",
-            "hint": "Over the past month — 1 (terrible) to 10 (excellent)",
-            "type": "slider",
-            "min": 1,
-            "max": 10,
-            "helpLink": "sleep-evidence.html#q5"
-          },
-          {
-            "id": "SS2_2",
-            "question": "How often do you wake up feeling rested and refreshed?",
-            "type": "radio",
-            "helpLink": "sleep-evidence.html#q6",
-            "options": [
-              {
-                "value": "10",
-                "label": "Every day or almost every day",
-                "points": 10
-              },
-              {
-                "value": "7",
-                "label": "Most days",
-                "points": 7
-              },
-              {
-                "value": "4",
-                "label": "Some days",
-                "points": 4
-              },
-              {
-                "value": "0",
-                "label": "Rarely or never",
-                "points": 0
-              }
-            ]
-          },
-          {
-            "id": "SS2_3",
-            "question": "How often do you have trouble falling or staying asleep?",
-            "type": "radio",
-            "helpLink": "sleep-evidence.html#q7",
-            "options": [
-              {
-                "value": "10",
-                "label": "Rarely or never",
-                "points": 10
-              },
-              {
-                "value": "7",
-                "label": "Occasionally (1–2 nights/week)",
-                "points": 7
-              },
-              {
-                "value": "4",
-                "label": "Frequently (3–4 nights/week)",
-                "points": 4
-              },
-              {
-                "value": "0",
-                "label": "Almost every night",
-                "points": 0
-              }
-            ]
-          }
-        ]
-      },
-      "sec3": {
-        "title": "Wearable Sleep Score",
-        "weight": 0.3,
-        "questions": [
-          {
-            "id": "SS3_1",
-            "question": "What is your average wearable sleep score?",
-            "hint": "30-day average from your wearable app (0–100). Leave blank if you don't use a sleep tracker.",
-            "type": "number",
-            "min": 0,
-            "max": 100,
-            "unit": "/ 100",
-            "inputMin": 0,
-            "inputMax": 100,
-            "step": 1,
-            "helpLink": "sleep-evidence.html#q8"
-          }
-        ]
-      }
-    }
-  },
-  "wellbeing": {
-    "name": "Wellbeing",
-    "icon": "smile",
-    "sections": {
-      "sec1": {
-        "title": "Positive Emotions & Engagement",
-        "weight": 0.3,
-        "questions": [
-          {
-            "id": "W1_1",
-            "question": "How often do you experience positive emotions such as joy, gratitude, or contentment?",
-            "type": "radio",
-            "helpLink": "wellbeing-evidence.html#q4",
-            "options": [
-              {
-                "value": "10",
-                "label": "Every day or almost",
-                "points": 10
-              },
-              {
-                "value": "7",
-                "label": "Most days",
-                "points": 7
-              },
-              {
-                "value": "4",
-                "label": "Some days",
-                "points": 4
-              },
-              {
-                "value": "0",
-                "label": "Rarely",
-                "points": 0
-              }
-            ]
-          },
-          {
-            "id": "W1_2",
-            "question": "How often do you get fully absorbed in activities you enjoy?",
-            "hint": "\"Flow\" — losing track of time while doing something engaging",
-            "type": "radio",
-            "helpLink": "wellbeing-evidence.html#q5",
-            "options": [
-              {
-                "value": "10",
-                "label": "Daily or almost daily",
-                "points": 10
-              },
-              {
-                "value": "7",
-                "label": "Several times a week",
-                "points": 7
-              },
-              {
-                "value": "4",
-                "label": "Occasionally",
-                "points": 4
-              },
-              {
-                "value": "0",
-                "label": "Rarely or never",
-                "points": 0
-              }
-            ]
-          }
-        ]
-      },
-      "sec2": {
-        "title": "Relationships, Meaning & Accomplishment",
-        "weight": 0.35,
-        "questions": [
-          {
-            "id": "W2_1",
-            "question": "How would you rate the quality of your close relationships?",
-            "type": "radio",
-            "helpLink": "wellbeing-evidence.html#q6",
-            "options": [
-              {
-                "value": "10",
-                "label": "Excellent — deep, supportive connections",
-                "points": 10
-              },
-              {
-                "value": "7",
-                "label": "Good — regular meaningful interactions",
-                "points": 7
-              },
-              {
-                "value": "4",
-                "label": "Fair — some connections but lacking depth",
-                "points": 4
-              },
-              {
-                "value": "0",
-                "label": "Poor — feeling isolated or unsupported",
-                "points": 0
-              }
-            ]
-          },
-          {
-            "id": "W2_2",
-            "question": "To what extent do you feel your life has a sense of purpose or meaning?",
-            "type": "radio",
-            "helpLink": "wellbeing-evidence.html#q7",
-            "options": [
-              {
-                "value": "10",
-                "label": "Strong and clear sense of purpose",
-                "points": 10
-              },
-              {
-                "value": "7",
-                "label": "Moderate — I have some direction",
-                "points": 7
-              },
-              {
-                "value": "4",
-                "label": "Somewhat unclear",
-                "points": 4
-              },
-              {
-                "value": "0",
-                "label": "Lacking direction or purpose",
-                "points": 0
-              }
-            ]
-          },
-          {
-            "id": "W2_3",
-            "question": "How often do you feel a sense of accomplishment or progress toward your goals?",
-            "type": "radio",
-            "helpLink": "wellbeing-evidence.html#q8",
-            "options": [
-              {
-                "value": "10",
-                "label": "Regularly — meaningful progress",
-                "points": 10
-              },
-              {
-                "value": "7",
-                "label": "Often — steady but could be more",
-                "points": 7
-              },
-              {
-                "value": "4",
-                "label": "Sometimes",
-                "points": 4
-              },
-              {
-                "value": "0",
-                "label": "Rarely — I feel stuck",
-                "points": 0
-              }
-            ]
-          }
-        ]
-      },
-      "sec3": {
-        "title": "Stress Balance",
-        "weight": 0.35,
-        "questions": [
-          {
-            "id": "W3_1",
-            "question": "Which best describes the stress you typically experience?",
-            "hint": "Eustress (challenge stress) energizes you; distress drains you",
-            "type": "radio",
-            "helpLink": "wellbeing-evidence.html#q9",
-            "options": [
-              {
-                "value": "10",
-                "label": "Mostly challenge stress — stretched but energized",
-                "points": 10
-              },
-              {
-                "value": "7",
-                "label": "A healthy mix — some motivating, some draining",
-                "points": 7
-              },
-              {
-                "value": "3",
-                "label": "Mostly draining — feeling overwhelmed",
-                "points": 3
-              },
-              {
-                "value": "0",
-                "label": "Chronic overwhelm affecting health and sleep",
-                "points": 0
-              }
-            ]
-          },
-          {
-            "id": "W3_2",
-            "question": "How quickly do you recover after stressful periods?",
-            "type": "radio",
-            "helpLink": "wellbeing-evidence.html#q10",
-            "options": [
-              {
-                "value": "10",
-                "label": "Within hours — effective coping strategies",
-                "points": 10
-              },
-              {
-                "value": "7",
-                "label": "Within a day or two",
-                "points": 7
-              },
-              {
-                "value": "4",
-                "label": "It takes weeks",
-                "points": 4
-              },
-              {
-                "value": "0",
-                "label": "I rarely feel fully recovered",
-                "points": 0
-              }
-            ]
-          },
-          {
-            "id": "W3_3",
-            "question": "Do you regularly practice any stress-management techniques?",
-            "hint": "e.g. meditation, breathwork, journaling, time in nature, therapy",
-            "type": "radio",
-            "helpLink": "wellbeing-evidence.html#q11",
-            "options": [
-              {
-                "value": "10",
-                "label": "Yes, daily practice",
-                "points": 10
-              },
-              {
-                "value": "7",
-                "label": "Yes, several times a week",
-                "points": 7
-              },
-              {
-                "value": "4",
-                "label": "Occasionally",
-                "points": 4
-              },
-              {
-                "value": "0",
-                "label": "No regular practice",
-                "points": 0
-              }
-            ]
-          }
-        ]
-      }
-    }
-  },
-  "mindset": {
-    "name": "Mindset",
-    "icon": "brain",
-    "scoreInsights": {
-      "low": {
-        "title": "Your mindset score needs attention",
-        "text": "Sustained healthy behaviors reduce mortality by 66% — but sticking with them requires the readiness and grit this section measures. Tap to learn what your score means.",
-        "link": "mindset-evidence-v2.html#q1"
-      },
-      "belowAvg": {
-        "title": "Your biggest opportunity: {section}",
-        "text": "You're building awareness — now focus on {section} to unlock the next level. Every improvement here makes your other health habits more sustainable.",
-        "link": "mindset-evidence-v2.html#q8"
-      },
-      "aboveAvg": {
-        "title": "Good foundation — keep building",
-        "text": "You're above average. Strengthening {section} is your highest-leverage next step — small gains here compound across all your health behaviors.",
-        "link": "mindset-evidence-v2.html#q8"
-      },
-      "high": {
-        "title": "Strong mindset — you have the foundation",
-        "text": "Your psychological readiness makes all other health habits sustainable. Tap to see the research behind your advantage.",
-        "link": "mindset-evidence-v2.html#q2"
+              "edgeCeiling": 100,
+              "edgeCeilingLabel": "HDL above 100 mg/dL may paradoxically increase mortality risk (Madsen et al. 2017) — discuss with your doctor.",
+              "cardiovascularWeight": 0.15,
+              "metabolicWeight": 0.25,
+              "helpLink": "cardiovascular-evidence.html#q-hdl",
+              "group": "shared"
+            },
+            {
+              "id": "MD3_trig",
+              "question": "What are your triglycerides?",
+              "hint": "Found on standard lipid panel (mg/dL). Leave blank if not tested.",
+              "type": "number",
+              "min": 20,
+              "max": 500,
+              "step": 1,
+              "unit": "mg/dL",
+              "inputMin": 150,
+              "inputMax": 70,
+              "edgeFloor": 30,
+              "edgeFloorLabel": "Triglycerides below 30 mg/dL are very unusual — verify with your lab.",
+              "cardiovascularWeight": 0.15,
+              "metabolicWeight": 0.25,
+              "helpLink": "cardiovascular-evidence.html#q-trig",
+              "group": "shared"
+            },
+            {
+              "id": "MD3_insulin",
+              "question": "What is your fasting insulin level?",
+              "hint": "Found on metabolic panel (µIU/mL). Leave blank if not tested.",
+              "type": "number",
+              "min": 0,
+              "max": 80,
+              "step": 0.1,
+              "unit": "µIU/mL",
+              "inputMin": 25,
+              "inputMax": 5,
+              "edgeFloor": 1,
+              "edgeFloorLabel": "Fasting insulin below 1 µIU/mL is very unusual — verify with your lab.",
+              "cardiovascularWeight": 0,
+              "metabolicWeight": 0.25,
+              "helpLink": "metabolic-evidence.html#q-insulin",
+              "group": "metabolic"
+            },
+            {
+              "id": "MD3_glucose",
+              "question": "What is your fasting blood glucose?",
+              "hint": "Found on basic metabolic panel (mg/dL). Leave blank if not tested.",
+              "type": "number",
+              "min": 40,
+              "max": 400,
+              "step": 1,
+              "unit": "mg/dL",
+              "inputMin": 100,
+              "inputMax": 80,
+              "edgeFloor": 55,
+              "edgeFloorLabel": "Fasting glucose below 55 mg/dL (hypoglycemia) may indicate a health issue.",
+              "cardiovascularWeight": 0,
+              "metabolicWeight": 0.25,
+              "helpLink": "metabolic-evidence.html#q-glucose",
+              "group": "metabolic"
+            }
+          ]
+        }
       }
     },
-    "sections": {
-      "sec1": {
-        "title": "Change Readiness",
-        "weight": 0.25,
-        "questions": [
-          {
-            "id": "M1_1",
-            "question": "When you think about your long-term health, which of these describe where you are?",
-            "type": "checkbox",
-            "scoring": "count",
-            "helpLink": "mindset-evidence-v2.html#q3",
-            "options": [
-              {
-                "value": "change_needed",
-                "label": "Something has to change"
-              },
-              {
-                "value": "my_responsibility",
-                "label": "I'm the one who must change it"
-              },
-              {
-                "value": "can_do_it",
-                "label": "I believe I can do it"
-              }
-            ]
-          }
-        ]
-      },
-      "sec2": {
-        "title": "Grit",
-        "weight": 0.25,
-        "questions": [
-          {
-            "id": "M2_1",
-            "question": "How long have you consistently maintained your current health habits?",
-            "type": "radio",
-            "helpLink": "mindset-evidence-v2.html#q4",
-            "options": [
-              {
-                "value": "10",
-                "label": "Over 2 years",
-                "points": 10
-              },
-              {
-                "value": "7",
-                "label": "6 months – 2 years",
-                "points": 7
-              },
-              {
-                "value": "3",
-                "label": "Less than 6 months",
-                "points": 3
-              },
-              {
-                "value": "0",
-                "label": "I haven't started yet",
-                "points": 0
-              }
-            ]
+    "nutrition": {
+      "name": "Nutrition",
+      "icon": "apple",
+      "sections": {
+        "sec1": {
+          "title": "Diet Adherence",
+          "weight": 0.25,
+          "questions": [
+            {
+              "id": "N1_1",
+              "question": "How much do you enjoy your food?",
+              "hint": "Rate from 1 (not at all) to 10 (always a delight)",
+              "type": "slider",
+              "min": 1,
+              "max": 10,
+              "helpLink": "nutrition-evidence.html#q8"
+            },
+            {
+              "id": "N1_2",
+              "question": "In which situations does your diet work well?",
+              "type": "checkbox",
+              "scoring": "count",
+              "helpLink": "nutrition-evidence.html#q9",
+              "options": [
+                {
+                  "value": "restaurant",
+                  "label": "Restaurant"
+                },
+                {
+                  "value": "travel",
+                  "label": "Travel"
+                },
+                {
+                  "value": "family",
+                  "label": "Family and friends"
+                },
+                {
+                  "value": "stress",
+                  "label": "Stressful situations"
+                }
+              ]
+            },
+            {
+              "id": "N1_3",
+              "question": "How satisfied do you feel after eating?",
+              "type": "radio",
+              "helpLink": "nutrition-evidence.html#q10",
+              "options": [
+                {
+                  "value": "10",
+                  "label": "Always full, no cravings",
+                  "points": 10
+                },
+                {
+                  "value": "5",
+                  "label": "Mostly full, rarely hungry",
+                  "points": 5
+                },
+                {
+                  "value": "2",
+                  "label": "Regularly hungry",
+                  "points": 2
+                },
+                {
+                  "value": "0",
+                  "label": "Constantly hungry",
+                  "points": 0
+                }
+              ]
+            }
+          ]
+        },
+        "sec2": {
+          "title": "Progress",
+          "weight": 0.25,
+          "questions": [
+            {
+              "id": "N2_1",
+              "question": "How is your progress towards your goals?",
+              "type": "radio",
+              "helpLink": "nutrition-evidence.html#q11",
+              "options": [
+                {
+                  "value": "10",
+                  "label": "Every week is a win",
+                  "points": 10
+                },
+                {
+                  "value": "8",
+                  "label": "Most weeks successful",
+                  "points": 8
+                },
+                {
+                  "value": "5",
+                  "label": "Slow but visible progress",
+                  "points": 5
+                },
+                {
+                  "value": "2",
+                  "label": "Stagnation",
+                  "points": 2
+                },
+                {
+                  "value": "0",
+                  "label": "Getting worse",
+                  "points": 0
+                }
+              ]
+            }
+          ]
+        },
+        "sec3": {
+          "title": "Protein",
+          "weight": 0.25,
+          "footerLink": {
+            "text": "→ Open Nutrition Calculator",
+            "url": "nutrition-calculator.html",
+            "description": "Use nutrition calculator to calculate optimal protein intake according to your goals."
           },
-          {
-            "id": "M2_2",
-            "question": "When you miss a workout or break a health routine, what do you typically do?",
-            "type": "radio",
-            "helpLink": "mindset-evidence-v2.html#q5",
-            "options": [
-              {
-                "value": "10",
-                "label": "Get back on track the next day",
-                "points": 10
-              },
-              {
-                "value": "7",
-                "label": "Resume within a few days",
-                "points": 7
-              },
-              {
-                "value": "3",
-                "label": "It takes weeks to restart",
-                "points": 3
-              },
-              {
-                "value": "0",
-                "label": "I usually give up",
-                "points": 0
+          "questions": [
+            {
+              "id": "N3_1",
+              "question": "What is your daily protein intake per kg of body weight?",
+              "type": "radio",
+              "helpLink": "protein-evidence.html#q1",
+              "options": [
+                {
+                  "value": "10",
+                  "label": "1.6–2.0 g/kg",
+                  "points": 10
+                },
+                {
+                  "value": "6",
+                  "label": "1.2–1.5 g/kg",
+                  "points": 6
+                },
+                {
+                  "value": "2",
+                  "label": "0.8–1.1 g/kg (RDA)",
+                  "points": 2
+                },
+                {
+                  "value": "0",
+                  "label": "Below 0.8 g/kg",
+                  "points": 0
+                }
+              ]
+            },
+            {
+              "id": "N3_2",
+              "question": "How many meals per day contain the age-related minimum protein per portion?",
+              "type": "radio",
+              "helpLink": "protein-evidence.html#q4",
+              "options": [
+                {
+                  "value": "10",
+                  "label": "4 or more meals/snacks",
+                  "points": 10
+                },
+                {
+                  "value": "6",
+                  "label": "3 meals",
+                  "points": 6
+                },
+                {
+                  "value": "2",
+                  "label": "2 meals",
+                  "points": 2
+                },
+                {
+                  "value": "0",
+                  "label": "1 or fewer",
+                  "points": 0
+                }
+              ]
+            }
+          ]
+        },
+        "sec4": {
+          "title": "Nutrition Principles",
+          "weight": 0.25,
+          "description": "Check habits you follow 7+ out of 10 days.",
+          "questions": [
+            {
+              "id": "N4_principles",
+              "question": "Which nutrition principles do you follow?",
+              "type": "checkbox",
+              "scoring": "principles",
+              "helpLink": "nutrition-evidence.html#q6",
+              "options": [
+                {
+                  "value": "vegetables",
+                  "label": "3+ servings vegetables daily",
+                  "evidence": "13% lower mortality"
+                },
+                {
+                  "value": "whole_foods",
+                  "label": "Home-cooked whole foods",
+                  "evidence": "15% lower mortality"
+                },
+                {
+                  "value": "healthy_fats",
+                  "label": "Healthy fats (olive oil, nuts)",
+                  "evidence": "30% less CVD"
+                },
+                {
+                  "value": "avoid_harmful",
+                  "label": "Avoid trans fats & processed meat",
+                  "evidence": "34% reduction"
+                },
+                {
+                  "value": "alcohol",
+                  "label": "Moderate alcohol (max 7/week)",
+                  "evidence": "Linear dose-response"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "energy": {
+      "name": "Energy & Performance",
+      "icon": "zap",
+      "sections": {
+        "sec1": {
+          "title": "VO2max / Aerobic Capacity",
+          "weight": 0.5,
+          "description": "Cardiorespiratory fitness is one of the strongest predictors of longevity. Enter your VO2max from a wearable, the Cooper Test, or a lab test.",
+          "questions": [
+            {
+              "id": "E1_vo2",
+              "question": "What is your VO2max?",
+              "hint": "Enter in ml/kg/min. Check your fitness watch, or use the Cooper Test calculator below.",
+              "type": "number",
+              "min": 5,
+              "max": 100,
+              "step": 0.1,
+              "unit": "ml/kg/min",
+              "normsTable": "VO2MAX_NORMS",
+              "cooperCalc": true,
+              "fitnessAgeLabel": "VO2max age",
+              "helpLink": "vo2max-evidence.html#q3",
+              "coaching": {
+                "impactWeight": 0.95,
+                "improvability": 0.95,
+                "benefitType": "short-term",
+                "benefitTimeline": "2–6 weeks",
+                "preScoreNudge": "VO2max is the single strongest predictor of longevity — yet most people have never measured theirs. Without knowing your number, you can't see your biggest lever.",
+                "concreteBenefit": "Every MET you gain gives you more energy for daily life and adds measurable longevity protection.",
+                "recoveryNudge": "VO2max bounces back quickly — a few weeks of consistent movement will reverse this.",
+                "messages": {
+                  "q1_initial": {
+                    "headline": "Your VO2max puts you in the bottom quartile — but this is where gains come fastest",
+                    "detail": "People starting here typically gain 1 MET (3.5 ml/kg/min) within 4–6 weeks of regular brisk walking. That means climbing 2–3 flights of stairs without stopping for breath. VO2max is the strongest single predictor of all-cause mortality — and it's highly trainable at any starting point."
+                  },
+                  "q1_improved": {
+                    "headline": "You're making real progress — every point of VO2max you gain adds measurable daily capacity",
+                    "detail": "The improvement you've made translates directly to easier movement: less breathlessness on stairs, more energy for daily tasks. Keep this trajectory — research shows the biggest mortality reduction comes from moving out of the bottom 25%."
+                  },
+                  "q1_stable": {
+                    "headline": "Your VO2max hasn't changed yet — let's find what unlocks movement for you",
+                    "detail": "Even 10 minutes of brisk walking per day can start shifting VO2max within weeks. The key is consistency, not intensity. Could you add a short walk after one meal each day?"
+                  },
+                  "q1_declined": {
+                    "headline": "Your VO2max has dipped — this is common and reversible",
+                    "detail": "VO2max fluctuates with illness, stress, and inactivity. A few weeks of regular movement will recover what you've lost. The important thing is restarting, not where you restart from."
+                  },
+                  "q2_initial": {
+                    "headline": "You have a solid foundation — the next tier unlocks noticeably easier daily movement",
+                    "detail": "At your current level, daily activities are manageable but may still feel effortful. Improving by 1 MET means brisk walking feels easy, moderate hikes become enjoyable, and you recover faster from physical tasks. This is achievable in 4–8 weeks."
+                  },
+                  "q2_improved": {
+                    "headline": "You've crossed into the next tier — can you feel the difference?",
+                    "detail": "Most people at this stage notice stairs getting easier and energy lasting longer through the afternoon. You're moving away from the risk zone — each additional point compounds your protection."
+                  },
+                  "q2_stable": {
+                    "headline": "You're holding steady — now is the time to push for the next level",
+                    "detail": "Consistency brought you here. Adding interval efforts — even short bursts of faster walking — is what drives VO2max from fair toward good. Two sessions per week is enough to see change."
+                  },
+                  "q2_declined": {
+                    "headline": "Your VO2max has dropped — worth checking what changed",
+                    "detail": "Common causes: reduced activity during a busy period, illness, or poor sleep. VO2max responds quickly to resumed training. Even 2–3 weeks of regular activity should reverse this decline."
+                  },
+                  "q3_initial": {
+                    "headline": "You're above average — pushing further puts you in the protective range",
+                    "detail": "At this level, you can hike, cycle, and handle physically demanding days comfortably. Moving into the top quartile is associated with significantly lower all-cause mortality. You're within reach — structured cardio 3× per week can get you there."
+                  },
+                  "q3_improved": {
+                    "headline": "Strong progress — you're entering the range where health protection compounds",
+                    "detail": "Your improvement means more than fitness — it's extending your healthspan. At this level, activities like hill hiking, recreational sports, and active travel become easy. The gap to 'excellent' is smaller than what you've already covered."
+                  },
+                  "q3_stable": {
+                    "headline": "Good and consistent — the foundation is solid",
+                    "detail": "Maintaining this level already puts you ahead of most people your age. To push higher, consider adding one high-intensity interval session per week — the most time-efficient way to drive VO2max upward."
+                  },
+                  "q3_declined": {
+                    "headline": "A small decline from a good base — easy to recover",
+                    "detail": "You have the fitness foundation to bounce back quickly. Resuming your previous routine should restore your level within 2–3 weeks. Fitness memory works in your favor."
+                  },
+                  "q4_initial": {
+                    "headline": "Excellent — you're in the top quartile for your age and sex",
+                    "detail": "Your VO2max puts you in a category associated with dramatically lower mortality risk and high functional independence into older age. Hiking with a heavy pack, vigorous sports, and physically demanding work are all well within your capacity."
+                  },
+                  "q4_improved": {
+                    "headline": "You've pushed into excellent territory — this is where longevity protection is strongest",
+                    "detail": "Research shows diminishing returns above this level for mortality — but the functional capacity gains continue. You're building a reserve that pays dividends for decades."
+                  },
+                  "q4_stable": {
+                    "headline": "Maintaining excellent fitness — this is the goal",
+                    "detail": "Consistency at this level is more valuable than occasional peaks. Your current routine is working. Focus on sustainability and injury prevention to keep this level for years."
+                  },
+                  "q4_declined": {
+                    "headline": "A dip from excellent — your base fitness makes recovery fast",
+                    "detail": "At your level, VO2max fluctuations are normal with training cycles, travel, or seasonal changes. Your cardiovascular system retains adaptations well — a focused 2–3 week block will restore your level."
+                  },
+                  "q5_initial": {
+                    "headline": "Superior — you're performing at an exceptional level",
+                    "detail": "Your VO2max places you in the top 3% for your age and sex. This level of cardiovascular fitness is associated with the lowest possible mortality risk. You have the aerobic capacity for mountaineering, competitive endurance sports, and sustained high-output activities."
+                  },
+                  "q5_improved": {
+                    "headline": "You've reached the highest tier — an extraordinary achievement",
+                    "detail": "Very few people achieve this level. You're maximizing both longevity protection and functional capacity. The focus now is maintaining this through smart, sustainable training."
+                  },
+                  "q5_stable": {
+                    "headline": "Maintaining superior fitness — you're in the optimal zone",
+                    "detail": "At this level, the priority shifts from improvement to longevity of the habit. Injury prevention, recovery quality, and training variety keep you here for years rather than months."
+                  },
+                  "q5_declined": {
+                    "headline": "A step back from superior — still in excellent range",
+                    "detail": "Even with a decline, you're likely still in the top 10%. The fitness base you've built retains well. Adjust training load or recovery as needed — you know your body at this level."
+                  }
+                }
               }
-            ]
-          }
-        ]
+            },
+            {
+              "id": "E1_method",
+              "question": "How did you measure your VO2max?",
+              "hint": "Informational only — does not affect your score",
+              "type": "radio",
+              "helpLink": "vo2max-evidence.html#q6",
+              "options": [
+                {
+                  "value": "wearable",
+                  "label": "Wearable device (Apple Watch, Garmin, etc.)"
+                },
+                {
+                  "value": "cooper",
+                  "label": "Cooper 12-minute run test"
+                },
+                {
+                  "value": "lab",
+                  "label": "Laboratory test (metabolic cart)"
+                }
+              ]
+            }
+          ]
+        },
+        "sec2": {
+          "title": "Muscle Strength",
+          "weight": 0.5,
+          "description": "Muscle strength predicts functional independence and longevity. Complete one or both tests below.",
+          "questions": [
+            {
+              "id": "E2_pushups",
+              "question": "How many consecutive push-ups can you complete?",
+              "hint": "Men: standard (from toes). Women: modified (from knees). Maintain proper form throughout.",
+              "type": "number",
+              "min": 0,
+              "max": 200,
+              "step": 1,
+              "unit": "reps",
+              "normsTable": "PUSHUP_NORMS",
+              "fitnessAgeLabel": "Strength age",
+              "helpLink": "muscle-strength-evidence.html#q3"
+            },
+            {
+              "id": "E2_chair",
+              "question": "How many chair stands can you do in 30 seconds?",
+              "hint": "Stand fully from a chair and sit back down. Count complete cycles. This test is for ages 60+.",
+              "type": "number",
+              "min": 0,
+              "max": 50,
+              "step": 1,
+              "unit": "reps",
+              "normsTable": "CHAIRSTAND_NORMS",
+              "ageMin": 60,
+              "fitnessAgeLabel": "Functional age",
+              "helpLink": "muscle-strength-evidence.html#q4"
+            }
+          ]
+        }
+      }
+    },
+    "sleep": {
+      "name": "Sleep",
+      "icon": "moon",
+      "sections": {
+        "sec1": {
+          "title": "Sleep Duration & Regularity",
+          "weight": 0.35,
+          "questions": [
+            {
+              "id": "SS1_1",
+              "question": "How many hours of sleep do you typically get per night?",
+              "hint": "Average over the past month",
+              "type": "radio",
+              "helpLink": "sleep-evidence.html#q4",
+              "options": [
+                {
+                  "value": "10",
+                  "label": "7–8 hours",
+                  "points": 10
+                },
+                {
+                  "value": "7",
+                  "label": "6–7 or 8–9 hours",
+                  "points": 7
+                },
+                {
+                  "value": "4",
+                  "label": "5–6 or 9–10 hours",
+                  "points": 4
+                },
+                {
+                  "value": "0",
+                  "label": "Less than 5 or more than 10 hours",
+                  "points": 0
+                }
+              ]
+            },
+            {
+              "id": "SS1_2",
+              "question": "How consistent is your sleep schedule?",
+              "hint": "Same bedtime and wake time each day",
+              "type": "radio",
+              "helpLink": "sleep-evidence.html#q3",
+              "options": [
+                {
+                  "value": "10",
+                  "label": "Very consistent (±30 min)",
+                  "points": 10
+                },
+                {
+                  "value": "7",
+                  "label": "Fairly consistent (±1 hour)",
+                  "points": 7
+                },
+                {
+                  "value": "4",
+                  "label": "Somewhat irregular (±2 hours)",
+                  "points": 4
+                },
+                {
+                  "value": "0",
+                  "label": "Highly irregular (varies widely)",
+                  "points": 0
+                }
+              ]
+            }
+          ]
+        },
+        "sec2": {
+          "title": "Sleep Quality",
+          "weight": 0.35,
+          "questions": [
+            {
+              "id": "SS2_1",
+              "question": "How would you rate your overall sleep quality?",
+              "hint": "Over the past month — 1 (terrible) to 10 (excellent)",
+              "type": "slider",
+              "min": 1,
+              "max": 10,
+              "helpLink": "sleep-evidence.html#q5"
+            },
+            {
+              "id": "SS2_2",
+              "question": "How often do you wake up feeling rested and refreshed?",
+              "type": "radio",
+              "helpLink": "sleep-evidence.html#q6",
+              "options": [
+                {
+                  "value": "10",
+                  "label": "Every day or almost every day",
+                  "points": 10
+                },
+                {
+                  "value": "7",
+                  "label": "Most days",
+                  "points": 7
+                },
+                {
+                  "value": "4",
+                  "label": "Some days",
+                  "points": 4
+                },
+                {
+                  "value": "0",
+                  "label": "Rarely or never",
+                  "points": 0
+                }
+              ]
+            },
+            {
+              "id": "SS2_3",
+              "question": "How often do you have trouble falling or staying asleep?",
+              "type": "radio",
+              "helpLink": "sleep-evidence.html#q7",
+              "options": [
+                {
+                  "value": "10",
+                  "label": "Rarely or never",
+                  "points": 10
+                },
+                {
+                  "value": "7",
+                  "label": "Occasionally (1–2 nights/week)",
+                  "points": 7
+                },
+                {
+                  "value": "4",
+                  "label": "Frequently (3–4 nights/week)",
+                  "points": 4
+                },
+                {
+                  "value": "0",
+                  "label": "Almost every night",
+                  "points": 0
+                }
+              ]
+            }
+          ]
+        },
+        "sec3": {
+          "title": "Wearable Sleep Score",
+          "weight": 0.3,
+          "questions": [
+            {
+              "id": "SS3_1",
+              "question": "What is your average wearable sleep score?",
+              "hint": "30-day average from your wearable app (0–100). Leave blank if you don't use a sleep tracker.",
+              "type": "number",
+              "min": 0,
+              "max": 100,
+              "unit": "/ 100",
+              "inputMin": 0,
+              "inputMax": 100,
+              "step": 1,
+              "helpLink": "sleep-evidence.html#q8"
+            }
+          ]
+        }
+      }
+    },
+    "wellbeing": {
+      "name": "Wellbeing",
+      "icon": "smile",
+      "sections": {
+        "sec1": {
+          "title": "Positive Emotions & Engagement",
+          "weight": 0.3,
+          "questions": [
+            {
+              "id": "W1_1",
+              "question": "How often do you experience positive emotions such as joy, gratitude, or contentment?",
+              "type": "radio",
+              "helpLink": "wellbeing-evidence.html#q4",
+              "options": [
+                {
+                  "value": "10",
+                  "label": "Every day or almost",
+                  "points": 10
+                },
+                {
+                  "value": "7",
+                  "label": "Most days",
+                  "points": 7
+                },
+                {
+                  "value": "4",
+                  "label": "Some days",
+                  "points": 4
+                },
+                {
+                  "value": "0",
+                  "label": "Rarely",
+                  "points": 0
+                }
+              ]
+            },
+            {
+              "id": "W1_2",
+              "question": "How often do you get fully absorbed in activities you enjoy?",
+              "hint": "\"Flow\" — losing track of time while doing something engaging",
+              "type": "radio",
+              "helpLink": "wellbeing-evidence.html#q5",
+              "options": [
+                {
+                  "value": "10",
+                  "label": "Daily or almost daily",
+                  "points": 10
+                },
+                {
+                  "value": "7",
+                  "label": "Several times a week",
+                  "points": 7
+                },
+                {
+                  "value": "4",
+                  "label": "Occasionally",
+                  "points": 4
+                },
+                {
+                  "value": "0",
+                  "label": "Rarely or never",
+                  "points": 0
+                }
+              ]
+            }
+          ]
+        },
+        "sec2": {
+          "title": "Relationships, Meaning & Accomplishment",
+          "weight": 0.35,
+          "questions": [
+            {
+              "id": "W2_1",
+              "question": "How would you rate the quality of your close relationships?",
+              "type": "radio",
+              "helpLink": "wellbeing-evidence.html#q6",
+              "options": [
+                {
+                  "value": "10",
+                  "label": "Excellent — deep, supportive connections",
+                  "points": 10
+                },
+                {
+                  "value": "7",
+                  "label": "Good — regular meaningful interactions",
+                  "points": 7
+                },
+                {
+                  "value": "4",
+                  "label": "Fair — some connections but lacking depth",
+                  "points": 4
+                },
+                {
+                  "value": "0",
+                  "label": "Poor — feeling isolated or unsupported",
+                  "points": 0
+                }
+              ]
+            },
+            {
+              "id": "W2_2",
+              "question": "To what extent do you feel your life has a sense of purpose or meaning?",
+              "type": "radio",
+              "helpLink": "wellbeing-evidence.html#q7",
+              "options": [
+                {
+                  "value": "10",
+                  "label": "Strong and clear sense of purpose",
+                  "points": 10
+                },
+                {
+                  "value": "7",
+                  "label": "Moderate — I have some direction",
+                  "points": 7
+                },
+                {
+                  "value": "4",
+                  "label": "Somewhat unclear",
+                  "points": 4
+                },
+                {
+                  "value": "0",
+                  "label": "Lacking direction or purpose",
+                  "points": 0
+                }
+              ]
+            },
+            {
+              "id": "W2_3",
+              "question": "How often do you feel a sense of accomplishment or progress toward your goals?",
+              "type": "radio",
+              "helpLink": "wellbeing-evidence.html#q8",
+              "options": [
+                {
+                  "value": "10",
+                  "label": "Regularly — meaningful progress",
+                  "points": 10
+                },
+                {
+                  "value": "7",
+                  "label": "Often — steady but could be more",
+                  "points": 7
+                },
+                {
+                  "value": "4",
+                  "label": "Sometimes",
+                  "points": 4
+                },
+                {
+                  "value": "0",
+                  "label": "Rarely — I feel stuck",
+                  "points": 0
+                }
+              ]
+            }
+          ]
+        },
+        "sec3": {
+          "title": "Stress Balance",
+          "weight": 0.35,
+          "questions": [
+            {
+              "id": "W3_1",
+              "question": "Which best describes the stress you typically experience?",
+              "hint": "Eustress (challenge stress) energizes you; distress drains you",
+              "type": "radio",
+              "helpLink": "wellbeing-evidence.html#q9",
+              "options": [
+                {
+                  "value": "10",
+                  "label": "Mostly challenge stress — stretched but energized",
+                  "points": 10
+                },
+                {
+                  "value": "7",
+                  "label": "A healthy mix — some motivating, some draining",
+                  "points": 7
+                },
+                {
+                  "value": "3",
+                  "label": "Mostly draining — feeling overwhelmed",
+                  "points": 3
+                },
+                {
+                  "value": "0",
+                  "label": "Chronic overwhelm affecting health and sleep",
+                  "points": 0
+                }
+              ]
+            },
+            {
+              "id": "W3_2",
+              "question": "How quickly do you recover after stressful periods?",
+              "type": "radio",
+              "helpLink": "wellbeing-evidence.html#q10",
+              "options": [
+                {
+                  "value": "10",
+                  "label": "Within hours — effective coping strategies",
+                  "points": 10
+                },
+                {
+                  "value": "7",
+                  "label": "Within a day or two",
+                  "points": 7
+                },
+                {
+                  "value": "4",
+                  "label": "It takes weeks",
+                  "points": 4
+                },
+                {
+                  "value": "0",
+                  "label": "I rarely feel fully recovered",
+                  "points": 0
+                }
+              ]
+            },
+            {
+              "id": "W3_3",
+              "question": "Do you regularly practice any stress-management techniques?",
+              "hint": "e.g. meditation, breathwork, journaling, time in nature, therapy",
+              "type": "radio",
+              "helpLink": "wellbeing-evidence.html#q11",
+              "options": [
+                {
+                  "value": "10",
+                  "label": "Yes, daily practice",
+                  "points": 10
+                },
+                {
+                  "value": "7",
+                  "label": "Yes, several times a week",
+                  "points": 7
+                },
+                {
+                  "value": "4",
+                  "label": "Occasionally",
+                  "points": 4
+                },
+                {
+                  "value": "0",
+                  "label": "No regular practice",
+                  "points": 0
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "mindset": {
+      "name": "Mindset",
+      "icon": "brain",
+      "scoreInsights": {
+        "low": {
+          "title": "Your mindset score needs attention",
+          "text": "Sustained healthy behaviors reduce mortality by 66% — but sticking with them requires the readiness and grit this section measures. Tap to learn what your score means.",
+          "link": "mindset-evidence-v2.html#q1"
+        },
+        "belowAvg": {
+          "title": "Your biggest opportunity: {section}",
+          "text": "You're building awareness — now focus on {section} to unlock the next level. Every improvement here makes your other health habits more sustainable.",
+          "link": "mindset-evidence-v2.html#q8"
+        },
+        "aboveAvg": {
+          "title": "Good foundation — keep building",
+          "text": "You're above average. Strengthening {section} is your highest-leverage next step — small gains here compound across all your health behaviors.",
+          "link": "mindset-evidence-v2.html#q8"
+        },
+        "high": {
+          "title": "Strong mindset — you have the foundation",
+          "text": "Your psychological readiness makes all other health habits sustainable. Tap to see the research behind your advantage.",
+          "link": "mindset-evidence-v2.html#q2"
+        }
       },
-      "sec3": {
-        "title": "Growth Mindset",
-        "weight": 0.25,
-        "questions": [
-          {
-            "id": "M3_1",
-            "question": "When you struggle with a health goal, what do you believe?",
-            "type": "radio",
-            "helpLink": "mindset-evidence-v2.html#q6",
-            "options": [
-              {
-                "value": "10",
-                "label": "I can learn and improve with effort",
-                "points": 10
-              },
-              {
-                "value": "7",
-                "label": "I can improve, but it's hard to change habits",
-                "points": 7
-              },
-              {
-                "value": "3",
-                "label": "Some things improve, but my health is mostly genetic",
-                "points": 3
-              },
-              {
-                "value": "0",
-                "label": "My health is largely out of my control",
-                "points": 0
-              }
-            ]
-          }
-        ]
-      },
-      "sec4": {
-        "title": "Preventive Health",
-        "weight": 0.25,
-        "questions": [
-          {
-            "id": "M4_1",
-            "question": "How do you prioritize preventive health compared to treating problems when they arise?",
-            "type": "radio",
-            "helpLink": "mindset-evidence-v2.html#q7",
-            "options": [
-              {
-                "value": "10",
-                "label": "Prevention is my main focus",
-                "points": 10
-              },
-              {
-                "value": "7",
-                "label": "I try to balance both",
-                "points": 7
-              },
-              {
-                "value": "3",
-                "label": "I mostly react when issues come up",
-                "points": 3
-              },
-              {
-                "value": "0",
-                "label": "I only deal with health when I have to",
-                "points": 0
-              }
-            ]
-          }
-        ]
+      "sections": {
+        "sec1": {
+          "title": "Change Readiness",
+          "weight": 0.25,
+          "questions": [
+            {
+              "id": "M1_1",
+              "question": "When you think about your long-term health, which of these describe where you are?",
+              "type": "checkbox",
+              "scoring": "count",
+              "helpLink": "mindset-evidence-v2.html#q3",
+              "options": [
+                {
+                  "value": "change_needed",
+                  "label": "Something has to change"
+                },
+                {
+                  "value": "my_responsibility",
+                  "label": "I'm the one who must change it"
+                },
+                {
+                  "value": "can_do_it",
+                  "label": "I believe I can do it"
+                }
+              ]
+            }
+          ]
+        },
+        "sec2": {
+          "title": "Grit",
+          "weight": 0.25,
+          "questions": [
+            {
+              "id": "M2_1",
+              "question": "How long have you consistently maintained your current health habits?",
+              "type": "radio",
+              "helpLink": "mindset-evidence-v2.html#q4",
+              "options": [
+                {
+                  "value": "10",
+                  "label": "Over 2 years",
+                  "points": 10
+                },
+                {
+                  "value": "7",
+                  "label": "6 months – 2 years",
+                  "points": 7
+                },
+                {
+                  "value": "3",
+                  "label": "Less than 6 months",
+                  "points": 3
+                },
+                {
+                  "value": "0",
+                  "label": "I haven't started yet",
+                  "points": 0
+                }
+              ]
+            },
+            {
+              "id": "M2_2",
+              "question": "When you miss a workout or break a health routine, what do you typically do?",
+              "type": "radio",
+              "helpLink": "mindset-evidence-v2.html#q5",
+              "options": [
+                {
+                  "value": "10",
+                  "label": "Get back on track the next day",
+                  "points": 10
+                },
+                {
+                  "value": "7",
+                  "label": "Resume within a few days",
+                  "points": 7
+                },
+                {
+                  "value": "3",
+                  "label": "It takes weeks to restart",
+                  "points": 3
+                },
+                {
+                  "value": "0",
+                  "label": "I usually give up",
+                  "points": 0
+                }
+              ]
+            }
+          ]
+        },
+        "sec3": {
+          "title": "Growth Mindset",
+          "weight": 0.25,
+          "questions": [
+            {
+              "id": "M3_1",
+              "question": "When you struggle with a health goal, what do you believe?",
+              "type": "radio",
+              "helpLink": "mindset-evidence-v2.html#q6",
+              "options": [
+                {
+                  "value": "10",
+                  "label": "I can learn and improve with effort",
+                  "points": 10
+                },
+                {
+                  "value": "7",
+                  "label": "I can improve, but it's hard to change habits",
+                  "points": 7
+                },
+                {
+                  "value": "3",
+                  "label": "Some things improve, but my health is mostly genetic",
+                  "points": 3
+                },
+                {
+                  "value": "0",
+                  "label": "My health is largely out of my control",
+                  "points": 0
+                }
+              ]
+            }
+          ]
+        },
+        "sec4": {
+          "title": "Preventive Health",
+          "weight": 0.25,
+          "questions": [
+            {
+              "id": "M4_1",
+              "question": "How do you prioritize preventive health compared to treating problems when they arise?",
+              "type": "radio",
+              "helpLink": "mindset-evidence-v2.html#q7",
+              "options": [
+                {
+                  "value": "10",
+                  "label": "Prevention is my main focus",
+                  "points": 10
+                },
+                {
+                  "value": "7",
+                  "label": "I try to balance both",
+                  "points": 7
+                },
+                {
+                  "value": "3",
+                  "label": "I mostly react when issues come up",
+                  "points": 3
+                },
+                {
+                  "value": "0",
+                  "label": "I only deal with health when I have to",
+                  "points": 0
+                }
+              ]
+            }
+          ]
+        }
       }
     }
+  },
+  "screeningGuidelines": {
+    "de": [
+      {
+        "id": "checkup35",
+        "name": "General Health Check-up (Check-up 35)",
+        "desc": "Blood pressure, lipids, glucose, kidney function, hepatitis B/C",
+        "gender": "all",
+        "ageStart": 35,
+        "ageEnd": 120,
+        "freq": "Every 3 years",
+        "source": "GKV / G-BA",
+        "helpLink": "medical-evidence.html#q-checkup"
+      },
+      {
+        "id": "skin",
+        "name": "Skin Cancer Screening",
+        "desc": "Full-body dermatological exam for melanoma and other skin cancers",
+        "gender": "all",
+        "ageStart": 35,
+        "ageEnd": 120,
+        "freq": "Every 2 years",
+        "source": "GKV",
+        "helpLink": "medical-evidence.html#q-skin"
+      },
+      {
+        "id": "dental",
+        "name": "Dental Check-up",
+        "desc": "Oral exam, tartar removal, periodontitis screening",
+        "gender": "all",
+        "ageStart": 18,
+        "ageEnd": 120,
+        "freq": "Twice yearly",
+        "source": "GKV",
+        "helpLink": "medical-evidence.html#q-dental"
+      },
+      {
+        "id": "cervical",
+        "name": "Cervical Cancer Screening",
+        "desc": "Pap test (20–34 annually) or Pap + HPV co-test (35+ every 3 yr)",
+        "gender": "female",
+        "ageStart": 20,
+        "ageEnd": 65,
+        "freq": "Annual (20–34) / Every 3 yr (35+)",
+        "source": "GKV",
+        "helpLink": "medical-evidence.html#q-cervical"
+      },
+      {
+        "id": "breast_exam",
+        "name": "Breast Examination",
+        "desc": "Annual palpation by physician",
+        "gender": "female",
+        "ageStart": 30,
+        "ageEnd": 120,
+        "freq": "Annual",
+        "source": "GKV",
+        "helpLink": "medical-evidence.html#q-breast"
+      },
+      {
+        "id": "mammogram",
+        "name": "Mammography",
+        "desc": "Breast cancer screening X-ray",
+        "gender": "female",
+        "ageStart": 50,
+        "ageEnd": 75,
+        "freq": "Every 2 years",
+        "source": "GKV",
+        "helpLink": "medical-evidence.html#q-breast"
+      },
+      {
+        "id": "prostate",
+        "name": "Prostate &amp; Genital Exam",
+        "desc": "Annual prostate palpation",
+        "gender": "male",
+        "ageStart": 45,
+        "ageEnd": 120,
+        "freq": "Annual",
+        "source": "GKV",
+        "helpLink": "medical-evidence.html#q-prostate"
+      },
+      {
+        "id": "colorectal",
+        "name": "Colorectal Cancer Screening",
+        "desc": "Annual stool test (50–54) or colonoscopy (from 50 men / 55 women)",
+        "gender": "all",
+        "ageStart": 50,
+        "ageEnd": 120,
+        "freq": "Stool test annually / colonoscopy every 10 yr",
+        "source": "GKV",
+        "helpLink": "medical-evidence.html#q-colorectal"
+      },
+      {
+        "id": "aaa",
+        "name": "Abdominal Aortic Aneurysm Screening",
+        "desc": "One-time ultrasound to detect aortic aneurysm",
+        "gender": "male",
+        "ageStart": 65,
+        "ageEnd": 120,
+        "freq": "Once",
+        "source": "GKV",
+        "helpLink": "medical-evidence.html#q-aaa"
+      },
+      {
+        "id": "eye",
+        "name": "Eye Exam",
+        "desc": "Comprehensive eye and vision exam (glaucoma, macular degeneration)",
+        "gender": "all",
+        "ageStart": 40,
+        "ageEnd": 120,
+        "freq": "Every 2–4 yr (40–54) / Every 1–2 yr (55+)",
+        "source": "BVA / AAO",
+        "helpLink": "medical-evidence.html#q-eye"
+      }
+    ],
+    "us": [
+      {
+        "id": "bp",
+        "name": "Blood Pressure Screening",
+        "desc": "Check for hypertension — the leading modifiable cardiovascular risk factor",
+        "gender": "all",
+        "ageStart": 18,
+        "ageEnd": 120,
+        "freq": "Every 2 years (annual if elevated)",
+        "source": "USPSTF / ACC/AHA",
+        "helpLink": "medical-evidence.html#q-bp"
+      },
+      {
+        "id": "lipid",
+        "name": "Lipid Panel (Cholesterol)",
+        "desc": "Total cholesterol, LDL, HDL, triglycerides",
+        "gender": "all",
+        "ageStart": 20,
+        "ageEnd": 120,
+        "freq": "Every 4–6 years (every 3 yr if near threshold)",
+        "source": "USPSTF / AHA",
+        "helpLink": "medical-evidence.html#q-lipid"
+      },
+      {
+        "id": "glucose",
+        "name": "Blood Glucose / Diabetes Screening",
+        "desc": "Fasting glucose or HbA1c for prediabetes and diabetes",
+        "gender": "all",
+        "ageStart": 35,
+        "ageEnd": 120,
+        "freq": "Every 3 years (if overweight)",
+        "source": "USPSTF",
+        "helpLink": "medical-evidence.html#q-glucose"
+      },
+      {
+        "id": "dental",
+        "name": "Dental Check-up",
+        "desc": "Oral exam and cleaning",
+        "gender": "all",
+        "ageStart": 18,
+        "ageEnd": 120,
+        "freq": "Every 6–12 months",
+        "source": "ADA",
+        "helpLink": "medical-evidence.html#q-dental"
+      },
+      {
+        "id": "eye",
+        "name": "Eye Exam",
+        "desc": "Comprehensive eye and vision exam",
+        "gender": "all",
+        "ageStart": 40,
+        "ageEnd": 120,
+        "freq": "Every 2–4 yr (40–54) / Every 1–2 yr (55+)",
+        "source": "AAO",
+        "helpLink": "medical-evidence.html#q-eye"
+      },
+      {
+        "id": "cervical",
+        "name": "Cervical Cancer Screening",
+        "desc": "Pap test every 3 yr (21–29) or HPV test every 5 yr (30–65)",
+        "gender": "female",
+        "ageStart": 21,
+        "ageEnd": 65,
+        "freq": "Pap every 3 yr / HPV every 5 yr",
+        "source": "USPSTF",
+        "helpLink": "medical-evidence.html#q-cervical"
+      },
+      {
+        "id": "mammogram",
+        "name": "Mammography",
+        "desc": "Breast cancer screening",
+        "gender": "female",
+        "ageStart": 40,
+        "ageEnd": 74,
+        "freq": "Every 2 years",
+        "source": "USPSTF 2024",
+        "helpLink": "medical-evidence.html#q-breast"
+      },
+      {
+        "id": "colorectal",
+        "name": "Colorectal Cancer Screening",
+        "desc": "Colonoscopy every 10 yr, or stool-based test annually",
+        "gender": "all",
+        "ageStart": 45,
+        "ageEnd": 85,
+        "freq": "Colonoscopy every 10 yr / stool test annually",
+        "source": "USPSTF",
+        "helpLink": "medical-evidence.html#q-colorectal"
+      },
+      {
+        "id": "lung",
+        "name": "Lung Cancer Screening (LDCT)",
+        "desc": "Low-dose CT for current/former heavy smokers (20+ pack-years)",
+        "gender": "all",
+        "ageStart": 50,
+        "ageEnd": 80,
+        "freq": "Annual",
+        "source": "USPSTF",
+        "smoking": "ever",
+        "helpLink": "medical-evidence.html#q-lung"
+      },
+      {
+        "id": "prostate",
+        "name": "Prostate Cancer Screening (PSA)",
+        "desc": "PSA blood test — shared decision with provider",
+        "gender": "male",
+        "ageStart": 55,
+        "ageEnd": 69,
+        "freq": "Shared decision, every 1–2 yr",
+        "source": "USPSTF",
+        "helpLink": "medical-evidence.html#q-prostate"
+      },
+      {
+        "id": "aaa",
+        "name": "Abdominal Aortic Aneurysm Screening",
+        "desc": "One-time ultrasound for men who have ever smoked",
+        "gender": "male",
+        "ageStart": 65,
+        "ageEnd": 75,
+        "freq": "Once",
+        "source": "USPSTF",
+        "smoking": "ever",
+        "helpLink": "medical-evidence.html#q-aaa"
+      },
+      {
+        "id": "dexa",
+        "name": "Bone Density (DEXA Scan)",
+        "desc": "Osteoporosis screening",
+        "gender": "female",
+        "ageStart": 65,
+        "ageEnd": 120,
+        "freq": "Baseline at 65, then per provider",
+        "source": "USPSTF",
+        "helpLink": "medical-evidence.html#q-dexa"
+      },
+      {
+        "id": "skin",
+        "name": "Skin Cancer Check",
+        "desc": "Full-body skin exam by dermatologist",
+        "gender": "all",
+        "ageStart": 35,
+        "ageEnd": 120,
+        "freq": "Every 2–3 yr (annual if high risk or 65+)",
+        "source": "AAD / Skin Cancer Foundation",
+        "helpLink": "medical-evidence.html#q-skin"
+      }
+    ],
+    "eu": [
+      {
+        "id": "bp",
+        "name": "Blood Pressure Screening",
+        "desc": "Check for hypertension",
+        "gender": "all",
+        "ageStart": 18,
+        "ageEnd": 120,
+        "freq": "Every 2–3 years",
+        "source": "ESC 2024",
+        "helpLink": "medical-evidence.html#q-bp"
+      },
+      {
+        "id": "lipid",
+        "name": "Lipid Panel (Cholesterol)",
+        "desc": "Total cholesterol, LDL, HDL",
+        "gender": "all",
+        "ageStart": 40,
+        "ageEnd": 120,
+        "freq": "Every 4–6 years",
+        "source": "ESC / National guidelines",
+        "helpLink": "medical-evidence.html#q-lipid"
+      },
+      {
+        "id": "glucose",
+        "name": "Blood Glucose / Diabetes Screening",
+        "desc": "Fasting glucose or HbA1c",
+        "gender": "all",
+        "ageStart": 40,
+        "ageEnd": 120,
+        "freq": "Every 3 years (if overweight or risk factors)",
+        "source": "National guidelines",
+        "helpLink": "medical-evidence.html#q-glucose"
+      },
+      {
+        "id": "dental",
+        "name": "Dental Check-up",
+        "desc": "Oral exam and cleaning",
+        "gender": "all",
+        "ageStart": 18,
+        "ageEnd": 120,
+        "freq": "Every 6–12 months",
+        "source": "National dental associations",
+        "helpLink": "medical-evidence.html#q-dental"
+      },
+      {
+        "id": "eye",
+        "name": "Eye Exam",
+        "desc": "Comprehensive eye and vision exam",
+        "gender": "all",
+        "ageStart": 40,
+        "ageEnd": 120,
+        "freq": "Every 2–4 yr (40–54) / Every 1–2 yr (55+)",
+        "source": "National ophthalmology guidelines",
+        "helpLink": "medical-evidence.html#q-eye"
+      },
+      {
+        "id": "cervical",
+        "name": "Cervical Cancer Screening",
+        "desc": "HPV-based screening, adjusted for vaccination history",
+        "gender": "female",
+        "ageStart": 25,
+        "ageEnd": 65,
+        "freq": "Every 3–5 years (HPV-based)",
+        "source": "EU Council 2022",
+        "helpLink": "medical-evidence.html#q-cervical"
+      },
+      {
+        "id": "mammogram",
+        "name": "Mammography",
+        "desc": "Breast cancer screening",
+        "gender": "female",
+        "ageStart": 45,
+        "ageEnd": 74,
+        "freq": "Every 2 years",
+        "source": "EU Council 2022",
+        "helpLink": "medical-evidence.html#q-breast"
+      },
+      {
+        "id": "colorectal",
+        "name": "Colorectal Cancer Screening",
+        "desc": "Stool-based test or colonoscopy",
+        "gender": "all",
+        "ageStart": 50,
+        "ageEnd": 120,
+        "freq": "Every 1–2 years (stool) or colonoscopy every 10 yr",
+        "source": "EU Council 2022",
+        "helpLink": "medical-evidence.html#q-colorectal"
+      },
+      {
+        "id": "skin",
+        "name": "Skin Cancer Check",
+        "desc": "Full-body skin exam by dermatologist",
+        "gender": "all",
+        "ageStart": 35,
+        "ageEnd": 120,
+        "freq": "Every 2–3 years (per national guidelines)",
+        "source": "National guidelines",
+        "helpLink": "medical-evidence.html#q-skin"
+      }
+    ],
+    "other": [
+      {
+        "id": "bp",
+        "name": "Blood Pressure Screening",
+        "desc": "Check for hypertension",
+        "gender": "all",
+        "ageStart": 18,
+        "ageEnd": 120,
+        "freq": "Every 2–3 years",
+        "source": "WHO / International consensus",
+        "helpLink": "medical-evidence.html#q-bp"
+      },
+      {
+        "id": "lipid",
+        "name": "Lipid Panel (Cholesterol)",
+        "desc": "Total cholesterol, LDL, HDL",
+        "gender": "all",
+        "ageStart": 40,
+        "ageEnd": 120,
+        "freq": "Every 4–6 years",
+        "source": "International consensus",
+        "helpLink": "medical-evidence.html#q-lipid"
+      },
+      {
+        "id": "glucose",
+        "name": "Blood Glucose / Diabetes Screening",
+        "desc": "Fasting glucose or HbA1c",
+        "gender": "all",
+        "ageStart": 40,
+        "ageEnd": 120,
+        "freq": "Every 3 years",
+        "source": "International consensus",
+        "helpLink": "medical-evidence.html#q-glucose"
+      },
+      {
+        "id": "dental",
+        "name": "Dental Check-up",
+        "desc": "Oral exam and cleaning",
+        "gender": "all",
+        "ageStart": 18,
+        "ageEnd": 120,
+        "freq": "Every 6–12 months",
+        "source": "WHO",
+        "helpLink": "medical-evidence.html#q-dental"
+      },
+      {
+        "id": "eye",
+        "name": "Eye Exam",
+        "desc": "Comprehensive eye and vision exam",
+        "gender": "all",
+        "ageStart": 40,
+        "ageEnd": 120,
+        "freq": "Every 2–4 yr",
+        "source": "International consensus",
+        "helpLink": "medical-evidence.html#q-eye"
+      },
+      {
+        "id": "colorectal",
+        "name": "Colorectal Cancer Screening",
+        "desc": "Stool test or colonoscopy",
+        "gender": "all",
+        "ageStart": 50,
+        "ageEnd": 85,
+        "freq": "Per local guidelines",
+        "source": "International consensus",
+        "helpLink": "medical-evidence.html#q-colorectal"
+      }
+    ]
   }
 }
