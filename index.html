@@ -3374,9 +3374,18 @@
     var PROFILE_SET = new Set(PROFILE);
     function isProfile(qid){ return PROFILE_SET.has(qid); }
 
-    var TOP10 = ['E1_vo2','E2_pushups','MD3_insulin','MD3_apob','SS1_2','SS1_1','W2_1','W2_2','N3_1','M4_1'];
+    var TOP10 = ['MD3_apob','MD3_insulin','MD3_glucose','N3_1','E1_vo2','E2_pushups','SS1_1','SS1_2','W2_1','M4_1'];
+    var DEFAULT_VERSION = '2';
     var stored = localStorage.getItem('lp_selected');
-    var SEL = new Set(stored ? JSON.parse(stored) : TOP10);
+    var storedVer = localStorage.getItem('lp_default_version');
+    var SEL;
+    if (storedVer !== DEFAULT_VERSION) {
+      // New default — reset selection to the latest TOP10
+      SEL = new Set(TOP10);
+      localStorage.setItem('lp_default_version', DEFAULT_VERSION);
+    } else {
+      SEL = new Set(stored ? JSON.parse(stored) : TOP10);
+    }
     PROFILE.forEach(function(p){ SEL.add(p); });
     function save(){ localStorage.setItem('lp_selected', JSON.stringify(Array.from(SEL))); }
     save();
