@@ -3470,6 +3470,8 @@
     // === Per-question 0-100 score, mirroring the dashboard's logic ===
     function questionScore100(info){
       var q = info.q;
+      // Use the same answered-check as isAnswered, so unanswered (incl. sliders at min) don't contribute 0
+      if (!isAnswered(info)) return null;
       var value = getCurrentAnswer(info);
       if (value === null || value === undefined || value === '') return null;
       if (q.type === 'number' && q.normsTable) {
