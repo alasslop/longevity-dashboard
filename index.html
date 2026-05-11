@@ -1229,7 +1229,7 @@
                                         },
                                         {
                                             "value": "alcohol",
-                                            "label": "Moderate alcohol (max 7/week)",
+                                            "label": "Moderate Alcohol (0 to max 7 drinks per week)",
                                             "evidence": "Linear dose-response"
                                         }
                                     ]
@@ -3453,10 +3453,17 @@
     }
 
     function isAnswered(info){
+      var q = info.q;
       var a = getCurrentAnswer(info);
       if (a == null) return false;
       if (typeof a === 'string') return a.trim() !== '';
       if (Array.isArray(a)) return a.length > 0;
+      // Sliders are auto-initialised to q.min by the dashboard — only count as answered if user moved it
+      if (q.type === 'slider') {
+        var v = parseFloat(a);
+        var mn = (q.min !== undefined ? q.min : 1);
+        return !isNaN(v) && v > mn;
+      }
       return true;
     }
 
@@ -3478,6 +3485,9 @@
       if (q.type === 'number' && q.inputMin !== undefined && q.inputMax !== undefined) {
         var v = parseFloat(value);
         if (isNaN(v)) return null;
+        // Out-of-range: don't score (matches dashboard's behavior)
+        if (q.min !== undefined && v < q.min) return null;
+        if (q.max !== undefined && v > q.max) return null;
         var pct = ((v - q.inputMin) / (q.inputMax - q.inputMin)) * 100;
         if (q.edgeFloor !== undefined && v < q.edgeFloor) {
           var rng = q.edgeFloor - (q.min || 0);
@@ -3568,9 +3578,19 @@
     function statusFor(info){
       if (!isAnswered(info)) return 'Not answered yet';
       if (isProfile(info.qid)) return 'Used for scoring other questions';
+      var q = info.q;
+      var raw = getCurrentAnswer(info);
+      var v = parseFloat(raw);
+      // Detect out-of-range
+      if (q.type === 'number' && !isNaN(v)) {
+        if ((q.min !== undefined && v < q.min) || (q.max !== undefined && v > q.max)) {
+          var unitHint = q.unit ? ' (unit: ' + q.unit + ')' : '';
+          return 'Value ' + v + ' is outside expected range ' + q.min + '–' + q.max + unitHint + ' — not scored. Check units?';
+        }
+      }
       var s = questionScore100(info);
       if (s == null) {
-        if (info.q.normsTable) return 'Answered — needs age + sex to score';
+        if (q.normsTable) return 'Answered — needs age + sex to score';
         return 'Answered (no score available)';
       }
       return 'Score: ' + Math.round(s) + '/100';
@@ -3634,6 +3654,9 @@
       var gluAns = getCurrentAnswer({qid:'MD3_glucose', dimKey:'medical', secKey:'sec3'});
       var ins = parseFloat(insAns); var glu = parseFloat(gluAns);
       if (isNaN(ins) || isNaN(glu) || ins <= 0 || glu <= 0) return;
+      // Skip when values are out of dashboard's allowed range
+      if (ins < 0 || ins > 80) return;
+      if (glu < 40 || glu > 400) return;
       var insCard = panel.querySelector('[data-card-qid="MD3_insulin"]'); if (!insCard) return;
       var homa = (ins * glu) / 405;
       var homaStr = homa.toFixed(2);
