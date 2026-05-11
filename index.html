@@ -3600,6 +3600,35 @@
       location.reload();
     }
 
+    function updateHomaCard(){
+      var panel = document.getElementById('lp-panel'); if (!panel) return;
+      var existing = panel.querySelector('[data-lp-homa]');
+      if (existing) existing.remove();
+      if (!SEL.has('MD3_insulin') || !SEL.has('MD3_glucose')) return;
+      var insAns = getCurrentAnswer({qid:'MD3_insulin', dimKey:'medical', secKey:'sec3'});
+      var gluAns = getCurrentAnswer({qid:'MD3_glucose', dimKey:'medical', secKey:'sec3'});
+      var ins = parseFloat(insAns); var glu = parseFloat(gluAns);
+      if (isNaN(ins) || isNaN(glu) || ins <= 0 || glu <= 0) return;
+      var insCard = panel.querySelector('[data-card-qid="MD3_insulin"]'); if (!insCard) return;
+      var homa = (ins * glu) / 405;
+      var homaStr = homa.toFixed(2);
+      var label, bg, color;
+      if (homa < 1.0)      { label = 'Optimal insulin sensitivity'; bg = '#E6F4EA'; color = '#1B5E20'; }
+      else if (homa < 1.5) { label = 'Normal'; bg = '#E6F4EA'; color = '#1B5E20'; }
+      else if (homa < 2.5) { label = 'Early insulin resistance'; bg = '#FFF8E1'; color = '#8D6E00'; }
+      else if (homa < 5.0) { label = 'Significant insulin resistance'; bg = '#FFEBEE'; color = '#B00020'; }
+      else                 { label = 'Severe insulin resistance'; bg = '#FFEBEE'; color = '#B00020'; }
+      var card = document.createElement('div');
+      card.className = 'lp-q-card'; card.dataset.lpHoma = '1';
+      card.style.cssText = 'background:'+bg+';border-color:'+color+'33';
+      card.innerHTML = '<div class="lp-dim-tag" style="background:'+color+'1a;color:'+color+'">CALCULATED · MEDICAL</div>' +
+        '<h4 style="display:flex;align-items:center;gap:6px">HOMA-IR <span style="font-size:11px;color:var(--color-text-muted);font-weight:400">(Insulin Resistance Index)</span></h4>' +
+        '<div class="question-hint" style="font-size:12px;color:var(--color-text-muted);margin-top:2px;margin-bottom:4px">HOMA-IR = (fasting insulin × fasting glucose) / 405. Lower is better. Attia threshold ~1.5.</div>' +
+        '<div style="display:flex;align-items:baseline;gap:8px;margin-top:6px"><div style="font-size:28px;font-weight:700;color:'+color+'">'+homaStr+'</div><div style="font-size:13px;color:'+color+';font-weight:600">'+label+'</div></div>' +
+        '<div style="font-size:11px;color:var(--color-text-muted);margin-top:4px">Computed from insulin '+ins+' µIU/mL and glucose '+glu+' mg/dL.</div>';
+      insCard.parentNode.insertBefore(card, insCard.nextSibling);
+    }
+
     function updateScoresOnly(){
       var panel = document.getElementById('lp-panel'); if (!panel) return renderPanel();
       var s = computeScores();
@@ -3616,6 +3645,7 @@
         var statusEl = card.querySelector('.lp-q-status');
         if (statusEl) statusEl.textContent = statusFor(info);
       });
+      try { updateHomaCard(); } catch(e){}
     }
 
     function renderPanel(){
@@ -3663,7 +3693,7 @@
             else if (homa < 2.5) { label = 'Early insulin resistance';     bg = '#FFF8E1'; color = '#8D6E00'; }
             else if (homa < 5.0) { label = 'Significant insulin resistance'; bg = '#FFEBEE'; color = '#B00020'; }
             else                 { label = 'Severe insulin resistance';    bg = '#FFEBEE'; color = '#B00020'; }
-            qList += '<div class="lp-q-card" style="background:'+bg+';border-color:'+color+'33"><div class="lp-dim-tag" style="background:'+color+'1a;color:'+color+'">CALCULATED · MEDICAL</div><h4 style="display:flex;align-items:center;gap:6px">HOMA-IR <span style="font-size:11px;color:var(--color-text-muted);font-weight:400">(Insulin Resistance Index)</span></h4><div class="question-hint" style="font-size:12px;color:var(--color-text-muted);margin-top:2px;margin-bottom:4px">HOMA-IR = (fasting insulin × fasting glucose) / 405. Lower is better. Attia threshold ~1.5.</div><div style="display:flex;align-items:baseline;gap:8px;margin-top:6px"><div style="font-size:28px;font-weight:700;color:'+color+'">'+homaStr+'</div><div style="font-size:13px;color:'+color+';font-weight:600">'+label+'</div></div><div style="font-size:11px;color:var(--color-text-muted);margin-top:4px">Computed from insulin '+ins+' µIU/mL and glucose '+glu+' mg/dL.</div></div>';
+            qList += '<div class="lp-q-card" data-lp-homa="1" style="background:'+bg+';border-color:'+color+'33"><div class="lp-dim-tag" style="background:'+color+'1a;color:'+color+'">CALCULATED · MEDICAL</div><h4 style="display:flex;align-items:center;gap:6px">HOMA-IR <span style="font-size:11px;color:var(--color-text-muted);font-weight:400">(Insulin Resistance Index)</span></h4><div class="question-hint" style="font-size:12px;color:var(--color-text-muted);margin-top:2px;margin-bottom:4px">HOMA-IR = (fasting insulin × fasting glucose) / 405. Lower is better. Attia threshold ~1.5.</div><div style="display:flex;align-items:baseline;gap:8px;margin-top:6px"><div style="font-size:28px;font-weight:700;color:'+color+'">'+homaStr+'</div><div style="font-size:13px;color:'+color+';font-weight:600">'+label+'</div></div><div style="font-size:11px;color:var(--color-text-muted);margin-top:4px">Computed from insulin '+ins+' µIU/mL and glucose '+glu+' mg/dL.</div></div>';
           }
         }
       });
