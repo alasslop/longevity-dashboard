@@ -3576,6 +3576,31 @@
       return 'Score: ' + Math.round(s) + '/100';
     }
 
+    function computeAllAnswered(){
+      // Iterate ALL 44 questions; score each that has an answer
+      var dimNames = {medical:'Medical', nutrition:'Nutrition', energy:'Energy & Performance', sleep:'Sleep', wellbeing:'Wellbeing', mindset:'Mindset'};
+      var byDim = {medical:[], nutrition:[], energy:[], sleep:[], wellbeing:[], mindset:[]};
+      var all = [];
+      Object.keys(CATEGORIES).forEach(function(dk){
+        Object.keys(CATEGORIES[dk].sections || {}).forEach(function(sk){
+          (CATEGORIES[dk].sections[sk].questions || []).forEach(function(q){
+            var info = {qid: q.id, q: q, dimKey: dk, secKey: sk, dimName: CATEGORIES[dk].name};
+            if (isProfile(q.id)) return; // profile drives other scoring, no score of its own
+            if (!isAnswered(info)) return;
+            var p = questionScore100(info);
+            if (p != null) { byDim[dk].push(p); all.push(p); }
+          });
+        });
+      });
+      var total = all.length ? Math.round(all.reduce(function(a,b){return a+b;},0)/all.length) : null;
+      var dimScores = {};
+      Object.keys(byDim).forEach(function(k){
+        var arr = byDim[k];
+        dimScores[k] = arr.length ? Math.round(arr.reduce(function(a,b){return a+b;},0)/arr.length) : null;
+      });
+      return {dimNames: dimNames, dimScores: dimScores, total: total};
+    }
+
     function computeScores(){
       var dimNames = {medical:'Medical', nutrition:'Nutrition', energy:'Energy & Performance', sleep:'Sleep', wellbeing:'Wellbeing', mindset:'Mindset'};
       var byDim = {medical:[], nutrition:[], energy:[], sleep:[], wellbeing:[], mindset:[]};
@@ -3722,18 +3747,16 @@
     obs.observe(document.body, {childList: true, subtree: true});
 
     function hijackDashboard(){
-      var s = computeScores();
-      // Top ring number
+      // Top ring & dimension cards reflect ALL answered questions (not just selected)
+      var s = computeAllAnswered();
       var totEl = document.getElementById('totalScoreValue');
       if (totEl) totEl.textContent = (s.total == null ? 0 : s.total);
-      // Top ring progress arc
       var ring = document.getElementById('scoreRingProgress');
       if (ring) {
         var C = 2 * Math.PI * 78;
         var pct = (s.total == null ? 0 : s.total) / 100;
         ring.style.strokeDashoffset = C - pct * C;
       }
-      // Per-dimension cards
       var cards = document.querySelectorAll('.dimension-card');
       cards.forEach(function(card){
         var oc = card.getAttribute('onclick') || '';
@@ -3746,10 +3769,20 @@
       });
     }
 
-    if (typeof window.updateScoresAndUI === 'function') {
-      var orig = window.updateScoresAndUI;
-      window.updateScoresAndUI = function(){ var r = orig.apply(this, arguments); try { updateScoresOnly(); } catch(e){} try { hijackDashboard(); } catch(e){} return r; };
+    function wrapFn(name, after){
+      var orig = window[name];
+      if (typeof orig !== 'function') return;
+      window[name] = function(){ var r = orig.apply(this, arguments); try { after(); } catch(e){} return r; };
     }
+    function refresh(){
+      try { updateScoresOnly(); } catch(e){}
+      try { hijackDashboard(); } catch(e){}
+      // Run again in next tick to override any post-call DOM writes
+      setTimeout(function(){ try { hijackDashboard(); } catch(e){} }, 0);
+    }
+    wrapFn('updateScoresAndUI', refresh);
+    wrapFn('updateTotalScore', refresh);
+    wrapFn('renderDimensions', refresh);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
