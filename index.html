@@ -3381,9 +3381,19 @@
     function save(){ localStorage.setItem('lp_selected', JSON.stringify(Array.from(SEL))); }
     save();
 
+    // Build canonical index: dimensionPos*1e4 + sectionPos*1e2 + questionPos
+    var ORDER = {};
+    Object.keys(CATEGORIES).forEach(function(dk, di){
+      Object.keys(CATEGORIES[dk].sections || {}).forEach(function(sk, si){
+        (CATEGORIES[dk].sections[sk].questions || []).forEach(function(q, qi){
+          if (q && q.id) ORDER[q.id] = di * 10000 + si * 100 + qi;
+        });
+      });
+    });
     function orderedSelection(){
       var rest = [];
       SEL.forEach(function(qid){ if (!isProfile(qid)) rest.push(qid); });
+      rest.sort(function(a, b){ return (ORDER[a] || 0) - (ORDER[b] || 0); });
       return PROFILE.filter(function(q){ return SEL.has(q); }).concat(rest);
     }
 
@@ -3637,7 +3647,8 @@
         var tagLabel = profile ? 'PROFILE · ' + info.dimName : info.dimName;
         var hint = profile ? '<div class="lp-profile-hint">Required — needed for VO2max & push-up scoring</div>' : '';
         var helpHtml = info.q.helpLink ? ' <a href="'+info.q.helpLink+'" class="help-link" onclick="saveScrollState(event)">?</a>' : '';
-        qList += '<div class="'+cardClass+'" data-card-qid="'+info.qid+'"><div class="'+tagClass+'">'+tagLabel+'</div><h4 style="display:flex;align-items:center;gap:6px">'+info.q.question+helpHtml+'</h4>'+hint+buildInputHtml(info)+'<div class="lp-q-status">'+statusFor(info)+'</div></div>';
+        var qHint = info.q.hint ? '<div class="question-hint" style="font-size:12px;color:var(--color-text-muted);margin-top:2px;margin-bottom:4px">'+info.q.hint+'</div>' : '';
+        qList += '<div class="'+cardClass+'" data-card-qid="'+info.qid+'"><div class="'+tagClass+'">'+tagLabel+'</div><h4 style="display:flex;align-items:center;gap:6px">'+info.q.question+helpHtml+'</h4>'+qHint+hint+buildInputHtml(info)+'<div class="lp-q-status">'+statusFor(info)+'</div></div>';
       });
       if (s.selectedList.length === 0) qList = '<div style="text-align:center;padding:20px;color:var(--color-text-muted);font-size:13px">No questions selected.</div>';
       panel.innerHTML =
