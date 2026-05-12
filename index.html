@@ -307,6 +307,39 @@
 .lp-q-status { font-size:11px; color:var(--color-text-muted); margin-top:6px; }
 .lp-dim-mini { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
 .lp-dim-pill { font-size:11px; padding:4px 10px; background:var(--color-bg); border-radius:999px; border:1px solid var(--color-border); }
+
+        /* Habit Tracker v2 — tiny-habits design */
+        .ht-date { font-size: 1.6rem; font-weight: 700; color: var(--color-text); margin: 0 0 4px; }
+        .ht-subtitle { font-size: 0.9rem; color: var(--color-text-muted); margin: 0 0 20px; }
+        .ht-card { background: var(--color-card); border-radius: 14px; padding: 16px; margin-bottom: 10px; display: flex; align-items: flex-start; gap: 12px; border: 1px solid var(--color-border); }
+        .ht-card-body { flex: 1; min-width: 0; }
+        .ht-tag { display: inline-block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; padding: 3px 10px; border-radius: 999px; margin-bottom: 8px; }
+        .ht-tag.cat-nutrition  { color: #92400E; background: #FEF3C7; }
+        .ht-tag.cat-sleep      { color: #1E40AF; background: #DBEAFE; }
+        .ht-tag.cat-movement   { color: #166534; background: #DCFCE7; }
+        .ht-tag.cat-mindset    { color: #6B21A8; background: #F3E8FF; }
+        .ht-tag.cat-wellbeing  { color: #9D174D; background: #FCE7F3; }
+        .ht-tag.cat-medical    { color: #92400E; background: #FED7AA; }
+        .ht-title { font-size: 1.05rem; font-weight: 700; color: var(--color-text); margin: 0 0 4px; line-height: 1.3; }
+        .ht-title.done { text-decoration: line-through; color: var(--color-text-muted); }
+        .ht-desc { font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.4; }
+        .ht-desc b { color: var(--color-text); font-weight: 600; }
+        .ht-check { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--color-border); display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: all 0.15s; background: white; color: transparent; }
+        .ht-check:hover { border-color: var(--color-teal); }
+        .ht-check.done { background: var(--color-teal); border-color: var(--color-teal); color: white; }
+        .ht-week-label { font-size: 0.95rem; font-weight: 600; color: var(--color-text); margin: 20px 0 10px; }
+        .ht-week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-bottom: 8px; }
+        .ht-day { aspect-ratio: 1; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 600; padding: 4px; background: #F5F5F4; color: var(--color-text-muted); border: 1.5px solid transparent; }
+        .ht-day.today { border-color: var(--color-orange); background: white; color: var(--color-text); }
+        .ht-day.complete { background: #16A34A; color: white; }
+        .ht-day .ht-day-name { font-size: 0.78rem; line-height: 1.1; }
+        .ht-day .ht-day-frac { font-size: 0.7rem; opacity: 0.85; margin-top: 1px; }
+        .ht-week-summary { font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 18px; }
+        .ht-callout { background: #FEF3C7; border-radius: 14px; padding: 18px 16px; text-align: center; margin-top: 18px; }
+        .ht-callout-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #92400E; margin-bottom: 6px; }
+        .ht-callout-body { font-size: 1rem; font-weight: 600; color: var(--color-text); line-height: 1.4; margin-bottom: 14px; }
+        .ht-btn-primary { background: #EA580C; color: white; border: none; padding: 14px 28px; border-radius: 999px; font-weight: 600; font-size: 0.95rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+        .ht-btn-primary:hover { background: #C2410C; }
 </style>
 </head>
 <body>
@@ -338,40 +371,21 @@
         <div id="dimensionsList"></div>
     </div>
 
-    <!-- TAB 2: HABITS -->
+        <!-- TAB 2: HABITS -->
     <div class="tab-content" id="tab-habits">
-        <h2 class="section-title" style="margin-bottom: 16px;">My Habits</h2>
-        <div class="habits-stats">
-            <div class="stat-item"><div class="stat-value">12</div><div class="stat-label">Active</div></div>
-            <div class="stat-item"><div class="stat-value">87%</div><div class="stat-label">This Week</div></div>
-            <div class="stat-item"><div class="stat-value">45</div><div class="stat-label">Day Streak</div></div>
-        </div>
-        <h3 class="section-title">Today's Check-in</h3>
-        <div id="habitsList">
-            <div class="habit-card">
-                <div class="habit-checkbox" onclick="toggleHabit(this)"><i data-lucide="check" style="width:16px;height:16px;display:none;"></i></div>
-                <div class="habit-info"><div class="habit-name">Morning walk (20 min)</div><div class="habit-meta"><span class="habit-streak"><i data-lucide="flame" style="width:12px;height:12px;"></i> 55 days</span><span>• Improves Energy</span></div></div>
-            </div>
-            <div class="habit-card">
-                <div class="habit-checkbox" onclick="toggleHabit(this)"><i data-lucide="check" style="width:16px;height:16px;display:none;"></i></div>
-                <div class="habit-info"><div class="habit-name">Meditation (10 min)</div><div class="habit-meta"><span class="habit-streak"><i data-lucide="flame" style="width:12px;height:12px;"></i> 12 days</span><span>• Improves Mindset</span></div></div>
-            </div>
-            <div class="habit-card">
-                <div class="habit-checkbox checked" onclick="toggleHabit(this)"><i data-lucide="check" style="width:16px;height:16px;"></i></div>
-                <div class="habit-info"><div class="habit-name">Protein intake (30g breakfast)</div><div class="habit-meta"><span class="habit-streak"><i data-lucide="flame" style="width:12px;height:12px;"></i> 24 days</span><span>• Improves Nutrition</span></div></div>
-            </div>
-            <div class="habit-card">
-                <div class="habit-checkbox" onclick="toggleHabit(this)"><i data-lucide="check" style="width:16px;height:16px;display:none;"></i></div>
-                <div class="habit-info"><div class="habit-name">Hydration (2L water)</div><div class="habit-meta"><span class="habit-streak"><i data-lucide="flame" style="width:12px;height:12px;"></i> 89 days</span><span>• Improves Energy</span></div></div>
-            </div>
-        </div>
-        <div class="habit-buttons">
-            <button class="btn btn-outline"><i data-lucide="plus" style="width:18px;height:18px;"></i> Add Habit</button>
-            <button class="btn btn-primary"><i data-lucide="sparkles" style="width:18px;height:18px;"></i> AI Suggest</button>
+        <h1 class="ht-date" id="htDate">Friday, May 8</h1>
+        <p class="ht-subtitle" id="htSubtitle">3 tiny habits. That's all.</p>
+        <div id="htList"></div>
+        <h3 class="ht-week-label">This week</h3>
+        <div class="ht-week" id="htWeek"></div>
+        <div class="ht-week-summary" id="htWeekSummary">3 of 7 days complete</div>
+        <div class="ht-callout">
+            <div class="ht-callout-label">Streak complete</div>
+            <div class="ht-callout-body">Your sleep-duration streak is done — keep stacking tiny habits.</div>
+            <button class="ht-btn-primary" onclick="htAddHabit()"><i data-lucide="plus" style="width:18px;height:18px;"></i> Add Habit</button>
         </div>
     </div>
-
-    <!-- TAB 3: COMMUNITY -->
+<!-- TAB 3: COMMUNITY -->
     <div class="tab-content" id="tab-community">
         <div class="coach-card">
             <div class="coach-label">Next Session</div>
@@ -3374,8 +3388,8 @@
     var PROFILE_SET = new Set(PROFILE);
     function isProfile(qid){ return PROFILE_SET.has(qid); }
 
-    var TOP10 = ['MD3_apob','MD3_insulin','MD3_glucose','N3_1','E1_vo2','E2_pushups','SS1_1','SS1_2','W2_1','M4_1'];
-    var DEFAULT_VERSION = '2';
+    var TOP10 = ['MD3_apob','MD3_insulin','MD3_glucose','N3_1','E1_vo2','E2_pushups','SS1_1','SS1_2','SS2_3','W2_1','M4_1'];
+    var DEFAULT_VERSION = '3';
     var stored = localStorage.getItem('lp_selected');
     var storedVer = localStorage.getItem('lp_default_version');
     var SEL;
@@ -3822,5 +3836,149 @@
   else init();
 })();
 </script>
+
+<script id="ht-script">
+(function(){
+  var DEFAULT_HABITS = [
+    { id: 'h1', category: 'nutrition', title: 'Protein power shake', cue: 'make my morning coffee', action: 'blend my 30g protein shake' },
+    { id: 'h2', category: 'sleep',     title: 'Lights out by 11',   cue: 'brush my teeth',          action: 'close the laptop and dim the lamp' },
+    { id: 'h3', category: 'movement',  title: 'Ten-minute lunch walk', cue: 'finish lunch',         action: 'walk around the block once' }
+  ];
+  var STORAGE_KEY = 'ht_state_v1';
+
+  function loadState(){
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e){ return {}; }
+  }
+  function saveState(s){ localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); }
+
+  function getState(){
+    var s = loadState();
+    if (!s.habits) s.habits = DEFAULT_HABITS.slice();
+    if (!s.completions) s.completions = {}; // {dateISO: [habitId, ...]}
+    return s;
+  }
+
+  function localISO(d){
+    d = d || new Date();
+    var y = d.getFullYear();
+    var m = String(d.getMonth() + 1).padStart(2, '0');
+    var day = String(d.getDate()).padStart(2, '0');
+    return y + '-' + m + '-' + day;
+  }
+  function todayISO(){ return localISO(new Date()); }
+  function dayName(d){ return ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()]; }
+  function dayShortLetter(d){ return ['S','M','T','W','T','F','S'][d.getDay()]; }
+
+  function formatDateHeader(d){
+    var weekdays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    return weekdays[d.getDay()] + ', ' + months[d.getMonth()] + ' ' + d.getDate();
+  }
+
+  function getMondayOfWeek(d){
+    var x = new Date(d);
+    var day = x.getDay(); // 0=Sun..6=Sat
+    var diff = (day === 0 ? -6 : 1 - day); // make Monday start of week
+    x.setDate(x.getDate() + diff);
+    x.setHours(0,0,0,0);
+    return x;
+  }
+
+  function renderHabits(){
+    var s = getState();
+    var listEl = document.getElementById('htList');
+    if (!listEl) return;
+    var today = todayISO();
+    var doneToday = new Set(s.completions[today] || []);
+
+    var headerEl = document.getElementById('htDate');
+    var subEl = document.getElementById('htSubtitle');
+    if (headerEl) headerEl.textContent = formatDateHeader(new Date());
+    if (subEl) subEl.textContent = s.habits.length + ' tiny habit' + (s.habits.length === 1 ? '' : 's') + '. That\'s all.';
+
+    listEl.innerHTML = s.habits.map(function(h){
+      var done = doneToday.has(h.id);
+      var titleClass = 'ht-title' + (done ? ' done' : '');
+      var checkClass = 'ht-check' + (done ? ' done' : '');
+      var catLabel = (h.category || '').toUpperCase();
+      return '<div class="ht-card">' +
+        '<div class="ht-card-body">' +
+          '<div class="ht-tag cat-' + h.category + '">' + catLabel + '</div>' +
+          '<div class="' + titleClass + '">' + h.title + '</div>' +
+          '<div class="ht-desc">After I <b>' + h.cue + '</b>, I will <b>' + h.action + '</b>.</div>' +
+        '</div>' +
+        '<div class="' + checkClass + '" onclick="htToggle(\'' + h.id + '\')"><i data-lucide="check" style="width:18px;height:18px;"></i></div>' +
+      '</div>';
+    }).join('');
+
+    renderWeek();
+    if (window.lucide && lucide.createIcons) lucide.createIcons();
+  }
+
+  function renderWeek(){
+    var s = getState();
+    var weekEl = document.getElementById('htWeek');
+    var sumEl = document.getElementById('htWeekSummary');
+    if (!weekEl) return;
+    var today = new Date(); today.setHours(0,0,0,0);
+    var monday = getMondayOfWeek(today);
+    var todayISOStr = todayISO();
+    var totalHabits = s.habits.length || 1;
+    var daysComplete = 0;
+    var html = '';
+    for (var i = 0; i < 7; i++) {
+      var d = new Date(monday); d.setDate(monday.getDate() + i);
+      var iso = localISO(d);
+      var done = (s.completions[iso] || []).length;
+      var isToday = iso === todayISOStr;
+      var classes = 'ht-day' + (isToday ? ' today' : '') + (done === totalHabits && done > 0 ? ' complete' : '');
+      var label = ['M','T','W','T','F','S','S'][i];
+      var frac = done + '/' + totalHabits;
+      if (done === totalHabits && done > 0) daysComplete++;
+      // future days show no frac
+      var isFuture = d > today;
+      html += '<div class="' + classes + '">' +
+        '<div class="ht-day-name">' + label + '</div>' +
+        (isFuture ? '<div class="ht-day-frac" style="opacity:0.4">—</div>' : '<div class="ht-day-frac">' + frac + '</div>') +
+      '</div>';
+    }
+    weekEl.innerHTML = html;
+    if (sumEl) sumEl.textContent = daysComplete + ' of 7 days complete';
+  }
+
+  window.htToggle = function(id){
+    var s = getState();
+    var today = todayISO();
+    if (!s.completions[today]) s.completions[today] = [];
+    var arr = s.completions[today];
+    var idx = arr.indexOf(id);
+    if (idx === -1) arr.push(id);
+    else arr.splice(idx, 1);
+    saveState(s);
+    renderHabits();
+  };
+
+  window.htAddHabit = function(){
+    var category = prompt('Category? (nutrition / sleep / movement / mindset / wellbeing / medical)', 'movement');
+    if (!category) return;
+    var title = prompt('Habit title (e.g. "Ten-minute lunch walk")', '');
+    if (!title) return;
+    var cue = prompt('After I … (cue, e.g. "finish lunch")', '');
+    if (!cue) return;
+    var action = prompt('I will … (action, e.g. "walk around the block once")', '');
+    if (!action) return;
+    var s = getState();
+    s.habits.push({ id: 'h' + Date.now(), category: category.toLowerCase().trim(), title: title.trim(), cue: cue.trim(), action: action.trim() });
+    saveState(s);
+    renderHabits();
+  };
+
+  // Re-render whenever habits tab is shown (in case it was loaded before tab is visible)
+  function init(){ renderHabits(); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>
+
 </body>
 </html>
